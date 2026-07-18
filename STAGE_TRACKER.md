@@ -2,7 +2,7 @@
 
 ## Stage
 
-Stage 5 - Clippers End-to-End
+Stage 8 - Stretch Features
 
 ## Stage Status
 
@@ -24,10 +24,10 @@ Stage 5 - Clippers End-to-End
   remains an external credential/rehearsal gate.
 - **Stage 6 — Watering Can End-to-End:** Implementation complete in the shared lifecycle; real generated
   test PR remains an external credential/rehearsal gate.
-- **Stage 7 — Demo Path Polish:** Implementation in progress; browser/golden-playthrough acceptance
-  remains open.
-- **Stage 8:** Two safe stretch slices implemented (seasons and deterministic plant voices); individual
-  stretch acceptance remains open.
+- **Stage 7 — Demo Path Polish:** Local golden playthrough implementation complete; two-person visual
+  legibility and human acceptance remain open.
+- **Stage 8 — Stretch Features:** Two individually bounded slices complete (seasons and deterministic
+  plant voices); final stretch gate and demo stability audit remain open.
 
 ## Goal
 
@@ -218,6 +218,26 @@ checks.
 - [x] Added Stage 8 seasons snapshots and deterministic plant voices, both grounded in report data.
 - [ ] Real demo-fork PRs, golden playthrough, two-person legibility test, and final human acceptance
       remain open gates.
+
+## Stage 7 golden playthrough evidence — 2026-07-18
+
+- [x] Mobile production browser rehearsal loaded sample mode and report-grounded Magnifying Glass copy.
+- [x] Clippers reached `landed`, removed the dead-code finding only after re-analysis, and recorded
+      the rehearsal in the payoff panel.
+- [x] Watering Can reached `landed`, removed the estimated coverage finding only after re-analysis,
+      and reduced the comparison from two signals to zero.
+- [x] Payoff panel, classroom comparison, mobile layout, and zero browser page/console errors passed.
+- [x] Season selector switched to the late-summer snapshot during the same rehearsal.
+- [ ] Two-person five-second wide-shot legibility test and human acceptance are not yet recorded.
+
+## Stage 8 stretch evidence — 2026-07-18
+
+- [x] Seasons: three deterministic sample snapshots are selectable without network access.
+- [x] Plant voices: deterministic first-person copy is derived only from the selected report node and
+      findings; no health or finding state is invented.
+- [x] Pesticide shares the typed lifecycle and remains dormant until a vulnerability finding exists.
+- [ ] AI-painted backdrop is intentionally deferred; generated art must not encode garden health.
+- [ ] Independent stretch review and final human acceptance remain open.
 
 ## Stage 2 completion record — 2026-07-17
 

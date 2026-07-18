@@ -220,3 +220,12 @@ the displayed report after a deterministic re-analysis removes the finding. The 
 shared with the Pesticide stretch tool. Stage 7 records rehearsal outcomes and classroom comparison;
 Stage 8 adds deterministic sample seasons and report-grounded plant voices. Real demo-fork PRs and
 human playthrough/legibility evidence remain required before those stages can be called fully accepted.
+
+## 2026-07-18 — Stage 7 golden path and Stage 8 stretch scope
+
+The local golden path is now Magnifying Glass → Clippers → Watering Can → payoff/classroom comparison.
+The first Stage 8 slices are seasons and deterministic plant voices because they are offline, cheap to
+verify, and preserve the truth boundary. Pesticide is lifecycle-ready but dormant until a real
+vulnerability finding exists. AI-painted backdrop is deferred so generated art cannot encode health.
+A mobile production browser rehearsal passed; two-person wide-shot legibility, independent review,
+and real demo-fork PR evidence remain explicit acceptance gates.
