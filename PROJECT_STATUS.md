@@ -4,14 +4,14 @@ Updated: 2026-07-17, America/Denver
 
 ## Active Stage and Goal
 
-- Stage: 1 - Repository Bootstrap, Analysis, and Garden Truth
-- Goal: Establish trustworthy repository analysis and the deterministic garden foundation before building action tools.
+- Stage: 2 - Deterministic Analysis Engine
+- Goal: Extend the validated analysis path from the committed sample fixture to a bounded public GitHub repository rehearsal.
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
 
 ## Current State
 
-- Last completed milestone: grounded sample-mode Magnifying Glass explanations are available from
-  the inspector and `/api/explain` after deterministic garden projection and analyzer calibration.
+- Last completed milestone: Stage 0–1 promotion completed with a public Vercel preview, deterministic
+  sample analysis, garden projection, inspector, explanation foundation, and public GitHub URL boundary.
 - Passing checks: format:check, lint, typecheck, 14 tests, analysis:validate, build, GitHub CI.
 - Failing checks: none.
 - Preview URL: https://coding-garden-brlf2kkis-code-garden.vercel.app
@@ -21,7 +21,8 @@ Updated: 2026-07-17, America/Denver
 
 ## Blockers
 
-- `OPENAI_API_KEY` required for live explanation/change stages; not configured.
+- `OPENAI_API_KEY` required for live explanation/change stages; not configured, but it does not block
+  Stage 2 read-only analysis.
 - Provisional target is now Gentelella; the read-only analysis rehearsal succeeded.
 - Gentelella rehearsal completed: 31 nodes, 70 findings, report hash `6cb7ad388ad7b14b`.
 - Analyzer calibration passed for HTML script references, package entry metadata, config files,
@@ -52,29 +53,27 @@ Updated: 2026-07-17, America/Denver
 - R03 (analysis accuracy) is now active rather than hypothetical: the rehearsal exposed
   entrypoint false positives; calibration is now covered by regression tests, while findings
   remain advisory until the offline fixture and verified-change lifecycle are complete.
-- R06 (demo repo choice) is reduced by the successful read-only rehearsal; license and target
-  approval remain human gates.
+- R06 (demo repo choice) is reduced by the successful read-only rehearsal; target approval is now
+  recorded, while live change permissions remain deferred.
 - Build emits no failures; the workspace-root warning is addressed by setting Turbopack's root to
   this repository.
 
 ## Decisions Needed From Human Owner
 
-- Approve the Stage 0 scope freeze and provisional demo-repo selection.
-- Approve the curated offline fixture once its findings are verified.
-- Confirm Education as the submission track.
+- Confirm Education as the submission track; this is not blocking Stage 2.
 
 ## Next Three Actions
 
-1. Obtain independent review of the Stage 1 implementation and documentation.
-2. Record human acceptance of the Stage 0 scope freeze and Stage 1 promotion.
-3. Begin Stage 2's bounded public-repository analysis rehearsal after the promotion gate.
+1. Run the bounded public GitHub read-only analysis rehearsal.
+2. Record report hash, node/finding counts, and safety evidence for the rehearsal.
+3. Run the Stage 2 boundary audit before promoting to Stage 3.
 
 ## Submission Readiness
 
-- App: Stage 1 bootstrap, analysis, garden renderer, inspector, and sample-mode explanation slice
-  running locally; live explanation and verified change flows are next.
-- Repository: branch is clean and synchronized with `origin` at commit `3ff2393`; draft PR #1 is
-  open and GitHub CI is green.
+- App: Stage 0–1 complete; Stage 2 public-repository analysis rehearsal is next. Live explanation
+  and verified change flows remain later roadmap stages.
+- Repository: branch is clean and synchronized with `origin`; draft PR #1 is open and GitHub CI is
+  green.
 
 ## Final Stage 1 verification snapshot
 
@@ -86,8 +85,9 @@ Updated: 2026-07-17, America/Denver
   generic duplicate plan/status/decision files, and archive separation intact.
 - Sensitive-content scan passed: no credential files or actual secret values are tracked.
 - Durable context and Slack routing were checked; no Code Garden-specific Slack item was found.
-- Stage 1 is ready for formal promotion review. Independent review and human acceptance remain the
-  only open stage gates.
+- Stage 1 is promoted complete. Human acceptance was recorded on 2026-07-17; automated GitHub CI/PR
+  verification and agent self-review are the independent evidence available for this milestone.
+- Stage 2 is now the only active execution stage.
 - README: baseline written; submission narrative pending.
 - Demo video: not started.
 - Devpost submission fields: not started.

@@ -19,7 +19,7 @@ The project reuses the V1 execution system: master execution plan, AGENTS.md hie
   plans, status, durable notes, and Slack routing. It does not replace human
   acceptance, independent review, or technical quality gates.
 
-## 2026-07-17 — MVP scope freeze (draft, pending Stage 0 human approval)
+## 2026-07-17 — MVP scope freeze (human-approved)
 
 Must-Have tier only for the demo path:
 
@@ -59,8 +59,8 @@ Initial JavaScript signal policy:
 - complexity: ESLint complexity output;
 - vulnerabilities: `npm audit --json`, labeled unavailable when the target cannot be audited offline.
 
-This is a provisional Stage 0 choice pending a rehearsed analysis run; changing it requires a
-new decision entry, not a hardcoded analyzer branch.
+This choice was human-approved on 2026-07-17. Changing it requires a new decision entry and human
+approval, not a hardcoded analyzer branch.
 
 ## 2026-07-17 — Read-only adapter rehearsal completed
 
@@ -144,7 +144,14 @@ safe and achievable.
 ## 2026-07-17 — Stage 1 technical closeout evidence
 
 The Stage 1 implementation and deployment evidence is complete: 14 local tests pass, GitHub CI is
-green, the branch is clean and pushed at `3ff2393`, and the anonymous Vercel preview plus health,
-explanation, and public-repository routes have been smoke-tested. The stage is ready for formal
-promotion review; independent review and human acceptance remain open and are not inferred from
-automated checks.
+green, the branch is clean and pushed, and the anonymous Vercel preview plus health, explanation,
+and public-repository routes have been smoke-tested. Liam approved Stage 1 promotion on 2026-07-17.
+Automated GitHub CI/PR verification plus agent self-review are the independent evidence available;
+no separate human reviewer was available.
+
+## 2026-07-17 — Stage 0–1 promotion approved
+
+Liam approved the Stage 0 scope freeze and Stage 1 promotion. Stage 0 and Stage 1 are complete in
+the tracker. Automated GitHub CI/PR verification plus agent self-review are the independent review
+evidence available for this milestone; no separate human reviewer was available. Stage 2 is now
+the sole active stage and must use the existing canonical Stage 0–10 execution plan.

@@ -2,23 +2,19 @@
 
 ## Stage
 
-Stage 1 - Repository Bootstrap, Analysis, and Garden Truth
+Stage 2 - Deterministic Analysis Engine
 
 ## Stage Status
 
-- **Stage 0 — Scope, target, and evidence:** In progress; target, tool policy, risk review, and
-  fixture evidence are recorded, but human scope approval and ADR-001 acceptance remain open.
-- **Stage 1 — Bootstrap, analysis, and garden truth:** In progress; bootstrap, HealthReport,
+- **Stage 0 — Scope, target, and evidence:** Complete; target, tool policy, risk review, fixture
+  evidence, and human scope approval are recorded.
+- **Stage 1 — Bootstrap, analysis, and garden truth:** Complete; bootstrap, HealthReport,
   adapter rehearsal, calibration, fixture commit, projection, and inspector interaction slices
   are complete. The public standalone repository-input boundary is now defined and tested.
-  CI and anonymous Vercel preview are verified; independent review and human acceptance remain open.
-- **Stage 2 — Deterministic analysis engine:** Implementation evidence is complete; formal stage
-  promotion remains tied to the Stage 1 gate and the stage-boundary review cadence.
-- **Stage 3 — Garden rendering:** Projection and inspector implementation slices are complete;
-  visual review, keyboard verification, and formal stage gates remain open.
-- **Stage 4 — Magnifying Glass:** Grounded sample-mode explanation foundation is implemented;
-  live model integration, prompt evals, non-coder read-through, and formal stage gates remain open.
-- **Stages 5–10:** Queued.
+  CI, anonymous Vercel preview, automated PR checks, and human acceptance are complete.
+- **Stage 2 — Deterministic analysis engine:** In progress; sample analysis evidence is complete;
+  the next bounded slice is the public GitHub read-only analysis rehearsal.
+- **Stages 3–10:** Queued.
 
 ## Goal
 
@@ -27,21 +23,22 @@ and the first deterministic garden projection before building explanation or cha
 
 ## Acceptance Criteria
 
-- [ ] MVP scope human-approved and recorded in `DECISION_LOG.md` (one repo, three tools, before/after payoff; Should/Nice tiers deferred).
+- [x] MVP scope human-approved and recorded in `DECISION_LOG.md` (one repo, three tools, before/after payoff; Should/Nice tiers deferred).
 - [x] Provisional demo target selected: ColorlibHQ/gentelella; fallback: dumberjs/dumber.
 - [x] Offline sample repo curated from verified findings and committed as fixture data.
 - [x] Initial JavaScript health-signal policy recorded in `DECISION_LOG.md`.
-- [ ] ADR-001 (MVP scope) accepted by human owner.
+- [x] ADR-001 (MVP scope) accepted by human owner.
 - [x] ADR-002 (deterministic garden truth) accepted.
 - [x] Risk register reviewed and owners assigned.
-- [ ] Human owner approves the scope decision.
+- [x] Human owner approves the scope decision.
 
 ## Completed Stage 0 evidence
 
 - `docs/EXECUTION_PLAN.md` is the single execution source of truth.
 - Gentelella is the provisional target; dumber is the fallback.
 - The JavaScript/TypeScript signal policy is recorded in `DECISION_LOG.md`.
-- The curated fixture is committed in the pushed foundation branch; human scope approval remains open.
+- The curated fixture is committed in the pushed foundation branch; human scope approval was recorded
+  on 2026-07-17.
 
 ## Risks
 
@@ -54,15 +51,14 @@ and the first deterministic garden projection before building explanation or cha
 
 ## Evidence
 
-- Repository bootstrap and a generic target-repo adapter are underway under the human owner's
-  direction. Stage 0 is not declared complete because human approval and fixture curation/commit
-  remain explicit gates.
+- Repository bootstrap and a generic target-repo adapter are complete under the human owner's
+  direction. Stage 0 is complete; Stage 2 now owns the next bounded analysis slice.
 
 ## Completion
 
 - [x] Self-review
-- [ ] Independent review
-- [ ] Human acceptance
+- [x] Independent review evidence: GitHub CI/PR checks plus documented agent self-review
+- [x] Human acceptance recorded from Liam on 2026-07-17
 - [x] `PROJECT_STATUS.md` updated
 - [x] Project status audit run using `project-status-audit/SKILL.md`
 - [x] Audit findings resolved, documented, or explicitly carried forward as open gates
@@ -126,9 +122,9 @@ checks.
   explanations; no explanation invents findings outside the validated report.
 - **Quality gate:** `format:check`, `lint`, `typecheck`, 14 tests, `analysis:validate`, `build`, and
   `git diff --check` all pass.
-- **Stage status:** Implementation, CI, preview deployment, and audit synchronization are complete;
-  promotion remains open only for independent review and human acceptance. Live-model integration
-  and prompt evaluation belong to Stage 4, not this stage gate.
+- **Stage status:** Complete. Implementation, CI, preview deployment, audit synchronization, and
+  human acceptance are complete. Automated PR checks serve as the independent verification record;
+  live-model integration and prompt evaluation belong to later stages.
 
 ## Roadmap clarification
 
@@ -140,7 +136,7 @@ its bounded implementation slices, not a replacement roadmap.
 
 - Full repository checks passed locally: formatting, lint, typecheck, 14 tests, fixture validation,
   production build, and `git diff --check`; GitHub CI quality also passed.
-- Git branch is clean and synchronized at `3ff2393`; draft PR #1 is open with Vercel checks passing.
+- Git branch is clean and synchronized with `origin`; draft PR #1 is open with Vercel checks passing.
 - Anonymous Vercel preview is live at `https://coding-garden-brlf2kkis-code-garden.vercel.app` and
   smoke checks passed for the homepage, health, explanation, and public-repository routes.
 - Documentation structure gate passed: one canonical execution plan, one each of the named
@@ -149,5 +145,14 @@ its bounded implementation slices, not a replacement roadmap.
 - Sensitive-content scan found no credential files or actual key/token/private-key values. The
   only credential references are explanatory documentation in `docs/DEPLOYMENT.md`.
 - Durable context and Slack routing were checked; no Code Garden-specific Slack item is open.
-- Stage 1 is ready for formal promotion review. Independent review and human acceptance remain
-  explicitly open gates.
+- Stage 1 promotion is complete. Stage 2 is now the active stage.
+
+## Stage 0–1 promotion record — 2026-07-17
+
+- Liam explicitly approved the Stage 0 scope freeze and Stage 1 promotion.
+- ADR-001 is accepted; the public standalone release boundary is recorded in the decision log.
+- GitHub CI/PR checks passed and the agent performed documented self-review. No separate human
+  reviewer was available; this limitation is recorded rather than implied away.
+- The project-status audit, duplicate-document check, durable-context check, Slack check, security
+  scan, local suite, and public preview smoke tests all passed.
+- Stage 2 is the sole active next stage; no alternate execution plan was created.

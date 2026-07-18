@@ -1,6 +1,6 @@
 # ADR-001: MVP Scope — One Repo, Three Tools, One Payoff
 
-Status: Accepted (pending Stage 0 human sign-off)
+Status: Accepted
 
 ## Context
 
