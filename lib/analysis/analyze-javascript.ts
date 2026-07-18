@@ -5,7 +5,11 @@ import {
   repositoryDescriptorSchema,
   type RepositoryDescriptor,
 } from "./repository";
-import { healthReportSchema, type HealthReport } from "./schema";
+import {
+  healthReportSchema,
+  type HealthReport,
+  type AnalysisScope,
+} from "./schema";
 
 const SOURCE_EXTENSIONS = new Set([
   ".js",
@@ -151,21 +155,33 @@ function isEntryPoint(file: string, records: FileRecord[]): boolean {
 export async function analyzeJavaScriptRepository(
   root: string,
   descriptor: RepositoryDescriptor,
+  scopeOverride?: Omit<AnalysisScope, "analyzedFiles">,
 ): Promise<HealthReport> {
   const repository = repositoryDescriptorSchema.parse(descriptor);
   const records = await collectFiles(root);
   const files = new Set(records.map(({ relativePath }) => relativePath));
+  const scope: AnalysisScope = {
+    kind: scopeOverride?.kind ?? "complete",
+    supportedFiles: scopeOverride?.supportedFiles ?? records.length,
+    analyzedFiles: records.length,
+    omittedFiles: scopeOverride?.omittedFiles ?? 0,
+  };
   const incoming = new Map(
     records.map(({ relativePath }) => [relativePath, 0]),
   );
   const edges: Array<{ from: string; to: string }> = [];
+  const edgeKeys = new Set<string>();
 
   for (const record of records) {
     for (const match of record.source.matchAll(IMPORT_RE)) {
       const resolved = resolveImport(record.relativePath, match[2], files);
       if (!resolved) continue;
       incoming.set(resolved, (incoming.get(resolved) ?? 0) + 1);
-      edges.push({ from: record.relativePath, to: resolved });
+      const edgeKey = `${record.relativePath}\0${resolved}`;
+      if (!edgeKeys.has(edgeKey)) {
+        edgeKeys.add(edgeKey);
+        edges.push({ from: record.relativePath, to: resolved });
+      }
     }
   }
 
@@ -234,7 +250,7 @@ export async function analyzeJavaScriptRepository(
 
   return healthReportSchema.parse({
     reportHash: createHash("sha256")
-      .update(JSON.stringify({ repository, nodes, findings, edges }))
+      .update(JSON.stringify({ repository, scope, nodes, findings, edges }))
       .digest("hex")
       .slice(0, 16),
     repo: {
@@ -242,6 +258,7 @@ export async function analyzeJavaScriptRepository(
       ref: repository.ref,
       commit: repository.ref,
     },
+    scope,
     method: {
       deadCode: "estimated",
       coverage: "estimated",

@@ -12,7 +12,12 @@ const report = JSON.parse(
 if (
   !report.reportHash ||
   !Array.isArray(report.nodes) ||
-  !Array.isArray(report.findings)
+  !Array.isArray(report.findings) ||
+  !report.scope ||
+  !["complete", "bounded"].includes(report.scope.kind) ||
+  !Number.isInteger(report.scope.supportedFiles) ||
+  !Number.isInteger(report.scope.analyzedFiles) ||
+  !Number.isInteger(report.scope.omittedFiles)
 )
   throw new Error("offline analysis fixture is missing required report fields");
 console.log(`analysis fixture structure valid (${required.length} files)`);

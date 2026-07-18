@@ -40,6 +40,12 @@ describe("bounded public GitHub analysis", () => {
       ref: "abc123",
       commit: "abc123",
     });
+    expect(report.scope).toEqual({
+      kind: "complete",
+      supportedFiles: 2,
+      analyzedFiles: 2,
+      omittedFiles: 0,
+    });
     expect(report.nodes).toEqual([
       { id: "src/main.js", path: "src/main.js", health: "stressed" },
     ]);
@@ -63,6 +69,75 @@ describe("bounded public GitHub analysis", () => {
       maxFiles: 120,
       maxFileBytes: 256_000,
       maxTotalBytes: 2_000_000,
+      fetchTimeoutMs: 10_000,
     });
+  });
+
+  it("sorts candidates and reports omitted files when the file cap applies", async () => {
+    const paths = [
+      "z-last.js",
+      "a-first.js",
+      ...Array.from(
+        { length: 119 },
+        (_, index) => `middle-${String(index).padStart(3, "0")}.js`,
+      ),
+      "omitted.js",
+    ];
+    const fetchedPaths: string[] = [];
+    const fetcher = vi.fn(async (input: string) => {
+      if (input.includes("/git/trees/"))
+        return response({
+          sha: "abc123",
+          truncated: false,
+          tree: paths.map((filePath) => ({
+            path: filePath,
+            type: "blob",
+            size: 40,
+          })),
+        });
+      if (input.endsWith("/repos/acme/garden"))
+        return response({ default_branch: "main" });
+      fetchedPaths.push(decodeURIComponent(input.split("/").pop() ?? ""));
+      return response("export const value = true;");
+    });
+
+    const report = await analyzePublicGitHubRepository(
+      "https://github.com/acme/garden",
+      fetcher,
+    );
+
+    expect(report.scope).toEqual({
+      kind: "bounded",
+      supportedFiles: 122,
+      analyzedFiles: 120,
+      omittedFiles: 2,
+    });
+    expect(fetchedPaths[0]).toBe("a-first.js");
+    expect(fetchedPaths).not.toContain("omitted.js");
+  });
+
+  it("turns an aborted fetch into a bounded timeout error", async () => {
+    vi.useFakeTimers();
+    try {
+      const fetcher = vi.fn(
+        async (_input: string, init?: RequestInit) =>
+          new Promise<never>((_, reject) => {
+            init?.signal?.addEventListener("abort", () =>
+              reject(new Error("aborted")),
+            );
+          }),
+      );
+      const pending = analyzePublicGitHubRepository(
+        "https://github.com/acme/garden",
+        fetcher,
+      );
+      const assertion = expect(pending).rejects.toThrow(
+        "GitHub request timed out",
+      );
+      await vi.advanceTimersByTimeAsync(10_000);
+      await assertion;
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

@@ -185,3 +185,17 @@ was not executed. Keyboard traversal, mobile rendering, wide-shot legibility, re
 local checks, hosted UI smoke, documentation structure, durable-context, Slack, and sensitive-content
 checks passed. Stage 4 is now the active stage; the existing deterministic explanation fallback stays
 the no-key path while live GPT-5.6 narration awaits `OPENAI_API_KEY` and prompt acceptance.
+## 2026-07-17 — Public analysis safeguards and bounded-report disclosure
+
+The standalone login-free release keeps the existing 120-file, 256 KB per-file, and 2 MB total
+limits. Public analysis requests now use strict URL validation, a best-effort in-memory limit of five
+uncached analyses per client IP per ten minutes, five-minute report caching keyed by normalized
+repository URL plus resolved commit, and ten-second timeouts for GitHub requests. This avoids adding
+an external service while limiting accidental and abusive load; Vercel instances may enforce the
+best-effort limit independently.
+
+The HealthReport contract now records whether analysis is complete or bounded and reports supported,
+analyzed, and omitted file counts. GitHub candidates are sorted before capping so the bounded slice is
+repeatable, and the UI explicitly discloses partial scope. Import relationships are unique by
+`from -> to` before they reach the garden renderer. These safeguards preserve deterministic analysis
+truth and make incompleteness visible rather than presenting a partial report as complete.

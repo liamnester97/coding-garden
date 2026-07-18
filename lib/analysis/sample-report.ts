@@ -3,6 +3,12 @@ import { healthReportSchema, type HealthReport } from "./schema";
 export const sampleHealthReport: HealthReport = healthReportSchema.parse({
   reportHash: "sample-v1",
   repo: { name: "sample-garden", ref: "main", commit: "offline-sample" },
+  scope: {
+    kind: "complete",
+    supportedFiles: 3,
+    analyzedFiles: 3,
+    omittedFiles: 0,
+  },
   method: {
     deadCode: "estimated",
     coverage: "estimated",

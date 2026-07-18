@@ -72,7 +72,10 @@ describe("HealthReport garden projection", () => {
           health: "stressed" as const,
         },
       ],
-      edges: [{ from: "src/v4/inbox.js", to: "src/v4/toast.js" }],
+      edges: [
+        { from: "src/v4/inbox.js", to: "src/v4/toast.js" },
+        { from: "src/v4/inbox.js", to: "src/v4/toast.js" },
+      ],
       findings: [
         {
           id: "coverage-inbox",

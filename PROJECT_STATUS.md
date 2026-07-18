@@ -13,7 +13,7 @@ Updated: 2026-07-17, America/Denver
 
 - Last completed milestone: Stage 0–1 promotion completed with a public Vercel preview, deterministic
   sample analysis, garden projection, inspector, explanation foundation, and public GitHub URL boundary.
-- Passing checks: format:check, lint, typecheck, 18 tests, analysis:validate, build, local and hosted
+- Passing checks: format:check, lint, typecheck, 25 tests, analysis:validate, build, local and hosted
   browser smoke checks.
 - Failing checks: none.
 - Preview URL: https://coding-garden-lfpeu333p-code-garden.vercel.app
@@ -62,6 +62,11 @@ Updated: 2026-07-17, America/Denver
 - The Stage 3 closeout now carries validated import edges into `GardenScene` and renders a truthful
   SVG map. Hosted Gentelella UI smoke testing rendered 31 plants, 41 roots, 63 findings, and the
   selected-node inspector at mobile and wide viewports with no page errors.
+- Review fixes now validate analysis requests without coercion, apply best-effort per-IP throttling,
+  five-minute in-memory report caching, ten-second GitHub request timeouts, deterministic file
+  selection, and explicit complete/bounded report scope metadata. Public reports disclose omitted
+  files, mode labels no longer claim sample mode after live analysis, and repeated import edges are
+  deduplicated before rendering.
 
 ## Risks Changed
 

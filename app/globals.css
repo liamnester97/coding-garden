@@ -131,6 +131,14 @@ main {
   color: #91a88d !important;
   font-size: 0.78rem;
 }
+.scope-notice {
+  margin: 0.75rem 0 0 !important;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #8f6f3d;
+  border-radius: 0.65rem;
+  color: #f5d995 !important;
+  font-size: 0.82rem;
+}
 .garden-stage {
   position: relative;
   min-height: 360px;

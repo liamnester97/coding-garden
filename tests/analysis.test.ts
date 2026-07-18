@@ -135,4 +135,34 @@ describe("sample HealthReport", () => {
       await rm(root, { recursive: true, force: true });
     }
   });
+
+  it("deduplicates repeated relative imports in the report graph", async () => {
+    const root = await mkdtemp(path.join(tmpdir(), "code-garden-edges-"));
+    try {
+      await import("node:fs/promises").then(({ mkdir }) =>
+        mkdir(path.join(root, "src"), { recursive: true }),
+      );
+      await writeFile(
+        path.join(root, "src/main.js"),
+        'import "./dep.js"; import "./dep.js";',
+      );
+      await writeFile(
+        path.join(root, "src/dep.js"),
+        "export const dep = true;",
+      );
+
+      const report = await analyzeJavaScriptRepository(root, {
+        id: "duplicate-edges",
+        name: "duplicate-edges",
+        source: "local",
+        location: root,
+        language: "javascript",
+        ref: "fixture",
+      });
+
+      expect(report.edges).toEqual([{ from: "src/main.js", to: "src/dep.js" }]);
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
+  });
 });

@@ -1,9 +1,15 @@
 {
-  "reportHash": "73099114f7f9f15a",
+  "reportHash": "333a6ff5d48a7f5f",
   "repo": {
     "name": "repository",
     "ref": "working-tree",
     "commit": "working-tree"
+  },
+  "scope": {
+    "kind": "complete",
+    "supportedFiles": 4,
+    "analyzedFiles": 4,
+    "omittedFiles": 0
   },
   "method": {
     "deadCode": "estimated",

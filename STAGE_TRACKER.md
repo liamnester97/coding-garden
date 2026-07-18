@@ -168,6 +168,19 @@ checks.
 - [x] Project-status audit, documentation structure gate, durable-context check, Slack routing check,
       and sensitive-content scan completed; no P1 documentation or security findings remain.
 
+## Stage 4 review-fix slice — 2026-07-17
+
+- [x] Public analysis requests use strict URL validation, five requests per client IP per ten-minute
+      window, bounded limiter memory, five-minute in-memory report caching, and ten-second GitHub
+      request timeouts.
+- [x] GitHub candidates are sorted before the 120-file cap; `HealthReport.scope` records complete or
+      bounded coverage with supported, analyzed, and omitted file counts.
+- [x] The UI discloses bounded reports and correctly labels sample versus public-report mode.
+- [x] Repeated relative imports are deduplicated in analysis and defensively in `GardenScene`.
+- [x] Regression coverage expanded to 25 tests, including route guards/cache expiry, timeout handling,
+      deterministic bounded selection, report scope, and duplicate-edge behavior.
+- [x] Deployment, risk, status, tracker, and decision records document the new safeguards.
+
 ## Stage 2 completion record — 2026-07-17
 
 - [x] Deterministic sample report remains schema-validated and stable.

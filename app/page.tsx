@@ -19,6 +19,7 @@ export default function HomePage() {
   const scene = projectHealthReport(report);
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
+  const modeLabel = source === "sample" ? "sample mode" : "public report";
   const explanation = selectedPlant
     ? explainNode(report, selectedPlant.id, source)
     : null;
@@ -59,7 +60,7 @@ export default function HomePage() {
   return (
     <main>
       <section className="garden" aria-labelledby="title">
-        <span className="eyebrow">Code Garden · sample mode</span>
+        <span className="eyebrow">Code Garden · {modeLabel}</span>
         <h1 id="title">A living view of your codebase.</h1>
         <p>
           Every plant is a module. Its condition comes from the validated health
@@ -121,6 +122,13 @@ export default function HomePage() {
           {report.method.coverage}, complexity {report.method.complexity},
           vulnerabilities {report.method.vulnerabilities}.
         </p>
+        {report.scope.kind === "bounded" ? (
+          <p className="scope-notice" role="status">
+            Bounded analysis: {report.scope.analyzedFiles} of{" "}
+            {report.scope.supportedFiles} supported files analyzed;{" "}
+            {report.scope.omittedFiles} omitted by the intake limits.
+          </p>
+        ) : null}
         <div className="garden-stage" aria-label="Code garden map">
           <svg
             viewBox="0 0 100 100"
@@ -128,9 +136,9 @@ export default function HomePage() {
             aria-label={`${scene.repoName} module map with ${scene.plants.length} plants and ${scene.roots.length} roots`}
           >
             <g className="roots" aria-hidden="true">
-              {scene.roots.map((root) => (
+              {scene.roots.map((root, index) => (
                 <line
-                  key={`${root.from}-${root.to}`}
+                  key={`${root.from}\0${root.to}\0${index}`}
                   x1={root.x1}
                   y1={root.y1}
                   x2={root.x2}
@@ -192,7 +200,7 @@ export default function HomePage() {
                 className="explanation"
                 aria-label="Magnifying Glass explanation"
               >
-                <span className="eyebrow">Magnifying Glass · sample mode</span>
+                <span className="eyebrow">Magnifying Glass · {modeLabel}</span>
                 <p>{explanation.summary}</p>
                 <p>{explanation.health}</p>
                 <p>{explanation.needs}</p>

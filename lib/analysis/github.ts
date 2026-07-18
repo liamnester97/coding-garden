@@ -13,6 +13,7 @@ const RAW_ROOT = "https://raw.githubusercontent.com";
 const MAX_FILES = 120;
 const MAX_FILE_BYTES = 256_000;
 const MAX_TOTAL_BYTES = 2_000_000;
+const FETCH_TIMEOUT_MS = 10_000;
 const TEXT_EXTENSIONS = new Set([
   ".cjs",
   ".html",
@@ -57,6 +58,24 @@ async function readJson<T>(
   return (await response.json()) as T;
 }
 
+async function fetchWithTimeout(
+  fetcher: GitHubFetcher,
+  input: string,
+  init: RequestInit,
+): Promise<GitHubResponse> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    return await fetcher(input, { ...init, signal: controller.signal });
+  } catch (error) {
+    if (controller.signal.aborted)
+      throw new Error("GitHub request timed out", { cause: error });
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 function supportedPath(filePath: string): boolean {
   return TEXT_EXTENSIONS.has(path.posix.extname(filePath).toLowerCase());
 }
@@ -81,7 +100,8 @@ export async function analyzePublicGitHubRepository(
 
   const [owner, repo] = descriptor.id.split("/");
   const info = await readJson<RepositoryInfo>(
-    await fetcher(
+    await fetchWithTimeout(
+      fetcher,
       `${API_ROOT}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`,
       { headers: headers() },
     ),
@@ -92,7 +112,8 @@ export async function analyzePublicGitHubRepository(
   if (!branch) throw new Error("GitHub did not provide a default branch");
 
   const tree = await readJson<RepositoryTree>(
-    await fetcher(
+    await fetchWithTimeout(
+      fetcher,
       `${API_ROOT}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/git/trees/${encodeURIComponent(branch)}?recursive=1`,
       { headers: headers() },
     ),
@@ -103,7 +124,7 @@ export async function analyzePublicGitHubRepository(
   if (!sha || tree.truncated === true)
     throw new Error("GitHub repository is too large for the bounded analysis");
 
-  const files = entries
+  const candidateFiles = entries
     .filter((entry) => entry.type === "blob")
     .map((entry) => ({
       path:
@@ -114,11 +135,14 @@ export async function analyzePublicGitHubRepository(
       (entry): entry is { path: string; size: unknown } =>
         typeof entry.path === "string",
     )
-    .filter((entry) => supportedPath(entry.path))
+    .filter((entry) => supportedPath(entry.path));
+  const supportedFiles = candidateFiles
     .filter(
       (entry) => typeof entry.size !== "number" || entry.size <= MAX_FILE_BYTES,
     )
-    .slice(0, MAX_FILES);
+    .sort((a, b) => a.path.localeCompare(b.path));
+  const files = supportedFiles.slice(0, MAX_FILES);
+  const omittedFiles = candidateFiles.length - files.length;
   if (files.length === 0)
     throw new Error("No supported JavaScript or text files were found");
 
@@ -132,7 +156,8 @@ export async function analyzePublicGitHubRepository(
         await mkdir(path.join(root, directory), { recursive: true });
     }
     for (const file of files) {
-      const response = await fetcher(
+      const response = await fetchWithTimeout(
+        fetcher,
         `${RAW_ROOT}/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${encodeURIComponent(sha)}/${file.path.split("/").map(encodeURIComponent).join("/")}`,
         { headers: { "User-Agent": "code-garden-read-only-analyzer" } },
       );
@@ -155,7 +180,11 @@ export async function analyzePublicGitHubRepository(
       ref: sha,
       language: "javascript",
     };
-    const report = await analyzeJavaScriptRepository(root, repository);
+    const report = await analyzeJavaScriptRepository(root, repository, {
+      kind: omittedFiles > 0 ? "bounded" : "complete",
+      supportedFiles: candidateFiles.length,
+      omittedFiles,
+    });
     return report;
   } finally {
     await rm(root, { recursive: true, force: true });
@@ -166,4 +195,5 @@ export const githubAnalysisLimits = {
   maxFiles: MAX_FILES,
   maxFileBytes: MAX_FILE_BYTES,
   maxTotalBytes: MAX_TOTAL_BYTES,
+  fetchTimeoutMs: FETCH_TIMEOUT_MS,
 };

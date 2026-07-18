@@ -56,22 +56,31 @@ export function projectHealthReport(report: HealthReport): GardenScene {
   return {
     repoName: report.repo.name,
     reportHash: report.reportHash,
-    roots: report.edges.flatMap((edge) => {
-      const from = positions.get(edge.from);
-      const to = positions.get(edge.to);
-      return from && to
-        ? [
-            {
-              from: edge.from,
-              to: edge.to,
-              x1: from.x,
-              y1: from.y,
-              x2: to.x,
-              y2: to.y,
-            },
-          ]
-        : [];
-    }),
+    roots: report.edges
+      .filter((edge, index, edges) => {
+        const key = `${edge.from}\0${edge.to}`;
+        return (
+          edges.findIndex(
+            (candidate) => `${candidate.from}\0${candidate.to}` === key,
+          ) === index
+        );
+      })
+      .flatMap((edge) => {
+        const from = positions.get(edge.from);
+        const to = positions.get(edge.to);
+        return from && to
+          ? [
+              {
+                from: edge.from,
+                to: edge.to,
+                x1: from.x,
+                y1: from.y,
+                x2: to.x,
+                y2: to.y,
+              },
+            ]
+          : [];
+      }),
     plants: report.nodes.map((node) => {
       const findings = report.findings.filter(
         (finding) => finding.nodeId === node.id,

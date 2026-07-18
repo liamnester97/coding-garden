@@ -12,9 +12,17 @@ export const findingSchema = z.object({
   }),
 });
 
+export const analysisScopeSchema = z.object({
+  kind: z.enum(["complete", "bounded"]),
+  supportedFiles: z.number().int().nonnegative(),
+  analyzedFiles: z.number().int().nonnegative(),
+  omittedFiles: z.number().int().nonnegative(),
+});
+
 export const healthReportSchema = z.object({
   reportHash: z.string(),
   repo: z.object({ name: z.string(), ref: z.string(), commit: z.string() }),
+  scope: analysisScopeSchema,
   method: z.object({
     deadCode: z.enum(["measured", "estimated"]),
     coverage: z.enum(["measured", "estimated"]),
@@ -32,4 +40,5 @@ export const healthReportSchema = z.object({
   findings: z.array(findingSchema),
 });
 
+export type AnalysisScope = z.infer<typeof analysisScopeSchema>;
 export type HealthReport = z.infer<typeof healthReportSchema>;
