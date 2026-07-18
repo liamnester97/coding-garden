@@ -116,8 +116,9 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
   commit `c4515bd2682660d79d6d0e64160a57cd86482451`: 31 nodes, 63 findings, and a complete bounded
   scope of 96 supported/analyzed files with zero omissions.
 - [x] Stage 10 documentation readiness: root README now contains the project description and fresh-clone
-  setup flow; public-repository MIT license is committed as `LICENSE`; submission checklist reflects
-  the completed track, description, repository, and README evidence.
+  setup flow and Build Week submission narrative; public-repository MIT license is committed as
+  `LICENSE`; submission checklist reflects the completed track, description, repository, and README
+  evidence.
 
 ## Bundle Gate Protocol
 

@@ -41,8 +41,8 @@ Updated: 2026-07-18, America/Denver
 - Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
   the classroom payoff explains the learning loop and current rehearsal progress.
 - The app remains login-free and works without `OPENAI_API_KEY` through deterministic fallbacks.
-- The public repository now includes an MIT license and a README project/setup narrative; the remaining
-  submission artifacts are the video, human evidence, and Devpost form.
+- The public repository now includes an MIT license and a README project/setup/submission narrative;
+  the remaining submission artifacts are the video, human evidence, and Devpost form.
 - Hardening coverage now exercises expiry, proof replay, oversized challenge input, failed rehearsal,
   and health-preservation behavior.
 - Local and deployed production-mode route smoke passed: `/` 200, `/api/health` 200, and malformed

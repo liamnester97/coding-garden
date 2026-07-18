@@ -320,3 +320,6 @@ The public repository now carries an MIT license and a root README project narra
 setup, production-style commands, sample-mode behavior, and links to the human-test guide. The
 submission checklist marks the Education track, project description, repository link, and README as
 evidenced. Video, human acceptance, and Devpost submission remain open.
+
+The README now also contains the concise submission narrative: Education-track purpose, deterministic
+report-to-garden architecture, Codex/GPT-5.6 roles, and the honest sample-only rehearsal boundary.

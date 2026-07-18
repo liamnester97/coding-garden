@@ -18,6 +18,21 @@ not create branches or PRs. The app works without `OPENAI_API_KEY`, using determ
 as the release fallback. With a key, the optional server-side explanation route can provide grounded
 GPT-5.6 narration.
 
+## Build Week submission narrative
+
+Code Garden is an Education-track project for people who need to understand a codebase without first
+learning to read every file. The analyzer validates a bounded repository report, the garden projects
+that report into plants and roots, and the Magnifying Glass explains the evidence in plain English.
+Authored questions make understanding a prerequisite for the sample Clippers and Watering Can
+rehearsals; the report changes only after server-authoritative re-analysis.
+
+Codex was used to build and verify the analysis pipeline, learning gate, garden world, and release
+workflow. GPT-5.6 is an optional server-side narrator grounded in the current report; deterministic
+explanations keep the public release useful without a key. Public GitHub analysis is read-only, and
+the current anonymous demo deliberately labels tool actions as rehearsals rather than claiming real
+branches or pull requests. The production release is available at
+<https://coding-garden-iota.vercel.app>.
+
 ## If you want to know where we are
 
 Open [PROJECT_STATUS.md](PROJECT_STATUS.md) first. It is
