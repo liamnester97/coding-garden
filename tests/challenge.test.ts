@@ -30,6 +30,17 @@ describe("learning challenge gate", () => {
     ).toBe(JSON.stringify(question));
   });
 
+  it("uses short, age-flexible prompts for the easy learning step", () => {
+    const question = questionForFinding(
+      sampleHealthReport,
+      "dead-src-unused",
+      "easy",
+    );
+    expect(question?.prompt).toContain("How many warnings");
+    expect(question?.prompt).toContain("Type a number");
+    expect(question?.objective).not.toContain("module");
+  });
+
   it("requires the correct answer before issuing a proof", async () => {
     const start = await POST(
       request({

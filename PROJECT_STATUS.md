@@ -5,8 +5,8 @@ Updated: 2026-07-18, America/Denver
 ## Active Bundle and Goal
 
 - Bundle: 7 — World, Map, and Visual Language
-- Current goal: Complete Stage 11 Pixel Garden Foundation: original pixel-art asset pipeline, manifest,
-  deterministic sprite rendering, and final verification.
+- Current goal: Complete Stage 13 map-first movement and learning: directional facing, authored collisions,
+  in-map controls, and age-flexible challenge presentation.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
@@ -26,8 +26,8 @@ Updated: 2026-07-18, America/Denver
 - Bundle 4 — Playable Garden World: local world/controls implementation complete; human playtest open.
 - Bundle 5 — Progression and Classroom Value: seasons and voices implemented; final human review open.
 - Bundle 6 — Hardening and Release: technical slice complete; human/release acceptance remains open.
-- Bundle 7 — World, Map, and Visual Language: Stage 11 implementation in progress; final checks and
-  audit remain open.
+- Bundle 7 — World, Map, and Visual Language: Stage 12 implementation slice complete; Stage 13 movement/learning
+  slice in progress.
 - Bundle gate: open pending Stage 11 verification, later visual stages, human acceptance, and final
   submission artifacts.
 
@@ -42,8 +42,14 @@ Updated: 2026-07-18, America/Denver
   server validation, hints, retries, and confirmation gating.
 - The garden now includes a 2D world layer with a keyboard-operable gardener avatar and named tool
   stations; the map remains a deterministic projection of the report.
-- Stage 11 visual foundation is in progress: original cozy pixel-garden WebP atlases, a typed asset
-  manifest, HealthReport-driven plant sprite selection, and authored map decorations are integrated.
+- Stage 11 visual foundation is complete as an implementation slice: original cozy pixel-garden WebP
+  atlases, a typed asset manifest, HealthReport-driven plant sprite selection, and authored decorations
+  are integrated. Final visual/human gates remain open.
+- Stage 12 authored map is complete as an implementation slice: fixed zones and paths now give the pixel garden an
+  explicit entrance, learning greenhouse, code beds, root crossing, tool shed, and payoff area.
+- Stage 13 movement/learning is in progress: the map now owns movement/station controls and challenge overlays;
+  facing direction and authored solid areas are deterministic, while camera-follow and true proximity actions
+  remain open.
 - The existing production deployment remains the fallback while the authored visual world is developed;
   final release acceptance is intentionally not closed yet.
 - Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
@@ -76,8 +82,8 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Finish Stage 11 checks, visual browser verification, and project-status audit.
-2. Build Stage 12’s authored garden map on the Stage 11 sprite foundation.
+1. Finish Stage 13 camera/proximity behavior and run focused/full checks.
+2. Run the Stage 13 browser matrix and end-of-stage project-status audit.
 3. Re-run human legibility, accessibility, and release evidence after Bundles 7–8 are complete.
 
 ## Synchronization Rules
@@ -88,16 +94,16 @@ Updated: 2026-07-18, America/Denver
 - `DECISION_LOG.md` contains durable project decisions and milestone evidence.
 - No commit or push is implied by this status update.
 
-## Hibernation Checkpoint — 2026-07-18, 02:57 MDT
+## Resume Checkpoint — 2026-07-18
 
-- **Execution state:** paused overnight; no implementation work is in progress.
-- **State update:** superseded by the accepted Bundle 7 / Stage 11 visual-foundation work.
-- **Safe resume point:** Bundle 7 / Stage 11 verification and audit.
+- **Execution state:** active; Stage 13 map-first movement/learning implementation is in progress.
+- **State update:** Stage 12 implementation slice is complete; Stage 13 has directional movement, authored
+  collision rectangles, in-map controls, and an in-map learning overlay.
+- **Safe resume point:** Bundle 7 / Stage 13 camera, proximity, and end-of-stage verification.
 - **Verified release:** production `https://coding-garden-iota.vercel.app`, commit `bd77258`,
   deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`.
-- **Resume sequence:** read this file and `STAGE_TRACKER.md`; run the human-test guide against
-  production; record non-coder and two-person legibility evidence; then complete video/Devpost work
-  and run the final project-status audit.
+- **Resume sequence:** read this file and `STAGE_TRACKER.md`; finish Stage 13 camera/proximity behavior, run
+  the browser matrix, then complete the Stage 13 audit before beginning Stage 14.
 - **Scope guard:** do not begin a new bundle or claim Stage 9/10 complete until the open human and
   submission gates below have evidence.
 
@@ -107,3 +113,15 @@ Updated: 2026-07-18, America/Denver
   Vercel deployment, and Vercel Preview Comments), then was intentionally promoted to production on
   2026-07-18. Live smoke verified `/` 200, `/api/health` 200, keyless `POST /api/explain` 200, malformed
   repository/tending payloads 400, mobile sample mode, and zero page/console errors.
+
+## Stage 13 Verification Note — 2026-07-18
+
+- Map-first controls are implemented locally: seven in-map controls, three clickable map plants, and no external
+  `.world-controls` toolbar.
+- Desktop browser smoke returned HTTP 200, changed the gardener sprite from down-facing to right-facing after
+  movement, opened the Clippers learning question inside the map, and observed zero page/console errors.
+- Mobile browser smoke observed no horizontal overflow and zero page/console errors.
+- Full local checks passed at 60 tests: format, lint, typecheck, test, analysis validation, production build, and
+  diff check.
+- Documentation structure/security checks found exactly one roadmap and root tracker/status/decision set, with no
+  detected secrets. Stage 13 camera-follow, true proximity actions, formal audit, and human acceptance remain open.

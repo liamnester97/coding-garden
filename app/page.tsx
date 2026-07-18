@@ -13,8 +13,9 @@ import type {
 } from "@/lib/garden/challenges";
 import {
   gardenerStart,
-  moveGardener,
+  moveGardenerWithFacing,
   toolStations,
+  type Facing,
   type WorldPoint,
 } from "@/lib/garden/world";
 import {
@@ -22,6 +23,7 @@ import {
   spritePosition,
   type PixelSpriteId,
 } from "@/lib/garden/assets";
+import { authoredGardenMap } from "@/lib/garden/map";
 
 const stationSprites: Record<string, PixelSpriteId> = {
   magnify: "magnifying-glass",
@@ -82,12 +84,14 @@ export default function HomePage() {
   );
   const challengeAnswerRef = useRef<HTMLInputElement>(null);
   const [gardener, setGardener] = useState<WorldPoint>(gardenerStart);
+  const [gardenerFacing, setGardenerFacing] = useState<Facing>("down");
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
   const [seasonId, setSeasonId] = useState("early-spring");
   const seasons = sampleSeasons(sampleHealthReport);
   const currentSeason =
     seasons.find((season) => season.id === seasonId) ?? seasons[0];
   const scene = projectHealthReport(report);
+  const solids = authoredGardenMap.solids;
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
   const modeLabel = source === "sample" ? "sample mode" : "public report";
@@ -183,6 +187,17 @@ export default function HomePage() {
             )
           : undefined;
     setSelectedId(finding?.nodeId ?? report.nodes[0]?.id);
+  }
+
+  function movePlayer(direction: string) {
+    const next = moveGardenerWithFacing(
+      gardener,
+      gardenerFacing,
+      direction,
+      solids,
+    );
+    setGardener(next.point);
+    setGardenerFacing(next.facing);
   }
 
   async function startChallenge(
@@ -429,6 +444,23 @@ export default function HomePage() {
           </p>
         ) : null}
         <div className="garden-stage" aria-label="Code garden map">
+          <div className="garden-map-zones" aria-hidden="true">
+            {authoredGardenMap.zones.map((zone) => (
+              <span
+                className={`garden-map-zone ${zone.tone}`}
+                key={zone.id}
+                style={{
+                  left: `${zone.x}%`,
+                  top: `${zone.y}%`,
+                  width: `${zone.width}%`,
+                  height: `${zone.height}%`,
+                }}
+              >
+                <strong>{zone.label}</strong>
+                <small>{zone.description}</small>
+              </span>
+            ))}
+          </div>
           <div className="garden-ground" aria-hidden="true">
             <span
               className="pixel-sprite ground-grass"
@@ -462,7 +494,7 @@ export default function HomePage() {
             ))}
           </div>
           <svg
-            viewBox="0 0 100 100"
+            viewBox={authoredGardenMap.viewBox}
             role="img"
             aria-label={`${scene.repoName} module map with ${scene.plants.length} plants and ${scene.roots.length} roots`}
             tabIndex={0}
@@ -480,7 +512,7 @@ export default function HomePage() {
                 ].includes(event.key)
               ) {
                 event.preventDefault();
-                setGardener((current) => moveGardener(current, event.key));
+                movePlayer(event.key);
               }
             }}
           >
@@ -494,6 +526,13 @@ export default function HomePage() {
               ))}
             </g>
             <g className="roots" aria-hidden="true">
+              {authoredGardenMap.paths.map((path) => (
+                <polyline
+                  className="authored-map-path"
+                  key={path.id}
+                  points={path.points}
+                />
+              ))}
               {scene.roots.map((root, index) => (
                 <line
                   key={`${root.from}\0${root.to}\0${index}`}
@@ -533,72 +572,178 @@ export default function HomePage() {
             <span
               className="pixel-sprite gardener-sprite"
               style={spriteStyle(
-                "gardener-down",
+                `gardener-${gardenerFacing}` as PixelSpriteId,
                 gardener.x - 6,
                 gardener.y - 6,
                 "avatar",
               )}
             />
           </div>
-          <span className="garden-stage-note">
-            Move with arrow keys or WASD. Roots show analyzed relative imports;
-            select a plant below for full evidence.
-          </span>
-        </div>
-        <div
-          className="world-controls"
-          aria-label="Garden movement and tool stations"
-        >
-          <div className="movement-controls" aria-label="Move gardener">
-            <span>Move</span>
-            <button
-              type="button"
-              aria-label="Move up"
-              onClick={() =>
-                setGardener((current) => moveGardener(current, "ArrowUp"))
-              }
-            >
-              ↑
-            </button>
-            <button
-              type="button"
-              aria-label="Move left"
-              onClick={() =>
-                setGardener((current) => moveGardener(current, "ArrowLeft"))
-              }
-            >
-              ←
-            </button>
-            <button
-              type="button"
-              aria-label="Move down"
-              onClick={() =>
-                setGardener((current) => moveGardener(current, "ArrowDown"))
-              }
-            >
-              ↓
-            </button>
-            <button
-              type="button"
-              aria-label="Move right"
-              onClick={() =>
-                setGardener((current) => moveGardener(current, "ArrowRight"))
-              }
-            >
-              →
-            </button>
-          </div>
-          <div className="station-controls" aria-label="Visit tool station">
-            {toolStations.map((station) => (
+          <div className="map-hud" aria-label="Garden game controls">
+            <div className="map-hud-title">
+              <strong>Garden controls</strong>
+              <small>Walk, inspect, and learn here</small>
+            </div>
+            <div className="map-movement" aria-label="Move gardener">
               <button
-                key={station.id}
                 type="button"
-                onClick={() => focusStation(station.id)}
+                aria-label="Move up"
+                onClick={() => movePlayer("ArrowUp")}
               >
-                Visit {station.label}
+                ↑
+              </button>
+              <button
+                type="button"
+                aria-label="Move left"
+                onClick={() => movePlayer("ArrowLeft")}
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                aria-label="Move down"
+                onClick={() => movePlayer("ArrowDown")}
+              >
+                ↓
+              </button>
+              <button
+                type="button"
+                aria-label="Move right"
+                onClick={() => movePlayer("ArrowRight")}
+              >
+                →
+              </button>
+            </div>
+            <div className="map-stations" aria-label="Garden stations">
+              {toolStations.map((station) => (
+                <button
+                  key={station.id}
+                  type="button"
+                  onClick={() => focusStation(station.id)}
+                >
+                  {station.label}
+                </button>
+              ))}
+            </div>
+            <span className="map-hud-help">
+              Arrows/WASD move · blocked areas stay blocked
+            </span>
+          </div>
+          <div className="map-plants" aria-label="Plants in the garden">
+            {scene.plants.map((plant) => (
+              <button
+                key={plant.id}
+                type="button"
+                className={`map-plant-button ${plant.health} ${plant.id === selectedId ? "selected" : ""}`}
+                style={{ left: `${plant.x}%`, top: `${plant.y}%` }}
+                aria-label={`Inspect ${plant.path}`}
+                aria-pressed={plant.id === selectedId}
+                onClick={() => setSelectedId(plant.id)}
+              >
+                <span
+                  className="pixel-sprite map-plant-sprite"
+                  style={spriteStyle(plant.sprite, 50, 50, "plant")}
+                />
               </button>
             ))}
           </div>
+          {pendingFinding &&
+          source === "sample" &&
+          visibleExplanation &&
+          challenge ? (
+            <div
+              className="map-challenge-overlay"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="map-confirm-title"
+              aria-describedby="map-confirm-description"
+              onKeyDown={(event) => {
+                if (event.key === "Escape") {
+                  event.preventDefault();
+                  setPendingFinding(null);
+                  setChallenge(null);
+                  setChallengeFeedback(null);
+                }
+              }}
+            >
+              <span className="eyebrow">
+                Learning greenhouse · {challenge.question.difficulty}
+              </span>
+              <h2 id="map-confirm-title">Answer to tend this plant</h2>
+              <p id="map-confirm-description">{visibleExplanation.summary}</p>
+              <div className="challenge-card" aria-live="polite">
+                <strong>{challenge.question.objective}</strong>
+                <label htmlFor="map-challenge-difficulty">Level</label>
+                <select
+                  id="map-challenge-difficulty"
+                  value={challengeDifficulty}
+                  disabled={Boolean(challenge.proof)}
+                  onChange={(event) => {
+                    const nextDifficulty = event.target
+                      .value as ChallengeDifficulty;
+                    setChallengeDifficulty(nextDifficulty);
+                    void startChallenge(pendingFinding, nextDifficulty);
+                  }}
+                >
+                  <option value="easy">Easy · spot it</option>
+                  <option value="medium">Medium · connect it</option>
+                  <option value="hard">Hard · explain it</option>
+                </select>
+                <label htmlFor="map-challenge-answer">
+                  {challenge.question.prompt}
+                </label>
+                <input
+                  id="map-challenge-answer"
+                  ref={challengeAnswerRef}
+                  value={challengeAnswer}
+                  onChange={(event) => setChallengeAnswer(event.target.value)}
+                  disabled={Boolean(challenge.proof)}
+                  aria-describedby="map-challenge-hint map-challenge-feedback"
+                />
+                <small id="map-challenge-hint">
+                  Hint: {challenge.question.hint}
+                </small>
+                {challengeFeedback ? (
+                  <p id="map-challenge-feedback" role="status">
+                    {challengeFeedback}
+                  </p>
+                ) : null}
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={submitChallenge}
+                  disabled={Boolean(challenge.proof) || !challengeAnswer.trim()}
+                >
+                  Check answer
+                </button>
+              </div>
+              <div className="confirmation-actions">
+                <button
+                  type="button"
+                  className="tool-button"
+                  disabled={!challenge.proof}
+                  onClick={() => void tendFinding(pendingFinding)}
+                >
+                  Confirm and tend
+                </button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => {
+                    setPendingFinding(null);
+                    setChallenge(null);
+                    setChallengeFeedback(null);
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          ) : null}
+          <span className="garden-stage-note">
+            Roots show analyzed relative imports. Buildings, ponds, trees, and
+            beds are solid.
+          </span>
         </div>
         <div className="plant-grid" aria-label="Code garden plants">
           {scene.plants.map((plant) => (
@@ -645,109 +790,6 @@ export default function HomePage() {
                     ))}
                   </ul>
                 ) : null}
-              </div>
-            ) : null}
-            {pendingFinding &&
-            source === "sample" &&
-            visibleExplanation &&
-            challenge ? (
-              <div
-                className="confirmation-card"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="confirm-title"
-                aria-describedby="confirm-description"
-                onKeyDown={(event) => {
-                  if (event.key === "Escape") {
-                    event.preventDefault();
-                    setPendingFinding(null);
-                    setChallenge(null);
-                    setChallengeFeedback(null);
-                  }
-                }}
-              >
-                <span className="eyebrow">Ready to tend</span>
-                <h3 id="confirm-title">Understand, then review the change</h3>
-                <p id="confirm-description">
-                  This rehearsal targets{" "}
-                  <strong>{pendingFinding.evidence.file}</strong>. The selected
-                  finding will be cleared only after the rehearsal reaches
-                  verification and re-analysis.
-                </p>
-                <div className="challenge-card" aria-live="polite">
-                  <span className="eyebrow">
-                    Learning gate · {challenge.question.difficulty}
-                  </span>
-                  <strong>{challenge.question.objective}</strong>
-                  <label htmlFor="challenge-difficulty">
-                    Choose a challenge level
-                  </label>
-                  <select
-                    id="challenge-difficulty"
-                    value={challengeDifficulty}
-                    disabled={Boolean(challenge.proof)}
-                    onChange={(event) => {
-                      const nextDifficulty = event.target
-                        .value as ChallengeDifficulty;
-                      setChallengeDifficulty(nextDifficulty);
-                      void startChallenge(pendingFinding, nextDifficulty);
-                    }}
-                  >
-                    <option value="easy">Easy · recognize</option>
-                    <option value="medium">Medium · connect evidence</option>
-                    <option value="hard">Hard · reason about action</option>
-                  </select>
-                  <label htmlFor="challenge-answer">
-                    {challenge.question.prompt}
-                  </label>
-                  <input
-                    id="challenge-answer"
-                    ref={challengeAnswerRef}
-                    value={challengeAnswer}
-                    onChange={(event) => setChallengeAnswer(event.target.value)}
-                    disabled={Boolean(challenge.proof)}
-                    aria-describedby="challenge-hint challenge-feedback"
-                  />
-                  <small id="challenge-hint">
-                    Hint: {challenge.question.hint}
-                  </small>
-                  {challengeFeedback ? (
-                    <p id="challenge-feedback" role="status">
-                      {challengeFeedback}
-                    </p>
-                  ) : null}
-                  <button
-                    type="button"
-                    className="secondary-button"
-                    onClick={submitChallenge}
-                    disabled={
-                      Boolean(challenge.proof) || !challengeAnswer.trim()
-                    }
-                  >
-                    Check answer
-                  </button>
-                </div>
-                <div className="confirmation-actions">
-                  <button
-                    type="button"
-                    className="tool-button"
-                    disabled={!challenge.proof}
-                    onClick={() => void tendFinding(pendingFinding)}
-                  >
-                    Confirm and rehearse
-                  </button>
-                  <button
-                    type="button"
-                    className="secondary-button"
-                    onClick={() => {
-                      setPendingFinding(null);
-                      setChallenge(null);
-                      setChallengeFeedback(null);
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
               </div>
             ) : null}
             {source === "report" && selectedPlant.findings.length ? (

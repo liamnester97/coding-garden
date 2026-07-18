@@ -486,7 +486,8 @@ No claim without artifact: check output pasted, Playwright report linked, PR URL
 
 # 9. Stage-by-Stage Execution Roadmap
 
-Operating rules: stages are strictly ordered through Stage 7; a stage is not begun until the prior stage's gates pass; every stage leaves the product demoable; stretch stages (8) are optional and individually gated.
+Operating rules: stages are strictly ordered; a stage is not promoted until the prior stage's required gates pass;
+every stage leaves the product demoable; later visual and classroom stages are individually gated.
 
 ### Stage 0 — Discovery, Scope Freeze, Demo Repo Selection
 
@@ -556,7 +557,8 @@ placeholder quality; copy pass on all explanations; classroom comparison panel (
 
 ### Stage 8 — Stretch Features (individually gated, any order, time-permitting)
 
-8a Seasons scrubbing (3–4 snapshots) · 8b Plant voices/personality (text) · 8c AI-painted backdrop · 8d Pesticide Spray. Each: bounded slice, own STAGE_TRACKER.md cycle, must not destabilize the demo path (E2E stays green).
+8a Seasons scrubbing (3–4 snapshots) · 8b Plant voices/personality (text) · 8c AI-painted backdrop · 8d Pesticide Spray. Each:
+bounded slice recorded in the existing `STAGE_TRACKER.md`, and must not destabilize the demo path (E2E stays green).
 
 ### Stage 9 — Hardening
 
@@ -593,7 +595,15 @@ same placement; decorative art never invents findings.
 
 **Goal:** add a sprite-based gardener, collision boundaries, camera behavior, keyboard/touch movement, and
 proximity interactions for plants, stations, learning, and payoff areas.
-**Acceptance:** a first-time player can navigate the authored map on desktop and mobile with accessible equivalents.
+**Acceptance:** a first-time player can navigate the authored map on desktop and mobile with accessible equivalents;
+the avatar faces its travel direction, authored buildings/ponds/beds block movement, map controls are in the play
+surface, and learning questions open in the map.
+
+Implementation note (2026-07-18): the movement slice now uses authored solid areas, direction-aware gardener
+sprites, in-map keyboard/button controls, clickable map plants, and an in-map learning overlay. Challenge copy is
+shortened for a broad first-grade-through-high-school audience while preserving Easy/Medium/Hard server validation.
+Technical checks and desktop/mobile browser smoke pass locally; camera-follow and true proximity-triggered actions
+remain the next Stage 13 slice, and human acceptance remains open.
 
 ### Stage 14 — Exploration-to-Learning Golden Path
 
@@ -631,7 +641,7 @@ synchronized.
 
 ## 9.1 Execution Bundles
 
-The Stage 0–10 roadmap remains the canonical hierarchy. Execution bundles group related stages into
+The Stage 0–18 roadmap remains the canonical hierarchy. Execution bundles group related stages into
 four bounded goals so each Codex goal can be implemented, reviewed, audited, and accepted without
 creating a parallel roadmap.
 

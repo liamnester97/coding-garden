@@ -269,11 +269,48 @@ main {
   background: #234d30;
 }
 .garden-ground,
+.garden-map-zones,
 .garden-decorations,
-.garden-sprites {
+.garden-sprites,
+.map-plants {
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+.garden-map-zones {
+  z-index: 1;
+}
+.garden-map-zone {
+  position: absolute;
+  display: grid;
+  align-content: start;
+  gap: 0.15rem;
+  padding: 0.5rem;
+  border: 1px dashed rgb(231 244 218 / 0.28);
+  border-radius: 0.7rem;
+  color: rgb(237 245 233 / 0.82);
+  font-size: 0.68rem;
+  text-shadow: 0 1px 0 #0e1b14;
+}
+.garden-map-zone strong {
+  font-size: 0.72rem;
+}
+.garden-map-zone small {
+  max-width: 15rem;
+  color: rgb(199 213 191 / 0.76);
+  font-size: 0.62rem;
+}
+.garden-map-zone.learning {
+  background: rgb(117 153 79 / 0.28);
+}
+.garden-map-zone.beds {
+  background: rgb(102 74 44 / 0.25);
+}
+.garden-map-zone.tools {
+  background: rgb(73 96 119 / 0.25);
+}
+.garden-map-zone.payoff {
+  background: rgb(150 111 61 / 0.22);
 }
 .garden-ground {
   overflow: hidden;
@@ -330,6 +367,9 @@ main {
 .garden-sprites {
   z-index: 4;
 }
+.map-plants {
+  z-index: 6;
+}
 .plant-sprite,
 .station-sprite,
 .gardener-sprite {
@@ -369,6 +409,14 @@ main {
   stroke-linecap: round;
   opacity: 0.8;
 }
+.authored-map-path {
+  fill: none;
+  stroke: #d4ad6b;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.24;
+}
 .map-plants circle {
   display: none;
 }
@@ -388,45 +436,107 @@ main {
   color: #c7d5bf;
   font-size: 0.75rem;
 }
-.world-controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 0.8rem;
-  padding: 0.8rem;
-  border: 1px solid #39553d;
-  border-radius: 0.8rem;
-  background: #122019;
+.map-hud {
+  position: absolute;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  z-index: 8;
+  display: grid;
+  gap: 0.35rem;
+  width: min(19rem, calc(100% - 1.4rem));
+  padding: 0.55rem;
+  border: 1px solid #d4ad6b;
+  background: rgb(16 31 22 / 0.94);
+  box-shadow: 0 0.25rem 0 #0e1b14;
 }
-.movement-controls,
-.station-controls {
+.map-hud-title {
+  display: grid;
+  gap: 0.1rem;
+}
+.map-hud-title strong {
+  color: #f0f7eb;
+}
+.map-hud-title small,
+.map-hud-help {
+  color: #c7d5bf;
+  font-size: 0.7rem;
+}
+.map-movement,
+.map-stations {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
 }
-.movement-controls span {
-  width: 100%;
-  color: #a8c983;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-}
-.movement-controls button,
-.station-controls button {
+.map-movement button,
+.map-stations button {
   min-height: 2.2rem;
   border: 1px solid #527357;
-  border-radius: 0.5rem;
+  border-radius: 0;
   padding: 0.35rem 0.6rem;
   background: #182b20;
   color: #edf5e9;
   font: inherit;
   cursor: pointer;
 }
-.movement-controls button:focus-visible,
-.station-controls button:focus-visible {
+.map-movement button:focus-visible,
+.map-stations button:focus-visible,
+.map-plant-button:focus-visible {
   outline: 2px solid #f0bd62;
   outline-offset: 2px;
+}
+.map-stations button {
+  font-size: 0.72rem;
+}
+.map-plant-button {
+  position: absolute;
+  width: 2.7rem;
+  height: 2.7rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(16 31 22 / 0.18);
+  cursor: pointer;
+}
+.map-plant-button.selected {
+  border-color: #f0bd62;
+  box-shadow: 0 0 0 0.15rem rgb(240 189 98 / 0.3);
+}
+.map-plant-sprite {
+  pointer-events: none;
+}
+.map-challenge-overlay {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  z-index: 10;
+  width: min(25rem, calc(100% - 2rem));
+  max-height: calc(100% - 2rem);
+  overflow: auto;
+  padding: 0.9rem;
+  border: 2px solid #f0bd62;
+  background: #f4f7ed;
+  color: #263d2b;
+  box-shadow: 0.3rem 0.3rem 0 #0e1b14;
+}
+.map-challenge-overlay h2 {
+  margin: 0.25rem 0;
+  font-size: 1.35rem;
+}
+.map-challenge-overlay > p {
+  margin: 0.35rem 0;
+  color: #455944;
+  font-size: 0.83rem;
+}
+.map-challenge-overlay .eyebrow {
+  color: #507344;
+}
+.map-challenge-overlay .challenge-card {
+  margin: 0.65rem 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 .plant-grid {
   display: grid;

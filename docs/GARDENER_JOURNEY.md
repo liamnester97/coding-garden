@@ -51,3 +51,17 @@ report does not support.
 The active visual stages are tracked in `docs/EXECUTION_PLAN.md` as Bundle 7 (Stages 11–14) and Bundle 8
 (Stages 15–18). Combat, enemies, bosses, accounts, leaderboards, procedural maps, and multiplayer remain
 deferred so the educational exploration loop stays clear and honest.
+
+## Map-first controls and audience range
+
+The map is the primary game surface. Movement buttons, tool stations, map plants, and the learning question all
+appear inside the garden so a player can stay in one field of play. The plant cards and Inspector below remain a
+text-first evidence fallback for keyboard, screen-reader, and detailed report review—not a second game route.
+
+The gardener faces the last direction pressed. Authored buildings, ponds, trees, beds, benches, and classroom
+landmarks are solid; the avatar cannot walk through them. The current movement slice uses clear outer-map bounds
+and authored collision rectangles. Camera-follow and true proximity-triggered actions remain planned work.
+
+Questions use short sentences and one small idea at a time. Easy asks for a visible count, Medium asks for the
+short check name, and Hard asks for one safe next step. The level labels remain useful for older learners without
+making the Easy path depend on advanced code vocabulary.

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
 import { projectHealthReport } from "@/lib/garden/project";
 import { explainNode } from "@/lib/garden/explanation";
+import { authoredGardenMap } from "@/lib/garden/map";
 import {
   pixelSpriteManifest,
   spriteForHealth,
@@ -9,6 +10,29 @@ import {
 } from "@/lib/garden/assets";
 
 describe("HealthReport garden projection", () => {
+  it("keeps the authored map fixed and analytical content report-derived", () => {
+    const first = projectHealthReport(sampleHealthReport);
+    const second = projectHealthReport(sampleHealthReport);
+
+    expect(authoredGardenMap.zones.map((zone) => zone.id)).toEqual([
+      "entrance",
+      "learning",
+      "code-beds",
+      "root-crossing",
+      "tool-shed",
+      "payoff",
+    ]);
+    expect(authoredGardenMap.paths).toHaveLength(2);
+    expect(first.plants).toEqual(second.plants);
+    expect(first.roots).toEqual(second.roots);
+    expect(first.plants).toHaveLength(sampleHealthReport.nodes.length);
+    expect(first.roots).toHaveLength(
+      new Set(
+        sampleHealthReport.edges.map((edge) => `${edge.from}\0${edge.to}`),
+      ).size,
+    );
+  });
+
   it("is deterministic and preserves report health", () => {
     const first = projectHealthReport(sampleHealthReport);
     const second = projectHealthReport(sampleHealthReport);

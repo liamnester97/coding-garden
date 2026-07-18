@@ -53,13 +53,11 @@ function answerFor(
 }
 
 function objectiveFor(type: HealthReport["findings"][number]["type"]) {
-  if (type === "dead-code")
-    return "Recognize evidence of an unused module before changing code.";
-  if (type === "coverage-gap")
-    return "Connect a missing test path to the protection it provides.";
+  if (type === "dead-code") return "Notice when a code plant may be unused.";
+  if (type === "coverage-gap") return "See how a test helps protect code.";
   if (type === "vulnerability")
-    return "Explain why a security signal needs verification before a fix.";
-  return "Interpret a measured code-health signal before acting.";
+    return "Spot a code safety warning before fixing it.";
+  return "Understand one code signal before acting.";
 }
 
 export function questionForFinding(
@@ -80,16 +78,16 @@ export function questionForFinding(
     objective: objectiveFor(finding.type),
     prompt:
       difficulty === "easy"
-        ? `How many report signals are attached to ${finding.evidence.file}? Enter a number.`
+        ? `Look at ${finding.evidence.file}. How many warnings are here? Type a number.`
         : difficulty === "medium"
-          ? `Which analyzer produced this signal for ${finding.evidence.file}? Enter its short name.`
-          : `In a few words, what is the safest next step for this signal at ${finding.evidence.file}?`,
+          ? `Which check found this on ${finding.evidence.file}? Type its short name.`
+          : `What is one safe next step for ${finding.evidence.file}? Keep it short.`,
     hint:
       difficulty === "easy"
-        ? "Count the warning cards for this file."
+        ? "Count the warning on this plant. The answer is a number."
         : difficulty === "medium"
-          ? `Look at the evidence label: ${finding.evidence.tool}.`
-          : "Choose an action that verifies understanding and protects the code.",
+          ? `Read the check label: ${finding.evidence.tool}.`
+          : "Check first, then make the smallest safe change.",
     answer: answerFor(finding, difficulty),
   });
 }

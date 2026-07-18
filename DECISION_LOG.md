@@ -374,3 +374,21 @@ Paused execution after the Bundle 6 technical release gate and production promot
 pause, not a scope or roadmap change. Resume at the documented human/release gates: non-coder
 explanation read-through, two-person legibility, real-PR boundary evidence, video, Devpost, and final
 acceptance. Do not start a new bundle until those gates are reviewed and reconciled.
+
+## 2026-07-18 — Stage 12 fixed authored map
+
+Stage 12 uses one deterministic authored top-down map rather than a procedural or report-sized world.
+The map registry defines the entrance, learning greenhouse, code beds, root crossing, tool shed, and
+payoff/reflection area, plus authored walking paths. These are presentation and navigation surfaces;
+they never create HealthReport nodes, findings, roots, or health changes. Report-derived plants and
+import roots continue to be projected from the validated report and remain stable across repeated runs.
+Stage 13 owns collision, camera, and proximity interaction behavior; Stage 12 only establishes the
+truthful, legible world layout.
+
+## 2026-07-18 — Map-first learning controls and broad age range
+
+The authored garden is the primary game surface: movement, station controls, plant selection, and the learning
+question belong inside the map. The lower Inspector and plant list remain as an accessible text/evidence fallback.
+The gardener must face its last travel direction and stop at authored solid landmarks so the map reads as a real
+place rather than a decorative background. Challenge copy is intentionally short and concrete for first-grade
+through high-school learners; difficulty still controls the reasoning depth and is validated server-side.

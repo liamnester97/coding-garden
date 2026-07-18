@@ -2,19 +2,20 @@
 
 ## Stage
 
-Stage 11 — Pixel Garden Foundation / Bundle 7 — World, Map, and Visual Language
+Stage 13 — Map-First Movement and Learning / Bundle 7 — World, Map, and Visual Language
 
 ## Execution Bundle
 
 - **Bundle:** 7 — World, Map, and Visual Language
-- **Current goal:** Establish the cozy pixel-garden visual language, original sprite/tile asset pipeline,
-  manifest, and deterministic sprite-rendering foundation.
+- **Current goal:** Keep the full play loop inside the authored map with direction-aware movement, solid landmarks,
+  accessible map controls, and age-flexible learning questions.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; Stage 11 implementation is in progress.
-- **Audit status:** Stage 9/10 technical audit completed 2026-07-18; Stage 11 audit is pending.
+- **Bundle gate:** Open; Stage 13 movement/learning implementation is in progress.
+- **Audit status:** Stage 9/10 technical audit completed 2026-07-18; Stage 12 technical verification completed;
+  Stage 13 audit is pending.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
 
 ## Stage 11 Goals
@@ -25,16 +26,44 @@ Stage 11 — Pixel Garden Foundation / Bundle 7 — World, Map, and Visual Langu
 - [x] Project HealthReport health into deterministic healthy, stressed, and withered sprite IDs.
 - [x] Integrate authored decorations, tool sprites, plant sprites, and gardener sprite into the map foundation.
 - [x] Add focused projection and manifest regression coverage.
-- [ ] Add final Stage 11 documentation evidence, full project checks, visual browser verification, and audit.
+- [x] Add final Stage 11 implementation evidence; full visual/human acceptance remains open.
 
-## Hibernation Checkpoint — 2026-07-18, 02:57 MDT
+## Stage 12 Goals
 
-- **State:** paused overnight after the technical release audit and production promotion.
-- **State update:** superseded by the accepted Bundle 7 / Stage 11 visual-foundation work below.
-- **Resume at:** Bundle 7 / Stage 11; the next work is visual-foundation verification, not a new roadmap.
+- [x] Define a fixed authored map registry with entrance, learning, code-bed, root-crossing, tool, and payoff zones.
+- [x] Add deterministic authored walking paths that are visually distinct from analyzed import roots.
+- [x] Render map zones and labels over the pixel-art foundation without inventing report content.
+- [x] Add regression coverage for fixed map structure, deterministic placement, and truthful plant/root counts.
+- [x] Complete full checks, browser wide-shot/mobile verification, documentation reconciliation, and technical
+      structure/security verification. Formal human wide-shot acceptance remains open.
+
+### Stage 12 Verification Evidence — 2026-07-18
+
+- [x] Full checks passed: format, lint, typecheck, 58 tests, analysis validation, production build, and diff check.
+- [x] Desktop browser smoke rendered six authored zones, two authored paths, 21 pixel sprites, HTTP 200, and zero
+      page/console errors.
+- [x] Mobile browser smoke rendered six zones with no horizontal overflow and zero page/console errors.
+- [x] Structure audit found one canonical `docs/EXECUTION_PLAN.md`, one root tracker/status/decision set, no generic
+      duplicate plan/status/decision files, and no detected secret material.
+- [ ] Human wide-shot legibility and formal stage acceptance remain open.
+
+### Stage 13 Goals
+
+- [x] Add authored solid areas that block the gardener at buildings, ponds, trees, beds, and landmarks.
+- [x] Track the gardener’s facing direction and render the matching sprite after keyboard or button movement.
+- [x] Move movement, station, plant-selection, and challenge interactions into the map surface.
+- [x] Simplify challenge wording for a broad first-grade-through-high-school audience without weakening server checks.
+- [ ] Add camera-follow/proximity behavior and complete full checks, browser verification, documentation reconciliation,
+      and the end-of-stage audit.
+
+## Resume Checkpoint — 2026-07-18
+
+- **State:** active after the overnight pause.
+- **State update:** Stage 12 implementation and technical verification are complete; Stage 13 map-first
+  movement/learning is active.
+- **Resume at:** Bundle 7 / Stage 13; the next work is camera/proximity behavior and end-of-stage verification.
 - **Release to test:** `https://coding-garden-iota.vercel.app` at verified commit `bd77258`.
-- **Resume order:** human-test guide → non-coder explanation review → two-person map legibility →
-  honest recording/submission evidence → final audit and acceptance reconciliation.
+- **Resume order:** local movement verification → camera/proximity behavior → Stage 13 audit → Stage 14.
 
 ## Stage Status
 
@@ -68,8 +97,13 @@ Stage 11 — Pixel Garden Foundation / Bundle 7 — World, Map, and Visual Langu
 - **Stage 11 — Pixel Garden Foundation:** Implementation slice is complete locally: original WebP
   atlases, typed manifest, HealthReport-driven plant sprites, authored decorations, and sprite layers
   are integrated. Final documentation, full audit, and human visual acceptance remain open.
+- **Stage 12 — Authored Garden Map:** Implementation slice is complete: fixed map zones, authored paths,
+  visible labels, and regression coverage are integrated. Human wide-shot acceptance remains open.
+- **Stage 13 — Map-First Movement and Learning:** Implementation slice is in progress: direction-aware
+  movement, authored solid areas, in-map controls, clickable plants, and in-map challenge overlay are integrated;
+  camera/proximity behavior and full stage audit remain open.
 
-## Goal
+## Historical Foundation Goal
 
 Complete the hardening gate for the implemented garden: adversarial lifecycle checks, bounded inputs,
 read-only public behavior, accessibility/runtime smoke, and release evidence.

@@ -24,6 +24,8 @@ npm run dev
 ```
 
 Open the local URL printed by Next.js, normally `http://localhost:3000`.
+If `http://127.0.0.1:3000` does not respond, use `http://localhost:3000` exactly; some local
+browser or network-permission configurations treat the two loopback hostnames differently.
 
 To test the production build locally instead:
 
@@ -80,6 +82,49 @@ viewport when possible.
 - [ ] The report source says the sample is offline and requires no credentials.
 - [ ] No browser console errors or uncaught page errors appear.
 
+### Stage 11 pixel-garden visuals
+
+Test this section against the local build or the current branch’s Vercel preview. The production URL may
+still serve the earlier verified release until the visual bundle is deliberately promoted.
+
+- [ ] The map uses cozy pixel-art sprites rather than placeholder circles for the gardener, plants, and
+      tool stations.
+- [ ] The authored garden includes visible terrain/ground texture, paths, a learning greenhouse, tool
+      shed, entrance, pond, roots, trees, flower beds, and classroom/payoff decorations.
+- [ ] The three analyzed sample plants remain visibly distinct: healthy, stressed, and withered.
+- [ ] Plant health visuals agree with the summary chips, plant cards, and Inspector text.
+- [ ] The gardener sprite appears inside the map and moves without leaving the map boundary.
+- [ ] Magnifying Glass, Clippers, and Watering Can have distinct visual tool sprites and matching text
+      labels.
+- [ ] Roots remain tied to analyzed imports; decorative roots do not create additional findings or nodes.
+- [ ] The map remains readable as a wide shot before opening the Inspector.
+- [ ] Resize to a phone-sized viewport: sprites remain visible, the map does not create horizontal page
+      overflow, and the controls remain usable.
+- [ ] Enable reduced motion and confirm the sprite map remains usable without requiring animation.
+- [ ] Open the browser Network panel and confirm both pixel-garden atlas assets load successfully:
+      `terrain-landmarks.webp` and `characters-tools-states.webp`.
+
+### Stage 12 authored garden map
+
+- [ ] The wide shot clearly reads as one fixed garden with a gate, learning greenhouse, code beds,
+      root crossing, tool shed, and reflection/payoff area.
+- [ ] Authored walking paths are visually distinct from the analyzed import roots.
+- [ ] Zone labels explain what a player does there without requiring source-code knowledge.
+- [ ] Reloading the same report keeps the map zones and plant placement stable.
+- [ ] Changing the report changes only report-derived plants, roots, findings, and health—not the
+      authored map structure.
+- [ ] No decorative path, landmark, or zone is presented as a code finding.
+
+### Stage 13 map-first controls and learning
+
+- [ ] Movement buttons and tool-station controls are inside the map; there is no second movement toolbar below it.
+- [ ] Arrow keys/WASD and the in-map buttons move the gardener; the sprite faces the last direction pressed.
+- [ ] The gardener stops at the greenhouse, shed, pond, trees, beds, bench, and classroom scroll instead of walking
+      through them.
+- [ ] Clicking a visible plant opens its evidence/Inspector state, and the learning question opens as a map overlay.
+- [ ] Easy uses a short, simple prompt; Medium and Hard remain available for older learners.
+- [ ] The map overlay supports keyboard focus, Escape cancellation, and readable mobile layout.
+
 ### Magnifying Glass
 
 - [ ] Select a plant and confirm the Inspector opens.
@@ -105,8 +150,8 @@ viewport when possible.
 - [ ] Confirm the Magnifying Glass explanation is visible before the confirmation card appears.
 - [ ] Try Easy, Medium, and Hard; an incorrect answer shows a hint and keeps confirmation locked.
 - [ ] Answer correctly and verify the proposed-scope confirmation becomes available.
-- [ ] Review the proposed file scope and choose **Confirm demo rehearsal**; verify no `/api/tend`
-  request occurs before confirmation.
+- [ ] Review the proposed file scope and choose **Confirm and rehearse**; verify no `/api/tend`
+      request occurs before confirmation.
 - [ ] Confirm the status advances through the lifecycle and ends at `landed`.
 - [ ] Confirm the dead-code finding disappears only after the rehearsal re-analysis response.
 - [ ] Select the sample stressed plant and choose **Use Watering Can**.
