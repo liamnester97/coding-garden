@@ -313,3 +313,10 @@ The production release completed an anonymous read-only analysis of `ColorlibHQ/
 with no bounded-analysis omissions. This confirms the public repository path without granting the app
 write access to the target repository. Human acceptance, real PR evidence, video, and Devpost submission
 remain open.
+
+## 2026-07-18 — Submission documentation and license evidence
+
+The public repository now carries an MIT license and a root README project narrative with fresh-clone
+setup, production-style commands, sample-mode behavior, and links to the human-test guide. The
+submission checklist marks the Education track, project description, repository link, and README as
+evidenced. Video, human acceptance, and Devpost submission remain open.

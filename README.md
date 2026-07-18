@@ -5,6 +5,19 @@ or status document.
 
 The active runnable application and implementation source are in this folder.
 
+## What Code Garden is
+
+Code Garden turns a public JavaScript or TypeScript repository into a playable 2D garden. Modules
+become plants, imports become roots, coverage gaps become drought, and dead-code findings become
+withered branches. A deterministic `HealthReport` owns the garden truth; the interface explains each
+finding in plain language and uses authored learning challenges before any demo action is unlocked.
+
+The public release is anonymous and read-only for analyzed GitHub repositories. The bundled sample
+garden supports honest, server-authoritative demo rehearsals for Clippers and Watering Can; it does
+not create branches or PRs. The app works without `OPENAI_API_KEY`, using deterministic explanations
+as the release fallback. With a key, the optional server-side explanation route can provide grounded
+GPT-5.6 narration.
+
 ## If you want to know where we are
 
 Open [PROJECT_STATUS.md](PROJECT_STATUS.md) first. It is
@@ -41,8 +54,21 @@ Do not create another plan, status snapshot, or decision log.
 Run commands from this folder:
 
 ```bash
+npm install
 npm run dev
 ```
+
+Open the local URL printed by Next.js. For a production-style local run:
+
+```bash
+npm run build
+npm run start
+```
+
+Run the full verification suite with `npm run format:check`, `npm run lint`, `npm run typecheck`,
+`npm run test`, `npm run analysis:validate`, and `npm run build`. See
+[docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md](docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md) for anonymous Vercel
+deployment and the complete human-test checklist.
 
 This README is the active repository entry point; the application code and quality checks are
 available directly in this root folder.
