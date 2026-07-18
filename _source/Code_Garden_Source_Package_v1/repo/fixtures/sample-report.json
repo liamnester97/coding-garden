@@ -1,0 +1,63 @@
+{
+  "reportHash": "73099114f7f9f15a",
+  "repo": {
+    "name": "repository",
+    "ref": "working-tree",
+    "commit": "working-tree"
+  },
+  "method": {
+    "deadCode": "estimated",
+    "coverage": "estimated",
+    "complexity": "estimated",
+    "vulnerabilities": "unavailable"
+  },
+  "nodes": [
+    {
+      "id": "src/healthy.js",
+      "path": "src/healthy.js",
+      "health": "stressed"
+    },
+    {
+      "id": "src/index.js",
+      "path": "src/index.js",
+      "health": "healthy"
+    },
+    {
+      "id": "src/unused.js",
+      "path": "src/unused.js",
+      "health": "withered"
+    }
+  ],
+  "findings": [
+    {
+      "id": "9691adaaecbc",
+      "type": "coverage-gap",
+      "nodeId": "src/healthy.js",
+      "summary": "No matching test file was found; coverage is estimated.",
+      "evidence": {
+        "tool": "test-file-mapping",
+        "file": "src/healthy.js"
+      }
+    },
+    {
+      "id": "dc7215c51fd2",
+      "type": "dead-code",
+      "nodeId": "src/unused.js",
+      "summary": "No incoming relative import was found for this file.",
+      "evidence": {
+        "tool": "import-graph",
+        "file": "src/unused.js"
+      }
+    },
+    {
+      "id": "c7c1d272e20e",
+      "type": "coverage-gap",
+      "nodeId": "src/unused.js",
+      "summary": "No matching test file was found; coverage is estimated.",
+      "evidence": {
+        "tool": "test-file-mapping",
+        "file": "src/unused.js"
+      }
+    }
+  ]
+}

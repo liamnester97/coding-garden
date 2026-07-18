@@ -1,6 +1,6 @@
 # Code Garden
 
-*A living, playable ecosystem for understanding and tending codebases.*
+_A living, playable ecosystem for understanding and tending codebases._
 
 Code Garden turns a codebase into a living garden you can walk through, understand, and tend. Functions are plants, dependencies are roots, test coverage is sunlight, bugs are pests, dead code is decay. You hold real tools: clip a withered branch and Codex actually removes the dead code; water a drought zone and Codex actually writes the missing tests. You cannot act without understanding — every action is preceded by a plain-English explanation, which is what makes it a teaching tool as much as a developer tool.
 
@@ -8,7 +8,7 @@ Built for the **OpenAI Build Week Challenge 2026** with **Codex + GPT-5.6**. Pri
 
 ## Status
 
-Stage 0 (scope freeze) — see `STATUS.md` for the live snapshot and `PLAN.md` for the active slice.
+Stage 1 (analysis foundation) — see `STATUS.md` for the live snapshot, `PLAN.md` for the active slice, and `docs/EXECUTION_PLAN.md` for the roadmap.
 
 ## Run
 

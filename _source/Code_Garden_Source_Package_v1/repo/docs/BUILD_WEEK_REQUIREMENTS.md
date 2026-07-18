@@ -4,11 +4,11 @@ Source: `code_garden_brief.pdf` (OpenAI Build Week Challenge, Devpost).
 
 ## Key dates
 
-| Item | Date |
-|---|---|
+| Item                | Date                                   |
+| ------------------- | -------------------------------------- |
 | Submission deadline | **Tuesday, July 21, 2026, 5:00 PM PT** |
-| Judging period | July 22 – August 5, 2026 |
-| Winners announced | ~August 12, 2026 |
+| Judging period      | July 22 – August 5, 2026               |
+| Winners announced   | ~August 12, 2026                       |
 
 ## Hard requirements checklist
 
@@ -20,7 +20,7 @@ Source: `code_garden_brief.pdf` (OpenAI Build Week Challenge, Devpost).
   - If **private**: shared with `testing@devpost.com` and `build-week-event@openai.com`.
   - If **public**: must carry an open source license.
 - [ ] A **README** with setup instructions, sample data if needed, and clear steps to run the project.
-- [ ] **Documentation of architecture and key decisions** (satisfied by `docs/EXECUTION_PLAN.md`, `docs/adr/`, and `DECISIONS.md`).
+- [x] **Documentation of architecture and key decisions** (satisfied by `docs/EXECUTION_PLAN.md`, `docs/adr/`, and `DECISIONS.md`).
 
 ## Judging criteria (weight the demo accordingly)
 

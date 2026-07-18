@@ -44,3 +44,21 @@ Freeze the MVP scope, select the demo target repo and the offline sample repo, a
 - [ ] Independent review
 - [ ] Human acceptance
 - [ ] `STATUS.md` updated
+- [ ] Project status audit run using `project-status-audit/SKILL.md`
+- [ ] Audit findings resolved, documented, or explicitly carried forward as open gates
+
+## Stage Gate Protocol
+
+At the end of every stage, before promoting the project to the next stage:
+
+1. Complete the stage's acceptance criteria and required quality checks.
+2. Perform self-review and independent review; obtain human acceptance where required.
+3. Update `PLAN.md`, `STATUS.md`, `DECISIONS.md`, and relevant project documentation with
+   evidence and any remaining gates.
+4. Run the project-local `project-status-audit` skill against the repository, durable notes,
+   and Slack routing context.
+5. Resolve documentation drift and record any plan change before starting the next stage.
+
+The audit is also run at the end of each workday during active execution and once during final
+submission closeout. It is a synchronization and decision checkpoint, not a replacement for
+human acceptance, independent review, or the required technical checks.

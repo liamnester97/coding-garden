@@ -15,13 +15,13 @@ You open a codebase you've never seen. Instead of ten thousand lines of text, yo
 
 ## Evidence chain (tool → deterministic signal → real change → visual result)
 
-| Tool | Health signal (deterministic) | What Codex actually does | Garden result |
-|---|---|---|---|
-| Magnifying Glass | HealthReport entry for the node | Nothing (read-only); GPT-5.6 explains in plain English | Plant "introduces itself" |
-| Clippers | Dead/unused-code finding | Removes the code on a branch, opens PR; analysis re-runs | Withered branch disappears |
-| Watering Can | Coverage gap on the node | Writes missing tests on a branch; tests pass; analysis re-runs | Drought patch greens up |
-| Pesticide Spray *(stretch)* | Vulnerability/bug finding | Patches the vulnerability on a branch | Pest vanishes, rot heals |
-| Fertilizer *(stretch)* | Complexity/debt score | Refactors the function on a branch | Plant grows taller, stands straighter |
+| Tool                        | Health signal (deterministic)   | What Codex actually does                                       | Garden result                         |
+| --------------------------- | ------------------------------- | -------------------------------------------------------------- | ------------------------------------- |
+| Magnifying Glass            | HealthReport entry for the node | Nothing (read-only); GPT-5.6 explains in plain English         | Plant "introduces itself"             |
+| Clippers                    | Dead/unused-code finding        | Removes the code on a branch, opens PR; analysis re-runs       | Withered branch disappears            |
+| Watering Can                | Coverage gap on the node        | Writes missing tests on a branch; tests pass; analysis re-runs | Drought patch greens up               |
+| Pesticide Spray _(stretch)_ | Vulnerability/bug finding       | Patches the vulnerability on a branch                          | Pest vanishes, rot heals              |
+| Fertilizer _(stretch)_      | Complexity/debt score           | Refactors the function on a branch                             | Plant grows taller, stands straighter |
 
 ## The design rule
 

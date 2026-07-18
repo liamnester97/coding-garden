@@ -12,6 +12,8 @@ Build a reliable, delightful, non-coder-first garden interface over real codebas
 4. Relevant records in `docs/adr/` and the nearest nested `AGENTS.md`
 5. `docs/EXECUTION_PLAN.md`
 
+For a project-wide execution/status check, use `../../../project-status-audit/SKILL.md`.
+
 ## Non-Negotiable Invariants
 
 - The language model never mutates garden state directly. Garden health changes only when a verified code change lands and analysis is re-run.
@@ -30,7 +32,8 @@ Build a reliable, delightful, non-coder-first garden interface over real codebas
 - Work against the active goal in `STATUS.md`; keep the slice bounded by `PLAN.md`.
 - Keep diffs focused and add tests with behavior changes.
 - Update `STATUS.md`, `PLAN.md` evidence, and relevant documentation before declaring a stage complete.
-- Do not begin Stage 1 until the human owner approves the Stage 0 scope decision.
+- Stage 1 bootstrap and read-only analysis may proceed under the human owner's direction; do not
+  promote to the garden/action stages until the Stage 0 scope decision is explicitly approved.
 - Do not begin any Should-Have feature until the Must-Have demo path passes all gates.
 
 ## Required Checks Once the Application Exists

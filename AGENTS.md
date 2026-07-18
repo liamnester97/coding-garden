@@ -12,6 +12,8 @@ Build a reliable, delightful, non-coder-first garden interface over real codebas
 4. Relevant records in `docs/adr/` and the nearest nested `AGENTS.md`
 5. `docs/EXECUTION_PLAN.md`
 
+For a project-wide execution/status check, use `project-status-audit/SKILL.md`.
+
 ## Non-Negotiable Invariants
 
 - The language model never mutates garden state directly. Garden health changes only when a verified code change lands and analysis is re-run.

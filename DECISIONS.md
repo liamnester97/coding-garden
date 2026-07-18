@@ -10,6 +10,16 @@ The Build Week V2 submission is Code Garden per `code_garden_brief.pdf`: a livin
 
 The project reuses the V1 execution system: master execution plan, AGENTS.md hierarchy, PLAN/STATUS/DECISIONS discipline, bounded vertical slices, stage gates with self-review + independent review + human acceptance.
 
+## 2026-07-17 — Project status audit at stage gates
+
+- Run the project-local `project-status-audit` skill at the end of every stage,
+  after technical checks, self-review, independent review, and human acceptance.
+- Also run it at the end of each active workday and during final submission
+  closeout.
+- Treat the audit as a synchronization checkpoint for implementation evidence,
+  plans, status, durable notes, and Slack routing. It does not replace human
+  acceptance, independent review, or technical quality gates.
+
 ## 2026-07-17 — Track confirmed: Education
 
 Human owner (Liam) confirmed **Education** as the primary Build Week submission track, with Developer Tools, Work & Productivity, and Apps for Your Life as crossover narrative only. Apps for Your Life is no longer a fallback track option — Education is final.

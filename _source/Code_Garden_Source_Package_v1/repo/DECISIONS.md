@@ -10,6 +10,16 @@ The Build Week V2 submission is Code Garden per `code_garden_brief.pdf`: a livin
 
 The project reuses the V1 execution system: master execution plan, AGENTS.md hierarchy, PLAN/STATUS/DECISIONS discipline, bounded vertical slices, stage gates with self-review + independent review + human acceptance.
 
+## 2026-07-17 — Project status audit at stage gates
+
+- Run the project-local `project-status-audit` skill at the end of every stage,
+  after technical checks, self-review, independent review, and human acceptance.
+- Also run it at the end of each active workday and during final submission
+  closeout.
+- Treat the audit as a synchronization checkpoint for implementation evidence,
+  plans, status, durable notes, and Slack routing. It does not replace human
+  acceptance, independent review, or technical quality gates.
+
 ## 2026-07-17 — MVP scope freeze (draft, pending Stage 0 human approval)
 
 Must-Have tier only for the demo path:
@@ -29,6 +39,50 @@ Health signals come only from real static-analysis tooling. Garden state changes
 
 The analyzed repo is untrusted input: no execution of target-repo code outside sandboxed test runners. No destructive writes to any default branch. The app must run without an API key on the cached sample repo.
 
-## (pending Stage 0) — Demo repo selection
+## 2026-07-17 — Provisional demo repository selection
 
-Target repo: TBD. Fallback: TBD. Offline sample fixture: TBD. Toolchain per health signal: TBD.
+Target repo for the first live adapter: **[ColorlibHQ/gentelella](https://github.com/ColorlibHQ/gentelella)**.
+It is MIT-licensed, JavaScript/SCSS/Vite, has 221 tracked files and 58 production pages,
+and has enough UI surface to make the garden visually legible. We will analyze it read-only
+from a temporary checkout and make any Codex changes only on a fork/branch/PR.
+
+Fallback: **[dumberjs/dumber](https://github.com/dumberjs/dumber)**, an MIT-licensed JavaScript
+bundler with a smaller, safer graph if Gentelella proves too noisy or slow.
+
+Offline fixture: the committed deterministic `sample-garden` report remains the no-network
+path until the fixture is curated from the selected target. It is intentionally not presented
+as a live analysis result.
+
+Initial JavaScript signal policy:
+
+- dead code: import-graph reachability plus ESLint unused-variable findings;
+- coverage: estimated from test-file mapping until the target test runner is safely sandboxed;
+- complexity: ESLint complexity output;
+- vulnerabilities: `npm audit --json`, labeled unavailable when the target cannot be audited offline.
+
+This is a provisional Stage 0 choice pending a rehearsed analysis run; changing it requires a
+new decision entry, not a hardcoded analyzer branch.
+
+## 2026-07-17 — Read-only adapter rehearsal completed
+
+The generic JavaScript/TypeScript adapter was run against a temporary Gentelella checkout without
+executing target-repo code. It produced 31 nodes and 70 findings with report hash
+`6cb7ad388ad7b14b`. This is sufficient evidence to continue Stage 1, but not to authorize change
+actions: calibration is required because configuration, CLI, service-worker, and other tooling
+entrypoints can currently be mistaken for dead code. Findings remain advisory until that gate
+passes.
+
+## 2026-07-17 — Entrypoint calibration completed
+
+The generic adapter now recognizes HTML script references, package `main`/`browser`/`bin`
+metadata, common config files, service workers, and `scripts/`/`bin/` tooling as entrypoints.
+A regression fixture confirms that only the genuinely unreachable source file is reported as
+dead code. This removes the known false-positive class from the Gentelella rehearsal; findings
+remain advisory until the offline fixture is curated and the verified-change lifecycle exists.
+
+## 2026-07-17 — Offline analyzer fixture curated
+
+`fixtures/sample-report.json` is the schema-validated output of the generic adapter against
+`fixtures/sample-repo`. It records three source nodes, one estimated dead-code finding for
+`src/unused.js`, and two estimated coverage gaps. A regression test compares the analyzer output
+to this snapshot; the fixture is curated but remains uncommitted pending human review.
