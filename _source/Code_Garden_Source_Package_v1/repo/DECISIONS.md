@@ -86,3 +86,11 @@ remain advisory until the offline fixture is curated and the verified-change lif
 `fixtures/sample-repo`. It records three source nodes, one estimated dead-code finding for
 `src/unused.js`, and two estimated coverage gaps. A regression test compares the analyzer output
 to this snapshot; the fixture is curated but remains uncommitted pending human review.
+
+## 2026-07-17 — Garden projection is a pure report view
+
+The first garden renderer consumes a typed `GardenScene` produced solely by the validated
+`HealthReport`. Node identity determines stable positions, the metaphor registry defines health
+and finding labels, and accessibility text is generated from the same evidence. The renderer may
+show pending interaction states later, but it cannot improve a plant until re-analysis confirms
+the change.

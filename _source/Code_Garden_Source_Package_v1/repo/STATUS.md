@@ -10,8 +10,8 @@ Updated: 2026-07-17, America/Denver
 
 ## Current State
 
-- Last completed milestone: calibrated generic read-only JavaScript/TypeScript analyzer against
-  the entrypoint patterns exposed by the Gentelella rehearsal.
+- Last completed milestone: deterministic `HealthReport -> GardenScene` projection rendered in
+  sample mode after analyzer calibration and fixture curation.
 - Passing checks: format:check, lint, typecheck, test, analysis:validate, build.
 - Failing checks: none.
 - Preview URL: none.
@@ -29,6 +29,8 @@ Updated: 2026-07-17, America/Denver
 - Offline fixture is now curated from `fixtures/sample-repo` and locked by
   `fixtures/sample-report.json`: three nodes, one dead-code finding, and two estimated coverage
   gaps. The snapshot is not committed yet.
+- Garden projection is deterministic and pure: plant health, finding labels, colors, and stable
+  positions are derived from the validated report; the renderer does not recalculate health.
 
 ## Risks Changed
 
@@ -48,8 +50,8 @@ Updated: 2026-07-17, America/Denver
 
 ## Next Three Actions
 
-1. Commit the curated fixture snapshot after human review.
-2. Build the deterministic HealthReport-to-GardenScene projection and renderer.
+1. Add the accessible inspector/detail interaction for projected plants.
+2. Commit the curated fixture and projection follow-up after human review.
 3. Run the project status audit at the next stage gate and resolve documentation drift.
 
 ## Submission Readiness

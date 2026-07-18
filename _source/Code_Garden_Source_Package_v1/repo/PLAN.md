@@ -89,3 +89,11 @@ human acceptance, independent review, or the required technical checks.
 - [x] `fixtures/sample-report.json` captures the analyzer output for `fixtures/sample-repo`: one
   dead-code finding and two estimated coverage gaps; the schema-backed regression test matches it.
 - [ ] Commit the curated fixture snapshot.
+
+## Garden projection evidence
+
+- [x] Pure `HealthReport -> GardenScene` projection added with stable node-id layout hashing.
+- [x] Health states and finding types use a single metaphor/accessibility registry.
+- [x] Renderer consumes projected plants and exposes report-grounded labels in sample mode.
+- [x] Projection regression tests cover deterministic output, health preservation, and finding labels.
+- [ ] Add inspector detail and interaction states before entering the explanation stage.

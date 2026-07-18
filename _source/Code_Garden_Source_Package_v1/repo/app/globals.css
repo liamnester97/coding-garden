@@ -52,3 +52,54 @@ main {
   border-radius: 50%;
   background: #89c66a;
 }
+.plant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+  margin-top: 3rem;
+}
+.plant-card {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  min-height: 118px;
+  padding: 1rem;
+  border: 1px solid #294332;
+  border-radius: 1rem;
+  background: #15241c;
+}
+.plant-card strong {
+  display: block;
+  color: #f0f7eb;
+  overflow-wrap: anywhere;
+}
+.plant-card p {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+}
+.plant-dot {
+  flex: 0 0 auto;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-top: 0.25rem;
+  border-radius: 50%;
+  box-shadow: 0 0 1rem currentColor;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  color: #c7d5bf;
+  font-size: 0.85rem;
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.legend i {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+}
