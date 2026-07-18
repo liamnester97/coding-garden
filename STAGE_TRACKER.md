@@ -106,7 +106,7 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Local production-mode smoke passed on `next start`: `/` 200, `/api/health` 200,
   `/api/explain` 200 without a key, invalid repository/challenge/tend payloads 400, and mobile map
   movement completed without page errors.
-- [x] Implementation commit `235be74` and documentation sync commits `12029f1`/`e858a30` are pushed;
+- [x] Implementation commit `235be74` and documentation sync commits `12029f1`/`e858a30`/`8462b1f`/`e9a25fb` are pushed;
   draft PR #1 reports passing GitHub CI quality, Vercel deployment, and Vercel Preview Comments.
   Preview URL is recorded in `PROJECT_STATUS.md`.
 - [x] Production browser smoke on 2026-07-18 verified mobile rendering, sample-mode labels, zero page
