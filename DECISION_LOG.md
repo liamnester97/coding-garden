@@ -432,3 +432,12 @@ The authored map now treats required destinations as explicit walkable approach 
 reachability and route-vertex collision tests. The gardener keeps its last pressed direction even when an obstacle
 blocks movement. A Garden Journal and classroom comparison are local/session surfaces only: they summarize learning
 and report changes without accounts, server persistence, repository mutation, or any new source of HealthReport truth.
+
+## 2026-07-18 — Full verification findings and release boundary
+
+The Stage 16–18 implementation slice is verified on development commit `6e616e3`, while production remains on the
+previously verified commit `bd77258` until human visual/release acceptance is recorded. The supported quality suite
+passes when run sequentially; `next build` regenerates `.next/types`, so parallel typecheck/build execution is not a
+reliable verification mode. Playwright is not installed in this checkout, so browser automation is an open evidence
+gate. An npm audit attempt was blocked by DNS resolution to the npm registry and is recorded as unverified rather than
+clean. These are release-evidence constraints, not claims about HealthReport or public repository behavior.

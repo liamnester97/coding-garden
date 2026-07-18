@@ -800,7 +800,8 @@ final submission evidence.
 
 ### Visual expansion assumptions
 
-- The current production build remains a fallback while Bundles 7–8 are developed.
+- The current production build remains a fallback while Bundles 7–8 move through human visual/release acceptance;
+  their implementation slices may be complete on the development branch before promotion.
 - The visual expansion uses original generated pixel-art assets plus a dependency-light React/SVG/image renderer;
   Phaser and other game engines remain deferred.
 - Combat, enemies, bosses, accounts, leaderboards, procedural worlds, and multiplayer remain post-event scope.

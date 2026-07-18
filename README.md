@@ -33,9 +33,11 @@ the current anonymous demo deliberately labels tool actions as rehearsals rather
 branches or pull requests. The production release is available at
 <https://coding-garden-iota.vercel.app>.
 
-The next visual expansion is tracked in the canonical roadmap as Bundle 7: an authored, cozy pixel
-garden with original sprite atlases, report-driven plants and roots, and the same accessible learning
-loop. The current production build remains a fallback while that visual world is developed.
+The authored visual world is tracked in the canonical roadmap as Bundles 7–8: a cozy pixel garden
+with original sprite atlases, report-driven plants and roots, and the same accessible learning loop.
+Its implementation slices are complete on the current development branch; human visual/release
+acceptance remains open, and the currently deployed production build remains the fallback until that
+acceptance is recorded.
 
 ## If you want to know where we are
 
@@ -84,8 +86,10 @@ npm run build
 npm run start
 ```
 
-Run the full verification suite with `npm run format:check`, `npm run lint`, `npm run typecheck`,
-`npm run test`, `npm run analysis:validate`, and `npm run build`. See
+Run the full verification suite sequentially with `npm run format:check`, `npm run lint`,
+`npm run typecheck`, `npm run test`, `npm run analysis:validate`, and `npm run build`; `next build`
+regenerates `.next/types`, so running typecheck and build concurrently can produce transient missing-file
+errors. See
 [docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md](docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md) for anonymous Vercel
 deployment and the complete human-test checklist.
 

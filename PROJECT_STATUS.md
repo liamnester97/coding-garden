@@ -10,9 +10,11 @@ Updated: 2026-07-18, America/Denver
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`); this
-  includes the latest pushed accessibility and audit reconciliation work. Earlier release/documentation
-  commits are preserved in history.
+- Development branch head: `6e616e3` (`feat: finish garden navigation and release polish`), pushed to
+  `origin/agent/health-report-foundation`.
+- Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`). The
+  deployed release is intentionally behind the development branch until the remaining human visual/release
+  gates are accepted; earlier release/documentation commits are preserved in history.
 - Vercel preview: https://coding-garden-git-agent-health-report-foundation-code-garden.vercel.app
 - Production: https://coding-garden-iota.vercel.app
 - Remote evidence: GitHub CI quality passed; Vercel deployment and preview comments passed. Production
@@ -98,9 +100,9 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Run the full checks, production/browser smoke, and final project-status audit for Stages 16–18.
-2. Human-test desktop/mobile map scale, target halo, compact overlay, reachability, collision, journal, and facing.
-3. Record remaining human/release evidence, then complete the video and Devpost submission gates.
+1. Human-test desktop/mobile map scale, target halo, compact overlay, reachability, collision, journal, and facing.
+2. Record browser/performance evidence and decide whether the current branch should be promoted to production.
+3. Complete the final code review, video, and Devpost submission gates.
 
 ## Synchronization Rules
 
@@ -142,6 +144,16 @@ Updated: 2026-07-18, America/Denver
   the journal, map halo, learning journey, and gardener surfaces.
 - Final structure/security audit found one canonical execution plan, one root tracker/status/decision set, no generic
   duplicate tracker files, and no detected secret literals. Human visual/release acceptance remains open.
+- Sequential verification passed: format, lint, typecheck, 73 tests across 14 files, analysis validation, production
+  build, and `git diff --check`.
+- Production HTTP smoke passed for `/` and `/api/health`; malformed repository and explanation requests returned
+  readable 400 responses. The rendered homepage contains the journal, map halo, learning journey, and gardener.
+- Browser automation was not rerun because Playwright is not installed in this checkout; manual desktop/mobile,
+  reduced-motion, keyboard, and performance acceptance remain open.
+- `npm audit --omit=dev --audit-level=high` was attempted but could not reach `registry.npmjs.org` due DNS/network
+  resolution, so dependency advisories are unverified rather than reported clean.
+- Running `typecheck` concurrently with `next build` produced transient missing `.next/types` errors; sequential
+  reruns passed. This is a verification-order/tooling risk, not a source type error.
 
 ## Stage 13 Verification Note — 2026-07-18
 
