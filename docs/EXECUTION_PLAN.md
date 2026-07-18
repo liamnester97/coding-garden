@@ -637,22 +637,42 @@ plain-language explanation; the player can also reveal the hint with the in-map 
 ### Stage 16 — Tool Mastery and Reward Feedback
 
 **Goal:** give each code-garden tool a distinct visual identity, interaction feedback, and non-destructive learning
-rewards without implying real repository mutation.
-**Acceptance:** players understand what each tool teaches, what it changes, and what remains a rehearsal.
+rewards without implying real repository mutation, while making the map large, readable, and self-contained.
+**Acceptance:** players understand what each tool teaches, what it changes, and what remains a rehearsal; the map is
+the dominant surface, the next target has a soft yellow halo, and the compact in-map objective ribbon does not hide
+the world.
+
+Implementation note (2026-07-18): the map now uses a large responsive playfield, subdued zone chrome, visible guided
+walkways, a target halo, and a compact HUD. Human acceptance of map scale and visual legibility remains open.
 
 ### Stage 17 — Garden Journal and Classroom Layer
 
 **Goal:** add a local/session-based gardener journal and classroom comparison surfaces for findings, learning
-objectives, tool practice, and before/after evidence.
-**Acceptance:** the educational value remains visible outside active movement; no accounts, leaderboard, or server
-persistence is required.
+objectives, tool practice, and before/after evidence, while making the authored map a genuinely walkable field.
+**Acceptance:** the educational value remains visible outside active movement; every required destination has a
+connected visible walkway; buildings, ponds, bushes, beds, trees, and landmarks remain solid; and route guidance
+never directs the player through a blocked area. No accounts, leaderboard, or server persistence is required.
+
+Implementation note (2026-07-18): authored navigation paths now include dedicated learning, Magnifying Glass, tool,
+and reflection routes. Collision padding is explicit and reachability regression coverage is the next bounded slice.
 
 ### Stage 18 — Final Visual and Release Hardening
 
 **Goal:** complete sprite animation, mobile polish, asset performance, accessibility, playtesting, final video,
 and release audits.
-**Acceptance:** no unresolved P0/P1 issues; visual, technical, documentation, and human-release evidence are
-synchronized.
+**Acceptance:** the avatar faces the last direction pressed, including when movement is blocked; desktop and mobile
+map layouts remain usable; reduced-motion mode removes target animation; browser checks cover map visibility,
+collision, route guidance, challenge placement, keyboard movement, and zero console errors; and no unresolved P0/P1
+issues remain. Visual, technical, documentation, and human-release evidence are synchronized.
+
+### Visual navigation decisions
+
+- Use one wide responsive map surface: desktop favors a whole-garden wide shot; small screens may use camera-follow.
+- Keep gameplay instructions in a compact in-map objective ribbon; lower Inspector content is evidence fallback only.
+- Use soft yellow target halos and restrained guided walkways to show what to do without turning the map into a bright
+  quest line.
+- Treat authored walkways as navigation data, not decoration only; collision tests and visual paths must agree.
+- Treat facing as an input/render invariant: a blocked move keeps position but immediately changes the avatar direction.
 
 ## 9.1 Execution Bundles
 

@@ -416,3 +416,13 @@ while leaving the map HUD and challenge overlay accessible. Nearby interaction u
 plants, stations, the learning greenhouse, and the reflection bench. Enter and the in-map action button are equivalent
 inputs; proximity selects or explains a target but never changes HealthReport health, starts a public-repository action,
 or claims a real branch/PR mutation.
+
+## 2026-07-18 — Map readability and navigation treatment
+
+The authored map remains the primary game surface. Stage 16–18 visual work uses a large responsive playfield, subdued
+zone borders, a compact in-map objective ribbon, a soft yellow halo for the next target, and visible guided walkways.
+Questions remain inside the map but use a bounded overlay so the surrounding world stays visible. Stage 17 treats
+walkways as navigation data and requires collision/reachability evidence for every required interaction target. Stage 18
+verifies that blocked movement preserves position but immediately changes the gardener's facing direction. These changes
+are presentation/navigation improvements only; HealthReport truth, public read-only behavior, and sample-only tending
+boundaries remain unchanged.

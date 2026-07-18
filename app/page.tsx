@@ -139,6 +139,13 @@ export default function HomePage() {
       : selectedPlant
         ? explainNode(report, selectedPlant.id, source)
         : null;
+  const nextTarget = goldenPath.reflected
+    ? { x: 38, y: 86, label: "Reflection bench" }
+    : selectedPlant
+      ? { x: selectedPlant.x, y: selectedPlant.y, label: selectedPlant.path }
+      : { x: 50, y: 43, label: "Main garden walk" };
+  const nextTargetLabel =
+    source === "report" ? "Inspect a public-report plant" : nextTarget.label;
   useEffect(() => {
     if (!selectedId) return;
     let cancelled = false;
@@ -517,6 +524,11 @@ export default function HomePage() {
           aria-label="Code garden map"
         >
           <div className="garden-camera-world" style={cameraStyle}>
+            <span
+              className="map-target-halo"
+              style={{ left: `${nextTarget.x}%`, top: `${nextTarget.y}%` }}
+              aria-hidden="true"
+            />
             <div className="garden-map-zones" aria-hidden="true">
               {authoredGardenMap.zones.map((zone) => (
                 <span
@@ -607,7 +619,7 @@ export default function HomePage() {
               <g className="roots" aria-hidden="true">
                 {authoredGardenMap.paths.map((path) => (
                   <polyline
-                    className="authored-map-path"
+                    className="authored-map-path guided"
                     key={path.id}
                     points={path.points}
                   />
@@ -684,8 +696,8 @@ export default function HomePage() {
           </div>
           <div className="map-hud" aria-label="Garden game controls">
             <div className="map-hud-title">
-              <strong>Garden controls</strong>
-              <small>Walk, inspect, and learn here</small>
+              <strong>Next: {nextTargetLabel}</strong>
+              <small>Walk to the golden glow, then press Enter or E</small>
             </div>
             <div className="golden-path" aria-label="Learning journey">
               <div className="golden-path-heading">
@@ -767,8 +779,7 @@ export default function HomePage() {
               ))}
             </div>
             <span className="map-hud-help">
-              Arrows/WASD move · Enter/E interacts · H shows a hint · blocked
-              areas stay blocked
+              Arrows/WASD move · Enter/E interact · H shows a hint
             </span>
             {source === "sample" && selectedPlant ? (
               <div className="map-selection" aria-label="Selected plant action">
@@ -956,8 +967,8 @@ export default function HomePage() {
             </div>
           ) : null}
           <span className="garden-stage-note">
-            Roots show analyzed relative imports. Buildings, ponds, trees, and
-            beds are solid.
+            Walkways are marked. Buildings, ponds, trees, bushes, and beds are
+            solid.
           </span>
         </div>
         <div className="plant-grid" aria-label="Code garden plants">

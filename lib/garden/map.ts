@@ -99,7 +99,26 @@ export const authoredGardenMap = {
       label: "Main garden walk",
       points: "10,74 28,74 42,63 50,43 68,30 69,16",
     },
-    { id: "tool-walk", label: "Tool shed walk", points: "50,43 77,43 86,72" },
+    {
+      id: "learning-walk",
+      label: "Learning greenhouse walk",
+      points: "50,43 50,30 58,22 69,16",
+    },
+    {
+      id: "magnify-walk",
+      label: "Magnifying Glass walk",
+      points: "10,74 12,58 12,30 12,16",
+    },
+    {
+      id: "tool-walk",
+      label: "Tool shed walk",
+      points: "50,43 77,43 86,72 86,82",
+    },
+    {
+      id: "reflection-walk",
+      label: "Reflection bench walk",
+      points: "42,63 42,84 38,86",
+    },
   ] satisfies GardenMapPath[],
   solids: [
     {

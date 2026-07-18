@@ -163,6 +163,22 @@ still serve the earlier verified release until the visual bundle is deliberately
       movement.
 - [ ] Confirm the lower plant list and Inspector are informational fallbacks only; game actions stay in the map.
 
+### Stage 16–18 map readability and navigation
+
+- [ ] Confirm the map is large enough to read as the dominant game surface on desktop; the HUD does not make the
+      world feel tiny.
+- [ ] Confirm zone borders are subtle, guided walkways are visible, and the soft yellow halo identifies the next
+      target without obscuring the plant or landmark.
+- [ ] Confirm the compact objective ribbon names the next target and key action while leaving the map visible.
+- [ ] Open a learning question and confirm its bounded in-map card does not hide the entire garden; close it with
+      Escape and reopen it with Enter/E near the target.
+- [ ] Walk from the entrance to the greenhouse, Magnifying Glass, Clippers, Watering Can, plants, and reflection
+      area; confirm every destination has a clear walkway.
+- [ ] Walk into buildings, ponds, bushes, trees, beds, and landmarks; confirm the gardener stops outside them.
+- [ ] Press each direction, including into a blocked object, and confirm the avatar faces the last direction pressed.
+- [ ] Resize to a phone-sized viewport and repeat the map, halo, collision, overlay, keyboard, and reduced-motion
+      checks without horizontal overflow.
+
 ### Public repository analysis
 
 - [ ] Enter a public URL such as `https://github.com/ColorlibHQ/gentelella`.

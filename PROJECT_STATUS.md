@@ -5,8 +5,8 @@ Updated: 2026-07-18, America/Denver
 ## Active Bundle and Goal
 
 - Bundle: 7 — World, Map, and Visual Language
-- Current goal: Complete the combined Stage 14–15 human gate after connecting the map journey to learning and adding
-  grade-band progression, hint/explanation feedback, and in-map level controls.
+- Current goal: Stage 16 map readability and interaction guidance; make the large map the dominant, self-contained
+  game surface before the Stage 17 walkability and Stage 18 release-polish slices.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
@@ -26,8 +26,10 @@ Updated: 2026-07-18, America/Denver
 - Bundle 4 — Playable Garden World: local world/controls implementation complete; human playtest open.
 - Bundle 5 — Progression and Classroom Value: seasons and voices implemented; final human review open.
 - Bundle 6 — Hardening and Release: technical slice complete; human/release acceptance remains open.
-- Bundle 7 — World, Map, and Visual Language: Stage 12, Stage 13, and Stage 14 implementation slices complete; the
-  Stage 14 technical audit is complete and human acceptance remains open.
+- Bundle 7 — World, Map, and Visual Language: Stage 12–14 implementation slices complete; human acceptance remains
+  open.
+- Bundle 8 — Progression, Feedback, and Release Polish: Stage 16 visual/navigation slice is active; Stage 17
+  reachability and Stage 18 facing/release checks remain queued.
 - Bundle gate: open pending Stage 11 verification, later visual stages, human acceptance, and final
   submission artifacts.
 
@@ -58,6 +60,11 @@ Updated: 2026-07-18, America/Denver
   hint reveal, and plain-language wrong-answer explanations.
 - The existing production deployment remains the fallback while the authored visual world is developed;
   final release acceptance is intentionally not closed yet.
+- The current map readability issues are now tracked as implementation work: the former small playfield, oversized
+  instructional overlay, faint/distracting map chrome, incomplete route coverage, and forward/backward facing concern.
+- The map now has a larger responsive surface, subdued zone borders, visible guided paths, a yellow next-target halo,
+  and a compact in-map objective ribbon. Collision padding is explicit; reachability and final facing verification
+  remain open.
 - Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
   the classroom payoff explains the learning loop and current rehearsal progress.
 - The app remains login-free and works without `OPENAI_API_KEY` through deterministic fallbacks.
@@ -88,9 +95,9 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Human-test and accept the Stage 14–15 map loop, including keyboard-only movement and sprite facing.
-2. Begin Stage 16 tool mastery and reward feedback after the Stage 14–15 gate is accepted.
-3. Re-run human legibility, accessibility, and release evidence through Bundles 7–8.
+1. Run the full checks and stage-end audit for the Stage 16 visual/navigation slice.
+2. Human-test desktop/mobile map scale, target halo, compact overlay, walkways, and facing.
+3. Implement Stage 17 reachability/collision coverage, then Stage 18 final facing and release polish.
 
 ## Synchronization Rules
 
@@ -102,13 +109,15 @@ Updated: 2026-07-18, America/Denver
 
 ## Resume Checkpoint — 2026-07-18
 
-- **Execution state:** active; Stages 14–15 implementation is complete and awaiting their formal gate.
-- **State update:** Stage 14 makes the full map-based learning journey visible and truthfully bounded; Stage 15 adds
-  grade-band progression, age-appropriate questions, hint/explanation feedback, and in-map level controls.
-- **Safe resume point:** Bundle 7 / Stage 14–15 human acceptance.
+- **Execution state:** active; Stages 14–15 implementation is complete and the Stage 16 visual/navigation slice is
+  in progress.
+- **State update:** Stage 16 enlarges and declutters the map, keeps instructions in-map, and makes the next target
+  visible through a yellow halo and guided walkways.
+- **Safe resume point:** Bundle 8 / Stage 16 map readability.
 - **Verified release:** production `https://coding-garden-iota.vercel.app`, commit `bd77258`,
   deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`.
-- **Resume sequence:** read this file and `STAGE_TRACKER.md`; obtain Stage 14–15 human acceptance, then begin Stage 16.
+- **Resume sequence:** read this file and `STAGE_TRACKER.md`; run the Stage 16 visual/navigation checks, then proceed
+  to Stage 17 reachability and Stage 18 facing/release polish.
 - **Scope guard:** do not begin a new bundle or claim Stage 9/10 complete until the open human and
   submission gates below have evidence.
 

@@ -22,7 +22,14 @@ describe("HealthReport garden projection", () => {
       "tool-shed",
       "payoff",
     ]);
-    expect(authoredGardenMap.paths).toHaveLength(2);
+    expect(authoredGardenMap.paths).toHaveLength(5);
+    expect(authoredGardenMap.paths.map((path) => path.id)).toEqual([
+      "main-walk",
+      "learning-walk",
+      "magnify-walk",
+      "tool-walk",
+      "reflection-walk",
+    ]);
     expect(first.plants).toEqual(second.plants);
     expect(first.roots).toEqual(second.roots);
     expect(first.plants).toHaveLength(sampleHealthReport.nodes.length);

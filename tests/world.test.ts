@@ -5,6 +5,7 @@ import {
   isNearWorldPoint,
   moveGardener,
   moveGardenerWithFacing,
+  isWorldPointWalkable,
   toolStations,
 } from "@/lib/garden/world";
 
@@ -57,5 +58,11 @@ describe("garden world controls", () => {
     expect(distanceBetween({ x: 10, y: 10 }, { x: 13, y: 14 })).toBe(5);
     expect(isNearWorldPoint({ x: 10, y: 10 }, { x: 13, y: 14 }, 5)).toBe(true);
     expect(isNearWorldPoint({ x: 10, y: 10 }, { x: 16, y: 14 }, 5)).toBe(false);
+  });
+
+  it("uses collision padding to keep the avatar outside authored solids", () => {
+    const pond = { x: 67, y: 2, width: 16, height: 14 };
+    expect(isWorldPointWalkable({ x: 66, y: 10 }, [pond])).toBe(false);
+    expect(isWorldPointWalkable({ x: 60, y: 20 }, [pond])).toBe(true);
   });
 });

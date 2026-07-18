@@ -102,6 +102,11 @@ Use file inventory plus `rg` to check these invariants. Classify any violation a
 documentation drift** when it could cause an agent or human to follow the wrong source, and
 reconcile it before the stage can be promoted.
 
+For Stages 16–18, also check the map-specific navigation contract: the play surface has a usable responsive size,
+the map is the dominant interaction surface, gameplay controls are not duplicated below it, the next target guidance
+is visible and reduced-motion safe, authored walkways connect the entrance to every required interaction target,
+collision geometry agrees with visible paths, and all four facing directions are covered by tests or browser evidence.
+
 ### Stage completion tracking
 
 Always produce an explicit stage snapshot from the plan. Distinguish:

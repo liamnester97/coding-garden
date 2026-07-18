@@ -63,9 +63,14 @@ text-first evidence fallback for keyboard, screen-reader, and detailed report re
 The gardener faces the last direction pressed. Authored buildings, ponds, trees, beds, benches, and classroom
 landmarks are solid; the avatar cannot walk through them. The current movement slice uses clear outer-map bounds,
 authored collision rectangles, a camera-follow layer, and one nearby-interaction action shared by keyboard and touch
-controls. Enter and E plus the in-map action button are equivalent inputs for plants, stations, the learning
-greenhouse, and the reflection bench. H and Show hint reveal help inside the challenge. The lower Inspector and plant
-list remain detailed, non-interactive evidence fallbacks.
+controls. The map is intentionally large and keeps the next target visible with a soft yellow halo; guided walkways
+show the intended route without changing report truth. Enter and E plus the in-map action button are equivalent inputs
+for plants, stations, the learning greenhouse, and the reflection bench. H and Show hint reveal help inside the
+challenge. The lower Inspector and plant list remain detailed, non-interactive evidence fallbacks.
+
+The objective ribbon is deliberately compact: it names the next target and the key action while leaving the garden
+visible. Questions open as bounded in-map cards rather than taking over the page. On small screens the camera may
+follow the gardener, but the same target, walkway, collision, and keyboard rules apply.
 
 Questions use short sentences and one small idea at a time. Easy asks for a visible count, Medium asks whether to
 check roots, tests, or safety, and Hard asks for one safe next step. The level labels remain useful for older learners

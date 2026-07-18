@@ -26,7 +26,9 @@ export const toolStations = [
   { id: "watering-can", label: "Watering Can", x: 86, y: 82 },
 ] as const;
 
-type SolidArea = { x: number; y: number; width: number; height: number };
+export type SolidArea = { x: number; y: number; width: number; height: number };
+
+export const gardenerCollisionRadius = 3;
 
 function directionFor(direction: string): Facing | null {
   if (direction === "ArrowUp" || direction === "w") return "up";
@@ -37,13 +39,22 @@ function directionFor(direction: string): Facing | null {
 }
 
 function overlapsSolid(point: WorldPoint, solids: SolidArea[]) {
-  const radius = 3;
   return solids.some(
     (solid) =>
-      point.x + radius > solid.x &&
-      point.x - radius < solid.x + solid.width &&
-      point.y + radius > solid.y &&
-      point.y - radius < solid.y + solid.height,
+      point.x + gardenerCollisionRadius > solid.x &&
+      point.x - gardenerCollisionRadius < solid.x + solid.width &&
+      point.y + gardenerCollisionRadius > solid.y &&
+      point.y - gardenerCollisionRadius < solid.y + solid.height,
+  );
+}
+
+export function isWorldPointWalkable(point: WorldPoint, solids: SolidArea[]) {
+  return (
+    point.x >= 6 &&
+    point.x <= 94 &&
+    point.y >= 6 &&
+    point.y <= 94 &&
+    !overlapsSolid(point, solids)
   );
 }
 
@@ -67,7 +78,7 @@ export function moveGardenerWithFacing(
     x: Math.min(94, Math.max(6, point.x + change.x)),
     y: Math.min(94, Math.max(6, point.y + change.y)),
   };
-  if (overlapsSolid(nextPoint, solids)) {
+  if (!isWorldPointWalkable(nextPoint, solids)) {
     return { point, facing: nextFacing, moved: false };
   }
   return { point: nextPoint, facing: nextFacing, moved: true };

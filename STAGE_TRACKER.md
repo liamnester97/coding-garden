@@ -2,21 +2,21 @@
 
 ## Stage
 
-Stages 14–15 Closeout — Golden Path and Learning Levels / Bundle 7 — World, Map, and Visual Language
+Stage 16 — Map Readability and Interaction Guidance / Bundle 8 — Progression, Feedback, and Release Polish
 
 ## Execution Bundle
 
-- **Bundle:** 7 — World, Map, and Visual Language
-- **Current goal:** Complete the combined Stage 14–15 human gate after connecting the map journey to learning and
-  adding grade-band progression, hint/explanation feedback, and in-map level controls.
+- **Bundle:** 8 — Progression, Feedback, and Release Polish
+- **Current goal:** Make the 2D garden map large, legible, self-contained, and obvious to navigate with a compact
+  objective ribbon, target halo, and visible guided walkways.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; Stage 14–15 implementation slices and technical audit are complete, with human acceptance
-  still open.
-- **Audit status:** Stage 9/10, Stage 12, Stage 13, and Stage 14–15 technical audits completed 2026-07-18; human
-  acceptance remains open.
+- **Bundle gate:** Open; Stage 14–15 human acceptance remains open, and the Stage 16–18 visual/navigation slice is
+  now active.
+- **Audit status:** Stage 9/10, Stage 12, Stage 13, and Stage 14–15 technical audits completed 2026-07-18; Stage 16
+  technical audit is pending until the visual/navigation slice is complete.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
 
 ## Stage 11 Goals
@@ -96,14 +96,36 @@ Stages 14–15 Closeout — Golden Path and Learning Levels / Bundle 7 — World
 - [x] Human test guide and canonical roadmap now describe the Stage 14 journey and its truth boundaries.
 - [ ] Mobile human acceptance and formal human stage acceptance remain open.
 
+## Stage 16 Goals — Map readability and interaction guidance
+
+- [x] Increase the map to a large responsive playfield and remove distracting zone borders.
+- [x] Add a compact in-map objective ribbon and keep the challenge overlay inside the map.
+- [x] Add a yellow target halo and visible guided walkway treatment.
+- [x] Keep public reports read-only and the golden path unchanged.
+- [ ] Verify desktop/mobile map legibility and no overlay obstruction in human testing.
+
+### Stage 16 Verification Evidence — 2026-07-18
+
+- [x] Focused world/projection tests pass; the suite is now 65 tests across 14 files.
+- [x] Format, lint, typecheck, and focused tests pass after clearing stale generated `.next/types` duplicates.
+- [ ] Full project checks, browser visual smoke, project-status audit, and human acceptance remain open.
+
+## Stage 17–18 Planned Goals — Walkability and release polish
+
+- [ ] Add deterministic reachability coverage from the entrance to every required interaction target.
+- [ ] Verify visible walkway geometry agrees with collision geometry and route guidance never crosses solids.
+- [ ] Verify all four facing sprites, including blocked-input facing changes, in browser and regression tests.
+- [ ] Complete responsive/mobile/reduced-motion/performance checks and final visual human acceptance.
+
 ## Resume Checkpoint — 2026-07-18
 
 - **State:** active after the overnight pause.
 - **State update:** Stage 12 implementation and technical verification are complete; Stage 13 map-first
   movement/learning is active.
-- **Resume at:** Bundle 7 / Stage 14–15 closeout; implementation is complete and the next work is human acceptance.
+- **Resume at:** Bundle 8 / Stage 16 map readability; the visual/navigation implementation slice is active and its
+  human gate is open.
 - **Release to test:** `https://coding-garden-iota.vercel.app` at verified commit `bd77258`.
-- **Resume order:** Stage 14–15 human acceptance → Stage 16 tool mastery and reward feedback.
+- **Resume order:** Stage 16 map readability → Stage 17 walkability/collision → Stage 18 facing and release polish.
 
 ## Stage Status
 
