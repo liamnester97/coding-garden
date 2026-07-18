@@ -323,3 +323,7 @@ evidenced. Video, human acceptance, and Devpost submission remain open.
 
 The README now also contains the concise submission narrative: Education-track purpose, deterministic
 report-to-garden architecture, Codex/GPT-5.6 roles, and the honest sample-only rehearsal boundary.
+
+The canonical storyboard and human-test guide now use the same release boundary: the public recording
+shows sample-only server-authoritative rehearsals and before/after HealthReport evidence, while any
+credentialed real branch/PR work must be a separately labeled future integration segment.

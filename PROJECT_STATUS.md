@@ -66,7 +66,7 @@ Updated: 2026-07-18, America/Denver
 2. Rehearse or record real demo-fork PR evidence where credentials permit; keep demo mode explicit
    until then.
 3. Have a second person run the human-test guide against production, then gather video/submission
-   evidence and record the remaining release gates.
+   evidence using the documented current-release run-of-show, then record the remaining release gates.
 
 ## Synchronization Rules
 

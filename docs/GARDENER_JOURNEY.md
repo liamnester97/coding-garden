@@ -12,7 +12,9 @@ You open a codebase you've never seen. Instead of ten thousand lines of text, yo
 4. **Learn before tending.** Choose Easy, Medium, or Hard and answer a short report-grounded question. A wrong answer gives a hint; a correct answer unlocks the proposed-scope confirmation.
 5. **Clippers.** Select a withered branch. The garden explains what this dead code is and why it appears unused. Confirm → the sample rehearsal advances through the server-authoritative lifecycle → re-analysis visibly clears the decay. Public reports remain read-only.
 6. **Watering Can.** Pour water on a drought zone. The garden explains what's untested and what a test would protect. Confirm → the sample rehearsal advances through the lifecycle → re-analysis greens the patch.
-7. **The payoff.** Wide shot: the same garden, now lush. Then the reveal — the actual PRs, real diffs, real passing tests that produced every visual change.
+7. **The payoff.** Wide shot: the same garden, now lush. In the current public release, reveal the
+   server-authoritative demo-rehearsal lifecycle and before/after HealthReport comparison; do not call
+   it a real PR or real diff. The real branch/PR reveal is a future/live integration gate.
 
 ## Evidence chain (tool → deterministic signal → real change → visual result)
 
@@ -23,8 +25,8 @@ and real diffs remain a future/live integration gate and are never implied by th
 | Tool                        | Health signal (deterministic)   | What Codex actually does                                       | Garden result                         |
 | --------------------------- | ------------------------------- | -------------------------------------------------------------- | ------------------------------------- |
 | Magnifying Glass            | HealthReport entry for the node | Nothing (read-only); GPT-5.6 explains in plain English         | Plant "introduces itself"             |
-| Clippers                    | Dead/unused-code finding        | Removes the code on a branch, opens PR; analysis re-runs       | Withered branch disappears            |
-| Watering Can                | Coverage gap on the node        | Writes missing tests on a branch; tests pass; analysis re-runs | Drought patch greens up               |
+| Clippers                    | Dead/unused-code finding        | Current release rehearses the validated lifecycle; live integration would remove code on a branch | Withered branch disappears after re-analysis |
+| Watering Can                | Coverage gap on the node        | Current release rehearses the validated lifecycle; live integration would write tests on a branch | Drought patch greens up after re-analysis |
 | Pesticide Spray _(stretch)_ | Vulnerability/bug finding       | Patches the vulnerability on a branch                          | Pest vanishes, rot heals              |
 | Fertilizer _(stretch)_      | Complexity/debt score           | Refactors the function on a branch                             | Plant grows taller, stands straighter |
 

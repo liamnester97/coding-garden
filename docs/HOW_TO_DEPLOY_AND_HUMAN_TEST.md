@@ -121,6 +121,26 @@ mutate the analyzed repository, and do not claim that a real code change landed.
 execution remains a future/live integration gate. An in-progress rehearsal can expire after a
 server restart; restart it from the sample garden if that happens.
 
+### Current-release recording run-of-show
+
+Use this sequence for a truthful sub-three-minute recording of the public release:
+
+1. Open the production URL in sample mode and show the sick plants, roots, findings, and offline source
+   label.
+2. Select a plant with the Magnifying Glass and read one plain-language explanation, naming GPT-5.6 as
+   the optional grounded narrator and the deterministic fallback as the no-key path.
+3. Visit Clippers, answer the authored challenge, show that confirmation is locked before the answer,
+   review the proposed scope, and confirm the sample rehearsal.
+4. Show the lifecycle status reaching `landed`, then show the finding disappearing only after the
+   re-analysis response and the payoff/classroom comparison.
+5. Repeat the learning-gated Watering Can path briefly, then close on the before/after garden.
+6. Say explicitly that Codex built and verified the experience, while this public release remains
+   read-only for analyzed repositories and does not create real branches or PRs.
+
+If a future credentialed live integration is recorded, keep it as a separately labeled segment and
+show the actual branch, checks, PR, and re-analysis evidence rather than blending it with rehearsal
+behavior.
+
 ### Payoff, seasons, and voices
 
 - [ ] The payoff panel shows the original-versus-current finding comparison.

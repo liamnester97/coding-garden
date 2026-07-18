@@ -732,11 +732,15 @@ Deployment per `DEPLOYMENT.md` (Vercel, env vars, per-deploy verification). Oper
 
 1. **0:00–0:20 Hook.** A famously messy repo opens as a garden: overgrown, brown, crawling with pests. "This is a real codebase. You're looking at its actual health."
 2. **0:20–0:50 Understand.** Magnifying Glass on two plants — the code introduces itself in plain English. Name GPT-5.6 on the audio here.
-3. **0:50–2:20 Tend.** Clip a withered branch (show the explanation → confirm → PR opening), water a drought zone (tests being written). Name Codex on the audio: what it's doing, where it accelerated the build, where key decisions were made.
-4. **2:20–2:45 Payoff.** Wide shot: the same garden, lush. Cut to the reveal: the real PRs, diffs, passing tests underneath.
+3. **0:50–2:20 Tend.** In the current anonymous release, show the explanation → learning answer → proposed scope → confirmed sample rehearsal for Clippers and Watering Can. Name Codex on the audio: what it built, where it accelerated the workflow, and where key decisions were made. Do not imply a branch or PR was created.
+4. **2:20–2:45 Payoff.** Wide shot: the same garden, lush. Cut to the before/after HealthReport comparison and server lifecycle evidence. Reserve real PRs, diffs, and passing target-repo tests for a separately credentialed live-integration recording.
 5. **2:45–3:00 Close.** "Code transparency for everyone." Track framing (Education) + URL.
 
 Audio requirement (hard): explicitly cover how Codex AND GPT-5.6 were used.
+
+Current-release boundary: the public login-free build is a truthful demo rehearsal. It does not mutate
+the analyzed repository or create a branch/PR; the video must say this plainly. A live PR recording is
+optional future evidence, not a prerequisite for describing the current release.
 
 ## 15.2 Submission description draft (skeleton)
 

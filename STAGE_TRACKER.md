@@ -119,6 +119,8 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
   setup flow and Build Week submission narrative; public-repository MIT license is committed as
   `LICENSE`; submission checklist reflects the completed track, description, repository, and README
   evidence.
+- [x] Stage 10 recording handoff: the existing human-test guide now contains a current-release
+  run-of-show that distinguishes sample rehearsals from any future credentialed live PR segment.
 
 ## Bundle Gate Protocol
 
