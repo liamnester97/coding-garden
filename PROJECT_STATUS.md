@@ -12,7 +12,7 @@ Updated: 2026-07-17, America/Denver
 
 - Last completed milestone: grounded sample-mode Magnifying Glass explanations are available from
   the inspector and `/api/explain` after deterministic garden projection and analyzer calibration.
-- Passing checks: format:check, lint, typecheck, test, analysis:validate, build.
+- Passing checks: format:check, lint, typecheck, 14 tests, analysis:validate, build, GitHub CI.
 - Failing checks: none.
 - Preview URL: https://coding-garden-brlf2kkis-code-garden.vercel.app
 - Production URL: none.
@@ -21,7 +21,6 @@ Updated: 2026-07-17, America/Denver
 
 ## Blockers
 
-- Vercel account/project connection required for the Stage 1 preview deployment.
 - `OPENAI_API_KEY` required for live explanation/change stages; not configured.
 - Provisional target is now Gentelella; the read-only analysis rehearsal succeeded.
 - Gentelella rehearsal completed: 31 nodes, 70 findings, report hash `6cb7ad388ad7b14b`.
@@ -66,28 +65,29 @@ Updated: 2026-07-17, America/Denver
 
 ## Next Three Actions
 
-1. Connect the Vercel Hobby project and verify the sample-mode interaction there.
-2. Implement bounded read-only analysis for the public GitHub repository boundary.
-3. Complete independent review and human acceptance, then run the project status audit at the stage
-   gate and resolve documentation drift.
+1. Obtain independent review of the Stage 1 implementation and documentation.
+2. Record human acceptance of the Stage 0 scope freeze and Stage 1 promotion.
+3. Begin Stage 2's bounded public-repository analysis rehearsal after the promotion gate.
 
 ## Submission Readiness
 
 - App: Stage 1 bootstrap, analysis, garden renderer, inspector, and sample-mode explanation slice
   running locally; live explanation and verified change flows are next.
-- Repository: local branch has a new uncommitted explanation slice; commit/push is pending after
-  the next bounded implementation slice.
+- Repository: branch is clean and synchronized with `origin` at commit `3ff2393`; draft PR #1 is
+  open and GitHub CI is green.
 
-## Stage-boundary verification snapshot
+## Final Stage 1 verification snapshot
 
-- Full technical suite passed: format, lint, typecheck, 11 tests, analysis fixture validation,
-  production build, and diff checks.
+- Full technical suite passed: format, lint, typecheck, 14 tests, analysis fixture validation,
+  production build, diff checks, and GitHub CI.
+- Vercel preview is public and live; homepage, health, explanation, and public-repository routes
+  passed anonymous smoke tests.
 - Documentation structure passed: one canonical execution plan, one named set of trackers, no
   generic duplicate plan/status/decision files, and archive separation intact.
 - Sensitive-content scan passed: no credential files or actual secret values are tracked.
 - Durable context and Slack routing were checked; no Code Garden-specific Slack item was found.
-- Stage 1 is not formally complete until the external preview, independent review, and human
-  acceptance gates are satisfied and the project-status audit is reconciled.
+- Stage 1 is ready for formal promotion review. Independent review and human acceptance remain the
+  only open stage gates.
 - README: baseline written; submission narrative pending.
 - Demo video: not started.
 - Devpost submission fields: not started.

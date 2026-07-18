@@ -11,7 +11,7 @@ Stage 1 - Repository Bootstrap, Analysis, and Garden Truth
 - **Stage 1 — Bootstrap, analysis, and garden truth:** In progress; bootstrap, HealthReport,
   adapter rehearsal, calibration, fixture commit, projection, and inspector interaction slices
   are complete. The public standalone repository-input boundary is now defined and tested.
-  Vercel preview, independent review, human acceptance, and the project status audit remain open.
+  CI and anonymous Vercel preview are verified; independent review and human acceptance remain open.
 - **Stage 2 — Deterministic analysis engine:** Implementation evidence is complete; formal stage
   promotion remains tied to the Stage 1 gate and the stage-boundary review cadence.
 - **Stage 3 — Garden rendering:** Projection and inspector implementation slices are complete;
@@ -60,10 +60,10 @@ and the first deterministic garden projection before building explanation or cha
 
 ## Completion
 
-- [ ] Self-review
+- [x] Self-review
 - [ ] Independent review
 - [ ] Human acceptance
-- [ ] `PROJECT_STATUS.md` updated
+- [x] `PROJECT_STATUS.md` updated
 - [x] Project status audit run using `project-status-audit/SKILL.md`
 - [x] Audit findings resolved, documented, or explicitly carried forward as open gates
 
@@ -124,11 +124,11 @@ checks.
 - **Evidence:** Cards are keyboard-focusable buttons; selection is exposed with `aria-pressed`;
   the inspector announces updates with `aria-live`; `/api/explain` returns typed, report-grounded
   explanations; no explanation invents findings outside the validated report.
-- **Quality gate:** `format:check`, `lint`, `typecheck`, 9 tests, `analysis:validate`, `build`, and
+- **Quality gate:** `format:check`, `lint`, `typecheck`, 14 tests, `analysis:validate`, `build`, and
   `git diff --check` all pass.
-- **Stage status:** Implementation slice complete; promotion remains open for independent review,
-  human acceptance, preview deployment, live-model integration, prompt evaluation, and the project
-  status audit.
+- **Stage status:** Implementation, CI, preview deployment, and audit synchronization are complete;
+  promotion remains open only for independent review and human acceptance. Live-model integration
+  and prompt evaluation belong to Stage 4, not this stage gate.
 
 ## Roadmap clarification
 
@@ -136,15 +136,18 @@ The canonical roadmap is the ordered Stage 0–10 roadmap in the outer
 `docs/EXECUTION_PLAN.md`. This file is only the live tracker for the current stage and
 its bounded implementation slices, not a replacement roadmap.
 
-## 2026-07-17 stage-boundary evidence snapshot
+## 2026-07-17 final Stage 1 audit evidence snapshot
 
-- Full repository checks passed: formatting, lint, typecheck, 11 tests, fixture validation,
-  production build, and `git diff --check`.
+- Full repository checks passed locally: formatting, lint, typecheck, 14 tests, fixture validation,
+  production build, and `git diff --check`; GitHub CI quality also passed.
+- Git branch is clean and synchronized at `3ff2393`; draft PR #1 is open with Vercel checks passing.
+- Anonymous Vercel preview is live at `https://coding-garden-brlf2kkis-code-garden.vercel.app` and
+  smoke checks passed for the homepage, health, explanation, and public-repository routes.
 - Documentation structure gate passed: one canonical execution plan, one each of the named
   trackers, no generic duplicate tracker names, active root navigation, and historical archive
   separation.
 - Sensitive-content scan found no credential files or actual key/token/private-key values. The
   only credential references are explanatory documentation in `docs/DEPLOYMENT.md`.
 - Durable context and Slack routing were checked; no Code Garden-specific Slack item is open.
-- This is an implementation and synchronization checkpoint, not Stage 1 promotion: Vercel preview,
-  independent review, human acceptance, and the formal audit reconciliation remain open gates.
+- Stage 1 is ready for formal promotion review. Independent review and human acceptance remain
+  explicitly open gates.

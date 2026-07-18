@@ -140,3 +140,11 @@ remains the deterministic no-credential fallback. Private repositories, OAuth/Ap
 long-running hosted analysis jobs, and per-user persistence are later capabilities behind the same
 repository-adapter boundary. This avoids a demo-only architecture while keeping the first release
 safe and achievable.
+
+## 2026-07-17 — Stage 1 technical closeout evidence
+
+The Stage 1 implementation and deployment evidence is complete: 14 local tests pass, GitHub CI is
+green, the branch is clean and pushed at `3ff2393`, and the anonymous Vercel preview plus health,
+explanation, and public-repository routes have been smoke-tested. The stage is ready for formal
+promotion review; independent review and human acceptance remain open and are not inferred from
+automated checks.
