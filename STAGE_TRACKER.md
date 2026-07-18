@@ -12,8 +12,9 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; Stage 9 hardening implementation is in progress.
-- **Audit status:** Stage 9 technical audit completed 2026-07-18; human/release gates remain open.
+- **Bundle gate:** Open; technical hardening and release evidence are complete, while human gates remain
+  open.
+- **Audit status:** Stage 9/10 technical audit completed 2026-07-18; human/release gates remain open.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
 
 ## Stage Status
@@ -40,8 +41,9 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
 - **Stage 8 — Stretch Features:** Seasons now provide Levels 1–3 with Easy/Medium/Hard recommended
   challenge progression, alongside deterministic plant voices; final stretch gate and demo stability
   audit remain open.
-- **Stage 9 — Hardening:** Failure/expiry/replay/oversized-input regression coverage is complete;
-  security checklist, accessibility evidence, and final audit remain in progress.
+- **Stage 9 — Hardening:** Failure/expiry/replay/oversized-input regression coverage, security scan,
+  production browser smoke, and final technical audit are complete; multi-person legibility and human
+  acceptance remain open.
 - **Stage 10 — Deploy, Video, Submission:** Production deployment and remote CI are verified at commit
   `235be74`; video, Devpost, and human acceptance remain open.
 
@@ -107,6 +109,9 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Implementation commit `235be74` and documentation sync commits `12029f1`/`e858a30` are pushed;
   draft PR #1 reports passing GitHub CI quality, Vercel deployment, and Vercel Preview Comments.
   Preview URL is recorded in `PROJECT_STATUS.md`.
+- [x] Production browser smoke on 2026-07-18 verified mobile rendering, sample-mode labels, zero page
+  or console errors, and the Clippers golden path. Opening the tool produced zero `/api/tend` calls
+  before confirmation; a correct answer enabled confirmation and the server lifecycle reached `landed`.
 
 ## Bundle Gate Protocol
 

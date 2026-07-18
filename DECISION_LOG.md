@@ -297,3 +297,11 @@ URL is `https://coding-garden-iota.vercel.app`; deployment
 `coding-garden-38w8yw6ne-code-garden.vercel.app` reported Ready. Live smoke checks returned HTTP 200
 for `/` and `/api/health`, and HTTP 400 for malformed repository input. Video, Devpost submission,
 human acceptance, and real PR evidence remain explicitly open.
+
+## 2026-07-18 — Stage 9/10 browser acceptance evidence
+
+Production browser smoke at `https://coding-garden-iota.vercel.app` verified the mobile surface, sample
+mode/source labels, and zero page or console errors. The Clippers golden path made zero `/api/tend`
+requests before confirmation; after the authored answer was accepted, the server-authoritative sample
+rehearsal completed all transitions to `landed`. This is technical evidence only; second-person
+legibility, human acceptance, real PR evidence, video, and Devpost submission remain open.

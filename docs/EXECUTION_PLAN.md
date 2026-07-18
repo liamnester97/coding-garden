@@ -556,8 +556,9 @@ placeholder quality; copy pass on all explanations; classroom comparison panel (
 Implementation note (2026-07-18): deterministic regression coverage now exercises expired challenge
 attempts, oversized answers, replayed learning proofs, expired command states, failed demo rehearsals,
 and the invariant that failed rehearsals preserve HealthReport findings. Browser smoke covers the sample
-golden path, touch movement, and public read-only mode; credentialed live PR, multi-person, and production
-release evidence remain open.
+golden path, touch movement, public read-only mode, and the production mobile surface. The production
+Clippers rehearsal produced zero tend requests before confirmation and reached `landed` only after a
+correct learning answer; credentialed live PR evidence and multi-person acceptance remain open.
 
 ### Stage 10 — Deploy, Video, Submission
 **Goal:** production deploy verified; demo video shot per §15 storyboard; README submission narrative; Devpost form completed and submitted.

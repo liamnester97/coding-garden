@@ -23,7 +23,7 @@ Updated: 2026-07-18, America/Denver
 - Bundle 3 — Act Safely: sample-only implementation complete; real PR evidence open.
 - Bundle 4 — Playable Garden World: local world/controls implementation complete; human playtest open.
 - Bundle 5 — Progression and Classroom Value: seasons and voices implemented; final human review open.
-- Bundle 6 — Hardening and Release: in progress; technical regression coverage is green.
+- Bundle 6 — Hardening and Release: technical slice complete; human/release acceptance remains open.
 - Bundle gate: open pending hardening audit and human acceptance.
 
 ## Current State
@@ -43,7 +43,8 @@ Updated: 2026-07-18, America/Denver
 - Hardening coverage now exercises expiry, proof replay, oversized challenge input, failed rehearsal,
   and health-preservation behavior.
 - Local and deployed production-mode route smoke passed: `/` 200, `/api/health` 200, and malformed
-  repository input 400 on the production deployment.
+  repository input 400 on the production deployment. Production browser smoke also verified mobile
+  rendering, zero page/console errors, and confirmation-gated Clippers reaching `landed`.
 
 ## Blockers and Open Gates
 
@@ -60,8 +61,8 @@ Updated: 2026-07-18, America/Denver
 1. Capture the five-explanation non-coder read-through and two-person map-legibility evidence.
 2. Rehearse or record real demo-fork PR evidence where credentials permit; keep demo mode explicit
    until then.
-3. Run the human test guide against production, then gather video/submission evidence and record the
-   remaining release gates.
+3. Have a second person run the human-test guide against production, then gather video/submission
+   evidence and record the remaining release gates.
 
 ## Synchronization Rules
 
