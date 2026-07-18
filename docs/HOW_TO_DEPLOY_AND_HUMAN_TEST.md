@@ -124,6 +124,9 @@ still serve the earlier verified release until the visual bundle is deliberately
 - [ ] Clicking a visible plant opens its evidence/Inspector state, and the learning question opens as a map overlay.
 - [ ] Easy uses a short, simple prompt; Medium and Hard remain available for older learners.
 - [ ] The map overlay supports keyboard focus, Escape cancellation, and readable mobile layout.
+- [ ] Move near a plant, station, greenhouse, or reflection bench and verify the in-map proximity status changes.
+- [ ] Press Enter or the in-map interaction button and verify the nearby target is inspected without leaving the map.
+- [ ] Move the gardener and verify the camera-follow layer shifts the authored world while the HUD stays usable.
 
 ### Magnifying Glass
 

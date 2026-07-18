@@ -60,7 +60,9 @@ text-first evidence fallback for keyboard, screen-reader, and detailed report re
 
 The gardener faces the last direction pressed. Authored buildings, ponds, trees, beds, benches, and classroom
 landmarks are solid; the avatar cannot walk through them. The current movement slice uses clear outer-map bounds
-and authored collision rectangles. Camera-follow and true proximity-triggered actions remain planned work.
+authored collision rectangles, a camera-follow layer, and one nearby-interaction action shared by keyboard and
+touch controls. Enter and the in-map action button are equivalent inputs for plants, stations, the learning
+greenhouse, and the reflection bench; the lower Inspector remains the detailed evidence fallback.
 
 Questions use short sentences and one small idea at a time. Easy asks for a visible count, Medium asks for the
 short check name, and Hard asks for one safe next step. The level labels remain useful for older learners without

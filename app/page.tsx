@@ -13,6 +13,7 @@ import type {
 } from "@/lib/garden/challenges";
 import {
   gardenerStart,
+  isNearWorldPoint,
   moveGardenerWithFacing,
   toolStations,
   type Facing,
@@ -85,6 +86,9 @@ export default function HomePage() {
   const challengeAnswerRef = useRef<HTMLInputElement>(null);
   const [gardener, setGardener] = useState<WorldPoint>(gardenerStart);
   const [gardenerFacing, setGardenerFacing] = useState<Facing>("down");
+  const [interactionMessage, setInteractionMessage] = useState<string | null>(
+    null,
+  );
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
   const [seasonId, setSeasonId] = useState("early-spring");
   const seasons = sampleSeasons(sampleHealthReport);
@@ -94,6 +98,24 @@ export default function HomePage() {
   const solids = authoredGardenMap.solids;
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
+  const nearbyPlant = scene.plants.find((plant) =>
+    isNearWorldPoint(gardener, plant, 10),
+  );
+  const nearbyStation = toolStations.find((station) =>
+    isNearWorldPoint(gardener, station, 12),
+  );
+  const nearbyZone = authoredGardenMap.zones.find((zone) => {
+    if (zone.id !== "learning" && zone.id !== "payoff") return false;
+    return isNearWorldPoint(
+      gardener,
+      { x: zone.x + zone.width / 2, y: zone.y + zone.height / 2 },
+      18,
+    );
+  });
+  const cameraStyle = {
+    "--camera-x": `${gardener.x}%`,
+    "--camera-y": `${gardener.y}%`,
+  } as CSSProperties;
   const modeLabel = source === "sample" ? "sample mode" : "public report";
   const visibleExplanation =
     explanation?.nodeId === selectedId
@@ -198,6 +220,39 @@ export default function HomePage() {
     );
     setGardener(next.point);
     setGardenerFacing(next.facing);
+    setInteractionMessage(null);
+  }
+
+  function interactNearby() {
+    if (nearbyStation) {
+      focusStation(nearbyStation.id);
+      setInteractionMessage(
+        `${nearbyStation.label} is ready. Choose a plant to practice on.`,
+      );
+      return;
+    }
+    if (nearbyPlant) {
+      setSelectedId(nearbyPlant.id);
+      setInteractionMessage(
+        `Inspecting ${nearbyPlant.path}. Read the evidence before choosing a tool.`,
+      );
+      return;
+    }
+    if (nearbyZone?.id === "learning") {
+      setInteractionMessage(
+        "Learning greenhouse: move near a plant, then press Inspect nearby.",
+      );
+      return;
+    }
+    if (nearbyZone?.id === "payoff") {
+      setInteractionMessage(
+        "Reflection bench: this is where the before-and-after learning recap appears.",
+      );
+      return;
+    }
+    setInteractionMessage(
+      "Nothing is close enough yet. Walk toward a plant, station, greenhouse, or bench.",
+    );
   }
 
   async function startChallenge(
@@ -444,140 +499,163 @@ export default function HomePage() {
           </p>
         ) : null}
         <div className="garden-stage" aria-label="Code garden map">
-          <div className="garden-map-zones" aria-hidden="true">
-            {authoredGardenMap.zones.map((zone) => (
+          <div className="garden-camera-world" style={cameraStyle}>
+            <div className="garden-map-zones" aria-hidden="true">
+              {authoredGardenMap.zones.map((zone) => (
+                <span
+                  className={`garden-map-zone ${zone.tone}`}
+                  key={zone.id}
+                  style={{
+                    left: `${zone.x}%`,
+                    top: `${zone.y}%`,
+                    width: `${zone.width}%`,
+                    height: `${zone.height}%`,
+                  }}
+                >
+                  <strong>{zone.label}</strong>
+                  <small>{zone.description}</small>
+                </span>
+              ))}
+            </div>
+            <div className="garden-ground" aria-hidden="true">
               <span
-                className={`garden-map-zone ${zone.tone}`}
-                key={zone.id}
-                style={{
-                  left: `${zone.x}%`,
-                  top: `${zone.y}%`,
-                  width: `${zone.width}%`,
-                  height: `${zone.height}%`,
-                }}
-              >
-                <strong>{zone.label}</strong>
-                <small>{zone.description}</small>
-              </span>
-            ))}
-          </div>
-          <div className="garden-ground" aria-hidden="true">
-            <span
-              className="pixel-sprite ground-grass"
-              style={spriteStyle("grass", 0, 0, "large")}
-            />
-            <span
-              className="pixel-sprite ground-soil"
-              style={spriteStyle("soil", 25, 22, "large")}
-            />
-            <span
-              className="pixel-sprite ground-path"
-              style={spriteStyle("stone-path", 42, 38, "large")}
-            />
-            <span
-              className="pixel-sprite ground-pond-edge"
-              style={spriteStyle("pond-edge", 77, 4, "medium")}
-            />
-          </div>
-          <div className="garden-decorations" aria-hidden="true">
-            {authoredGardenDecorations.map((decoration) => (
-              <span
-                className={`pixel-sprite decoration-${decoration.size}`}
-                key={decoration.id}
-                style={spriteStyle(
-                  decoration.sprite,
-                  decoration.x,
-                  decoration.y,
-                  decoration.size,
-                )}
+                className="pixel-sprite ground-grass"
+                style={spriteStyle("grass", 0, 0, "large")}
               />
-            ))}
-          </div>
-          <svg
-            viewBox={authoredGardenMap.viewBox}
-            role="img"
-            aria-label={`${scene.repoName} module map with ${scene.plants.length} plants and ${scene.roots.length} roots`}
-            tabIndex={0}
-            onKeyDown={(event) => {
-              if (
-                [
-                  "ArrowUp",
-                  "ArrowDown",
-                  "ArrowLeft",
-                  "ArrowRight",
-                  "w",
-                  "a",
-                  "s",
-                  "d",
-                ].includes(event.key)
-              ) {
-                event.preventDefault();
-                movePlayer(event.key);
-              }
-            }}
-          >
-            <g className="tool-stations" aria-label="Tool stations">
+              <span
+                className="pixel-sprite ground-soil"
+                style={spriteStyle("soil", 25, 22, "large")}
+              />
+              <span
+                className="pixel-sprite ground-path"
+                style={spriteStyle("stone-path", 42, 38, "large")}
+              />
+              <span
+                className="pixel-sprite ground-pond-edge"
+                style={spriteStyle("pond-edge", 77, 4, "medium")}
+              />
+            </div>
+            <div className="garden-decorations" aria-hidden="true">
+              {authoredGardenDecorations.map((decoration) => (
+                <span
+                  className={`pixel-sprite decoration-${decoration.size}`}
+                  key={decoration.id}
+                  style={spriteStyle(
+                    decoration.sprite,
+                    decoration.x,
+                    decoration.y,
+                    decoration.size,
+                  )}
+                />
+              ))}
+            </div>
+            <svg
+              viewBox={authoredGardenMap.viewBox}
+              role="img"
+              aria-label={`${scene.repoName} module map with ${scene.plants.length} plants and ${scene.roots.length} roots`}
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (
+                  [
+                    "ArrowUp",
+                    "ArrowDown",
+                    "ArrowLeft",
+                    "ArrowRight",
+                    "w",
+                    "a",
+                    "s",
+                    "d",
+                  ].includes(event.key)
+                ) {
+                  event.preventDefault();
+                  movePlayer(event.key);
+                } else if (event.key === "Enter") {
+                  event.preventDefault();
+                  interactNearby();
+                }
+              }}
+            >
+              <g className="tool-stations" aria-label="Tool stations">
+                {toolStations.map((station) => (
+                  <g key={station.id}>
+                    <text x={station.x} y={station.y + 7} textAnchor="middle">
+                      {station.label}
+                    </text>
+                  </g>
+                ))}
+              </g>
+              <g className="roots" aria-hidden="true">
+                {authoredGardenMap.paths.map((path) => (
+                  <polyline
+                    className="authored-map-path"
+                    key={path.id}
+                    points={path.points}
+                  />
+                ))}
+                {scene.roots.map((root, index) => (
+                  <line
+                    key={`${root.from}\0${root.to}\0${index}`}
+                    x1={root.x1}
+                    y1={root.y1}
+                    x2={root.x2}
+                    y2={root.y2}
+                  />
+                ))}
+              </g>
+            </svg>
+            <div className="garden-sprites" aria-hidden="true">
               {toolStations.map((station) => (
-                <g key={station.id}>
-                  <text x={station.x} y={station.y + 7} textAnchor="middle">
-                    {station.label}
-                  </text>
-                </g>
-              ))}
-            </g>
-            <g className="roots" aria-hidden="true">
-              {authoredGardenMap.paths.map((path) => (
-                <polyline
-                  className="authored-map-path"
-                  key={path.id}
-                  points={path.points}
+                <span
+                  className="pixel-sprite station-sprite"
+                  key={station.id}
+                  style={spriteStyle(
+                    stationSprites[station.id],
+                    station.x - 5,
+                    station.y - 5,
+                    "medium",
+                  )}
                 />
               ))}
-              {scene.roots.map((root, index) => (
-                <line
-                  key={`${root.from}\0${root.to}\0${index}`}
-                  x1={root.x1}
-                  y1={root.y1}
-                  x2={root.x2}
-                  y2={root.y2}
+              {scene.plants.map((plant) => (
+                <span
+                  className={`pixel-sprite plant-sprite ${plant.health}`}
+                  key={plant.id}
+                  style={spriteStyle(
+                    plant.sprite,
+                    plant.x - 5.5,
+                    plant.y - 5.5,
+                    "plant",
+                  )}
                 />
               ))}
-            </g>
-          </svg>
-          <div className="garden-sprites" aria-hidden="true">
-            {toolStations.map((station) => (
               <span
-                className="pixel-sprite station-sprite"
-                key={station.id}
+                className="pixel-sprite gardener-sprite"
                 style={spriteStyle(
-                  stationSprites[station.id],
-                  station.x - 5,
-                  station.y - 5,
-                  "medium",
+                  `gardener-${gardenerFacing}` as PixelSpriteId,
+                  gardener.x - 6,
+                  gardener.y - 6,
+                  "avatar",
                 )}
               />
-            ))}
-            {scene.plants.map((plant) => (
-              <span
-                className={`pixel-sprite plant-sprite ${plant.health}`}
-                key={plant.id}
-                style={spriteStyle(
-                  plant.sprite,
-                  plant.x - 5.5,
-                  plant.y - 5.5,
-                  "plant",
-                )}
-              />
-            ))}
-            <span
-              className="pixel-sprite gardener-sprite"
-              style={spriteStyle(
-                `gardener-${gardenerFacing}` as PixelSpriteId,
-                gardener.x - 6,
-                gardener.y - 6,
-                "avatar",
-              )}
-            />
+            </div>
+            <div className="map-plants" aria-label="Plants in the garden">
+              {scene.plants.map((plant) => (
+                <button
+                  key={plant.id}
+                  type="button"
+                  className={`map-plant-button ${plant.health} ${plant.id === selectedId ? "selected" : ""}`}
+                  style={{ left: `${plant.x}%`, top: `${plant.y}%` }}
+                  aria-label={`Inspect ${plant.path}`}
+                  aria-pressed={plant.id === selectedId}
+                  onClick={() => setSelectedId(plant.id)}
+                >
+                  <span
+                    className="pixel-sprite map-plant-sprite"
+                    style={spriteStyle(plant.sprite, 50, 50, "plant")}
+                  />
+                </button>
+              ))}
+            </div>
           </div>
           <div className="map-hud" aria-label="Garden game controls">
             <div className="map-hud-title">
@@ -626,26 +704,31 @@ export default function HomePage() {
               ))}
             </div>
             <span className="map-hud-help">
-              Arrows/WASD move · blocked areas stay blocked
+              Arrows/WASD move · Enter interacts · blocked areas stay blocked
             </span>
-          </div>
-          <div className="map-plants" aria-label="Plants in the garden">
-            {scene.plants.map((plant) => (
-              <button
-                key={plant.id}
-                type="button"
-                className={`map-plant-button ${plant.health} ${plant.id === selectedId ? "selected" : ""}`}
-                style={{ left: `${plant.x}%`, top: `${plant.y}%` }}
-                aria-label={`Inspect ${plant.path}`}
-                aria-pressed={plant.id === selectedId}
-                onClick={() => setSelectedId(plant.id)}
-              >
-                <span
-                  className="pixel-sprite map-plant-sprite"
-                  style={spriteStyle(plant.sprite, 50, 50, "plant")}
-                />
-              </button>
-            ))}
+            <button
+              type="button"
+              className="map-interact"
+              onClick={interactNearby}
+            >
+              {nearbyStation
+                ? `Use ${nearbyStation.label}`
+                : nearbyPlant
+                  ? `Inspect ${nearbyPlant.path}`
+                  : nearbyZone
+                    ? `Explore ${nearbyZone.label}`
+                    : "Inspect nearby"}
+            </button>
+            <span className="map-proximity" role="status" aria-live="polite">
+              {interactionMessage ??
+                (nearbyStation
+                  ? `Nearby: ${nearbyStation.label}`
+                  : nearbyPlant
+                    ? `Nearby: ${nearbyPlant.path}`
+                    : nearbyZone
+                      ? `Nearby: ${nearbyZone.label}`
+                      : "Walk toward a marked place to interact.")}
+            </span>
           </div>
           {pendingFinding &&
           source === "sample" &&

@@ -602,8 +602,9 @@ surface, and learning questions open in the map.
 Implementation note (2026-07-18): the movement slice now uses authored solid areas, direction-aware gardener
 sprites, in-map keyboard/button controls, clickable map plants, and an in-map learning overlay. Challenge copy is
 shortened for a broad first-grade-through-high-school audience while preserving Easy/Medium/Hard server validation.
-Technical checks and desktop/mobile browser smoke pass locally; camera-follow and true proximity-triggered actions
-remain the next Stage 13 slice, and human acceptance remains open.
+The completed movement slice now also includes a camera-follow layer, shared nearby-target detection for plants,
+stations, the learning greenhouse, and the payoff area, plus Enter/in-map interaction equivalents. Technical checks
+and desktop/mobile browser smoke pass locally; the Stage 13 audit and human acceptance remain open.
 
 ### Stage 14 — Exploration-to-Learning Golden Path
 

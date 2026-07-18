@@ -7,6 +7,18 @@ export type WorldMove = {
   moved: boolean;
 };
 
+export function distanceBetween(first: WorldPoint, second: WorldPoint) {
+  return Math.hypot(first.x - second.x, first.y - second.y);
+}
+
+export function isNearWorldPoint(
+  point: WorldPoint,
+  target: WorldPoint,
+  radius = 10,
+) {
+  return distanceBetween(point, target) <= radius;
+}
+
 export const gardenerStart: WorldPoint = { x: 50, y: 86 };
 export const toolStations = [
   { id: "magnify", label: "Magnifying Glass", x: 12, y: 16 },

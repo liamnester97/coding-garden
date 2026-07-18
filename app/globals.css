@@ -277,6 +277,19 @@ main {
   inset: 0;
   pointer-events: none;
 }
+.garden-camera-world {
+  position: absolute;
+  inset: -6%;
+  width: 112%;
+  height: 112%;
+  transform: translate(
+      calc((50% - var(--camera-x)) * 0.16),
+      calc((50% - var(--camera-y)) * 0.16)
+    )
+    scale(1.08);
+  transform-origin: center;
+  transition: transform 180ms ease-out;
+}
 .garden-map-zones {
   z-index: 1;
 }
@@ -487,6 +500,20 @@ main {
 }
 .map-stations button {
   font-size: 0.72rem;
+}
+.map-interact {
+  min-height: 2.2rem;
+  border: 1px solid #f0bd62;
+  border-radius: 0;
+  padding: 0.35rem 0.6rem;
+  background: #355c3c;
+  color: #fff8e8;
+  font: inherit;
+  cursor: pointer;
+}
+.map-proximity {
+  color: #f0d69e;
+  font-size: 0.7rem;
 }
 .map-plant-button {
   position: absolute;

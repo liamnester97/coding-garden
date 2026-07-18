@@ -7,15 +7,15 @@ Stage 13 — Map-First Movement and Learning / Bundle 7 — World, Map, and Visu
 ## Execution Bundle
 
 - **Bundle:** 7 — World, Map, and Visual Language
-- **Current goal:** Keep the full play loop inside the authored map with direction-aware movement, solid landmarks,
-  accessible map controls, and age-flexible learning questions.
+- **Current goal:** Complete Stage 13 verification after adding camera-follow and nearby interactions inside the
+  authored map; then prepare the Stage 14 golden-path slice.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; Stage 13 movement/learning implementation is in progress.
-- **Audit status:** Stage 9/10 technical audit completed 2026-07-18; Stage 12 technical verification completed;
-  Stage 13 audit is pending.
+- **Bundle gate:** Open; Stage 13 implementation slice is complete, with audit and human acceptance still open.
+- **Audit status:** Stage 9/10, Stage 12, and Stage 13 technical audits completed 2026-07-18; human acceptance
+  remains open.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
 
 ## Stage 11 Goals
@@ -53,17 +53,32 @@ Stage 13 — Map-First Movement and Learning / Bundle 7 — World, Map, and Visu
 - [x] Track the gardener’s facing direction and render the matching sprite after keyboard or button movement.
 - [x] Move movement, station, plant-selection, and challenge interactions into the map surface.
 - [x] Simplify challenge wording for a broad first-grade-through-high-school audience without weakening server checks.
-- [ ] Add camera-follow/proximity behavior and complete full checks, browser verification, documentation reconciliation,
-      and the end-of-stage audit.
+- [x] Add camera-follow/proximity behavior with Enter and in-map interaction equivalents for nearby plants, stations,
+      learning, and payoff areas.
+- [x] Complete focused/full checks, desktop/mobile browser verification, and documentation reconciliation.
+- [x] Run the end-of-stage project-status audit and reconcile the documentation structure.
+- [ ] Obtain human acceptance for map legibility, movement, proximity, and accessibility.
+
+### Stage 13 Verification Evidence — 2026-07-18
+
+- [x] Focused world/projection tests pass; the full suite is 61 tests across 13 files.
+- [x] Format, lint, typecheck, analysis validation, production build, and `git diff --check` pass.
+- [x] Desktop browser smoke returned HTTP 200, verified the camera CSS variables changed after movement, exposed
+      one in-map interaction control, and observed zero page errors.
+- [x] Mobile browser smoke verified the map HUD and proximity status with no horizontal overflow or page errors.
+- [x] End-of-stage project-status audit completed: one roadmap, one root tracker/status/decision set, valid links,
+      no generic duplicates, no detected secrets, and no Code Garden-specific Slack item.
+- [ ] Human acceptance remains open.
 
 ## Resume Checkpoint — 2026-07-18
 
 - **State:** active after the overnight pause.
 - **State update:** Stage 12 implementation and technical verification are complete; Stage 13 map-first
   movement/learning is active.
-- **Resume at:** Bundle 7 / Stage 13; the next work is camera/proximity behavior and end-of-stage verification.
+- **Resume at:** Bundle 7 / Stage 13; implementation is complete and the next work is the end-of-stage audit and
+  human acceptance.
 - **Release to test:** `https://coding-garden-iota.vercel.app` at verified commit `bd77258`.
-- **Resume order:** local movement verification → camera/proximity behavior → Stage 13 audit → Stage 14.
+- **Resume order:** Stage 13 audit → human acceptance → Stage 14 golden path.
 
 ## Stage Status
 
@@ -99,9 +114,9 @@ Stage 13 — Map-First Movement and Learning / Bundle 7 — World, Map, and Visu
   are integrated. Final documentation, full audit, and human visual acceptance remain open.
 - **Stage 12 — Authored Garden Map:** Implementation slice is complete: fixed map zones, authored paths,
   visible labels, and regression coverage are integrated. Human wide-shot acceptance remains open.
-- **Stage 13 — Map-First Movement and Learning:** Implementation slice is in progress: direction-aware
-  movement, authored solid areas, in-map controls, clickable plants, and in-map challenge overlay are integrated;
-  camera/proximity behavior and full stage audit remain open.
+- **Stage 13 — Map-First Movement and Learning:** Implementation slice is complete: direction-aware movement,
+  authored solid areas, in-map controls, clickable plants, camera-follow, nearby interactions, and in-map challenge
+  overlay are integrated; the formal stage audit and human acceptance remain open.
 
 ## Historical Foundation Goal
 

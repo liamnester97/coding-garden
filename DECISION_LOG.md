@@ -392,3 +392,11 @@ question belong inside the map. The lower Inspector and plant list remain as an 
 The gardener must face its last travel direction and stop at authored solid landmarks so the map reads as a real
 place rather than a decorative background. Challenge copy is intentionally short and concrete for first-grade
 through high-school learners; difficulty still controls the reasoning depth and is validated server-side.
+
+## 2026-07-18 — Camera-follow and proximity interaction slice
+
+Stage 13 keeps the authored garden as one playable field by shifting a camera-follow world layer around the gardener
+while leaving the map HUD and challenge overlay accessible. Nearby interaction uses one shared target model for
+plants, stations, the learning greenhouse, and the reflection bench. Enter and the in-map action button are equivalent
+inputs; proximity selects or explains a target but never changes HealthReport health, starts a public-repository action,
+or claims a real branch/PR mutation.

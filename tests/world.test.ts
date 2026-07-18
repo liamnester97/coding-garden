@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   gardenerStart,
+  distanceBetween,
+  isNearWorldPoint,
   moveGardener,
   moveGardenerWithFacing,
   toolStations,
@@ -49,5 +51,11 @@ describe("garden world controls", () => {
       facing: "right",
       moved: false,
     });
+  });
+
+  it("supports proximity interaction zones", () => {
+    expect(distanceBetween({ x: 10, y: 10 }, { x: 13, y: 14 })).toBe(5);
+    expect(isNearWorldPoint({ x: 10, y: 10 }, { x: 13, y: 14 }, 5)).toBe(true);
+    expect(isNearWorldPoint({ x: 10, y: 10 }, { x: 16, y: 14 }, 5)).toBe(false);
   });
 });

@@ -5,8 +5,8 @@ Updated: 2026-07-18, America/Denver
 ## Active Bundle and Goal
 
 - Bundle: 7 — World, Map, and Visual Language
-- Current goal: Complete Stage 13 map-first movement and learning: directional facing, authored collisions,
-  in-map controls, and age-flexible challenge presentation.
+- Current goal: Complete the Stage 13 gate after implementing camera-follow and nearby interactions for the
+  map-first movement and learning loop.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
@@ -26,8 +26,8 @@ Updated: 2026-07-18, America/Denver
 - Bundle 4 — Playable Garden World: local world/controls implementation complete; human playtest open.
 - Bundle 5 — Progression and Classroom Value: seasons and voices implemented; final human review open.
 - Bundle 6 — Hardening and Release: technical slice complete; human/release acceptance remains open.
-- Bundle 7 — World, Map, and Visual Language: Stage 12 implementation slice complete; Stage 13 movement/learning
-  slice in progress.
+- Bundle 7 — World, Map, and Visual Language: Stage 12 and Stage 13 implementation slices complete; the Stage 13
+  technical audit is complete and human acceptance remains open.
 - Bundle gate: open pending Stage 11 verification, later visual stages, human acceptance, and final
   submission artifacts.
 
@@ -47,9 +47,9 @@ Updated: 2026-07-18, America/Denver
   are integrated. Final visual/human gates remain open.
 - Stage 12 authored map is complete as an implementation slice: fixed zones and paths now give the pixel garden an
   explicit entrance, learning greenhouse, code beds, root crossing, tool shed, and payoff area.
-- Stage 13 movement/learning is in progress: the map now owns movement/station controls and challenge overlays;
-  facing direction and authored solid areas are deterministic, while camera-follow and true proximity actions
-  remain open.
+- Stage 13 movement/learning implementation is complete: the map owns movement/station controls and challenge
+  overlays; facing direction, authored solid areas, camera-follow, and nearby interactions are deterministic.
+  The technical audit is complete and human acceptance remains open.
 - The existing production deployment remains the fallback while the authored visual world is developed;
   final release acceptance is intentionally not closed yet.
 - Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
@@ -82,9 +82,9 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Finish Stage 13 camera/proximity behavior and run focused/full checks.
-2. Run the Stage 13 browser matrix and end-of-stage project-status audit.
-3. Re-run human legibility, accessibility, and release evidence after Bundles 7–8 are complete.
+1. Obtain human acceptance for map legibility, movement, proximity, and accessibility.
+2. Begin Stage 14’s uninterrupted exploration-to-learning golden path after the gate is accepted.
+3. Re-run human legibility, accessibility, and release evidence through Bundles 7–8.
 
 ## Synchronization Rules
 
@@ -96,14 +96,14 @@ Updated: 2026-07-18, America/Denver
 
 ## Resume Checkpoint — 2026-07-18
 
-- **Execution state:** active; Stage 13 map-first movement/learning implementation is in progress.
+- **Execution state:** active; Stage 13 implementation is complete and awaiting its formal gate.
 - **State update:** Stage 12 implementation slice is complete; Stage 13 has directional movement, authored
-  collision rectangles, in-map controls, and an in-map learning overlay.
-- **Safe resume point:** Bundle 7 / Stage 13 camera, proximity, and end-of-stage verification.
+  collision rectangles, in-map controls, camera-follow, proximity interactions, and an in-map learning overlay.
+- **Safe resume point:** Bundle 7 / Stage 13 human acceptance.
 - **Verified release:** production `https://coding-garden-iota.vercel.app`, commit `bd77258`,
   deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`.
-- **Resume sequence:** read this file and `STAGE_TRACKER.md`; finish Stage 13 camera/proximity behavior, run
-  the browser matrix, then complete the Stage 13 audit before beginning Stage 14.
+- **Resume sequence:** read this file and `STAGE_TRACKER.md`; run the Stage 13 audit, obtain human acceptance,
+  then begin Stage 14.
 - **Scope guard:** do not begin a new bundle or claim Stage 9/10 complete until the open human and
   submission gates below have evidence.
 
@@ -124,4 +124,15 @@ Updated: 2026-07-18, America/Denver
 - Full local checks passed at 60 tests: format, lint, typecheck, test, analysis validation, production build, and
   diff check.
 - Documentation structure/security checks found exactly one roadmap and root tracker/status/decision set, with no
-  detected secrets. Stage 13 camera-follow, true proximity actions, formal audit, and human acceptance remain open.
+  detected secrets. Stage 13 implementation is complete; formal audit and human acceptance remain open.
+
+## Stage 13 Implementation Note — 2026-07-18
+
+- Camera-follow shifts the authored world around the gardener while keeping the in-map HUD and learning overlay
+  stable.
+- Nearby interaction detection covers plants, tool stations, the learning greenhouse, and reflection bench. Enter
+  and the in-map action button provide equivalent interaction paths; proximity does not mutate report health.
+- Full checks passed at 61 tests; desktop/browser smoke returned HTTP 200 with changed camera variables and zero page
+  errors; mobile smoke showed no overflow and zero page errors.
+- The Stage 13 implementation slice and technical project-status audit are complete. Human acceptance and Stage 14
+  start remain open.
