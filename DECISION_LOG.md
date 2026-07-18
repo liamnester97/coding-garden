@@ -149,6 +149,22 @@ and public-repository routes have been smoke-tested. Liam approved Stage 1 promo
 Automated GitHub CI/PR verification plus agent self-review are the independent evidence available;
 no separate human reviewer was available.
 
+## 2026-07-18 — Golden path is an explicit map journey
+
+Stage 14 uses a deterministic local journey model inside the map HUD: Enter → Explore → Inspect → Answer → Confirm
+→ Tend → Re-analyze → Reflect. Milestones are advanced by actual movement, selection, challenge-proof, confirmation,
+server lifecycle, and final report-update events. Public reports intentionally stop at read-only exploration and
+inspection; only the bundled sample can rehearse tending. This makes the educational path visible without weakening
+the server-authoritative command registry or claiming real repository mutation.
+
+## 2026-07-18 — Grade-band learning and map-only game controls
+
+Stages 14–15 use the map as the primary game surface. Enter/E nearby interaction opens a finding challenge, H or
+Show hint reveals help, and wrong answers return a plain-language explanation before the player can retry. Sample
+levels target Grades 1–5, 6–8, and 9–12 with Easy notice/count, Medium clue connection, and Hard safe-next-step
+questions. The lower plant list and Inspector remain non-interactive evidence fallbacks; public reports remain
+read-only and season presentation never changes HealthReport truth.
+
 ## 2026-07-17 — Stage 0–1 promotion approved
 
 Liam approved the Stage 0 scope freeze and Stage 1 promotion. Stage 0 and Stage 1 are complete in

@@ -20,6 +20,11 @@ describe("season and plant voice stretch slices", () => {
       "medium",
       "hard",
     ]);
+    expect(seasons.map((season) => season.gradeBand)).toEqual([
+      "Grades 1–5",
+      "Grades 6–8",
+      "Grades 9–12",
+    ]);
   });
 
   it("keeps plant voices grounded in findings", () => {

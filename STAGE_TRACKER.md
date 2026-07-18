@@ -2,20 +2,21 @@
 
 ## Stage
 
-Stage 13 — Map-First Movement and Learning / Bundle 7 — World, Map, and Visual Language
+Stages 14–15 Closeout — Golden Path and Learning Levels / Bundle 7 — World, Map, and Visual Language
 
 ## Execution Bundle
 
 - **Bundle:** 7 — World, Map, and Visual Language
-- **Current goal:** Complete Stage 13 verification after adding camera-follow and nearby interactions inside the
-  authored map; then prepare the Stage 14 golden-path slice.
+- **Current goal:** Complete the combined Stage 14–15 human gate after connecting the map journey to learning and
+  adding grade-band progression, hint/explanation feedback, and in-map level controls.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; Stage 13 implementation slice is complete, with audit and human acceptance still open.
-- **Audit status:** Stage 9/10, Stage 12, and Stage 13 technical audits completed 2026-07-18; human acceptance
-  remains open.
+- **Bundle gate:** Open; Stage 14–15 implementation slices and technical audit are complete, with human acceptance
+  still open.
+- **Audit status:** Stage 9/10, Stage 12, Stage 13, and Stage 14–15 technical audits completed 2026-07-18; human
+  acceptance remains open.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
 
 ## Stage 11 Goals
@@ -70,15 +71,39 @@ Stage 13 — Map-First Movement and Learning / Bundle 7 — World, Map, and Visu
       no generic duplicates, no detected secrets, and no Code Garden-specific Slack item.
 - [ ] Human acceptance remains open.
 
+### Stage 14 Goals
+
+- [x] Add a deterministic in-map journey model for entering, exploring, inspecting, answering, confirming,
+      rehearsing, re-analysis, and reflection.
+- [x] Advance journey milestones from real map and lifecycle events rather than from a free-form client status.
+- [x] Keep public reports visibly read-only and stop their journey at exploration/inspection.
+- [x] Keep sample-only rehearsals explicit, preserve health until the server returns final re-analysis, and expose
+      failure/error messages without claiming a real branch or PR.
+- [x] Keep the journey status, controls, challenge, and payoff inside the map surface with keyboard and reduced-motion
+      support.
+- [x] Add focused golden-path regression coverage and complete the full technical verification.
+- [x] Run the end-of-stage project-status audit and reconcile the documentation structure.
+- [ ] Obtain human acceptance for the uninterrupted golden path on desktop and mobile.
+
+### Stage 14 Verification Evidence — 2026-07-18
+
+- [x] Added `lib/garden/golden-path.ts` with ordered, monotonic journey milestones and descriptions.
+- [x] Added two focused regression tests; the full suite is now 63 tests across 14 files.
+- [x] Map HUD renders 8/8 journey steps and explains the next action; public mode explicitly says read-only.
+- [x] Full checks passed: format, lint, typecheck, test, analysis validation, production build, and diff check.
+- [x] Desktop production browser smoke returned HTTP 200, rendered the journey HUD, and observed zero page/console
+      errors.
+- [x] Human test guide and canonical roadmap now describe the Stage 14 journey and its truth boundaries.
+- [ ] Mobile human acceptance and formal human stage acceptance remain open.
+
 ## Resume Checkpoint — 2026-07-18
 
 - **State:** active after the overnight pause.
 - **State update:** Stage 12 implementation and technical verification are complete; Stage 13 map-first
   movement/learning is active.
-- **Resume at:** Bundle 7 / Stage 13; implementation is complete and the next work is the end-of-stage audit and
-  human acceptance.
+- **Resume at:** Bundle 7 / Stage 14–15 closeout; implementation is complete and the next work is human acceptance.
 - **Release to test:** `https://coding-garden-iota.vercel.app` at verified commit `bd77258`.
-- **Resume order:** Stage 13 audit → human acceptance → Stage 14 golden path.
+- **Resume order:** Stage 14–15 human acceptance → Stage 16 tool mastery and reward feedback.
 
 ## Stage Status
 
@@ -114,9 +139,15 @@ Stage 13 — Map-First Movement and Learning / Bundle 7 — World, Map, and Visu
   are integrated. Final documentation, full audit, and human visual acceptance remain open.
 - **Stage 12 — Authored Garden Map:** Implementation slice is complete: fixed map zones, authored paths,
   visible labels, and regression coverage are integrated. Human wide-shot acceptance remains open.
-- **Stage 13 — Map-First Movement and Learning:** Implementation slice is complete: direction-aware movement,
-  authored solid areas, in-map controls, clickable plants, camera-follow, nearby interactions, and in-map challenge
-  overlay are integrated; the formal stage audit and human acceptance remain open.
+- **Stage 13 — Map-First Movement and Learning:** Implementation slice and formal technical audit are complete:
+  direction-aware movement, authored solid areas, in-map controls, clickable plants, camera-follow, nearby
+  interactions, and in-map challenge overlay are integrated; human acceptance remains open.
+- **Stage 14 — Exploration-to-Learning Golden Path:** Implementation slice and formal technical audit are complete:
+  the map visibly tracks the ordered journey through inspection, learning proof, confirmation, sample rehearsal,
+  final re-analysis, and reflection; public reports remain read-only; human acceptance remains open.
+- **Stage 15 — Seasons as Learning Levels:** Implementation slice is complete: grade-band learning metadata,
+  age-appropriate Easy/Medium/Hard prompts, in-map level selection, distinct season palettes, hint reveal, and
+  wrong-answer explanations are integrated; human acceptance remains open.
 
 ## Historical Foundation Goal
 
@@ -152,6 +183,18 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
       challenge state on selection, and the payoff includes a classroom learning recap.
 - [ ] External gates: non-coder explanation read-through, real demo-fork PRs, two-person wide-shot
       legibility, human acceptance, public video, and Devpost submission.
+
+### Stage 14–15 closeout slice — 2026-07-18
+
+- [x] Stage 14 keyboard-first map path supports Enter/E nearby interaction; selecting a finding inside the map opens
+      its learning question without requiring the lower Inspector.
+- [x] Stage 15 questions are authored for Grades 1–12: Easy Grades 1–5, Medium Grades 6–8, Hard Grades 9–12.
+- [x] Wrong answers return a hint and a plain-language explanation; the map challenge has a Show hint button and H
+      keyboard shortcut.
+- [x] Season levels and grade-band guidance live inside the map HUD; season ground palettes are visually distinct.
+- [x] Lower plant cards are now a non-interactive text fallback; game actions remain in the map surface.
+- [ ] Human desktop/mobile acceptance remains open for sprite facing, map legibility, keyboard-only play, and the
+      complete Stage 14–15 loop.
 
 ### Four-stage audit evidence — 2026-07-18
 

@@ -8,6 +8,8 @@ export type GardenSeason = {
   recommendedDifficulty: ChallengeDifficulty;
   label: string;
   description: string;
+  gradeBand: string;
+  learningFocus: string;
   report: HealthReport;
 };
 
@@ -27,6 +29,8 @@ export function sampleSeasons(report: HealthReport): GardenSeason[] {
       recommendedDifficulty: "easy",
       label: "Early spring",
       description: "The garden wakes with its original warning signals.",
+      gradeBand: "Grades 1–5",
+      learningFocus: "Notice and count",
       report,
     },
     {
@@ -35,6 +39,8 @@ export function sampleSeasons(report: HealthReport): GardenSeason[] {
       recommendedDifficulty: "medium",
       label: "Mid-summer",
       description: "One real tending action has cleared a withered branch.",
+      gradeBand: "Grades 6–8",
+      learningFocus: "Connect clues",
       report: tendedDead,
     },
     {
@@ -43,6 +49,8 @@ export function sampleSeasons(report: HealthReport): GardenSeason[] {
       recommendedDifficulty: "hard",
       label: "Late summer",
       description: "A second tending action has restored the drought patch.",
+      gradeBand: "Grades 9–12",
+      learningFocus: "Explain a safe step",
       report: tended,
     },
   ];

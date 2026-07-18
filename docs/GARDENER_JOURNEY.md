@@ -9,7 +9,9 @@ You open a codebase you've never seen. Instead of ten thousand lines of text, yo
 1. **Open the garden.** Point Code Garden at the demo repo. The analysis pipeline runs (or the cached sample loads) and the garden renders: one plant per module/function cluster, roots showing imports, sunlight showing coverage.
 2. **Read the landscape.** The overgrown, brown, pest-ridden state is legible without any UI reading: drought zones are visibly dry, dead code is visibly withered, vulnerabilities visibly crawl.
 3. **Magnifying Glass.** Hover any plant → a plain-English explanation of what that code does, grounded strictly in the HealthReport and the code itself. This is the non-coder magic moment.
-4. **Learn before tending.** Choose Easy, Medium, or Hard and answer a short report-grounded question. A wrong answer gives a hint; a correct answer unlocks the proposed-scope confirmation.
+4. **Learn before tending.** Choose a grade-aware Easy, Medium, or Hard level inside the map and answer one short,
+   report-grounded question. Grades 1–5 notice and count, Grades 6–8 connect clues, and Grades 9–12 explain a safe
+   next step. A wrong answer gives a hint and explains the idea; a correct answer unlocks confirmation.
 5. **Clippers.** Select a withered branch. The garden explains what this dead code is and why it appears unused. Confirm → the sample rehearsal advances through the server-authoritative lifecycle → re-analysis visibly clears the decay. Public reports remain read-only.
 6. **Watering Can.** Pour water on a drought zone. The garden explains what's untested and what a test would protect. Confirm → the sample rehearsal advances through the lifecycle → re-analysis greens the patch.
 7. **The payoff.** Wide shot: the same garden, now lush. In the current public release, reveal the
@@ -59,11 +61,12 @@ appear inside the garden so a player can stay in one field of play. The plant ca
 text-first evidence fallback for keyboard, screen-reader, and detailed report review—not a second game route.
 
 The gardener faces the last direction pressed. Authored buildings, ponds, trees, beds, benches, and classroom
-landmarks are solid; the avatar cannot walk through them. The current movement slice uses clear outer-map bounds
-authored collision rectangles, a camera-follow layer, and one nearby-interaction action shared by keyboard and
-touch controls. Enter and the in-map action button are equivalent inputs for plants, stations, the learning
-greenhouse, and the reflection bench; the lower Inspector remains the detailed evidence fallback.
+landmarks are solid; the avatar cannot walk through them. The current movement slice uses clear outer-map bounds,
+authored collision rectangles, a camera-follow layer, and one nearby-interaction action shared by keyboard and touch
+controls. Enter and E plus the in-map action button are equivalent inputs for plants, stations, the learning
+greenhouse, and the reflection bench. H and Show hint reveal help inside the challenge. The lower Inspector and plant
+list remain detailed, non-interactive evidence fallbacks.
 
-Questions use short sentences and one small idea at a time. Easy asks for a visible count, Medium asks for the
-short check name, and Hard asks for one safe next step. The level labels remain useful for older learners without
-making the Easy path depend on advanced code vocabulary.
+Questions use short sentences and one small idea at a time. Easy asks for a visible count, Medium asks whether to
+check roots, tests, or safety, and Hard asks for one safe next step. The level labels remain useful for older learners
+without making the Easy path depend on advanced code vocabulary.

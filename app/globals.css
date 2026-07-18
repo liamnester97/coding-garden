@@ -332,6 +332,18 @@ main {
     linear-gradient(rgb(23 63 34 / 0.35) 1px, transparent 1px), #3f8144;
   background-size: 5% 5%;
 }
+.garden-stage.season-mid-summer .garden-ground {
+  background:
+    linear-gradient(90deg, rgb(39 78 38 / 0.35) 1px, transparent 1px),
+    linear-gradient(rgb(39 78 38 / 0.35) 1px, transparent 1px), #548a43;
+  background-size: 5% 5%;
+}
+.garden-stage.season-late-summer .garden-ground {
+  background:
+    linear-gradient(90deg, rgb(72 77 35 / 0.35) 1px, transparent 1px),
+    linear-gradient(rgb(72 77 35 / 0.35) 1px, transparent 1px), #8a843d;
+  background-size: 5% 5%;
+}
 .pixel-sprite {
   position: absolute;
   display: block;
@@ -474,6 +486,53 @@ main {
   color: #c7d5bf;
   font-size: 0.7rem;
 }
+.golden-path {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.45rem;
+  border: 1px solid #39553d;
+  background: rgb(35 77 48 / 0.66);
+}
+.golden-path-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: #f0f7eb;
+  font-size: 0.75rem;
+}
+.golden-path-heading span {
+  color: #f0d69e;
+}
+.golden-path ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.golden-path li {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+  color: #8fa18b;
+  font-size: 0.58rem;
+  text-align: center;
+}
+.golden-path li span {
+  color: #8fa18b;
+  font-size: 0.85rem;
+}
+.golden-path li.complete,
+.golden-path li.complete span {
+  color: #cdecae;
+}
+.golden-path p {
+  margin: 0;
+  color: #f0d69e;
+  font-size: 0.68rem;
+  line-height: 1.35;
+}
 .map-movement,
 .map-stations {
   display: flex;
@@ -514,6 +573,38 @@ main {
 .map-proximity {
   color: #f0d69e;
   font-size: 0.7rem;
+}
+.map-selection,
+.map-season {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.4rem;
+  border: 1px solid #527357;
+  color: #edf5e9;
+  font-size: 0.72rem;
+}
+.map-selection small,
+.map-season small,
+.map-season label {
+  color: #c7d5bf;
+  font-size: 0.68rem;
+}
+.map-season select {
+  min-height: 2rem;
+  border: 1px solid #71856d;
+  border-radius: 0.35rem;
+  padding: 0.25rem 0.35rem;
+  background: #182b20;
+  color: #edf5e9;
+  font: inherit;
+}
+.map-season select:disabled {
+  opacity: 0.65;
+}
+.map-action-note {
+  margin: 0.35rem 0 0;
+  color: #f0d69e;
+  font-size: 0.76rem;
 }
 .map-plant-button {
   position: absolute;
@@ -584,7 +675,7 @@ main {
   color: inherit;
   font: inherit;
   text-align: left;
-  cursor: pointer;
+  cursor: default;
   transition:
     border-color 160ms ease,
     transform 160ms ease,
@@ -687,6 +778,10 @@ main {
 @media (max-width: 620px) {
   .repository-form-row {
     display: grid;
+  }
+
+  .golden-path ol {
+    grid-template-columns: repeat(4, minmax(3.2rem, 1fr));
   }
 }
 .explanation ul {

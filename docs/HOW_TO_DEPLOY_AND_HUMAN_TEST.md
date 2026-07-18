@@ -136,6 +136,33 @@ still serve the earlier verified release until the visual bundle is deliberately
 - [ ] A healthy plant does not receive invented warnings.
 - [ ] With no `OPENAI_API_KEY`, the deterministic fallback still works.
 
+### Stage 14 exploration-to-learning journey
+
+- [ ] The in-map **Learning journey** shows eight steps: Enter, Explore, Inspect, Answer, Confirm, Tend,
+      Re-analyze, and Reflect.
+- [ ] Move the gardener and select a plant; Explore and Inspect become complete without changing report health.
+- [ ] On the sample, answer the question, review the proposed scope, and confirm before the rehearsal begins.
+- [ ] Watch the journey advance through Tend and Re-analyze only as the server lifecycle responds; the final report
+      update is the event that changes the garden.
+- [ ] Visit the reflection/payoff surface and confirm the before/after explanation is visible.
+- [ ] Analyze a public repository and confirm its journey explains read-only exploration/inspection; it never offers
+      a tending rehearsal or synthetic healing.
+- [ ] Trigger a failed or expired rehearsal and confirm the readable error leaves the original report unchanged.
+- [ ] Repeat the journey with keyboard focus, reduced motion, and a phone-sized viewport.
+
+### Stage 15 grade-band levels and map-only controls
+
+- [ ] Level 1 / Early spring identifies **Grades 1–5** and uses Easy notice-and-count questions.
+- [ ] Level 2 / Mid-summer identifies **Grades 6–8** and uses Medium clue-connection questions.
+- [ ] Level 3 / Late summer identifies **Grades 9–12** and uses Hard safe-next-step questions.
+- [ ] The level selector is inside the game map HUD; the season palette changes without changing report truth.
+- [ ] Walk to a finding plant and press Enter or E; the challenge opens without using controls below the map.
+- [ ] Press H or **Show hint** to reveal help. Submit an incorrect answer and confirm the response explains the idea
+      in plain language before retrying.
+- [ ] Confirm the gardener sprite faces up, down, left, and right after keyboard movement, and solid map objects block
+      movement.
+- [ ] Confirm the lower plant list and Inspector are informational fallbacks only; game actions stay in the map.
+
 ### Public repository analysis
 
 - [ ] Enter a public URL such as `https://github.com/ColorlibHQ/gentelella`.

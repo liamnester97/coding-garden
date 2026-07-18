@@ -603,8 +603,8 @@ Implementation note (2026-07-18): the movement slice now uses authored solid are
 sprites, in-map keyboard/button controls, clickable map plants, and an in-map learning overlay. Challenge copy is
 shortened for a broad first-grade-through-high-school audience while preserving Easy/Medium/Hard server validation.
 The completed movement slice now also includes a camera-follow layer, shared nearby-target detection for plants,
-stations, the learning greenhouse, and the payoff area, plus Enter/in-map interaction equivalents. Technical checks
-and desktop/mobile browser smoke pass locally; the Stage 13 audit and human acceptance remain open.
+stations, the learning greenhouse, and the payoff area, plus Enter/in-map interaction equivalents. Technical checks,
+desktop/mobile browser smoke, and the Stage 13 technical audit pass locally; human acceptance remains open.
 
 ### Stage 14 — Exploration-to-Learning Golden Path
 
@@ -613,12 +613,26 @@ into one uninterrupted educational path.
 **Acceptance:** the golden path works without intervention; public reports remain read-only; sample-only behavior is
 explicit; reduced-motion and failure paths remain usable.
 
+Implementation note (2026-07-18): the map now exposes a deterministic eight-step journey state for Enter, Explore,
+Inspect, Answer, Confirm, Tend, Re-analyze, and Reflect. Movement, map-plant selection, learning-proof success,
+confirmation, rehearsal start, final re-analysis, and payoff each advance the corresponding local milestone. Public
+reports reset the journey to read-only exploration/inspection and cannot advance into tending. The journey status
+remains inside the map HUD so the player can understand what to do without leaving the play surface. Focused
+golden-path tests, full checks, production build, and desktop browser smoke pass; mobile execution remains a human
+evidence item because the local macOS browser runner is permission-limited.
+
 ### Stage 15 — Seasons as Learning Levels
 
 **Goal:** expand seasons into visually distinct progression levels while increasing challenge complexity without
 changing analysis truth.
 **Acceptance:** progression teaches deeper code concepts and the deterministic Easy/Medium/Hard challenge contract
 remains intact.
+
+Implementation note (2026-07-18): the three sample seasons now explicitly map to grade bands: Grades 1–5 use Easy
+notice-and-count questions, Grades 6–8 use Medium clue-connection questions, and Grades 9–12 use Hard safe-next-step
+questions. The map level selector lives inside the game HUD, and each season has a distinct ground palette while
+HealthReport plants, roots, findings, and re-analysis truth remain unchanged. Wrong answers return both a hint and a
+plain-language explanation; the player can also reveal the hint with the in-map button or `H` key.
 
 ### Stage 16 — Tool Mastery and Reward Feedback
 

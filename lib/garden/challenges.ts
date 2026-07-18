@@ -18,10 +18,12 @@ export const challengeQuestionSchema = z.object({
   prompt: z.string().min(1),
   hint: z.string().min(1),
   answer: z.string().min(1),
+  explanation: z.string().min(1),
 });
 
 export const challengePublicSchema = challengeQuestionSchema.omit({
   answer: true,
+  explanation: true,
 });
 export type ChallengeDifficulty = z.infer<typeof challengeDifficultySchema>;
 export type ChallengeQuestion = z.infer<typeof challengeQuestionSchema>;
@@ -44,12 +46,36 @@ function answerFor(
   difficulty: ChallengeDifficulty,
 ) {
   if (difficulty === "easy") return "1";
-  if (difficulty === "medium") return finding.evidence.tool;
+  if (difficulty === "medium")
+    return finding.type === "dead-code"
+      ? "roots"
+      : finding.type === "coverage-gap"
+        ? "tests"
+        : "safety";
   return finding.type === "dead-code"
     ? "check incoming imports before removing it"
     : finding.type === "coverage-gap"
       ? "add a test for this path"
       : "patch the reported vulnerability and rerun checks";
+}
+
+function explanationFor(
+  finding: HealthReport["findings"][number],
+  difficulty: ChallengeDifficulty,
+) {
+  if (difficulty === "easy")
+    return "This plant has one warning signal in the report.";
+  if (difficulty === "medium")
+    return finding.type === "dead-code"
+      ? "Roots show whether another plant depends on this code."
+      : finding.type === "coverage-gap"
+        ? "Tests give this code sunlight by checking that its path still works."
+        : "Safety checks help us understand and repair a security warning.";
+  return finding.type === "dead-code"
+    ? "Check incoming imports before removing code that may be unused."
+    : finding.type === "coverage-gap"
+      ? "Add a small test for this path, then run the checks."
+      : "Patch the reported issue, then run the checks again.";
 }
 
 function objectiveFor(type: HealthReport["findings"][number]["type"]) {
@@ -78,17 +104,22 @@ export function questionForFinding(
     objective: objectiveFor(finding.type),
     prompt:
       difficulty === "easy"
-        ? `Look at ${finding.evidence.file}. How many warnings are here? Type a number.`
+        ? `Look at the plant. How many warning signs do you see? Enter a number.`
         : difficulty === "medium"
-          ? `Which check found this on ${finding.evidence.file}? Type its short name.`
-          : `What is one safe next step for ${finding.evidence.file}? Keep it short.`,
+          ? `What should we check first: roots, tests, or safety? Type one word.`
+          : `What is one safe next step for this plant? Keep it short.`,
     hint:
       difficulty === "easy"
-        ? "Count the warning on this plant. The answer is a number."
+        ? "Count the warning signs on the plant."
         : difficulty === "medium"
-          ? `Read the check label: ${finding.evidence.tool}.`
+          ? finding.type === "dead-code"
+            ? "Look at the roots to see who depends on this plant."
+            : finding.type === "coverage-gap"
+              ? "Tests give a plant sunlight."
+              : "Safety checks help us handle a security warning."
           : "Check first, then make the smallest safe change.",
     answer: answerFor(finding, difficulty),
+    explanation: explanationFor(finding, difficulty),
   });
 }
 

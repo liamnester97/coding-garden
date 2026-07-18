@@ -25,6 +25,11 @@ import {
   type PixelSpriteId,
 } from "@/lib/garden/assets";
 import { authoredGardenMap } from "@/lib/garden/map";
+import {
+  advanceGoldenPath,
+  goldenPathSteps,
+  initialGoldenPathState,
+} from "@/lib/garden/golden-path";
 
 const stationSprites: Record<string, PixelSpriteId> = {
   magnify: "magnifying-glass",
@@ -83,12 +88,14 @@ export default function HomePage() {
   const [challengeFeedback, setChallengeFeedback] = useState<string | null>(
     null,
   );
+  const [showHint, setShowHint] = useState(false);
   const challengeAnswerRef = useRef<HTMLInputElement>(null);
   const [gardener, setGardener] = useState<WorldPoint>(gardenerStart);
   const [gardenerFacing, setGardenerFacing] = useState<Facing>("down");
   const [interactionMessage, setInteractionMessage] = useState<string | null>(
     null,
   );
+  const [goldenPath, setGoldenPath] = useState(initialGoldenPathState);
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
   const [seasonId, setSeasonId] = useState("early-spring");
   const seasons = sampleSeasons(sampleHealthReport);
@@ -98,6 +105,15 @@ export default function HomePage() {
   const solids = authoredGardenMap.solids;
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
+  const selectedTendFinding = selectedPlant
+    ? report.findings.find(
+        (finding) =>
+          finding.nodeId === selectedPlant.id &&
+          (finding.type === "dead-code" ||
+            finding.type === "coverage-gap" ||
+            finding.type === "vulnerability"),
+      )
+    : null;
   const nearbyPlant = scene.plants.find((plant) =>
     isNearWorldPoint(gardener, plant, 10),
   );
@@ -177,6 +193,7 @@ export default function HomePage() {
       setReport(payload.report);
       setSource("report");
       setSelectedId(payload.report.nodes[0]?.id);
+      setGoldenPath(initialGoldenPathState());
       setRequestState("idle");
     } catch (caught) {
       setRequestState("error");
@@ -196,6 +213,8 @@ export default function HomePage() {
     setChallenge(null);
     setChallengeAnswer("");
     setChallengeFeedback(null);
+    setShowHint(false);
+    setGoldenPath((current) => advanceGoldenPath(current, "inspected"));
     void startChallenge(finding, challengeDifficulty);
   }
 
@@ -221,6 +240,9 @@ export default function HomePage() {
     setGardener(next.point);
     setGardenerFacing(next.facing);
     setInteractionMessage(null);
+    if (next.moved) {
+      setGoldenPath((current) => advanceGoldenPath(current, "explored"));
+    }
   }
 
   function interactNearby() {
@@ -233,6 +255,18 @@ export default function HomePage() {
     }
     if (nearbyPlant) {
       setSelectedId(nearbyPlant.id);
+      setGoldenPath((current) => advanceGoldenPath(current, "inspected"));
+      const finding = report.findings.find(
+        (candidate) =>
+          candidate.nodeId === nearbyPlant.id &&
+          (candidate.type === "dead-code" ||
+            candidate.type === "coverage-gap" ||
+            candidate.type === "vulnerability"),
+      );
+      if (source === "sample" && finding) {
+        requestTending(finding);
+        return;
+      }
       setInteractionMessage(
         `Inspecting ${nearbyPlant.path}. Read the evidence before choosing a tool.`,
       );
@@ -304,6 +338,7 @@ export default function HomePage() {
         proof?: string;
         feedback?: string;
         hint?: string;
+        explanation?: string;
         error?: string;
       };
       if (payload.correct && payload.proof) {
@@ -313,10 +348,15 @@ export default function HomePage() {
         setChallengeFeedback(
           "Correct. Review the proposed scope before starting the rehearsal.",
         );
+        setGoldenPath((current) => advanceGoldenPath(current, "answered"));
       } else {
         setChallengeFeedback(
-          payload.feedback ?? payload.error ?? payload.hint ?? "Try again.",
+          [payload.feedback, payload.explanation].filter(Boolean).join(" ") ||
+            payload.error ||
+            payload.hint ||
+            "Try again.",
         );
+        setShowHint(true);
       }
     } catch (caught) {
       setChallengeFeedback(
@@ -359,6 +399,7 @@ export default function HomePage() {
     let currentReport = report;
     let firstRequest = true;
     try {
+      setGoldenPath((current) => advanceGoldenPath(current, "confirmed"));
       while (currentCommand.state !== "landed") {
         const response = await fetch("/api/tend", {
           method: "POST",
@@ -381,11 +422,16 @@ export default function HomePage() {
         currentReport = payload.report;
         firstRequest = false;
         setCommand(currentCommand);
+        if (currentCommand.state === "acting") {
+          setGoldenPath((current) => advanceGoldenPath(current, "rehearsed"));
+        }
       }
       setReport(currentReport);
+      setGoldenPath((current) => advanceGoldenPath(current, "reanalyzed"));
       setSource("sample");
       setSelectedId(finding.nodeId);
       setCompletedCommands((completed) => [...completed, currentCommand]);
+      setGoldenPath((current) => advanceGoldenPath(current, "reflected"));
       setPendingFinding(null);
       setChallenge(null);
     } catch (caught) {
@@ -459,38 +505,6 @@ export default function HomePage() {
           {report.method.coverage}, complexity {report.method.complexity},
           vulnerabilities {report.method.vulnerabilities}.
         </p>
-        <div className="season-controls" aria-label="Garden seasons">
-          <label htmlFor="season-select">Garden season</label>
-          <select
-            id="season-select"
-            value={seasonId}
-            disabled={source !== "sample"}
-            onChange={(event) => {
-              if (source !== "sample") return;
-              const next = seasons.find(
-                (season) => season.id === event.target.value,
-              );
-              if (next) {
-                setSeasonId(next.id);
-                setReport(next.report);
-                setChallengeDifficulty(next.recommendedDifficulty);
-                setPendingFinding(null);
-                setChallenge(null);
-                setSelectedId(next.report.nodes[0]?.id);
-              }
-            }}
-          >
-            {seasons.map((season) => (
-              <option key={season.id} value={season.id}>
-                {season.label}
-              </option>
-            ))}
-          </select>
-          <small>
-            Level {currentSeason.level} · {currentSeason.description}{" "}
-            Recommended challenge: {currentSeason.recommendedDifficulty}.
-          </small>
-        </div>
         {report.scope.kind === "bounded" ? (
           <p className="scope-notice" role="status">
             Bounded analysis: {report.scope.analyzedFiles} of{" "}
@@ -498,7 +512,10 @@ export default function HomePage() {
             {report.scope.omittedFiles} omitted by the intake limits.
           </p>
         ) : null}
-        <div className="garden-stage" aria-label="Code garden map">
+        <div
+          className={`garden-stage season-${currentSeason.id}`}
+          aria-label="Code garden map"
+        >
           <div className="garden-camera-world" style={cameraStyle}>
             <div className="garden-map-zones" aria-hidden="true">
               {authoredGardenMap.zones.map((zone) => (
@@ -570,6 +587,9 @@ export default function HomePage() {
                   event.preventDefault();
                   movePlayer(event.key);
                 } else if (event.key === "Enter") {
+                  event.preventDefault();
+                  interactNearby();
+                } else if (event.key.toLowerCase() === "e") {
                   event.preventDefault();
                   interactNearby();
                 }
@@ -647,7 +667,12 @@ export default function HomePage() {
                   style={{ left: `${plant.x}%`, top: `${plant.y}%` }}
                   aria-label={`Inspect ${plant.path}`}
                   aria-pressed={plant.id === selectedId}
-                  onClick={() => setSelectedId(plant.id)}
+                  onClick={() => {
+                    setSelectedId(plant.id);
+                    setGoldenPath((current) =>
+                      advanceGoldenPath(current, "inspected"),
+                    );
+                  }}
                 >
                   <span
                     className="pixel-sprite map-plant-sprite"
@@ -661,6 +686,44 @@ export default function HomePage() {
             <div className="map-hud-title">
               <strong>Garden controls</strong>
               <small>Walk, inspect, and learn here</small>
+            </div>
+            <div className="golden-path" aria-label="Learning journey">
+              <div className="golden-path-heading">
+                <strong>Learning journey</strong>
+                <span>
+                  {goldenPathSteps.filter((step) => goldenPath[step.id]).length}
+                  /{goldenPathSteps.length}
+                </span>
+              </div>
+              <ol>
+                {goldenPathSteps.map((step) => (
+                  <li
+                    key={step.id}
+                    className={goldenPath[step.id] ? "complete" : ""}
+                    title={step.description}
+                  >
+                    <span aria-hidden="true">
+                      {goldenPath[step.id] ? "✓" : "○"}
+                    </span>
+                    {step.label}
+                  </li>
+                ))}
+              </ol>
+              <p role="status" aria-live="polite">
+                {source === "report"
+                  ? "Public report: explore and inspect only. This garden is read-only."
+                  : goldenPath.reflected
+                    ? "Garden updated after verified sample re-analysis. Visit the reflection bench."
+                    : goldenPath.confirmed
+                      ? "The scope is confirmed. The sample rehearsal is running."
+                      : goldenPath.answered
+                        ? "You understand the finding. Confirm the proposed scope to continue."
+                        : goldenPath.inspected
+                          ? "Read the evidence, then choose a tool for this plant."
+                          : goldenPath.explored
+                            ? "You found the garden. Walk to a plant and inspect it."
+                            : "Use the map to explore the garden."}
+              </p>
             </div>
             <div className="map-movement" aria-label="Move gardener">
               <button
@@ -704,8 +767,62 @@ export default function HomePage() {
               ))}
             </div>
             <span className="map-hud-help">
-              Arrows/WASD move · Enter interacts · blocked areas stay blocked
+              Arrows/WASD move · Enter/E interacts · H shows a hint · blocked
+              areas stay blocked
             </span>
+            {source === "sample" && selectedPlant ? (
+              <div className="map-selection" aria-label="Selected plant action">
+                <strong>Selected: {selectedPlant.path}</strong>
+                {selectedTendFinding ? (
+                  <button
+                    type="button"
+                    className="map-interact"
+                    onClick={() => requestTending(selectedTendFinding)}
+                  >
+                    {selectedTendFinding.type === "dead-code"
+                      ? "Press to use Clippers"
+                      : selectedTendFinding.type === "coverage-gap"
+                        ? "Press to use Watering Can"
+                        : "Press to use Pesticide"}
+                  </button>
+                ) : (
+                  <small>This plant is healthy. Keep exploring.</small>
+                )}
+              </div>
+            ) : null}
+            <div className="map-season" aria-label="Garden level">
+              <label htmlFor="map-season-select">Garden level</label>
+              <select
+                id="map-season-select"
+                value={seasonId}
+                disabled={source !== "sample"}
+                onChange={(event) => {
+                  if (source !== "sample") return;
+                  const next = seasons.find(
+                    (season) => season.id === event.target.value,
+                  );
+                  if (next) {
+                    setSeasonId(next.id);
+                    setReport(next.report);
+                    setChallengeDifficulty(next.recommendedDifficulty);
+                    setPendingFinding(null);
+                    setChallenge(null);
+                    setSelectedId(next.report.nodes[0]?.id);
+                    setGoldenPath(initialGoldenPathState());
+                  }
+                }}
+              >
+                {seasons.map((season) => (
+                  <option key={season.id} value={season.id}>
+                    Level {season.level} · {season.label}
+                  </option>
+                ))}
+              </select>
+              <small>
+                {currentSeason.gradeBand} · {currentSeason.learningFocus} ·{" "}
+                {currentSeason.recommendedDifficulty}
+              </small>
+            </div>
             <button
               type="button"
               className="map-interact"
@@ -746,6 +863,10 @@ export default function HomePage() {
                   setPendingFinding(null);
                   setChallenge(null);
                   setChallengeFeedback(null);
+                  setShowHint(false);
+                } else if (event.key.toLowerCase() === "h") {
+                  event.preventDefault();
+                  setShowHint(true);
                 }
               }}
             >
@@ -783,9 +904,11 @@ export default function HomePage() {
                   disabled={Boolean(challenge.proof)}
                   aria-describedby="map-challenge-hint map-challenge-feedback"
                 />
-                <small id="map-challenge-hint">
-                  Hint: {challenge.question.hint}
-                </small>
+                {showHint ? (
+                  <small id="map-challenge-hint">
+                    Hint: {challenge.question.hint}
+                  </small>
+                ) : null}
                 {challengeFeedback ? (
                   <p id="map-challenge-feedback" role="status">
                     {challengeFeedback}
@@ -798,6 +921,14 @@ export default function HomePage() {
                   disabled={Boolean(challenge.proof) || !challengeAnswer.trim()}
                 >
                   Check answer
+                </button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => setShowHint(true)}
+                  disabled={Boolean(challenge.proof)}
+                >
+                  Show hint
                 </button>
               </div>
               <div className="confirmation-actions">
@@ -816,6 +947,7 @@ export default function HomePage() {
                     setPendingFinding(null);
                     setChallenge(null);
                     setChallengeFeedback(null);
+                    setShowHint(false);
                   }}
                 >
                   Close
@@ -830,19 +962,16 @@ export default function HomePage() {
         </div>
         <div className="plant-grid" aria-label="Code garden plants">
           {scene.plants.map((plant) => (
-            <button
+            <div
               className={`plant-card ${plant.health} ${plant.id === selectedId ? "selected" : ""}`}
               key={plant.id}
-              type="button"
-              aria-pressed={plant.id === selectedId}
-              onClick={() => setSelectedId(plant.id)}
             >
               <span className="plant-dot" style={{ background: plant.color }} />
               <div>
                 <strong>{plant.path}</strong>
                 <p>{plant.ariaLabel}</p>
               </div>
-            </button>
+            </div>
           ))}
         </div>
         {selectedPlant ? (
@@ -892,28 +1021,10 @@ export default function HomePage() {
                     (finding.label === "unreachable branch" ||
                       finding.label === "unwatered test path" ||
                       finding.label === "security pest") ? (
-                      <button
-                        type="button"
-                        className="tool-button"
-                        onClick={() => {
-                          const sourceFinding = report.findings.find(
-                            (candidate) =>
-                              candidate.nodeId === selectedPlant.id &&
-                              candidate.summary === finding.summary,
-                          );
-                          if (sourceFinding) requestTending(sourceFinding);
-                        }}
-                        disabled={
-                          command?.state === "acting" ||
-                          command?.state === "verifying"
-                        }
-                      >
-                        {finding.label === "unreachable branch"
-                          ? "Use Clippers"
-                          : finding.label === "unwatered test path"
-                            ? "Use Watering Can"
-                            : "Use Pesticide"}
-                      </button>
+                      <p className="map-action-note">
+                        Return to the map and choose the selected plant action
+                        in the game controls.
+                      </p>
                     ) : null}
                   </li>
                 ))}

@@ -22,7 +22,7 @@ describe("learning challenge gate", () => {
       "medium",
     );
     expect(question?.objective).toContain("unused");
-    expect(question?.answer).toBe("import-graph");
+    expect(question?.answer).toBe("roots");
     expect(
       JSON.stringify(
         questionForFinding(sampleHealthReport, "dead-src-unused", "medium"),
@@ -36,8 +36,8 @@ describe("learning challenge gate", () => {
       "dead-src-unused",
       "easy",
     );
-    expect(question?.prompt).toContain("How many warnings");
-    expect(question?.prompt).toContain("Type a number");
+    expect(question?.prompt).toContain("How many warning signs");
+    expect(question?.prompt).toContain("Enter a number");
     expect(question?.objective).not.toContain("module");
   });
 
@@ -70,11 +70,38 @@ describe("learning challenge gate", () => {
         findingId: "dead-src-unused",
         difficulty: started.question.difficulty,
         attemptId: started.attemptId,
-        answer: "import-graph",
+        answer: "roots",
       }),
     );
     expect(right.status).toBe(200);
     expect((await right.json()).proof).toMatch(/^proof-/);
+  });
+
+  it("explains the answer after an incorrect response", async () => {
+    const start = await POST(
+      request({
+        report: sampleHealthReport,
+        findingId: "dead-src-unused",
+        difficulty: "easy",
+      }),
+    );
+    const started = (await start.json()) as { attemptId: string };
+    const wrong = await POST(
+      request({
+        report: sampleHealthReport,
+        findingId: "dead-src-unused",
+        difficulty: "easy",
+        attemptId: started.attemptId,
+        answer: "2",
+      }),
+    );
+    const payload = (await wrong.json()) as {
+      explanation?: string;
+      hint?: string;
+    };
+    expect(wrong.status).toBe(422);
+    expect(payload.hint).toBeTruthy();
+    expect(payload.explanation).toContain("one warning");
   });
 
   it("supports all three levels and does not accept arbitrary reports", async () => {

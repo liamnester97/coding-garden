@@ -5,8 +5,8 @@ Updated: 2026-07-18, America/Denver
 ## Active Bundle and Goal
 
 - Bundle: 7 — World, Map, and Visual Language
-- Current goal: Complete the Stage 13 gate after implementing camera-follow and nearby interactions for the
-  map-first movement and learning loop.
+- Current goal: Complete the combined Stage 14–15 human gate after connecting the map journey to learning and adding
+  grade-band progression, hint/explanation feedback, and in-map level controls.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
@@ -26,8 +26,8 @@ Updated: 2026-07-18, America/Denver
 - Bundle 4 — Playable Garden World: local world/controls implementation complete; human playtest open.
 - Bundle 5 — Progression and Classroom Value: seasons and voices implemented; final human review open.
 - Bundle 6 — Hardening and Release: technical slice complete; human/release acceptance remains open.
-- Bundle 7 — World, Map, and Visual Language: Stage 12 and Stage 13 implementation slices complete; the Stage 13
-  technical audit is complete and human acceptance remains open.
+- Bundle 7 — World, Map, and Visual Language: Stage 12, Stage 13, and Stage 14 implementation slices complete; the
+  Stage 14 technical audit is complete and human acceptance remains open.
 - Bundle gate: open pending Stage 11 verification, later visual stages, human acceptance, and final
   submission artifacts.
 
@@ -50,6 +50,12 @@ Updated: 2026-07-18, America/Denver
 - Stage 13 movement/learning implementation is complete: the map owns movement/station controls and challenge
   overlays; facing direction, authored solid areas, camera-follow, and nearby interactions are deterministic.
   The technical audit is complete and human acceptance remains open.
+- Stage 14 golden-path implementation is complete: the map HUD now tracks Enter → Explore → Inspect → Answer →
+  Confirm → Tend → Re-analyze → Reflect. Public reports stop at read-only exploration/inspection; sample-only
+  rehearsals advance only after the existing server-authoritative lifecycle responds.
+- Stage 15 implementation is complete locally: seasons map to Grades 1–5, 6–8, and 9–12 with progressively deeper
+  Easy/Medium/Hard questions, in-map level selection, distinct season ground palettes, keyboard-first nearby action,
+  hint reveal, and plain-language wrong-answer explanations.
 - The existing production deployment remains the fallback while the authored visual world is developed;
   final release acceptance is intentionally not closed yet.
 - Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
@@ -82,8 +88,8 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Obtain human acceptance for map legibility, movement, proximity, and accessibility.
-2. Begin Stage 14’s uninterrupted exploration-to-learning golden path after the gate is accepted.
+1. Human-test and accept the Stage 14–15 map loop, including keyboard-only movement and sprite facing.
+2. Begin Stage 16 tool mastery and reward feedback after the Stage 14–15 gate is accepted.
 3. Re-run human legibility, accessibility, and release evidence through Bundles 7–8.
 
 ## Synchronization Rules
@@ -96,14 +102,13 @@ Updated: 2026-07-18, America/Denver
 
 ## Resume Checkpoint — 2026-07-18
 
-- **Execution state:** active; Stage 13 implementation is complete and awaiting its formal gate.
-- **State update:** Stage 12 implementation slice is complete; Stage 13 has directional movement, authored
-  collision rectangles, in-map controls, camera-follow, proximity interactions, and an in-map learning overlay.
-- **Safe resume point:** Bundle 7 / Stage 13 human acceptance.
+- **Execution state:** active; Stages 14–15 implementation is complete and awaiting their formal gate.
+- **State update:** Stage 14 makes the full map-based learning journey visible and truthfully bounded; Stage 15 adds
+  grade-band progression, age-appropriate questions, hint/explanation feedback, and in-map level controls.
+- **Safe resume point:** Bundle 7 / Stage 14–15 human acceptance.
 - **Verified release:** production `https://coding-garden-iota.vercel.app`, commit `bd77258`,
   deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`.
-- **Resume sequence:** read this file and `STAGE_TRACKER.md`; run the Stage 13 audit, obtain human acceptance,
-  then begin Stage 14.
+- **Resume sequence:** read this file and `STAGE_TRACKER.md`; obtain Stage 14–15 human acceptance, then begin Stage 16.
 - **Scope guard:** do not begin a new bundle or claim Stage 9/10 complete until the open human and
   submission gates below have evidence.
 
@@ -124,7 +129,7 @@ Updated: 2026-07-18, America/Denver
 - Full local checks passed at 60 tests: format, lint, typecheck, test, analysis validation, production build, and
   diff check.
 - Documentation structure/security checks found exactly one roadmap and root tracker/status/decision set, with no
-  detected secrets. Stage 13 implementation is complete; formal audit and human acceptance remain open.
+  detected secrets. Stage 13 implementation and formal technical audit are complete; human acceptance remains open.
 
 ## Stage 13 Implementation Note — 2026-07-18
 
@@ -136,3 +141,21 @@ Updated: 2026-07-18, America/Denver
   errors; mobile smoke showed no overflow and zero page errors.
 - The Stage 13 implementation slice and technical project-status audit are complete. Human acceptance and Stage 14
   start remain open.
+
+## Stage 14 Implementation Note — 2026-07-18
+
+- The map now exposes an ordered eight-step journey: Enter, Explore, Inspect, Answer, Confirm, Tend, Re-analyze,
+  and Reflect. Each step is advanced by a real UI/lifecycle event and the state is monotonic for the current session.
+- Public report analysis resets the journey to read-only exploration/inspection; it cannot enter challenge confirmation
+  or tending. Sample rehearsals remain explicit and only the final server response updates the report and reflection.
+- Technical checks passed at 63 tests; production browser smoke returned HTTP 200 with the journey HUD and zero
+  page/console errors. Mobile human evidence and final stage acceptance remain open.
+
+## Stage 15 Implementation Note — 2026-07-18
+
+- The three sample levels now target Grades 1–5, 6–8, and 9–12 with Easy notice/count, Medium clue connection, and
+  Hard safe-next-step learning objectives. The model never grades answers or changes report truth.
+- The level selector and selected-plant action are inside the game HUD. Enter/E nearby interaction opens a challenge
+  for a finding plant; H or Show hint reveals the clue; incorrect answers return a plain-language explanation.
+- Season palettes are visually distinct without changing report-derived plants, roots, findings, or health. The lower
+  plant list remains text-only evidence fallback rather than a second game control surface.

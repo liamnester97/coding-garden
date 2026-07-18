@@ -135,8 +135,9 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         correct: false,
-        feedback: "Not quite. Use the evidence and try again.",
+        feedback: "Not quite. Read the clue, then try again.",
         hint: attempt.question.hint,
+        explanation: attempt.question.explanation,
       },
       { status: 422 },
     );
