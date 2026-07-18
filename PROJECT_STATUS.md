@@ -9,9 +9,9 @@ Updated: 2026-07-18, America/Denver
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Production-verified release commit: `235be74`; latest pushed branch commit: `9a2d9c2` (accessibility
-  slice), with release documentation sync commits `12029f1`, `e858a30`, `8462b1f`, and `e9a25fb` also
-  pushed to origin.
+- Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`); this
+  includes the latest pushed accessibility and audit reconciliation work. Earlier release/documentation
+  commits are preserved in history.
 - Vercel preview: https://coding-garden-git-agent-health-report-foundation-code-garden.vercel.app
 - Production: https://coding-garden-iota.vercel.app
 - Remote evidence: GitHub CI quality passed; Vercel deployment and preview comments passed. Production
@@ -85,7 +85,7 @@ Updated: 2026-07-18, America/Denver
 
 ## Latest Verification Note
 
-- The latest branch head `9a2d9c2` passed the full local check suite and draft PR #1 remote checks
-  (GitHub CI quality, Vercel deployment, and Vercel Preview Comments) on 2026-07-18. The public
-  production URL is still documented against its separately verified release commit `235be74` until
-  a new production promotion is intentionally performed.
+- Commit `bd77258` passed the full local check suite and draft PR #1 remote checks (GitHub CI quality,
+  Vercel deployment, and Vercel Preview Comments), then was intentionally promoted to production on
+  2026-07-18. Live smoke verified `/` 200, `/api/health` 200, keyless `POST /api/explain` 200, malformed
+  repository/tending payloads 400, mobile sample mode, and zero page/console errors.

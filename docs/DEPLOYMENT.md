@@ -46,5 +46,6 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
 ## Production cut for submission
 
 - [x] Promote a verified preview to production before the final video is recorded, so the video shows the
-  URL the judges will visit: https://coding-garden-iota.vercel.app (commit `235be74`, verified 2026-07-18).
+  URL the judges will visit: https://coding-garden-iota.vercel.app (commit `bd77258`, deployment
+  `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`, verified 2026-07-18).
 - Freeze deploys after final verification (Execution Plan §15) except for critical fixes.

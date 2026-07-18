@@ -44,9 +44,8 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
 - **Stage 9 — Hardening:** Failure/expiry/replay/oversized-input regression coverage, security scan,
   production browser smoke, and final technical audit are complete; multi-person legibility and human
   acceptance remain open.
-- **Stage 10 — Deploy, Video, Submission:** Production deployment remains verified at release commit
-  `235be74`; the latest pushed branch commit is `9a2d9c2` with passing remote CI/Vercel checks. Video,
-  Devpost, and human acceptance remain open.
+- **Stage 10 — Deploy, Video, Submission:** Production is now verified at commit `bd77258` (deployment
+  `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`); video, Devpost, and human acceptance remain open.
 
 ## Goal
 
@@ -134,6 +133,9 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
   evidence.
 - [x] Stage 10 recording handoff: the existing human-test guide now contains a current-release
   run-of-show that distinguishes sample rehearsals from any future credentialed live PR segment.
+- [x] Production promotion: commit `bd77258` is Ready at `https://coding-garden-iota.vercel.app`;
+  live smoke returned `/` 200, `/api/health` 200, keyless `POST /api/explain` 200, malformed repository
+  and tending payloads 400, mobile sample-mode rendering, and zero page/console errors.
 
 ## Bundle Gate Protocol
 

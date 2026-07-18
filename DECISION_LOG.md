@@ -328,6 +328,15 @@ The canonical storyboard and human-test guide now use the same release boundary:
 shows sample-only server-authoritative rehearsals and before/after HealthReport evidence, while any
 credentialed real branch/PR work must be a separately labeled future integration segment.
 
+## 2026-07-18 — Production promotion updated after audit reconciliation
+
+The CI-green audit head `bd77258` was intentionally promoted to the Vercel production project after
+the accessibility and documentation-audit slices passed. Deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`
+reported Ready at `https://coding-garden-iota.vercel.app`. Live checks confirmed the homepage, health
+route, keyless explanation fallback, malformed-input responses, mobile sample mode, and zero browser
+errors. This updates the earlier Stage 10 production evidence; it does not close human acceptance,
+real PR, video, or Devpost gates.
+
 ## 2026-07-18 — Production browser matrix evidence
 
 Production browser rehearsal covered both sample tools: Clippers and Watering Can each made zero
