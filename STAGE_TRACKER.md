@@ -80,7 +80,7 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Stage 8 progression slice: seasons expose deterministic level/difficulty metadata, reset stale
   challenge state on selection, and the payoff includes a classroom learning recap.
 - [ ] External gates: non-coder explanation read-through, real demo-fork PRs, two-person wide-shot
-  legibility, human acceptance, and production evidence.
+  legibility, human acceptance, public video, and Devpost submission.
 
 ### Four-stage audit evidence — 2026-07-18
 

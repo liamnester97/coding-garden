@@ -24,7 +24,8 @@ Updated: 2026-07-18, America/Denver
 - Bundle 4 — Playable Garden World: local world/controls implementation complete; human playtest open.
 - Bundle 5 — Progression and Classroom Value: seasons and voices implemented; final human review open.
 - Bundle 6 — Hardening and Release: technical slice complete; human/release acceptance remains open.
-- Bundle gate: open pending hardening audit and human acceptance.
+- Bundle gate: open pending human acceptance and final submission artifacts; technical hardening and
+  production evidence are complete.
 
 ## Current State
 
