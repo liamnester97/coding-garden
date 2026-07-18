@@ -2,6 +2,11 @@ import { describe, expect, it } from "vitest";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
 import { projectHealthReport } from "@/lib/garden/project";
 import { explainNode } from "@/lib/garden/explanation";
+import {
+  pixelSpriteManifest,
+  spriteForHealth,
+  spritePosition,
+} from "@/lib/garden/assets";
 
 describe("HealthReport garden projection", () => {
   it("is deterministic and preserves report health", () => {
@@ -123,5 +128,33 @@ describe("HealthReport garden projection", () => {
     ]);
     expect(scene.plants[0]?.x).toBeGreaterThanOrEqual(10);
     expect(scene.plants[0]?.x).toBeLessThanOrEqual(89);
+  });
+
+  it("maps HealthReport health to the authored plant sprite states", () => {
+    const scene = projectHealthReport(sampleHealthReport);
+
+    expect(scene.plants.map((plant) => plant.sprite)).toEqual([
+      "stressed-plant",
+      "withered-plant",
+      "healthy-plant",
+    ]);
+    expect(spriteForHealth("healthy")).toBe("healthy-plant");
+    expect(spriteForHealth("stressed")).toBe("stressed-plant");
+    expect(spriteForHealth("withered")).toBe("withered-plant");
+  });
+
+  it("keeps every authored sprite manifest entry inside the four-cell atlas", () => {
+    for (const sprite of Object.values(pixelSpriteManifest)) {
+      expect(sprite.column).toBeGreaterThanOrEqual(0);
+      expect(sprite.column).toBeLessThanOrEqual(3);
+      expect(sprite.row).toBeGreaterThanOrEqual(0);
+      expect(sprite.row).toBeLessThanOrEqual(3);
+      expect(sprite.label.length).toBeGreaterThan(0);
+      expect(sprite.purpose.length).toBeGreaterThan(0);
+    }
+    expect(spritePosition("healthy-plant")).toMatchObject({
+      backgroundSize: "400% 400%",
+      backgroundPosition: "0% 66.66666666666667%",
+    });
   });
 });

@@ -4,9 +4,9 @@ Updated: 2026-07-18, America/Denver
 
 ## Active Bundle and Goal
 
-- Bundle: 6 — Hardening and Release
-- Current goal: Close human acceptance and submission evidence for the technically verified release:
-  non-coder read-through, two-person legibility, real-PR boundary evidence, video, and Devpost.
+- Bundle: 7 — World, Map, and Visual Language
+- Current goal: Complete Stage 11 Pixel Garden Foundation: original pixel-art asset pipeline, manifest,
+  deterministic sprite rendering, and final verification.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
@@ -26,8 +26,10 @@ Updated: 2026-07-18, America/Denver
 - Bundle 4 — Playable Garden World: local world/controls implementation complete; human playtest open.
 - Bundle 5 — Progression and Classroom Value: seasons and voices implemented; final human review open.
 - Bundle 6 — Hardening and Release: technical slice complete; human/release acceptance remains open.
-- Bundle gate: open pending human acceptance and final submission artifacts; technical hardening and
-  production evidence are complete.
+- Bundle 7 — World, Map, and Visual Language: Stage 11 implementation in progress; final checks and
+  audit remain open.
+- Bundle gate: open pending Stage 11 verification, later visual stages, human acceptance, and final
+  submission artifacts.
 
 ## Current State
 
@@ -40,6 +42,10 @@ Updated: 2026-07-18, America/Denver
   server validation, hints, retries, and confirmation gating.
 - The garden now includes a 2D world layer with a keyboard-operable gardener avatar and named tool
   stations; the map remains a deterministic projection of the report.
+- Stage 11 visual foundation is in progress: original cozy pixel-garden WebP atlases, a typed asset
+  manifest, HealthReport-driven plant sprite selection, and authored map decorations are integrated.
+- The existing production deployment remains the fallback while the authored visual world is developed;
+  final release acceptance is intentionally not closed yet.
 - Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
   the classroom payoff explains the learning loop and current rehearsal progress.
 - The app remains login-free and works without `OPENAI_API_KEY` through deterministic fallbacks.
@@ -70,11 +76,9 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Capture the five-explanation non-coder read-through and two-person map-legibility evidence.
-2. Rehearse or record real demo-fork PR evidence where credentials permit; keep demo mode explicit
-   until then.
-3. Have a second person run the human-test guide against production, then gather video/submission
-   evidence using the documented current-release run-of-show, then record the remaining release gates.
+1. Finish Stage 11 checks, visual browser verification, and project-status audit.
+2. Build Stage 12’s authored garden map on the Stage 11 sprite foundation.
+3. Re-run human legibility, accessibility, and release evidence after Bundles 7–8 are complete.
 
 ## Synchronization Rules
 
@@ -87,7 +91,8 @@ Updated: 2026-07-18, America/Denver
 ## Hibernation Checkpoint — 2026-07-18, 02:57 MDT
 
 - **Execution state:** paused overnight; no implementation work is in progress.
-- **Safe resume point:** Bundle 6 / Stage 9–10 human and submission gates.
+- **State update:** superseded by the accepted Bundle 7 / Stage 11 visual-foundation work.
+- **Safe resume point:** Bundle 7 / Stage 11 verification and audit.
 - **Verified release:** production `https://coding-garden-iota.vercel.app`, commit `bd77258`,
   deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`.
 - **Resume sequence:** read this file and `STAGE_TRACKER.md`; run the human-test guide against

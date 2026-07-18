@@ -22,13 +22,13 @@ For the current standalone release, Clippers and Watering Can use an explicitly 
 demo rehearsal. The lifecycle, learning gate, and re-analysis contract are real; branch/PR execution
 and real diffs remain a future/live integration gate and are never implied by the rehearsal UI.
 
-| Tool                        | Health signal (deterministic)   | What Codex actually does                                       | Garden result                         |
-| --------------------------- | ------------------------------- | -------------------------------------------------------------- | ------------------------------------- |
-| Magnifying Glass            | HealthReport entry for the node | Nothing (read-only); GPT-5.6 explains in plain English         | Plant "introduces itself"             |
+| Tool                        | Health signal (deterministic)   | What Codex actually does                                                                          | Garden result                                |
+| --------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| Magnifying Glass            | HealthReport entry for the node | Nothing (read-only); GPT-5.6 explains in plain English                                            | Plant "introduces itself"                    |
 | Clippers                    | Dead/unused-code finding        | Current release rehearses the validated lifecycle; live integration would remove code on a branch | Withered branch disappears after re-analysis |
-| Watering Can                | Coverage gap on the node        | Current release rehearses the validated lifecycle; live integration would write tests on a branch | Drought patch greens up after re-analysis |
-| Pesticide Spray _(stretch)_ | Vulnerability/bug finding       | Patches the vulnerability on a branch                          | Pest vanishes, rot heals              |
-| Fertilizer _(stretch)_      | Complexity/debt score           | Refactors the function on a branch                             | Plant grows taller, stands straighter |
+| Watering Can                | Coverage gap on the node        | Current release rehearses the validated lifecycle; live integration would write tests on a branch | Drought patch greens up after re-analysis    |
+| Pesticide Spray _(stretch)_ | Vulnerability/bug finding       | Patches the vulnerability on a branch                                                             | Pest vanishes, rot heals                     |
+| Fertilizer _(stretch)_      | Complexity/debt score           | Refactors the function on a branch                                                                | Plant grows taller, stands straighter        |
 
 ## The design rule
 
@@ -39,3 +39,15 @@ and real diffs remain a future/live integration gate and are never implied by th
 - Every garden interaction has a keyboard path and a text equivalent (the garden inspector panel lists what the visuals encode).
 - Explanations are text-first; any voice/audio is additive.
 - Reduced-motion mode swaps animations for state crossfades.
+
+## Authored pixel-garden direction
+
+The current visual expansion uses one fixed, cozy pixel-art garden rather than a procedural world. The
+map supplies the terrain, paths, landmarks, learning grove, tool clearing, and payoff area; the analyzed
+`HealthReport` supplies the plants, roots, findings, and health states placed into that world. Generated
+sprite art is decorative and presentation-focused. It never invents a finding or grants health that the
+report does not support.
+
+The active visual stages are tracked in `docs/EXECUTION_PLAN.md` as Bundle 7 (Stages 11–14) and Bundle 8
+(Stages 15–18). Combat, enemies, bosses, accounts, leaderboards, procedural maps, and multiplayer remain
+deferred so the educational exploration loop stays clear and honest.

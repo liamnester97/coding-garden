@@ -1,5 +1,6 @@
 import type { HealthReport } from "@/lib/analysis/schema";
 import { findingMetaphor, healthMetaphor, type HealthState } from "./metaphor";
+import { spriteForHealth, type PixelSpriteId } from "./assets";
 
 export type GardenPlant = {
   id: string;
@@ -16,6 +17,7 @@ export type GardenPlant = {
   }>;
   ariaLabel: string;
   color: string;
+  sprite: PixelSpriteId;
 };
 
 export type GardenScene = {
@@ -107,6 +109,7 @@ export function projectHealthReport(report: HealthReport): GardenScene {
         })),
         ariaLabel: `${node.path}: ${metaphor.label}${issueText}`,
         color: metaphor.color,
+        sprite: spriteForHealth(node.health),
       };
     }),
   };

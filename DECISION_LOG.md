@@ -185,6 +185,7 @@ was not executed. Keyboard traversal, mobile rendering, wide-shot legibility, re
 local checks, hosted UI smoke, documentation structure, durable-context, Slack, and sensitive-content
 checks passed. Stage 4 is now the active stage; the existing deterministic explanation fallback stays
 the no-key path while live GPT-5.6 narration awaits `OPENAI_API_KEY` and prompt acceptance.
+
 ## 2026-07-17 — Public analysis safeguards and bounded-report disclosure
 
 The standalone login-free release keeps the existing 120-file, 256 KB per-file, and 2 MB total
@@ -352,6 +353,20 @@ still required.
 The learning dialog now explicitly manages keyboard focus, exposes `aria-modal` and a description, and
 supports Escape cancellation. Local production browser smoke verified the focus target and cancellation
 behavior with zero errors; this is automated evidence, not a substitute for human accessibility review.
+
+## 2026-07-18 — Authored pixel-garden visual direction
+
+The current SVG garden is a functional prototype but is not the intended final game presentation. The
+next implementation bundle adopts a cozy 16-bit-inspired pixel-garden visual language with one fixed,
+authored top-down map. Original generated sprite atlases are stored as optimized RGBA WebP assets under
+`public/assets/pixel-garden/` and are indexed by the typed `lib/garden/assets.ts` manifest. The renderer
+uses the assets for authored decoration, tools, plants, and the gardener, while HealthReport remains the
+only authority for plant health, findings, roots, and action availability.
+
+This visual expansion intentionally adopts exploration, learning, and reward feedback from the game
+reference while deferring combat, bosses, procedural worlds, accounts, leaderboards, multiplayer, and
+server-persistent player profiles. The production build remains a fallback until the authored world and
+human visual acceptance gates pass.
 
 ## 2026-07-18 — Overnight hibernation checkpoint
 

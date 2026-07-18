@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
 import { explainNode, type GardenExplanation } from "@/lib/garden/explanation";
 import { healthMetaphor } from "@/lib/garden/metaphor";
@@ -17,6 +17,39 @@ import {
   toolStations,
   type WorldPoint,
 } from "@/lib/garden/world";
+import {
+  authoredGardenDecorations,
+  spritePosition,
+  type PixelSpriteId,
+} from "@/lib/garden/assets";
+
+const stationSprites: Record<string, PixelSpriteId> = {
+  magnify: "magnifying-glass",
+  clippers: "clippers",
+  "watering-can": "watering-can",
+};
+
+function spriteStyle(
+  sprite: PixelSpriteId,
+  x: number,
+  y: number,
+  size: "small" | "medium" | "large" | "plant" | "avatar" = "medium",
+): CSSProperties {
+  return {
+    ...spritePosition(sprite),
+    left: `${x}%`,
+    top: `${y}%`,
+    ...(size === "small"
+      ? { width: "10%", paddingBottom: "10%" }
+      : size === "large"
+        ? { width: "22%", paddingBottom: "22%" }
+        : size === "plant"
+          ? { width: "11%", paddingBottom: "11%" }
+          : size === "avatar"
+            ? { width: "12%", paddingBottom: "12%" }
+            : { width: "16%", paddingBottom: "16%" }),
+  };
+}
 
 export default function HomePage() {
   const [report, setReport] = useState(sampleHealthReport);
@@ -396,6 +429,38 @@ export default function HomePage() {
           </p>
         ) : null}
         <div className="garden-stage" aria-label="Code garden map">
+          <div className="garden-ground" aria-hidden="true">
+            <span
+              className="pixel-sprite ground-grass"
+              style={spriteStyle("grass", 0, 0, "large")}
+            />
+            <span
+              className="pixel-sprite ground-soil"
+              style={spriteStyle("soil", 25, 22, "large")}
+            />
+            <span
+              className="pixel-sprite ground-path"
+              style={spriteStyle("stone-path", 42, 38, "large")}
+            />
+            <span
+              className="pixel-sprite ground-pond-edge"
+              style={spriteStyle("pond-edge", 77, 4, "medium")}
+            />
+          </div>
+          <div className="garden-decorations" aria-hidden="true">
+            {authoredGardenDecorations.map((decoration) => (
+              <span
+                className={`pixel-sprite decoration-${decoration.size}`}
+                key={decoration.id}
+                style={spriteStyle(
+                  decoration.sprite,
+                  decoration.x,
+                  decoration.y,
+                  decoration.size,
+                )}
+              />
+            ))}
+          </div>
           <svg
             viewBox="0 0 100 100"
             role="img"
@@ -422,7 +487,6 @@ export default function HomePage() {
             <g className="tool-stations" aria-label="Tool stations">
               {toolStations.map((station) => (
                 <g key={station.id}>
-                  <circle cx={station.x} cy={station.y} r="3.5" />
                   <text x={station.x} y={station.y + 7} textAnchor="middle">
                     {station.label}
                   </text>
@@ -440,30 +504,42 @@ export default function HomePage() {
                 />
               ))}
             </g>
-            <g className="map-plants" aria-hidden="true">
-              {scene.plants.map((plant) => (
-                <circle
-                  key={plant.id}
-                  cx={plant.x}
-                  cy={plant.y}
-                  r={
-                    plant.health === "healthy"
-                      ? 2.2
-                      : plant.health === "stressed"
-                        ? 2.8
-                        : 3.4
-                  }
-                  className={plant.health}
-                />
-              ))}
-            </g>
-            <g className="gardener-avatar" aria-label="Gardener">
-              <circle cx={gardener.x} cy={gardener.y} r="2.2" />
-              <text x={gardener.x} y={gardener.y - 3} textAnchor="middle">
-                you
-              </text>
-            </g>
           </svg>
+          <div className="garden-sprites" aria-hidden="true">
+            {toolStations.map((station) => (
+              <span
+                className="pixel-sprite station-sprite"
+                key={station.id}
+                style={spriteStyle(
+                  stationSprites[station.id],
+                  station.x - 5,
+                  station.y - 5,
+                  "medium",
+                )}
+              />
+            ))}
+            {scene.plants.map((plant) => (
+              <span
+                className={`pixel-sprite plant-sprite ${plant.health}`}
+                key={plant.id}
+                style={spriteStyle(
+                  plant.sprite,
+                  plant.x - 5.5,
+                  plant.y - 5.5,
+                  "plant",
+                )}
+              />
+            ))}
+            <span
+              className="pixel-sprite gardener-sprite"
+              style={spriteStyle(
+                "gardener-down",
+                gardener.x - 6,
+                gardener.y - 6,
+                "avatar",
+              )}
+            />
+          </div>
           <span className="garden-stage-note">
             Move with arrow keys or WASD. Roots show analyzed relative imports;
             select a plant below for full evidence.

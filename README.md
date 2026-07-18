@@ -33,6 +33,10 @@ the current anonymous demo deliberately labels tool actions as rehearsals rather
 branches or pull requests. The production release is available at
 <https://coding-garden-iota.vercel.app>.
 
+The next visual expansion is tracked in the canonical roadmap as Bundle 7: an authored, cozy pixel
+garden with original sprite atlases, report-driven plants and roots, and the same accessible learning
+loop. The current production build remains a fallback while that visual world is developed.
+
 ## If you want to know where we are
 
 Open [PROJECT_STATUS.md](PROJECT_STATUS.md) first. It is

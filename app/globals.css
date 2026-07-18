@@ -266,22 +266,91 @@ main {
   overflow: hidden;
   border: 1px solid #39553d;
   border-radius: 1.25rem;
+  background: #234d30;
+}
+.garden-ground,
+.garden-decorations,
+.garden-sprites {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.garden-ground {
+  overflow: hidden;
   background:
-    radial-gradient(circle at 50% 20%, #23452d 0, transparent 45%), #0e1b14;
+    linear-gradient(90deg, rgb(23 63 34 / 0.35) 1px, transparent 1px),
+    linear-gradient(rgb(23 63 34 / 0.35) 1px, transparent 1px), #3f8144;
+  background-size: 5% 5%;
+}
+.pixel-sprite {
+  position: absolute;
+  display: block;
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-origin: border-box;
+  image-rendering: pixelated;
+  transform: translate(-50%, -50%);
+}
+.garden-ground .pixel-sprite {
+  opacity: 0.9;
+  mix-blend-mode: multiply;
+}
+.ground-grass {
+  left: 13% !important;
+  top: 18% !important;
+  width: 31% !important;
+  padding-bottom: 31% !important;
+  opacity: 0.38 !important;
+}
+.ground-soil {
+  left: 31% !important;
+  top: 62% !important;
+  width: 35% !important;
+  padding-bottom: 35% !important;
+  opacity: 0.88 !important;
+}
+.ground-path {
+  left: 51% !important;
+  top: 42% !important;
+  width: 37% !important;
+  padding-bottom: 37% !important;
+  opacity: 0.4 !important;
+  mix-blend-mode: normal !important;
+}
+.ground-pond-edge {
+  left: 84% !important;
+  top: 19% !important;
+  opacity: 0.82 !important;
+  mix-blend-mode: normal !important;
+}
+.garden-decorations .pixel-sprite {
+  z-index: 2;
+}
+.garden-sprites {
+  z-index: 4;
+}
+.plant-sprite,
+.station-sprite,
+.gardener-sprite {
+  filter: drop-shadow(0 0.25rem 0.18rem rgb(17 44 23 / 0.45));
+}
+.gardener-sprite {
+  z-index: 5;
 }
 .garden-stage svg {
   display: block;
   width: 100%;
   min-height: 360px;
+  position: relative;
+  z-index: 3;
 }
 .garden-stage svg:focus-visible {
   outline: 2px solid #f0bd62;
   outline-offset: -4px;
 }
 .tool-stations circle {
-  fill: #f0bd62;
-  stroke: #fff5d6;
-  stroke-width: 0.45;
+  display: none;
 }
 .tool-stations text,
 .gardener-avatar text {
@@ -292,9 +361,7 @@ main {
   stroke-width: 0.7px;
 }
 .gardener-avatar circle {
-  fill: #9ee4ff;
-  stroke: #fff;
-  stroke-width: 0.5;
+  display: none;
 }
 .roots line {
   stroke: #527357;
@@ -303,8 +370,7 @@ main {
   opacity: 0.8;
 }
 .map-plants circle {
-  stroke: #edf5e9;
-  stroke-width: 0.35;
+  display: none;
 }
 .map-plants .healthy {
   fill: #8bd36b;

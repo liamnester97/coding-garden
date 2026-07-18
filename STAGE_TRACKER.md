@@ -2,26 +2,36 @@
 
 ## Stage
 
-Stage 9 — Hardening / Bundle 6 — Hardening and Release
+Stage 11 — Pixel Garden Foundation / Bundle 7 — World, Map, and Visual Language
 
 ## Execution Bundle
 
-- **Bundle:** 6 — Hardening and Release
-- **Current goal:** Close human acceptance and submission evidence for the technically verified release:
-  non-coder read-through, two-person legibility, real-PR boundary evidence, video, and Devpost.
+- **Bundle:** 7 — World, Map, and Visual Language
+- **Current goal:** Establish the cozy pixel-garden visual language, original sprite/tile asset pipeline,
+  manifest, and deterministic sprite-rendering foundation.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; technical hardening and release evidence are complete, while human gates remain
-  open.
-- **Audit status:** Stage 9/10 technical audit completed 2026-07-18; human/release gates remain open.
+- **Bundle gate:** Open; Stage 11 implementation is in progress.
+- **Audit status:** Stage 9/10 technical audit completed 2026-07-18; Stage 11 audit is pending.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
+
+## Stage 11 Goals
+
+- [x] Generate original cozy pixel-garden terrain/landmark and character/tool/state atlases.
+- [x] Convert generated assets to optimized RGBA WebP files under `public/assets/pixel-garden/`.
+- [x] Add the typed `lib/garden/assets.ts` manifest with stable atlas coordinates and purposes.
+- [x] Project HealthReport health into deterministic healthy, stressed, and withered sprite IDs.
+- [x] Integrate authored decorations, tool sprites, plant sprites, and gardener sprite into the map foundation.
+- [x] Add focused projection and manifest regression coverage.
+- [ ] Add final Stage 11 documentation evidence, full project checks, visual browser verification, and audit.
 
 ## Hibernation Checkpoint — 2026-07-18, 02:57 MDT
 
 - **State:** paused overnight after the technical release audit and production promotion.
-- **Resume at:** Bundle 6 human/release gate; the next work is evidence capture, not a new roadmap.
+- **State update:** superseded by the accepted Bundle 7 / Stage 11 visual-foundation work below.
+- **Resume at:** Bundle 7 / Stage 11; the next work is visual-foundation verification, not a new roadmap.
 - **Release to test:** `https://coding-garden-iota.vercel.app` at verified commit `bd77258`.
 - **Resume order:** human-test guide → non-coder explanation review → two-person map legibility →
   honest recording/submission evidence → final audit and acceptance reconciliation.
@@ -55,6 +65,9 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
   acceptance remain open.
 - **Stage 10 — Deploy, Video, Submission:** Production is now verified at commit `bd77258` (deployment
   `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`); video, Devpost, and human acceptance remain open.
+- **Stage 11 — Pixel Garden Foundation:** Implementation slice is complete locally: original WebP
+  atlases, typed manifest, HealthReport-driven plant sprites, authored decorations, and sprite layers
+  are integrated. Final documentation, full audit, and human visual acceptance remain open.
 
 ## Goal
 
@@ -71,80 +84,80 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 ## Four-stage implementation cycle — 2026-07-18
 
 - [x] Stage 4 slice: report-grounded explanations now lead into deterministic learning objectives;
-  challenge answers are checked server-side and never graded by the model.
+      challenge answers are checked server-side and never graded by the model.
 - [x] Stage 5 slice: Clippers requires a valid challenge proof before the server command registry can
-  start the sample rehearsal.
+      start the sample rehearsal.
 - [x] Stage 6 slice: Watering Can uses the same proof/lifecycle/re-analysis contract; public reports
-  remain read-only.
+      remain read-only.
 - [x] Stage 7 slice: the SVG garden now has a keyboard-operable gardener avatar and named tool stations;
-  the golden path is visible from movement through payoff.
+      the golden path is visible from movement through payoff.
 - [x] Browser smoke: sample movement controls moved the avatar from `cy=86` to `cy=82`; the full
-  sample Clippers path locked confirmation before an answer, unlocked it after the correct answer,
-  reached `landed`, and reported zero page errors. Mocked public-report mode showed the read-only notice,
-  no tending buttons, and zero page errors.
+      sample Clippers path locked confirmation before an answer, unlocked it after the correct answer,
+      reached `landed`, and reported zero page errors. Mocked public-report mode showed the read-only notice,
+      no tending buttons, and zero page errors.
 - [x] Focused and full technical checks passed: 51 tests, lint, typecheck, analysis validation, build,
-  format check, and diff check.
+      format check, and diff check.
 - [x] Stage 9 regression coverage added: 54 tests now cover challenge/command expiry, proof replay,
-  oversized answers, failed rehearsals, and health preservation.
+      oversized answers, failed rehearsals, and health preservation.
 - [x] Stage 8 progression slice: seasons expose deterministic level/difficulty metadata, reset stale
-  challenge state on selection, and the payoff includes a classroom learning recap.
+      challenge state on selection, and the payoff includes a classroom learning recap.
 - [ ] External gates: non-coder explanation read-through, real demo-fork PRs, two-person wide-shot
-  legibility, human acceptance, public video, and Devpost submission.
+      legibility, human acceptance, public video, and Devpost submission.
 
 ### Four-stage audit evidence — 2026-07-18
 
 - [x] One canonical `docs/EXECUTION_PLAN.md`; exactly one root `STAGE_TRACKER.md`,
-  `PROJECT_STATUS.md`, and `DECISION_LOG.md`; no generic `PLAN.md`, `STATUS.md`, or `DECISIONS.md`.
+      `PROJECT_STATUS.md`, and `DECISION_LOG.md`; no generic `PLAN.md`, `STATUS.md`, or `DECISIONS.md`.
 - [x] Root navigation resolves to the current status, tracker, decisions, roadmap, and human-test guide.
 - [x] Sensitive-content scan found no committed secret; `.env.example` is the only environment template.
 - [x] `git diff --check`, format check, lint, typecheck, 55 tests, analysis validation, and production
-  build passed.
+      build passed.
 - [x] Obsidian project note and session log reconciled; Slack connector was unavailable in this session,
-  so no new Slack-backed claim was made.
+      so no new Slack-backed claim was made.
 
 ### Stage 9 hardening evidence — 2026-07-18
 
 - [x] 55 tests pass, including expiry, replay, oversized input, failed rehearsal, health-preservation,
-  and non-coder explanation-copy cases.
+      and non-coder explanation-copy cases.
 - [x] Browser smoke covered sample golden path, touch movement, public read-only mode, and zero page
-  errors.
+      errors.
 - [x] Generated build artifacts contain no detected secret prefixes.
 - [x] Stage 10 production deployment is verified at `https://coding-garden-iota.vercel.app` (deployment
-  `coding-garden-38w8yw6ne-code-garden.vercel.app`); public video, Devpost submission, and external
-  human review are not claimed complete.
+      `coding-garden-38w8yw6ne-code-garden.vercel.app`); public video, Devpost submission, and external
+      human review are not claimed complete.
 - [x] Local production-mode smoke passed on `next start`: `/` 200, `/api/health` 200,
-  `/api/explain` 200 without a key, invalid repository/challenge/tend payloads 400, and mobile map
-  movement completed without page errors.
+      `/api/explain` 200 without a key, invalid repository/challenge/tend payloads 400, and mobile map
+      movement completed without page errors.
 - [x] Release implementation commit `235be74`, documentation sync commits `12029f1`/`e858a30`/`8462b1f`/`e9a25fb`,
-  and latest accessibility commit `9a2d9c2` are pushed; draft PR #1 reports passing GitHub CI quality,
-  Vercel deployment, and Vercel Preview Comments for the latest branch head.
-  Preview URL is recorded in `PROJECT_STATUS.md`.
+      and latest accessibility commit `9a2d9c2` are pushed; draft PR #1 reports passing GitHub CI quality,
+      Vercel deployment, and Vercel Preview Comments for the latest branch head.
+      Preview URL is recorded in `PROJECT_STATUS.md`.
 - [x] Production browser smoke on 2026-07-18 verified mobile rendering, sample-mode labels, zero page
-  or console errors, and the Clippers golden path. Opening the tool produced zero `/api/tend` calls
-  before confirmation; a correct answer enabled confirmation and the server lifecycle reached `landed`.
+      or console errors, and the Clippers golden path. Opening the tool produced zero `/api/tend` calls
+      before confirmation; a correct answer enabled confirmation and the server lifecycle reached `landed`.
 - [x] Anonymous production analysis of `ColorlibHQ/gentelella` completed read-only on 2026-07-18 at
-  commit `c4515bd2682660d79d6d0e64160a57cd86482451`: 31 nodes, 63 findings, and a complete bounded
-  scope of 96 supported/analyzed files with zero omissions.
+      commit `c4515bd2682660d79d6d0e64160a57cd86482451`: 31 nodes, 63 findings, and a complete bounded
+      scope of 96 supported/analyzed files with zero omissions.
 - [x] Broader production browser matrix on 2026-07-18 passed: mobile sample mode showed three plants
-  and four movement controls; Early/Mid/Late season selection reached Level 3/Hard; keyboard focus
-  entered an input; invalid repository input produced an alert; public analysis showed read-only mode
-  with zero tending buttons; reduced-motion Watering Can reached `landed` after confirmation. Zero page
-  or console errors were observed.
+      and four movement controls; Early/Mid/Late season selection reached Level 3/Hard; keyboard focus
+      entered an input; invalid repository input produced an alert; public analysis showed read-only mode
+      with zero tending buttons; reduced-motion Watering Can reached `landed` after confirmation. Zero page
+      or console errors were observed.
 - [x] Magnifying Glass clarity slice: deterministic Inspector copy now translates analyzer labels into
-  plain-language issue, health, evidence-source, and next-step text; a regression test protects the
-  copy boundary. Human non-coder read-through remains an explicit acceptance gate.
+      plain-language issue, health, evidence-source, and next-step text; a regression test protects the
+      copy boundary. Human non-coder read-through remains an explicit acceptance gate.
 - [x] Accessibility focus slice: the learning dialog focuses the answer field, exposes modal labeling
-  and description, and supports Escape cancellation. Local production browser smoke verified focus and
-  cancellation with zero page/console errors.
+      and description, and supports Escape cancellation. Local production browser smoke verified focus and
+      cancellation with zero page/console errors.
 - [x] Stage 10 documentation readiness: root README now contains the project description and fresh-clone
-  setup flow and Build Week submission narrative; public-repository MIT license is committed as
-  `LICENSE`; submission checklist reflects the completed track, description, repository, and README
-  evidence.
+      setup flow and Build Week submission narrative; public-repository MIT license is committed as
+      `LICENSE`; submission checklist reflects the completed track, description, repository, and README
+      evidence.
 - [x] Stage 10 recording handoff: the existing human-test guide now contains a current-release
-  run-of-show that distinguishes sample rehearsals from any future credentialed live PR segment.
+      run-of-show that distinguishes sample rehearsals from any future credentialed live PR segment.
 - [x] Production promotion: commit `bd77258` is Ready at `https://coding-garden-iota.vercel.app`;
-  live smoke returned `/` 200, `/api/health` 200, keyless `POST /api/explain` 200, malformed repository
-  and tending payloads 400, mobile sample-mode rendering, and zero page/console errors.
+      live smoke returned `/` 200, `/api/health` 200, keyless `POST /api/explain` 200, malformed repository
+      and tending payloads 400, mobile sample-mode rendering, and zero page/console errors.
 
 ## Bundle Gate Protocol
 
