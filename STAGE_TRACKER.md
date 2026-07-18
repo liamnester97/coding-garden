@@ -100,8 +100,9 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Local production-mode smoke passed on `next start`: `/` 200, `/api/health` 200,
   `/api/explain` 200 without a key, invalid repository/challenge/tend payloads 400, and mobile map
   movement completed without page errors.
-- [x] Commit `3fb549f` is pushed; draft PR #1 reports passing GitHub CI quality, Vercel deployment,
-  and Vercel Preview Comments. Preview URL is recorded in `PROJECT_STATUS.md`.
+- [x] Implementation commit `3fb549f` and documentation sync commit `12029f1` are pushed; draft PR #1
+  reports passing GitHub CI quality, Vercel deployment, and Vercel Preview Comments. Preview URL is
+  recorded in `PROJECT_STATUS.md`.
 
 ## Bundle Gate Protocol
 
