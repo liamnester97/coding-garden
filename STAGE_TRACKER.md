@@ -2,7 +2,7 @@
 
 ## Stage
 
-Stage 4 - Magnifying Glass
+Stage 5 - Clippers End-to-End
 
 ## Stage Status
 
@@ -17,9 +17,17 @@ Stage 4 - Magnifying Glass
   and audit are complete.
 - **Stage 3 — Garden rendering:** Complete; real public reports now render as deterministic plants,
   analyzed import roots, health states, summaries, inspector evidence, and accessible selection.
-- **Stage 4 — Magnifying Glass:** In progress; extend the deterministic explanation foundation toward
-  the live GPT-5.6 path while preserving the no-key fallback.
-- **Stages 5–10:** Queued.
+- **Stage 4 — Magnifying Glass:** Implementation complete and promoted by Liam's authorization to
+  continue through Stage 8; live service-key exercise and a separately logged non-coder read-through
+  remain external evidence gaps.
+- **Stage 5 — Clippers End-to-End:** Implementation complete in demo-rehearsal mode; real demo-fork PR
+  remains an external credential/rehearsal gate.
+- **Stage 6 — Watering Can End-to-End:** Implementation complete in the shared lifecycle; real generated
+  test PR remains an external credential/rehearsal gate.
+- **Stage 7 — Demo Path Polish:** Implementation in progress; browser/golden-playthrough acceptance
+  remains open.
+- **Stage 8:** Two safe stretch slices implemented (seasons and deterministic plant voices); individual
+  stretch acceptance remains open.
 
 ## Goal
 
@@ -180,6 +188,36 @@ checks.
 - [x] Regression coverage expanded to 25 tests, including route guards/cache expiry, timeout handling,
       deterministic bounded selection, report scope, and duplicate-edge behavior.
 - [x] Deployment, risk, status, tracker, and decision records document the new safeguards.
+
+## Stage 4 Magnifying Glass slice — 2026-07-18
+
+- [x] Moved the deterministic explanation projection out of the AI module so client components do
+      not import server-side AI code.
+- [x] `/api/explain` accepts a schema-validated `HealthReport` and node ID rather than silently
+      explaining only the offline sample report.
+- [x] Added a server-side GPT-5.6 Responses API adapter with a strict grounding prompt, bounded
+      output schema, eight-second timeout, five-minute cache, and deterministic fallback on missing
+      key, invalid output, API failure, or timeout.
+- [x] The UI requests explanations for the currently selected report while rendering the local
+      grounded explanation immediately; public mode and sample mode remain login-free.
+- [x] Added a versioned prompt contract with five representative evidence expectations and route
+      tests for malformed reports, no-key fallback, and a mocked live model response.
+- [ ] Human non-coder read-through of five explanations remains the Stage 4 acceptance gate.
+
+## Stage 5–8 implementation slice — 2026-07-18
+
+- [x] Added the typed `ToolCommand` lifecycle for Clippers, Watering Can, and Pesticide, rejecting
+      illegal transitions and requiring the explanation/confirmation sequence.
+- [x] Added `/api/tend` with strict report/command validation, explicit demo-rehearsal labeling,
+      failure handling, and heal-only-after-reanalysis behavior.
+- [x] Clippers and Watering Can regression tests cover full lifecycle, failed commands, missing
+      findings, and finding removal after re-analysis.
+- [x] Added UI tool actions, lifecycle status, and an explicit rehearsal note; no fake PR URL is
+      emitted and no optimistic health update occurs.
+- [x] Added Stage 7 payoff history and classroom comparison surface.
+- [x] Added Stage 8 seasons snapshots and deterministic plant voices, both grounded in report data.
+- [ ] Real demo-fork PRs, golden playthrough, two-person legibility test, and final human acceptance
+      remain open gates.
 
 ## Stage 2 completion record — 2026-07-17
 

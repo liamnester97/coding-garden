@@ -8,7 +8,8 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
    standalone public release; it must not depend on Liam's local machine.
 2. Framework preset: Next.js; defaults for build (`npm run build`) and output.
 3. Environment variables (Project Settings → Environment Variables):
-   - `OPENAI_API_KEY` — optional; without it the app serves the cached sample garden.
+   - `OPENAI_API_KEY` — optional; without it the app still supports public read-only analysis and
+     serves deterministic explanations, with the cached sample garden as the no-network fallback.
    - Any Codex task-dispatch credentials required by the change pipeline (see Execution Plan §6.8) — server-side only, never exposed to the client.
 4. Public analysis is best-effort protected without a new service: five uncached analyses per
    client IP per ten minutes, five-minute in-memory report caching, and ten-second GitHub request
@@ -18,6 +19,10 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
 6. Keep the first public release login-free for public GitHub repositories. Private repository
    access is not enabled by a pasted URL; it requires a later least-privilege GitHub OAuth/App flow.
 7. Enable preview deployments on every PR; record the preview URL in `PROJECT_STATUS.md`.
+8. The Magnifying Glass explanation route accepts the validated report currently being viewed. With
+   `OPENAI_API_KEY`, GPT-5.6 is called server-side with an eight-second timeout and a five-minute
+   report/node cache. Without the key, or if the model fails validation, the deterministic grounded
+   explanation remains the release fallback.
 
 ## Verification after each deploy
 

@@ -139,6 +139,62 @@ main {
   color: #f5d995 !important;
   font-size: 0.82rem;
 }
+
+.tool-button {
+  margin-top: 0.55rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 0.35rem 0.7rem;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.tool-button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.tend-status {
+  border-left: 3px solid var(--moss);
+  padding-left: 0.7rem;
+  color: var(--moss);
+  font-size: 0.85rem;
+}
+
+.season-controls,
+.payoff {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--paper) 85%, var(--moss));
+}
+
+.season-controls select {
+  max-width: 16rem;
+  padding: 0.45rem;
+  border: 1px solid var(--ink);
+  border-radius: 0.5rem;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.plant-voice {
+  font-style: italic;
+}
+
+.classroom-panel {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+}
 .garden-stage {
   position: relative;
   min-height: 360px;

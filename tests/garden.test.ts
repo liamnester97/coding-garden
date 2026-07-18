@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
 import { projectHealthReport } from "@/lib/garden/project";
-import { explainNode } from "@/lib/ai/explain";
+import { explainNode } from "@/lib/garden/explanation";
 
 describe("HealthReport garden projection", () => {
   it("is deterministic and preserves report health", () => {

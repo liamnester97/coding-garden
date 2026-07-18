@@ -199,3 +199,24 @@ analyzed, and omitted file counts. GitHub candidates are sorted before capping s
 repeatable, and the UI explicitly discloses partial scope. Import relationships are unique by
 `from -> to` before they reach the garden renderer. These safeguards preserve deterministic analysis
 truth and make incompleteness visible rather than presenting a partial report as complete.
+
+## 2026-07-18 — Key-optional Magnifying Glass adapter
+
+Stage 4 keeps the public release login-free and key-optional. The explanation route receives the
+validated HealthReport being viewed, sends only that report-grounded context to a server-side GPT-5.6
+Responses API adapter when `OPENAI_API_KEY` is configured, validates the returned explanation shape,
+and caches results by report hash plus node ID. An eight-second timeout, invalid-output handling, and
+the deterministic explanation fallback ensure the garden remains usable without live AI. The pure
+fallback lives in `lib/garden/`; server-only model orchestration remains in `lib/ai/`. Five versioned
+prompt/evidence contract cases protect the grounding boundary. Live-key acceptance is optional for
+the standalone release and remains a human stage-gate decision.
+
+## 2026-07-18 — Demo-rehearsal change lifecycle through Stage 8
+
+To keep the public release standalone and safe while real Codex/GitHub credentials are unavailable,
+the first Clippers and Watering Can implementation uses an explicitly labeled `demo-rehearsal` mode.
+It validates the same typed lifecycle as the live path, never emits a fake PR URL, and only changes
+the displayed report after a deterministic re-analysis removes the finding. The implementation is
+shared with the Pesticide stretch tool. Stage 7 records rehearsal outcomes and classroom comparison;
+Stage 8 adds deterministic sample seasons and report-grounded plant voices. Real demo-fork PRs and
+human playthrough/legibility evidence remain required before those stages can be called fully accepted.

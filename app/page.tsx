@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
-import { explainNode } from "@/lib/ai/explain";
+import { explainNode, type GardenExplanation } from "@/lib/garden/explanation";
 import { healthMetaphor } from "@/lib/garden/metaphor";
 import { projectHealthReport } from "@/lib/garden/project";
+import type { ToolCommand } from "@/lib/garden/command";
+import { plantVoice, sampleSeasons } from "@/lib/garden/seasons";
 
 export default function HomePage() {
   const [report, setReport] = useState(sampleHealthReport);
@@ -16,13 +18,44 @@ export default function HomePage() {
     "idle" | "loading" | "error"
   >("idle");
   const [error, setError] = useState<string | null>(null);
+  const [explanation, setExplanation] = useState<GardenExplanation | null>(
+    null,
+  );
+  const [command, setCommand] = useState<ToolCommand | null>(null);
+  const [tendError, setTendError] = useState<string | null>(null);
+  const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
+  const [seasonId, setSeasonId] = useState("early-spring");
+  const seasons = sampleSeasons(sampleHealthReport);
   const scene = projectHealthReport(report);
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
   const modeLabel = source === "sample" ? "sample mode" : "public report";
-  const explanation = selectedPlant
-    ? explainNode(report, selectedPlant.id, source)
-    : null;
+  const visibleExplanation =
+    explanation?.nodeId === selectedId
+      ? explanation
+      : selectedPlant
+        ? explainNode(report, selectedPlant.id, source)
+        : null;
+  useEffect(() => {
+    if (!selectedId) return;
+    let cancelled = false;
+    void fetch("/api/explain", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ nodeId: selectedId, report }),
+    })
+      .then(async (response) => {
+        if (!response.ok) return null;
+        return (await response.json()) as GardenExplanation;
+      })
+      .then((nextExplanation) => {
+        if (!cancelled && nextExplanation) setExplanation(nextExplanation);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [report, selectedId, source]);
   const healthCounts = scene.plants.reduce(
     (counts, plant) => {
       counts[plant.health] += 1;
@@ -54,6 +87,59 @@ export default function HomePage() {
     } catch (caught) {
       setRequestState("error");
       setError(caught instanceof Error ? caught.message : "Analysis failed");
+    }
+  }
+
+  async function tendFinding(finding: (typeof report.findings)[number]) {
+    const tool =
+      finding.type === "dead-code"
+        ? "clippers"
+        : finding.type === "coverage-gap"
+          ? "watering-can"
+          : finding.type === "vulnerability"
+            ? "pesticide"
+            : null;
+    if (!tool) return;
+    setTendError(null);
+    let currentCommand: ToolCommand = {
+      id: `${tool}-${finding.id}`,
+      tool,
+      findingId: finding.id,
+      nodeId: finding.nodeId,
+      state: "seen",
+      mode: "demo-rehearsal",
+      prUrl: null,
+    };
+    let currentReport = report;
+    try {
+      while (currentCommand.state !== "landed") {
+        const response = await fetch("/api/tend", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            report: currentReport,
+            command: currentCommand,
+            action: "advance",
+          }),
+        });
+        const payload = (await response.json()) as {
+          command?: ToolCommand;
+          report?: typeof report;
+          error?: string;
+        };
+        if (!response.ok || !payload.command || !payload.report)
+          throw new Error(payload.error ?? "Tending failed");
+        currentCommand = payload.command;
+        currentReport = payload.report;
+        setCommand(currentCommand);
+      }
+      setReport(currentReport);
+      setSource("report");
+      setSelectedId(finding.nodeId);
+      setCompletedCommands((completed) => [...completed, currentCommand]);
+    } catch (caught) {
+      setTendError(caught instanceof Error ? caught.message : "Tending failed");
+      setCommand({ ...currentCommand, state: "failed" });
     }
   }
 
@@ -122,6 +208,33 @@ export default function HomePage() {
           {report.method.coverage}, complexity {report.method.complexity},
           vulnerabilities {report.method.vulnerabilities}.
         </p>
+        <div className="season-controls" aria-label="Garden seasons">
+          <label htmlFor="season-select">Garden season</label>
+          <select
+            id="season-select"
+            value={seasonId}
+            onChange={(event) => {
+              const next = seasons.find(
+                (season) => season.id === event.target.value,
+              );
+              if (next) {
+                setSeasonId(next.id);
+                setReport(next.report);
+                setSource("sample");
+                setSelectedId(next.report.nodes[0]?.id);
+              }
+            }}
+          >
+            {seasons.map((season) => (
+              <option key={season.id} value={season.id}>
+                {season.label}
+              </option>
+            ))}
+          </select>
+          <small>
+            {seasons.find((season) => season.id === seasonId)?.description}
+          </small>
+        </div>
         {report.scope.kind === "bounded" ? (
           <p className="scope-notice" role="status">
             Bounded analysis: {report.scope.analyzedFiles} of{" "}
@@ -195,18 +308,21 @@ export default function HomePage() {
             <span className="eyebrow">Inspector</span>
             <h2 id="inspector-title">{selectedPlant.path}</h2>
             <p>{selectedPlant.ariaLabel}</p>
-            {explanation ? (
+            <p className="plant-voice">
+              {plantVoice(report, selectedPlant.id)}
+            </p>
+            {visibleExplanation ? (
               <div
                 className="explanation"
                 aria-label="Magnifying Glass explanation"
               >
                 <span className="eyebrow">Magnifying Glass · {modeLabel}</span>
-                <p>{explanation.summary}</p>
-                <p>{explanation.health}</p>
-                <p>{explanation.needs}</p>
-                {explanation.evidence.length ? (
+                <p>{visibleExplanation.summary}</p>
+                <p>{visibleExplanation.health}</p>
+                <p>{visibleExplanation.needs}</p>
+                {visibleExplanation.evidence.length ? (
                   <ul>
-                    {explanation.evidence.map((item) => (
+                    {visibleExplanation.evidence.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
@@ -220,6 +336,32 @@ export default function HomePage() {
                     <strong>{finding.label}</strong>
                     <span>{finding.summary}</span>
                     <small>{finding.evidence}</small>
+                    {finding.label === "unreachable branch" ||
+                    finding.label === "unwatered test path" ||
+                    finding.label === "security pest" ? (
+                      <button
+                        type="button"
+                        className="tool-button"
+                        onClick={() => {
+                          const sourceFinding = report.findings.find(
+                            (candidate) =>
+                              candidate.nodeId === selectedPlant.id &&
+                              candidate.summary === finding.summary,
+                          );
+                          if (sourceFinding) void tendFinding(sourceFinding);
+                        }}
+                        disabled={
+                          command?.state === "acting" ||
+                          command?.state === "verifying"
+                        }
+                      >
+                        {finding.label === "unreachable branch"
+                          ? "Use Clippers"
+                          : finding.label === "unwatered test path"
+                            ? "Use Watering Can"
+                            : "Use Pesticide"}
+                      </button>
+                    ) : null}
                   </li>
                 ))}
               </ul>
@@ -228,6 +370,17 @@ export default function HomePage() {
                 No warning signals were recorded for this module.
               </p>
             )}
+            {command ? (
+              <p className="tend-status" role="status">
+                Demo rehearsal · {command.tool} · {command.state}.{" "}
+                {command.message ?? ""}
+              </p>
+            ) : null}
+            {tendError ? (
+              <p className="form-error" role="alert">
+                {tendError}
+              </p>
+            ) : null}
           </aside>
         ) : null}
         <div className="legend" aria-label="Garden health legend">
@@ -237,6 +390,31 @@ export default function HomePage() {
             </span>
           ))}
         </div>
+        {completedCommands.length ? (
+          <section className="payoff" aria-labelledby="payoff-title">
+            <span className="eyebrow">The garden remembers</span>
+            <h2 id="payoff-title">Verified tending changes</h2>
+            <p>
+              These are demo rehearsals. A real release will replace each
+              rehearsal with a branch, checks, PR, and pinned re-analysis
+              evidence.
+            </p>
+            <ul>
+              {completedCommands.map((completed) => (
+                <li key={completed.id}>
+                  {completed.tool} · {completed.findingId} · {completed.state}
+                </li>
+              ))}
+            </ul>
+            <div className="classroom-panel">
+              <strong>Classroom comparison</strong>
+              <span>
+                {sampleHealthReport.findings.length} original signals →{" "}
+                {report.findings.length} current signals
+              </span>
+            </div>
+          </section>
+        ) : null}
       </section>
     </main>
   );

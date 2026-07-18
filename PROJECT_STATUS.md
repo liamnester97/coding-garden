@@ -4,9 +4,9 @@ Updated: 2026-07-17, America/Denver
 
 ## Active Stage and Goal
 
-- Stage: 4 - Magnifying Glass
-- Goal: Extend report-grounded explanations toward the live GPT-5.6 path while preserving the
-  deterministic no-key fallback.
+- Stage: 5 - Clippers End-to-End
+- Goal: Exercise the shared see → understand → confirm → act → verify → re-analyze lifecycle, with
+  demo-safe Clippers first and Watering Can/Stage 7/8 implementation slices already prepared.
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
 
 ## Current State
@@ -23,9 +23,9 @@ Updated: 2026-07-17, America/Denver
 
 ## Blockers
 
-- `OPENAI_API_KEY` is required for live GPT-5.6 explanation work; it is not configured. The
-  deterministic explanation fallback remains available, so Stage 4 can continue with safe prompt
-  and fallback work while live narration is gated.
+- `OPENAI_API_KEY` is not configured locally, so live GPT-5.6 narration cannot be exercised against
+  the real service here. The server-side adapter is mocked in tests and the deterministic fallback
+  remains the public release path when the key is absent or the model fails.
 - Provisional target is now Gentelella; the bounded public read-only analysis rehearsal succeeded.
 - Gentelella rehearsal completed at commit `c4515bd2682660d79d6d0e64160a57cd86482451`: 31 nodes,
   63 findings, report hash `da302756ed12d03b`; cached evidence is in
@@ -40,9 +40,17 @@ Updated: 2026-07-17, America/Denver
   positions are derived from the validated report; the renderer does not recalculate health.
 - Plant cards now support accessible selection and an inspector panel with report-backed finding
   summaries and evidence. This slice is complete locally and all quality gates pass.
-- Magnifying Glass foundation is now report-grounded and deterministic in sample mode. It explains
-  a selected module's health and evidence without requiring an API key; live GPT narration and
-  prompt evaluations remain a later Stage 4 gate.
+- Magnifying Glass foundation is report-grounded and deterministic in sample mode. It explains a
+  selected module's health and evidence without requiring an API key; prompt contract tests and the
+  key-optional live adapter are now implemented. Human non-coder read-through remains the Stage 4
+  gate.
+- Stage 4 live explanation boundary is now implemented: `/api/explain` validates the complete
+  HealthReport, uses a server-side GPT-5.6 Responses API adapter when configured, caches by report
+  hash and node, times out safely, and falls back to the deterministic sample/report explanation.
+  Prompt contract coverage includes five representative evidence cases; no API key is committed.
+- Stage 5/6 command foundation is implemented: typed lifecycle, strict `/api/tend` boundary,
+  demo-rehearsal mode, failure return, and heal-only-after-reanalysis for Clippers and Watering Can.
+  Stage 7 payoff/classroom surfaces and Stage 8 seasons/plant-voice slices are also present locally.
 - Public repository intake now has a tested, normalized GitHub URL boundary and a bounded,
   read-only analysis route. The adapter reads supported blobs into a temporary workspace, caps
   files and bytes, and never installs or executes target code. The hosted route passed anonymous
@@ -85,14 +93,15 @@ Updated: 2026-07-17, America/Denver
 
 ## Next Three Actions
 
-1. Define and test the live explanation adapter boundary without weakening the deterministic fallback.
-2. Add prompt/evidence contracts for five representative report-grounded explanations.
-3. Resolve or explicitly defer the missing `OPENAI_API_KEY` before live narration acceptance.
+1. Exercise the Clippers rehearsal in the browser and record its complete lifecycle.
+2. Rehearse Watering Can, then run the Stage 7 golden path and accessibility checks.
+3. Resolve the external real-PR credential/rehearsal gate or explicitly carry it into final submission
+   risk; the public release remains key/login-optional.
 
 ## Submission Readiness
 
-- App: Stage 0–3 complete; Stage 4 Magnifying Glass is active. Live explanation and verified change
-  flows remain later roadmap stages.
+- App: Stage 0–4 implementation is complete; Stage 5 is active, with Stage 6–8 local slices prepared.
+  Real external PR evidence and final human/demo acceptance remain open.
 - Repository: branch is clean and synchronized with `origin`; draft PR #1 is open. Latest GitHub CI
   status was not re-verified because the local GitHub CLI token is invalid; Vercel preview checks and
   hosted smoke tests passed.
