@@ -352,3 +352,10 @@ still required.
 The learning dialog now explicitly manages keyboard focus, exposes `aria-modal` and a description, and
 supports Escape cancellation. Local production browser smoke verified the focus target and cancellation
 behavior with zero errors; this is automated evidence, not a substitute for human accessibility review.
+
+## 2026-07-18 — Overnight hibernation checkpoint
+
+Paused execution after the Bundle 6 technical release gate and production promotion. This is an operating
+pause, not a scope or roadmap change. Resume at the documented human/release gates: non-coder
+explanation read-through, two-person legibility, real-PR boundary evidence, video, Devpost, and final
+acceptance. Do not start a new bundle until those gates are reviewed and reconciled.

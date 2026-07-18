@@ -18,6 +18,14 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
 - **Audit status:** Stage 9/10 technical audit completed 2026-07-18; human/release gates remain open.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
 
+## Hibernation Checkpoint — 2026-07-18, 02:57 MDT
+
+- **State:** paused overnight after the technical release audit and production promotion.
+- **Resume at:** Bundle 6 human/release gate; the next work is evidence capture, not a new roadmap.
+- **Release to test:** `https://coding-garden-iota.vercel.app` at verified commit `bd77258`.
+- **Resume order:** human-test guide → non-coder explanation review → two-person map legibility →
+  honest recording/submission evidence → final audit and acceptance reconciliation.
+
 ## Stage Status
 
 - **Stage 0 — Scope, target, and evidence:** Complete; target, tool policy, risk review, fixture

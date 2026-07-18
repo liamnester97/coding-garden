@@ -84,6 +84,18 @@ Updated: 2026-07-18, America/Denver
 - `DECISION_LOG.md` contains durable project decisions and milestone evidence.
 - No commit or push is implied by this status update.
 
+## Hibernation Checkpoint — 2026-07-18, 02:57 MDT
+
+- **Execution state:** paused overnight; no implementation work is in progress.
+- **Safe resume point:** Bundle 6 / Stage 9–10 human and submission gates.
+- **Verified release:** production `https://coding-garden-iota.vercel.app`, commit `bd77258`,
+  deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`.
+- **Resume sequence:** read this file and `STAGE_TRACKER.md`; run the human-test guide against
+  production; record non-coder and two-person legibility evidence; then complete video/Devpost work
+  and run the final project-status audit.
+- **Scope guard:** do not begin a new bundle or claim Stage 9/10 complete until the open human and
+  submission gates below have evidence.
+
 ## Latest Verification Note
 
 - Commit `bd77258` passed the full local check suite and draft PR #1 remote checks (GitHub CI quality,
