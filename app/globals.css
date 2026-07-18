@@ -52,6 +52,126 @@ main {
   border-radius: 50%;
   background: #89c66a;
 }
+.repository-form {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #39553d;
+  border-radius: 1rem;
+  background: #122019;
+}
+.repository-form label {
+  color: #f0f7eb;
+  font-weight: 700;
+}
+.repository-form-row {
+  display: flex;
+  gap: 0.6rem;
+}
+.repository-form input,
+.repository-form button {
+  min-height: 2.7rem;
+  border: 1px solid #527357;
+  border-radius: 0.65rem;
+  font: inherit;
+}
+.repository-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 0 0.75rem;
+  background: #0f1a14;
+  color: #edf5e9;
+}
+.repository-form button {
+  padding: 0 0.9rem;
+  background: #a8c983;
+  color: #102016;
+  cursor: pointer;
+  font-weight: 700;
+}
+.repository-form button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+.repository-form small,
+.report-source {
+  color: #c7d5bf;
+}
+.form-error {
+  margin: 0;
+  color: #ffb2a3 !important;
+}
+.report-source {
+  font-size: 0.85rem;
+}
+.report-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+.report-summary span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid #294332;
+  border-radius: 999px;
+  color: #c7d5bf;
+  font-size: 0.82rem;
+}
+.report-summary i {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+}
+.report-methods {
+  margin: 0.75rem 0 0 !important;
+  color: #91a88d !important;
+  font-size: 0.78rem;
+}
+.garden-stage {
+  position: relative;
+  min-height: 360px;
+  margin-top: 1.5rem;
+  overflow: hidden;
+  border: 1px solid #39553d;
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(circle at 50% 20%, #23452d 0, transparent 45%), #0e1b14;
+}
+.garden-stage svg {
+  display: block;
+  width: 100%;
+  min-height: 360px;
+}
+.roots line {
+  stroke: #527357;
+  stroke-width: 0.55;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+.map-plants circle {
+  stroke: #edf5e9;
+  stroke-width: 0.35;
+}
+.map-plants .healthy {
+  fill: #8bd36b;
+}
+.map-plants .stressed {
+  fill: #f0bd62;
+}
+.map-plants .withered {
+  fill: #e77767;
+}
+.garden-stage-note {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.75rem;
+  color: #c7d5bf;
+  font-size: 0.75rem;
+}
 .plant-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -171,6 +291,21 @@ main {
 .explanation p {
   margin: 0;
 }
+@media (max-width: 620px) {
+  .repository-form-row {
+    display: grid;
+  }
+}
 .explanation ul {
   margin: 0.5rem 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

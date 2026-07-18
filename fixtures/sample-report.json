@@ -28,6 +28,16 @@
       "health": "withered"
     }
   ],
+  "edges": [
+    {
+      "from": "src/index.js",
+      "to": "src/healthy.js"
+    },
+    {
+      "from": "src/index.test.js",
+      "to": "src/healthy.js"
+    }
+  ],
   "findings": [
     {
       "id": "9691adaaecbc",

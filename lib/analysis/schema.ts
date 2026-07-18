@@ -28,6 +28,7 @@ export const healthReportSchema = z.object({
       health: z.enum(["healthy", "stressed", "withered"]),
     }),
   ),
+  edges: z.array(z.object({ from: z.string(), to: z.string() })),
   findings: z.array(findingSchema),
 });
 

@@ -8,7 +8,7 @@ export type GardenExplanation = {
   health: string;
   needs: string;
   evidence: string[];
-  mode: "sample" | "fallback";
+  mode: "sample" | "report" | "fallback";
 };
 
 function findNode(report: HealthReport, nodeId: string) {
@@ -18,6 +18,7 @@ function findNode(report: HealthReport, nodeId: string) {
 export function explainNode(
   report: HealthReport,
   nodeId: string,
+  mode: GardenExplanation["mode"] = "sample",
 ): GardenExplanation | null {
   const node = findNode(report, nodeId);
   if (!node) return null;
@@ -42,6 +43,6 @@ export function explainNode(
       ? "Use the evidence below to understand the issue before choosing a tending tool."
       : "Keep this module protected with tests as the codebase changes.",
     evidence,
-    mode: "sample",
+    mode,
   };
 }

@@ -249,6 +249,7 @@ export async function analyzeJavaScriptRepository(
       vulnerabilities: "unavailable",
     },
     nodes,
+    edges,
     findings,
   });
 }

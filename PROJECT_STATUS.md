@@ -12,7 +12,7 @@ Updated: 2026-07-17, America/Denver
 
 - Last completed milestone: Stage 0–1 promotion completed with a public Vercel preview, deterministic
   sample analysis, garden projection, inspector, explanation foundation, and public GitHub URL boundary.
-- Passing checks: format:check, lint, typecheck, 17 tests, analysis:validate, build, GitHub CI.
+- Passing checks: format:check, lint, typecheck, 18 tests, analysis:validate, build, GitHub CI.
 - Failing checks: none.
 - Preview URL: https://coding-garden-551m8dsjc-code-garden.vercel.app
 - Production URL: none.
@@ -50,6 +50,12 @@ Updated: 2026-07-17, America/Denver
 - Documentation ownership is now explicit: the workspace-level `docs/EXECUTION_PLAN.md` is the
   only execution roadmap; this repository owns active supporting records and trackers; the source
   package is historical only.
+- Stage 3 real-report rendering slice is implemented locally: the public GitHub form can replace
+  the offline sample with a validated `HealthReport`, and the inspector continues to use the same
+  report-grounded projection and explanation path.
+- The rendering summary now exposes healthy/stressed/withered counts and the analysis method labels;
+  a mobile-width local browser smoke check passed with HTTP 200, three sample plants, and no page
+  errors.
 
 ## Risks Changed
 
@@ -68,8 +74,9 @@ Updated: 2026-07-17, America/Denver
 
 ## Next Three Actions
 
-1. Project the public rehearsal HealthReport into the garden scene.
-2. Add rendering tests for real-analysis node health, findings, and deterministic layout.
+1. Refine the garden presentation for a 31-node public rehearsal while preserving accessible
+   selection and stable layout.
+2. Add a hosted smoke check that loads the public-report path through the UI.
 3. Run the Stage 3 boundary audit before promoting to Stage 4.
 
 ## Submission Readiness

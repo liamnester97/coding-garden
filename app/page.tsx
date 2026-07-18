@@ -7,12 +7,54 @@ import { healthMetaphor } from "@/lib/garden/metaphor";
 import { projectHealthReport } from "@/lib/garden/project";
 
 export default function HomePage() {
-  const scene = projectHealthReport(sampleHealthReport);
+  const [report, setReport] = useState(sampleHealthReport);
+  const [repositoryUrl, setRepositoryUrl] = useState(
+    "https://github.com/ColorlibHQ/gentelella",
+  );
+  const [source, setSource] = useState<"sample" | "report">("sample");
+  const [requestState, setRequestState] = useState<
+    "idle" | "loading" | "error"
+  >("idle");
+  const [error, setError] = useState<string | null>(null);
+  const scene = projectHealthReport(report);
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
   const explanation = selectedPlant
-    ? explainNode(sampleHealthReport, selectedPlant.id)
+    ? explainNode(report, selectedPlant.id, source)
     : null;
+  const healthCounts = scene.plants.reduce(
+    (counts, plant) => {
+      counts[plant.health] += 1;
+      return counts;
+    },
+    { healthy: 0, stressed: 0, withered: 0 },
+  );
+
+  async function analyzeRepository(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setRequestState("loading");
+    setError(null);
+    try {
+      const response = await fetch("/api/repository/analyze", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ url: repositoryUrl }),
+      });
+      const payload = (await response.json()) as {
+        report?: typeof sampleHealthReport;
+        error?: string;
+      };
+      if (!response.ok || !payload.report)
+        throw new Error(payload.error ?? "Repository analysis failed");
+      setReport(payload.report);
+      setSource("report");
+      setSelectedId(payload.report.nodes[0]?.id);
+      setRequestState("idle");
+    } catch (caught) {
+      setRequestState("error");
+      setError(caught instanceof Error ? caught.message : "Analysis failed");
+    }
+  }
 
   return (
     <main>
@@ -28,6 +70,97 @@ export default function HomePage() {
           {scene.plants.reduce((sum, plant) => sum + plant.findingCount, 0)}{" "}
           findings
         </span>
+        <form className="repository-form" onSubmit={analyzeRepository}>
+          <label htmlFor="repository-url">
+            Analyze a public GitHub repository
+          </label>
+          <div className="repository-form-row">
+            <input
+              id="repository-url"
+              type="url"
+              value={repositoryUrl}
+              onChange={(event) => setRepositoryUrl(event.target.value)}
+              placeholder="https://github.com/owner/repository"
+              required
+            />
+            <button type="submit" disabled={requestState === "loading"}>
+              {requestState === "loading" ? "Analyzing…" : "Grow this garden"}
+            </button>
+          </div>
+          <small>
+            Public, read-only analysis. Target code is not installed or
+            executed.
+          </small>
+          {error ? (
+            <p className="form-error" role="alert">
+              {error}
+            </p>
+          ) : null}
+        </form>
+        <p className="report-source">
+          {source === "sample"
+            ? "Offline sample report · no credentials required"
+            : `Public report · commit ${report.repo.commit.slice(0, 12)}`}
+        </p>
+        <div className="report-summary" aria-label="Garden health summary">
+          {Object.entries(healthMetaphor).map(([state, metaphor]) => (
+            <span key={state}>
+              <i style={{ background: metaphor.color }} />
+              <strong>
+                {healthCounts[state as keyof typeof healthCounts]}
+              </strong>{" "}
+              {metaphor.label.toLowerCase()}
+            </span>
+          ))}
+          <span>
+            <strong>{report.findings.length}</strong> report findings
+          </span>
+        </div>
+        <p className="report-methods">
+          Signals: dead code {report.method.deadCode}, coverage{" "}
+          {report.method.coverage}, complexity {report.method.complexity},
+          vulnerabilities {report.method.vulnerabilities}.
+        </p>
+        <div className="garden-stage" aria-label="Code garden map">
+          <svg
+            viewBox="0 0 100 100"
+            role="img"
+            aria-label={`${scene.repoName} module map with ${scene.plants.length} plants and ${scene.roots.length} roots`}
+          >
+            <g className="roots" aria-hidden="true">
+              {scene.roots.map((root) => (
+                <line
+                  key={`${root.from}-${root.to}`}
+                  x1={root.x1}
+                  y1={root.y1}
+                  x2={root.x2}
+                  y2={root.y2}
+                />
+              ))}
+            </g>
+            <g className="map-plants" aria-hidden="true">
+              {scene.plants.map((plant) => (
+                <circle
+                  key={plant.id}
+                  cx={plant.x}
+                  cy={plant.y}
+                  r={
+                    plant.health === "healthy"
+                      ? 2.2
+                      : plant.health === "stressed"
+                        ? 2.8
+                        : 3.4
+                  }
+                  className={plant.health}
+                />
+              ))}
+            </g>
+          </svg>
+          <span className="garden-stage-note">
+            Roots show analyzed relative imports. Select a plant below for the
+            full evidence.
+          </span>
+        </div>
         <div className="plant-grid" aria-label="Code garden plants">
           {scene.plants.map((plant) => (
             <button

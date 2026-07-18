@@ -2,7 +2,7 @@
 
 ## Stage
 
-Stage 2 - Deterministic Analysis Engine
+Stage 3 - Garden Rendering
 
 ## Stage Status
 
@@ -131,6 +131,17 @@ checks.
   complete.
 - **Stage status:** Complete. Stage 2 acceptance, review evidence, human acceptance, documentation
   reconciliation, and the project-status audit are complete. Stage 3 is now the only active stage.
+
+## Stage 3 active slice — real report rendering
+
+- [x] Public repository form sends a normalized URL to the bounded read-only analysis route.
+- [x] Returned `HealthReport` replaces the offline sample report in the garden without recalculating
+      health in the render layer.
+- [x] Inspector and Magnifying Glass explanation remain grounded in the selected report node.
+- [x] Rendering regression coverage includes a Gentelella-shaped report with health, finding labels,
+      evidence, and deterministic layout assertions.
+- [ ] Stage 3 visual acceptance and boundary audit remain open until the remaining rendering work is
+      complete.
 
 ## Stage 2 completion record — 2026-07-17
 

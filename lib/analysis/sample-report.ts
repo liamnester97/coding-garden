@@ -14,6 +14,7 @@ export const sampleHealthReport: HealthReport = healthReportSchema.parse({
     { id: "src/unused.ts", path: "src/unused.ts", health: "withered" },
     { id: "src/health.ts", path: "src/health.ts", health: "healthy" },
   ],
+  edges: [{ from: "src/garden.ts", to: "src/health.ts" }],
   findings: [
     {
       id: "dead-src-unused",

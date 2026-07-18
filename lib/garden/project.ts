@@ -22,6 +22,14 @@ export type GardenScene = {
   repoName: string;
   reportHash: string;
   plants: GardenPlant[];
+  roots: Array<{
+    from: string;
+    to: string;
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+  }>;
 };
 
 function stableHash(value: string) {
@@ -42,9 +50,28 @@ function positionFor(nodeId: string) {
 }
 
 export function projectHealthReport(report: HealthReport): GardenScene {
+  const positions = new Map(
+    report.nodes.map((node) => [node.id, positionFor(node.id)]),
+  );
   return {
     repoName: report.repo.name,
     reportHash: report.reportHash,
+    roots: report.edges.flatMap((edge) => {
+      const from = positions.get(edge.from);
+      const to = positions.get(edge.to);
+      return from && to
+        ? [
+            {
+              from: edge.from,
+              to: edge.to,
+              x1: from.x,
+              y1: from.y,
+              x2: to.x,
+              y2: to.y,
+            },
+          ]
+        : [];
+    }),
     plants: report.nodes.map((node) => {
       const findings = report.findings.filter(
         (finding) => finding.nodeId === node.id,
@@ -61,7 +88,7 @@ export function projectHealthReport(report: HealthReport): GardenScene {
         id: node.id,
         path: node.path,
         health: node.health,
-        ...positionFor(node.id),
+        ...positions.get(node.id)!,
         findingCount: findings.length,
         findingLabels,
         findings: findings.map((finding) => ({
