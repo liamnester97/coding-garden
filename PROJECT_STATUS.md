@@ -5,7 +5,8 @@ Updated: 2026-07-18, America/Denver
 ## Active Bundle and Goal
 
 - Bundle: 6 — Hardening and Release
-- Current goal: Complete abuse, expiry, failure, accessibility, and release-evidence checks.
+- Current goal: Close human acceptance and submission evidence for the technically verified release:
+  non-coder read-through, two-person legibility, real-PR boundary evidence, video, and Devpost.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1

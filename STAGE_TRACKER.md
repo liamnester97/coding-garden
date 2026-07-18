@@ -7,7 +7,8 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
 ## Execution Bundle
 
 - **Bundle:** 6 — Hardening and Release
-- **Current goal:** Complete abuse, expiry, failure, accessibility, and release-evidence checks.
+- **Current goal:** Close human acceptance and submission evidence for the technically verified release:
+  non-coder read-through, two-person legibility, real-PR boundary evidence, video, and Devpost.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
