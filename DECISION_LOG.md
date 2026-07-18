@@ -339,3 +339,7 @@ The Inspector copy was tightened for the non-coder acceptance gate: raw analyzer
 translated into readable labels such as “import map” and “test-file check,” while the deterministic
 evidence remains unchanged. The copy is protected by a regression test; human comprehension review is
 still required.
+
+The learning dialog now explicitly manages keyboard focus, exposes `aria-modal` and a description, and
+supports Escape cancellation. Local production browser smoke verified the focus target and cancellation
+behavior with zero errors; this is automated evidence, not a substitute for human accessibility review.

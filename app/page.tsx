@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
 import { explainNode, type GardenExplanation } from "@/lib/garden/explanation";
 import { healthMetaphor } from "@/lib/garden/metaphor";
@@ -47,6 +47,7 @@ export default function HomePage() {
   const [challengeFeedback, setChallengeFeedback] = useState<string | null>(
     null,
   );
+  const challengeAnswerRef = useRef<HTMLInputElement>(null);
   const [gardener, setGardener] = useState<WorldPoint>(gardenerStart);
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
   const [seasonId, setSeasonId] = useState("early-spring");
@@ -83,6 +84,13 @@ export default function HomePage() {
       cancelled = true;
     };
   }, [report, selectedId, source]);
+  useEffect(() => {
+    if (!challenge || !pendingFinding) return;
+    const frame = requestAnimationFrame(() => {
+      challengeAnswerRef.current?.focus();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [challenge, pendingFinding]);
   const healthCounts = scene.plants.reduce(
     (counts, plant) => {
       counts[plant.health] += 1;
@@ -570,11 +578,21 @@ export default function HomePage() {
               <div
                 className="confirmation-card"
                 role="dialog"
+                aria-modal="true"
                 aria-labelledby="confirm-title"
+                aria-describedby="confirm-description"
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    event.preventDefault();
+                    setPendingFinding(null);
+                    setChallenge(null);
+                    setChallengeFeedback(null);
+                  }
+                }}
               >
                 <span className="eyebrow">Ready to tend</span>
                 <h3 id="confirm-title">Understand, then review the change</h3>
-                <p>
+                <p id="confirm-description">
                   This rehearsal targets{" "}
                   <strong>{pendingFinding.evidence.file}</strong>. The selected
                   finding will be cleared only after the rehearsal reaches
@@ -608,6 +626,7 @@ export default function HomePage() {
                   </label>
                   <input
                     id="challenge-answer"
+                    ref={challengeAnswerRef}
                     value={challengeAnswer}
                     onChange={(event) => setChallengeAnswer(event.target.value)}
                     disabled={Boolean(challenge.proof)}
@@ -644,7 +663,11 @@ export default function HomePage() {
                   <button
                     type="button"
                     className="secondary-button"
-                    onClick={() => setPendingFinding(null)}
+                    onClick={() => {
+                      setPendingFinding(null);
+                      setChallenge(null);
+                      setChallengeFeedback(null);
+                    }}
                   >
                     Cancel
                   </button>

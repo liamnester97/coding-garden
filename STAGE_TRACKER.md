@@ -88,15 +88,15 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
   `PROJECT_STATUS.md`, and `DECISION_LOG.md`; no generic `PLAN.md`, `STATUS.md`, or `DECISIONS.md`.
 - [x] Root navigation resolves to the current status, tracker, decisions, roadmap, and human-test guide.
 - [x] Sensitive-content scan found no committed secret; `.env.example` is the only environment template.
-- [x] `git diff --check`, format check, lint, typecheck, 54 tests, analysis validation, and production
+- [x] `git diff --check`, format check, lint, typecheck, 55 tests, analysis validation, and production
   build passed.
 - [x] Obsidian project note and session log reconciled; Slack connector was unavailable in this session,
   so no new Slack-backed claim was made.
 
 ### Stage 9 hardening evidence — 2026-07-18
 
-- [x] 54 tests pass, including expiry, replay, oversized input, failed rehearsal, and health-preservation
-  cases.
+- [x] 55 tests pass, including expiry, replay, oversized input, failed rehearsal, health-preservation,
+  and non-coder explanation-copy cases.
 - [x] Browser smoke covered sample golden path, touch movement, public read-only mode, and zero page
   errors.
 - [x] Generated build artifacts contain no detected secret prefixes.
@@ -123,6 +123,9 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Magnifying Glass clarity slice: deterministic Inspector copy now translates analyzer labels into
   plain-language issue, health, evidence-source, and next-step text; a regression test protects the
   copy boundary. Human non-coder read-through remains an explicit acceptance gate.
+- [x] Accessibility focus slice: the learning dialog focuses the answer field, exposes modal labeling
+  and description, and supports Escape cancellation. Local production browser smoke verified focus and
+  cancellation with zero page/console errors.
 - [x] Stage 10 documentation readiness: root README now contains the project description and fresh-clone
   setup flow and Build Week submission narrative; public-repository MIT license is committed as
   `LICENSE`; submission checklist reflects the completed track, description, repository, and README
