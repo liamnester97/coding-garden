@@ -38,10 +38,13 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
 - [x] `/api/health` returns OK and reports whether live-AI mode is enabled.
 - [x] Magnifying Glass returns an explanation (canned in offline mode).
 - [x] `/api/repository` accepts a normalized public GitHub URL without requiring login.
+- [x] Production deployment is Ready at https://coding-garden-iota.vercel.app; live smoke checks returned
+  `/` 200, `/api/health` 200, and malformed repository input 400 on 2026-07-18.
 - [x] No secrets appear in client bundles; the generated `.next/static` and `.next/server` artifacts
   were scanned for key prefixes on 2026-07-18.
 
 ## Production cut for submission
 
-- Promote a verified preview to production before the final video is recorded, so the video shows the URL the judges will visit.
+- [x] Promote a verified preview to production before the final video is recorded, so the video shows the
+  URL the judges will visit: https://coding-garden-iota.vercel.app (commit `235be74`, verified 2026-07-18).
 - Freeze deploys after final verification (Execution Plan §15) except for critical fixes.

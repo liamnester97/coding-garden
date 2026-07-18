@@ -289,3 +289,11 @@ with Easy recognition questions, Mid-summer is Level 2 with Medium evidence-conn
 Late summer is Level 3 with Hard reasoning questions. Selecting a season resets stale challenge state;
 it does not alter public reports or invent HealthReport findings. The classroom payoff explains the loop
 and counts only completed sample rehearsals.
+
+## 2026-07-18 — Stage 10 production evidence
+
+The CI-verified commit `235be74` was promoted to the Vercel production project. The canonical public
+URL is `https://coding-garden-iota.vercel.app`; deployment
+`coding-garden-38w8yw6ne-code-garden.vercel.app` reported Ready. Live smoke checks returned HTTP 200
+for `/` and `/api/health`, and HTTP 400 for malformed repository input. Video, Devpost submission,
+human acceptance, and real PR evidence remain explicitly open.

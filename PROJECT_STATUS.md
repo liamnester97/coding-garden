@@ -9,10 +9,12 @@ Updated: 2026-07-18, America/Denver
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Verified implementation commit: `3fb549f`; release documentation sync commits `12029f1` and
+- Verified implementation commit: `235be74`; release documentation sync commits `12029f1` and
   `e858a30` are also pushed to origin.
 - Vercel preview: https://coding-garden-git-agent-health-report-foundation-code-garden.vercel.app
-- Remote evidence: GitHub CI quality passed; Vercel deployment and preview comments passed.
+- Production: https://coding-garden-iota.vercel.app
+- Remote evidence: GitHub CI quality passed; Vercel deployment and preview comments passed. Production
+  deployment `coding-garden-38w8yw6ne-code-garden.vercel.app` is Ready.
 
 ## Bundle Status
 
@@ -40,7 +42,8 @@ Updated: 2026-07-18, America/Denver
 - The app remains login-free and works without `OPENAI_API_KEY` through deterministic fallbacks.
 - Hardening coverage now exercises expiry, proof replay, oversized challenge input, failed rehearsal,
   and health-preservation behavior.
-- Local production-mode route smoke passed; this is not a substitute for a deployed public URL.
+- Local and deployed production-mode route smoke passed: `/` 200, `/api/health` 200, and malformed
+  repository input 400 on the production deployment.
 
 ## Blockers and Open Gates
 
@@ -49,7 +52,7 @@ Updated: 2026-07-18, America/Denver
 - Two-person wide-shot legibility and final human acceptance remain open.
 - Live GPT-5.6 narration cannot be exercised locally without `OPENAI_API_KEY`; the no-key fallback is
   the supported release path.
-- Production promotion, final video, and submission evidence are not complete; the verified preview is
+- Final video, Devpost submission, and human acceptance evidence remain open; the production release is
   available for human testing.
 
 ## Next Three Actions
@@ -57,8 +60,8 @@ Updated: 2026-07-18, America/Denver
 1. Capture the five-explanation non-coder read-through and two-person map-legibility evidence.
 2. Rehearse or record real demo-fork PR evidence where credentials permit; keep demo mode explicit
    until then.
-3. Complete the Stage 9 security/accessibility audit, then gather Stage 10 deployment/video/submission
-   evidence.
+3. Run the human test guide against production, then gather video/submission evidence and record the
+   remaining release gates.
 
 ## Synchronization Rules
 

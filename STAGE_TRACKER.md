@@ -42,8 +42,8 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
   audit remain open.
 - **Stage 9 — Hardening:** Failure/expiry/replay/oversized-input regression coverage is complete;
   security checklist, accessibility evidence, and final audit remain in progress.
-- **Stage 10 — Deploy, Video, Submission:** Preview deployment and remote CI are verified at commit
-  `3fb549f`; production promotion, video, Devpost, and human acceptance remain open.
+- **Stage 10 — Deploy, Video, Submission:** Production deployment and remote CI are verified at commit
+  `235be74`; video, Devpost, and human acceptance remain open.
 
 ## Goal
 
@@ -98,12 +98,13 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Browser smoke covered sample golden path, touch movement, public read-only mode, and zero page
   errors.
 - [x] Generated build artifacts contain no detected secret prefixes.
-- [x] Stage 10 remains queued; production deployment, public video, Devpost submission, and external
+- [x] Stage 10 production deployment is verified at `https://coding-garden-iota.vercel.app` (deployment
+  `coding-garden-38w8yw6ne-code-garden.vercel.app`); public video, Devpost submission, and external
   human review are not claimed complete.
 - [x] Local production-mode smoke passed on `next start`: `/` 200, `/api/health` 200,
   `/api/explain` 200 without a key, invalid repository/challenge/tend payloads 400, and mobile map
   movement completed without page errors.
-- [x] Implementation commit `3fb549f` and documentation sync commits `12029f1`/`e858a30` are pushed;
+- [x] Implementation commit `235be74` and documentation sync commits `12029f1`/`e858a30` are pushed;
   draft PR #1 reports passing GitHub CI quality, Vercel deployment, and Vercel Preview Comments.
   Preview URL is recorded in `PROJECT_STATUS.md`.
 
