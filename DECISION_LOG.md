@@ -272,3 +272,12 @@ limited before grading, challenge proofs are single-use and expiring, command tr
 reject replay/forgery, and failed rehearsals leave HealthReport findings unchanged. The release remains
 login-free and public-report read-only. Stage 10 production deployment, video, and Devpost evidence are
 not marked complete until independently observed and recorded.
+
+## 2026-07-18 — Stage 10 preview evidence
+
+The verified implementation was committed as `3fb549f` and pushed to
+`agent/health-report-foundation`. Draft PR #1 reports passing GitHub CI quality, Vercel deployment,
+and Vercel Preview Comments. The preview URL is
+`https://coding-garden-git-agent-health-report-foundation-code-garden.vercel.app`. This proves preview
+readiness only; production promotion, video, Devpost submission, real live PR evidence, and human
+acceptance remain open.

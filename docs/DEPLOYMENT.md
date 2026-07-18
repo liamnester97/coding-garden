@@ -21,7 +21,8 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
    remain 120 files, 256 KB per file, and 2 MB total.
 6. Keep the first public release login-free for public GitHub repositories. Private repository
    access is not enabled by a pasted URL; it requires a later least-privilege GitHub OAuth/App flow.
-7. Enable preview deployments on every PR; record the preview URL in `PROJECT_STATUS.md`.
+7. Enable preview deployments on every PR; the verified preview for commit `3fb549f` is recorded in
+   `PROJECT_STATUS.md`.
 8. The Magnifying Glass explanation route accepts the validated report currently being viewed. With
    `OPENAI_API_KEY`, GPT-5.6 is called server-side with an eight-second timeout and a five-minute
    report/node cache. Requests are bounded and uncached calls are best-effort limited to 30 per IP

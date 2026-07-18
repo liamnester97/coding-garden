@@ -9,6 +9,9 @@ Updated: 2026-07-18, America/Denver
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
+- Verified commit: `3fb549f` pushed to origin.
+- Vercel preview: https://coding-garden-git-agent-health-report-foundation-code-garden.vercel.app
+- Remote evidence: GitHub CI quality passed; Vercel deployment and preview comments passed.
 
 ## Bundle Status
 
@@ -43,7 +46,8 @@ Updated: 2026-07-18, America/Denver
 - Two-person wide-shot legibility and final human acceptance remain open.
 - Live GPT-5.6 narration cannot be exercised locally without `OPENAI_API_KEY`; the no-key fallback is
   the supported release path.
-- Production deployment, final video, and submission evidence are not complete.
+- Production promotion, final video, and submission evidence are not complete; the verified preview is
+  available for human testing.
 
 ## Next Three Actions
 

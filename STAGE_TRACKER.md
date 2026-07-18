@@ -41,7 +41,8 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
   plant voices); final stretch gate and demo stability audit remain open.
 - **Stage 9 — Hardening:** Failure/expiry/replay/oversized-input regression coverage is complete;
   security checklist, accessibility evidence, and final audit remain in progress.
-- **Stage 10 — Deploy, Video, Submission:** Queued; no production/video/Devpost completion is claimed.
+- **Stage 10 — Deploy, Video, Submission:** Preview deployment and remote CI are verified at commit
+  `3fb549f`; production promotion, video, Devpost, and human acceptance remain open.
 
 ## Goal
 
@@ -99,6 +100,8 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Local production-mode smoke passed on `next start`: `/` 200, `/api/health` 200,
   `/api/explain` 200 without a key, invalid repository/challenge/tend payloads 400, and mobile map
   movement completed without page errors.
+- [x] Commit `3fb549f` is pushed; draft PR #1 reports passing GitHub CI quality, Vercel deployment,
+  and Vercel Preview Comments. Preview URL is recorded in `PROJECT_STATUS.md`.
 
 ## Bundle Gate Protocol
 
