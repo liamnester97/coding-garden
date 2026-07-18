@@ -44,8 +44,9 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
 - **Stage 9 — Hardening:** Failure/expiry/replay/oversized-input regression coverage, security scan,
   production browser smoke, and final technical audit are complete; multi-person legibility and human
   acceptance remain open.
-- **Stage 10 — Deploy, Video, Submission:** Production deployment and remote CI are verified at commit
-  `235be74`; video, Devpost, and human acceptance remain open.
+- **Stage 10 — Deploy, Video, Submission:** Production deployment remains verified at release commit
+  `235be74`; the latest pushed branch commit is `9a2d9c2` with passing remote CI/Vercel checks. Video,
+  Devpost, and human acceptance remain open.
 
 ## Goal
 
@@ -106,8 +107,9 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Local production-mode smoke passed on `next start`: `/` 200, `/api/health` 200,
   `/api/explain` 200 without a key, invalid repository/challenge/tend payloads 400, and mobile map
   movement completed without page errors.
-- [x] Implementation commit `235be74` and documentation sync commits `12029f1`/`e858a30`/`8462b1f`/`e9a25fb` are pushed;
-  draft PR #1 reports passing GitHub CI quality, Vercel deployment, and Vercel Preview Comments.
+- [x] Release implementation commit `235be74`, documentation sync commits `12029f1`/`e858a30`/`8462b1f`/`e9a25fb`,
+  and latest accessibility commit `9a2d9c2` are pushed; draft PR #1 reports passing GitHub CI quality,
+  Vercel deployment, and Vercel Preview Comments for the latest branch head.
   Preview URL is recorded in `PROJECT_STATUS.md`.
 - [x] Production browser smoke on 2026-07-18 verified mobile rendering, sample-mode labels, zero page
   or console errors, and the Clippers golden path. Opening the tool produced zero `/api/tend` calls
