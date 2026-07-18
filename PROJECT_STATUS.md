@@ -10,7 +10,7 @@ Updated: 2026-07-18, America/Denver
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Development branch head: `6e616e3` (`feat: finish garden navigation and release polish`), pushed to
+- Development branch head: `1bf7667` (`fix: close code review release findings`), pushed to
   `origin/agent/health-report-foundation`.
 - Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`). The
   deployed release is intentionally behind the development branch until the remaining human visual/release

@@ -134,16 +134,16 @@ Stage 18 — Final Visual and Release Hardening / Bundle 8 — Progression, Feed
 
 ### Full verification findings — 2026-07-18
 
-- [x] Sequential format, lint, typecheck, test (73 tests across 14 files), analysis validation, production build,
+- [x] Sequential format, lint, typecheck, test (77 tests across 14 files), analysis validation, production build,
       and `git diff --check` pass.
 - [x] Production HTTP smoke passes for `/` and `/api/health`; malformed repository and explanation payloads return
       readable 400 responses; homepage markers for the journal, target halo, learning journey, and gardener render.
 - [x] Structure/security gate passes: one execution plan, one root tracker/status/decision set, no generic duplicate
       tracker files, and no detected secret literals.
-- [ ] Browser automation is unavailable because Playwright is not installed in this checkout; manual visual,
-      keyboard, mobile, reduced-motion, and performance evidence remains open.
-- [ ] npm audit could not reach `registry.npmjs.org` because of DNS/network resolution; dependency security status
-      remains unverified.
+- [x] Playwright Chromium desktop/mobile smoke coverage passes for pointer inspection, challenge placement,
+      keyboard facing, no overflow, reduced motion, public read-only mode, and browser/page errors.
+- [x] `npm audit --omit=dev --audit-level=high` passes after the compatible PostCSS override; no forced framework
+      downgrade was accepted.
 - [ ] Running typecheck and build concurrently can race on generated `.next/types` files; sequential execution passes.
       Keep the documented verification order.
 
@@ -155,7 +155,7 @@ Stage 18 — Final Visual and Release Hardening / Bundle 8 — Progression, Feed
 - **Resume at:** Bundle 8 / Stage 18 final visual and release hardening; implementation is complete and its human/
   release gate is open.
 - **Release to test:** `https://coding-garden-iota.vercel.app` at verified production commit `bd77258`; development
-  branch head is `6e616e3` and is not yet promoted.
+  branch head is `1bf7667` and is not yet promoted.
 - **Resume order:** Stage 18 browser/release evidence → final audit → human acceptance, video, and submission.
 
 ## Stage Status
