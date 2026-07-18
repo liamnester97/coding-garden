@@ -79,6 +79,22 @@ Build an evidence table from the repository, not from prose alone. Check:
 Use `rg` to find stale references such as old stages, missing files, `TODO`, `pending`,
 `not started`, and references to files that do not exist.
 
+### Stage completion tracking
+
+Always produce an explicit stage snapshot from the plan. Distinguish:
+
+- **Slice complete** — the bounded implementation work has evidence and passing checks.
+- **Stage gate open** — one or more acceptance, review, human-approval, deployment, or audit gates
+  remain.
+- **Stage complete** — every stage-specific acceptance criterion and required review/gate is
+  complete and the audit has been run and reconciled.
+
+Read the `## Stage Status` section in `PLAN.md` when present and compare it with the stage roadmap,
+checkboxes, `STATUS.md`, and repository evidence. Flag stale stage labels or percentages. Never
+mark a stage complete merely because its implementation slice is complete. When Liam asks to
+reconcile the project, update the authoritative stage status in `PLAN.md` with a dated evidence
+note and keep any human or external gates explicitly open.
+
 ## 4. Verify repository evidence
 
 Inspect repository cleanliness and run the project checks in a safe order. Prefer separate command
@@ -146,6 +162,13 @@ Return a compact report with these sections:
 ### Execution status
 
 State the active stage, overall assessment, and the strongest evidence.
+
+### Stage completion snapshot
+
+State which stages are complete, which are in progress, and which are queued. For the active stage,
+include completed slice criteria, remaining gates, and whether the stage is ready for a formal gate
+review. If percentages are used, calculate them from explicit stage criteria and label them as
+implementation progress rather than stage completion.
 
 ### Plan changes
 

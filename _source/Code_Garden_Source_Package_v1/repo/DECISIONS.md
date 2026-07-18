@@ -85,7 +85,8 @@ remain advisory until the offline fixture is curated and the verified-change lif
 `fixtures/sample-report.json` is the schema-validated output of the generic adapter against
 `fixtures/sample-repo`. It records three source nodes, one estimated dead-code finding for
 `src/unused.js`, and two estimated coverage gaps. A regression test compares the analyzer output
-to this snapshot; the fixture is curated but remains uncommitted pending human review.
+to this snapshot. The snapshot was subsequently committed in `5403100` and pushed to the draft PR;
+human scope approval remains a separate open gate.
 
 ## 2026-07-17 — Garden projection is a pure report view
 

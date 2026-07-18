@@ -4,15 +4,27 @@
 
 Stage 1 - Repository Bootstrap, Analysis, and Garden Truth
 
+## Stage Status
+
+- **Stage 0 — Scope, target, and evidence:** In progress; target, tool policy, risk review, and
+  fixture evidence are recorded, but human scope approval and ADR-001 acceptance remain open.
+- **Stage 1 — Bootstrap, analysis, and garden truth:** In progress; bootstrap, HealthReport,
+  adapter rehearsal, calibration, fixture commit, and initial projection slice are complete.
+  Vercel preview, independent review, human acceptance, and the project status audit remain open.
+- **Stage 2 — Garden projection and renderer:** Queued; inspector/detail interaction remains before
+  the stage can be considered complete.
+- **Stages 3–5:** Queued.
+
 ## Goal
 
-Establish a runnable sample-mode app, a generic read-only analysis path, and a trustworthy HealthReport before building the garden projection or change tools.
+Establish a runnable sample-mode app, a generic read-only analysis path, a trustworthy HealthReport,
+and the first deterministic garden projection before building explanation or change tools.
 
 ## Acceptance Criteria
 
 - [ ] MVP scope human-approved and recorded in `DECISIONS.md` (one repo, three tools, before/after payoff; Should/Nice tiers deferred).
 - [x] Provisional demo target selected: ColorlibHQ/gentelella; fallback: dumberjs/dumber.
-- [ ] Offline sample repo curated from verified findings and committed as fixture data.
+- [x] Offline sample repo curated from verified findings and committed as fixture data.
 - [x] Initial JavaScript health-signal policy recorded in `DECISIONS.md`.
 - [ ] ADR-001 (MVP scope) accepted by human owner.
 - [x] ADR-002 (deterministic garden truth) accepted.
@@ -24,7 +36,7 @@ Establish a runnable sample-mode app, a generic read-only analysis path, and a t
 - `docs/EXECUTION_PLAN.md` is present and is the active execution source of truth.
 - Gentelella is the provisional target; dumber is the fallback.
 - The JavaScript/TypeScript signal policy is recorded in `DECISIONS.md`.
-- A sample fixture scaffold exists in the working tree; final curation and Git commit remain open.
+- The curated fixture is committed in the pushed foundation branch; human scope approval remains open.
 
 ## Risks
 
@@ -60,7 +72,7 @@ Establish a runnable sample-mode app, a generic read-only analysis path, and a t
 - [ ] Vercel preview connection
 - [x] Generic read-only JavaScript/TypeScript target-repo analysis adapter
 - [x] Rehearse the target adapter against a temporary Gentelella checkout
-- [x] Curate the offline fixture from verified findings; commit remains open
+- [x] Curate and commit the offline fixture from verified findings
 - [x] Calibrate entrypoint detection and finding confidence before any change action
 
 ## Stage Gate Protocol
@@ -88,7 +100,7 @@ human acceptance, independent review, or the required technical checks.
   validation, and production build.
 - [x] `fixtures/sample-report.json` captures the analyzer output for `fixtures/sample-repo`: one
   dead-code finding and two estimated coverage gaps; the schema-backed regression test matches it.
-- [ ] Commit the curated fixture snapshot.
+- [x] Commit the curated fixture snapshot in `5403100`.
 
 ## Garden projection evidence
 

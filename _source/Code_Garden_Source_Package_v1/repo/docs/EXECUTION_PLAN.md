@@ -105,9 +105,9 @@ technical checks.
 ## Current next slice
 
 Add the accessible inspector/detail interaction for the deterministic
-`HealthReport -> GardenScene` projection, then commit the fixture and projection
-follow-up after human review. The fixture captures one estimated dead-code finding
-and two estimated coverage gaps from the bundled sample. Entrypoint calibration is
-complete for HTML/script references, package metadata, service workers, config files,
-and CLI tooling; no finding can authorize a code change until the verified-change
-lifecycle is in place.
+`HealthReport -> GardenScene` projection. The fixture captures one estimated
+dead-code finding and two estimated coverage gaps from the bundled sample and is
+committed in the pushed foundation branch. Entrypoint calibration is complete for
+HTML/script references, package metadata, service workers, config files, and CLI
+tooling; no finding can authorize a code change until the verified-change lifecycle
+is in place.

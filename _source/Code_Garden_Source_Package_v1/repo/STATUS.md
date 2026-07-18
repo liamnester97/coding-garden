@@ -28,7 +28,7 @@ Updated: 2026-07-17, America/Denver
   lifecycle exist.
 - Offline fixture is now curated from `fixtures/sample-repo` and locked by
   `fixtures/sample-report.json`: three nodes, one dead-code finding, and two estimated coverage
-  gaps. The snapshot is not committed yet.
+  gaps. The snapshot is committed in foundation commit `5403100` and pushed to the draft PR.
 - Garden projection is deterministic and pure: plant health, finding labels, colors, and stable
   positions are derived from the validated report; the renderer does not recalculate health.
 
@@ -51,7 +51,7 @@ Updated: 2026-07-17, America/Denver
 ## Next Three Actions
 
 1. Add the accessible inspector/detail interaction for projected plants.
-2. Commit the curated fixture and projection follow-up after human review.
+2. Complete independent review and human acceptance for the current stage gates.
 3. Run the project status audit at the next stage gate and resolve documentation drift.
 
 ## Submission Readiness
