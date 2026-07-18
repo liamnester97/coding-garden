@@ -2,7 +2,20 @@
 
 ## Stage
 
-Stage 8 - Stretch Features
+Stage 4 — Magnifying Glass / Bundle 2 — Understand and Learn
+
+## Execution Bundle
+
+- **Bundle:** 2 — Understand and Learn
+- **Current goal:** Goal 1 — close the Magnifying Glass quality gate and define the learning-objective
+  boundary for the question bank.
+- **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
+  acceptance remains to be recorded.
+- **Bundle 2 status:** In progress; the explanation implementation exists, while non-coder review and
+  the learning-gate implementation remain open.
+- **Bundle gate:** Open.
+- **Audit status:** Required at bundle close; not yet run for Bundle 2.
+- **Human acceptance:** Bundle 1 bundle-level acceptance and Bundle 2 acceptance are not yet recorded.
 
 ## Stage Status
 
@@ -31,8 +44,25 @@ Stage 8 - Stretch Features
 
 ## Goal
 
-Establish a runnable sample-mode app, a generic read-only analysis path, a trustworthy HealthReport,
-and the first deterministic garden projection before building explanation or change tools.
+Complete the Understand and Learn bundle: report-grounded explanations, deterministic learning
+objectives and questions, difficulty flow, and server-authoritative answer gating before actions.
+
+## Bundle Goals
+
+- [ ] Goal 1 — Magnifying Glass quality gate and learning-objective boundary.
+- [ ] Goal 2 — Deterministic question bank and authored learning content.
+- [ ] Goal 3 — Easy, Medium, and Hard challenge flow.
+- [ ] Goal 4 — Server-authoritative answer validation, hints, retries, and accessibility.
+
+## Bundle Gate Protocol
+
+At the end of every execution bundle:
+
+1. Run focused tests and review the four goals together.
+2. Run the project-local `project-status-audit` skill and documentation structure gate.
+3. Reconcile `PROJECT_STATUS.md`, `STAGE_TRACKER.md`, `DECISION_LOG.md`, and relevant docs.
+4. Record open human, credential, deployment, and review gates.
+5. Wait for human acceptance before starting the next bundle.
 
 ## Acceptance Criteria
 
@@ -208,8 +238,12 @@ checks.
 
 - [x] Added the typed `ToolCommand` lifecycle for Clippers, Watering Can, and Pesticide, rejecting
       illegal transitions and requiring the explanation/confirmation sequence.
-- [x] Added `/api/tend` with strict report/command validation, explicit demo-rehearsal labeling,
-      failure handling, and heal-only-after-reanalysis behavior.
+- [x] Added `/api/tend` with strict report/command validation, explicit confirmation, a
+      server-authoritative sample-only lifecycle, failure handling, and heal-only-after-reanalysis.
+- [x] Public reports remain read-only; forged, replayed, mismatched, skipped, and expired tending
+      commands are rejected by the bounded in-memory registry.
+- [x] Repository metadata input is strict, analysis cache identity includes the resolved commit,
+      and anonymous explanation requests have bounded payloads and best-effort rate limits.
 - [x] Clippers and Watering Can regression tests cover full lifecycle, failed commands, missing
       findings, and finding removal after re-analysis.
 - [x] Added UI tool actions, lifecycle status, and an explicit rehearsal note; no fake PR URL is

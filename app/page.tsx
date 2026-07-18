@@ -22,6 +22,9 @@ export default function HomePage() {
     null,
   );
   const [command, setCommand] = useState<ToolCommand | null>(null);
+  const [pendingFinding, setPendingFinding] = useState<
+    (typeof report.findings)[number] | null
+  >(null);
   const [tendError, setTendError] = useState<string | null>(null);
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
   const [seasonId, setSeasonId] = useState("early-spring");
@@ -90,6 +93,17 @@ export default function HomePage() {
     }
   }
 
+  function requestTending(finding: (typeof report.findings)[number]) {
+    if (source !== "sample") {
+      setTendError(
+        "Public reports are read-only; demo tending is sample-only.",
+      );
+      return;
+    }
+    setTendError(null);
+    setPendingFinding(finding);
+  }
+
   async function tendFinding(finding: (typeof report.findings)[number]) {
     const tool =
       finding.type === "dead-code"
@@ -101,16 +115,20 @@ export default function HomePage() {
             : null;
     if (!tool) return;
     setTendError(null);
-    let currentCommand: ToolCommand = {
+    const seed = {
       id: `${tool}-${finding.id}`,
       tool,
       findingId: finding.id,
       nodeId: finding.nodeId,
+    } as const;
+    let currentCommand: ToolCommand = {
+      ...seed,
       state: "seen",
       mode: "demo-rehearsal",
       prUrl: null,
     };
     let currentReport = report;
+    let firstRequest = true;
     try {
       while (currentCommand.state !== "landed") {
         const response = await fetch("/api/tend", {
@@ -118,7 +136,7 @@ export default function HomePage() {
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
             report: currentReport,
-            command: currentCommand,
+            command: firstRequest ? seed : currentCommand,
             action: "advance",
           }),
         });
@@ -131,12 +149,14 @@ export default function HomePage() {
           throw new Error(payload.error ?? "Tending failed");
         currentCommand = payload.command;
         currentReport = payload.report;
+        firstRequest = false;
         setCommand(currentCommand);
       }
       setReport(currentReport);
-      setSource("report");
+      setSource("sample");
       setSelectedId(finding.nodeId);
       setCompletedCommands((completed) => [...completed, currentCommand]);
+      setPendingFinding(null);
     } catch (caught) {
       setTendError(caught instanceof Error ? caught.message : "Tending failed");
       setCommand({ ...currentCommand, state: "failed" });
@@ -329,6 +349,44 @@ export default function HomePage() {
                 ) : null}
               </div>
             ) : null}
+            {pendingFinding && source === "sample" && visibleExplanation ? (
+              <div
+                className="confirmation-card"
+                role="dialog"
+                aria-labelledby="confirm-title"
+              >
+                <span className="eyebrow">Ready to tend</span>
+                <h3 id="confirm-title">Review the proposed demo change</h3>
+                <p>
+                  This rehearsal targets{" "}
+                  <strong>{pendingFinding.evidence.file}</strong>. The selected
+                  finding will be cleared only after the rehearsal reaches
+                  verification and re-analysis.
+                </p>
+                <div className="confirmation-actions">
+                  <button
+                    type="button"
+                    className="tool-button"
+                    onClick={() => void tendFinding(pendingFinding)}
+                  >
+                    Confirm demo rehearsal
+                  </button>
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={() => setPendingFinding(null)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : null}
+            {source === "report" && selectedPlant.findings.length ? (
+              <p className="read-only-notice" role="status">
+                Public reports are read-only. Demo rehearsals are available only
+                in the offline sample garden.
+              </p>
+            ) : null}
             {selectedPlant.findings.length ? (
               <ul>
                 {selectedPlant.findings.map((finding) => (
@@ -336,9 +394,10 @@ export default function HomePage() {
                     <strong>{finding.label}</strong>
                     <span>{finding.summary}</span>
                     <small>{finding.evidence}</small>
-                    {finding.label === "unreachable branch" ||
-                    finding.label === "unwatered test path" ||
-                    finding.label === "security pest" ? (
+                    {source === "sample" &&
+                    (finding.label === "unreachable branch" ||
+                      finding.label === "unwatered test path" ||
+                      finding.label === "security pest") ? (
                       <button
                         type="button"
                         className="tool-button"
@@ -348,7 +407,7 @@ export default function HomePage() {
                               candidate.nodeId === selectedPlant.id &&
                               candidate.summary === finding.summary,
                           );
-                          if (sourceFinding) void tendFinding(sourceFinding);
+                          if (sourceFinding) requestTending(sourceFinding);
                         }}
                         disabled={
                           command?.state === "acting" ||

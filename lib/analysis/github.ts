@@ -42,6 +42,14 @@ type RepositoryInfo = { default_branch?: unknown };
 type TreeEntry = { path?: unknown; type?: unknown; size?: unknown };
 type RepositoryTree = { sha?: unknown; truncated?: unknown; tree?: unknown };
 
+export type ResolvedGitHubRepository = {
+  descriptor: RepositoryDescriptor;
+  owner: string;
+  repo: string;
+  sha: string;
+  entries: TreeEntry[];
+};
+
 function headers(): HeadersInit {
   return {
     Accept: "application/vnd.github+json",
@@ -94,35 +102,13 @@ function safeRelativePath(filePath: string): string | null {
 export async function analyzePublicGitHubRepository(
   input: string,
   fetcher: GitHubFetcher = fetch as unknown as GitHubFetcher,
+  resolved?: ResolvedGitHubRepository,
 ): Promise<HealthReport> {
-  const descriptor = publicGitHubRepositoryFromUrl(input);
-  if (!descriptor) throw new Error("Only a public GitHub URL can be analyzed");
-
-  const [owner, repo] = descriptor.id.split("/");
-  const info = await readJson<RepositoryInfo>(
-    await fetchWithTimeout(
-      fetcher,
-      `${API_ROOT}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`,
-      { headers: headers() },
-    ),
-    "GitHub repository metadata",
-  );
-  const branch =
-    typeof info.default_branch === "string" ? info.default_branch : null;
-  if (!branch) throw new Error("GitHub did not provide a default branch");
-
-  const tree = await readJson<RepositoryTree>(
-    await fetchWithTimeout(
-      fetcher,
-      `${API_ROOT}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/git/trees/${encodeURIComponent(branch)}?recursive=1`,
-      { headers: headers() },
-    ),
-    "GitHub repository tree",
-  );
-  const sha = typeof tree.sha === "string" ? tree.sha : null;
-  const entries = Array.isArray(tree.tree) ? (tree.tree as TreeEntry[]) : [];
-  if (!sha || tree.truncated === true)
-    throw new Error("GitHub repository is too large for the bounded analysis");
+  const resolution =
+    resolved ?? (await resolvePublicGitHubRepository(input, fetcher));
+  const { descriptor, owner, repo, sha, entries } = resolution;
+  if (descriptor.location !== input)
+    throw new Error("Resolved repository does not match the requested URL");
 
   const candidateFiles = entries
     .filter((entry) => entry.type === "blob")
@@ -189,6 +175,42 @@ export async function analyzePublicGitHubRepository(
   } finally {
     await rm(root, { recursive: true, force: true });
   }
+}
+
+export async function resolvePublicGitHubRepository(
+  input: string,
+  fetcher: GitHubFetcher = fetch as unknown as GitHubFetcher,
+): Promise<ResolvedGitHubRepository> {
+  const descriptor = publicGitHubRepositoryFromUrl(input);
+  if (!descriptor) throw new Error("Only a public GitHub URL can be analyzed");
+
+  const [owner, repo] = descriptor.id.split("/");
+  const info = await readJson<RepositoryInfo>(
+    await fetchWithTimeout(
+      fetcher,
+      `${API_ROOT}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`,
+      { headers: headers() },
+    ),
+    "GitHub repository metadata",
+  );
+  const branch =
+    typeof info.default_branch === "string" ? info.default_branch : null;
+  if (!branch) throw new Error("GitHub did not provide a default branch");
+
+  const tree = await readJson<RepositoryTree>(
+    await fetchWithTimeout(
+      fetcher,
+      `${API_ROOT}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/git/trees/${encodeURIComponent(branch)}?recursive=1`,
+      { headers: headers() },
+    ),
+    "GitHub repository tree",
+  );
+  const sha = typeof tree.sha === "string" ? tree.sha : null;
+  const entries = Array.isArray(tree.tree) ? (tree.tree as TreeEntry[]) : [];
+  if (!sha || tree.truncated === true)
+    throw new Error("GitHub repository is too large for the bounded analysis");
+
+  return { descriptor, owner, repo, sha, entries };
 }
 
 export const githubAnalysisLimits = {

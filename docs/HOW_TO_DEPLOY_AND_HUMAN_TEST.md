@@ -98,7 +98,12 @@ viewport when possible.
 
 ### Demo-rehearsal tools
 
+- Return to the offline sample garden before using a tool. Public GitHub reports are strictly
+  read-only and do not show tending controls.
 - [ ] Select the sample withered plant and choose **Use Clippers**.
+- [ ] Confirm the Magnifying Glass explanation is visible before the confirmation card appears.
+- [ ] Review the proposed file scope and choose **Confirm demo rehearsal**; verify no `/api/tend`
+  request occurs before confirmation.
 - [ ] Confirm the status advances through the lifecycle and ends at `landed`.
 - [ ] Confirm the dead-code finding disappears only after the rehearsal re-analysis response.
 - [ ] Select the sample stressed plant and choose **Use Watering Can**.
@@ -107,7 +112,8 @@ viewport when possible.
 
 These are intentionally labeled **demo rehearsals**. They do not create a real branch or PR, do not
 mutate the analyzed repository, and do not claim that a real code change landed. Real branch/PR
-execution remains a future/live integration gate.
+execution remains a future/live integration gate. An in-progress rehearsal can expire after a
+server restart; restart it from the sample garden if that happens.
 
 ### Payoff, seasons, and voices
 

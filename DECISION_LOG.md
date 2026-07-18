@@ -229,3 +229,27 @@ verify, and preserve the truth boundary. Pesticide is lifecycle-ready but dorman
 vulnerability finding exists. AI-painted backdrop is deferred so generated art cannot encode health.
 A mobile production browser rehearsal passed; two-person wide-shot legibility, independent review,
 and real demo-fork PR evidence remain explicit acceptance gates.
+
+## 2026-07-18 — Review hardening: sample-only rehearsals and bounded anonymous AI
+
+The public report path remains strictly read-only. Tending controls are available only for the
+bundled offline sample and require an explicit confirmation card. The `/api/tend` route owns an
+in-memory command registry with bounded lifetime and rejects forged, skipped, replayed, mismatched,
+or expired transitions. The demo may lose an in-progress command after a server restart and must
+show a recoverable restart/expiry message rather than claim success.
+
+The public GitHub analysis cache is keyed by normalized repository URL plus the currently resolved
+commit SHA, preventing a new default-branch commit from receiving a stale report. The anonymous
+explanation route bounds report/request size and uses a best-effort 30-request-per-IP, ten-minute
+limit for uncached requests while preserving deterministic no-key fallback behavior.
+
+## 2026-07-18 — Execution bundle cadence
+
+The canonical Stage 0–10 roadmap remains unchanged as the product hierarchy. To make execution
+manageable in bounded Codex goals, work is now grouped into six execution bundles: Foundation and
+Truth; Understand and Learn; Act Safely; Playable Garden World; Progression and Classroom Value; and
+Hardening and Release. A bundle contains four implementation goals by default and closes with focused
+review, the project-status audit, documentation reconciliation, and human acceptance. Bundles are a
+delivery cadence inside `docs/EXECUTION_PLAN.md`, not a second roadmap or tracker. Bundle 1 is accepted
+from the existing Stages 0–3 evidence; Bundle 2 is now active with the Magnifying Glass quality gate
+and learning-objective boundary as its first goal.

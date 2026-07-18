@@ -157,6 +157,42 @@ main {
   opacity: 0.55;
 }
 
+.secondary-button {
+  border: 1px solid #71856d;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  padding: 0.35rem 0.7rem;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.confirmation-card,
+.read-only-notice {
+  margin: 0.9rem 0;
+  padding: 0.8rem;
+  border: 1px solid #8f6f3d;
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, var(--paper) 88%, #f5d995);
+}
+
+.confirmation-card h3 {
+  margin: 0.25rem 0;
+}
+
+.confirmation-card p,
+.read-only-notice {
+  color: #455944;
+  font-size: 0.85rem;
+}
+
+.confirmation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .tend-status {
   border-left: 3px solid var(--moss);
   padding-left: 0.7rem;

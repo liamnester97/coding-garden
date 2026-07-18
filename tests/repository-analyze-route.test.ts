@@ -2,9 +2,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
 
 const analyzeMock = vi.hoisted(() => vi.fn());
+const resolveMock = vi.hoisted(() => vi.fn());
 
 vi.mock("@/lib/analysis/github", () => ({
   analyzePublicGitHubRepository: analyzeMock,
+  resolvePublicGitHubRepository: resolveMock,
 }));
 
 import {
@@ -25,11 +27,33 @@ describe("POST /api/repository/analyze", () => {
   beforeEach(() => {
     resetPublicAnalysisGuards();
     analyzeMock.mockReset();
+    resolveMock.mockReset();
     analyzeMock.mockResolvedValue(sampleHealthReport);
+    resolveMock.mockResolvedValue({
+      descriptor: {
+        id: "acme/garden",
+        name: "garden",
+        source: "github",
+        location: "https://github.com/acme/garden",
+        language: "unknown",
+        ref: "default",
+      },
+      owner: "acme",
+      repo: "garden",
+      sha: "abc123",
+      entries: [],
+    });
   });
 
   it("rejects non-string URLs before analysis", async () => {
     const response = await POST(request(42));
+
+    expect(response.status).toBe(400);
+    expect(analyzeMock).not.toHaveBeenCalled();
+  });
+
+  it("rejects arrays before analysis", async () => {
+    const response = await POST(request(["https://github.com/acme/garden"]));
 
     expect(response.status).toBe(400);
     expect(analyzeMock).not.toHaveBeenCalled();
@@ -70,5 +94,42 @@ describe("POST /api/repository/analyze", () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it("refreshes the cache when the resolved commit changes", async () => {
+    resolveMock
+      .mockResolvedValueOnce({
+        descriptor: {
+          id: "acme/garden",
+          name: "garden",
+          source: "github",
+          location: "https://github.com/acme/garden",
+          language: "unknown",
+          ref: "default",
+        },
+        owner: "acme",
+        repo: "garden",
+        sha: "first-sha",
+        entries: [],
+      })
+      .mockResolvedValueOnce({
+        descriptor: {
+          id: "acme/garden",
+          name: "garden",
+          source: "github",
+          location: "https://github.com/acme/garden",
+          language: "unknown",
+          ref: "default",
+        },
+        owner: "acme",
+        repo: "garden",
+        sha: "second-sha",
+        entries: [],
+      });
+
+    await POST(request("https://github.com/acme/garden"));
+    await POST(request("https://github.com/acme/garden"));
+
+    expect(analyzeMock).toHaveBeenCalledTimes(2);
   });
 });

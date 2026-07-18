@@ -23,6 +23,12 @@ export const explanationLimits = {
   cacheTtlMs: CACHE_TTL_MS,
   maxCacheEntries: MAX_CACHE_ENTRIES,
   requestTimeoutMs: REQUEST_TIMEOUT_MS,
+  maxRequestsPerIp: 30,
+  rateLimitWindowMs: 10 * 60 * 1000,
+  maxRequestBytes: 256_000,
+  maxNodes: 200,
+  maxEdges: 500,
+  maxFindings: 500,
 };
 
 export const explanationSystemPrompt = `You explain a static-analysis report to a non-coder. Use only the supplied report context. Never claim a finding, metric, dependency, behavior, or source fact that is not present in the context. Preserve uncertainty such as possibly unused and estimated coverage. Explain jargon briefly. Return JSON with exactly three string fields: summary, health, needs.`;
@@ -127,18 +133,26 @@ export async function explainNodeWithModel(
   nodeId: string,
   now = Date.now(),
 ): Promise<GardenExplanation | null> {
-  for (const [key, entry] of explanationCache) {
-    if (entry.expiresAt <= now) explanationCache.delete(key);
-  }
+  const cached = getCachedExplanation(report.reportHash, nodeId, now);
+  if (cached) return cached;
   const key = `${report.reportHash}:${nodeId}`;
-  const cached = explanationCache.get(key);
-  if (cached) return cached.explanation;
   const explanation = await liveExplanation(report, nodeId);
   if (!explanation) return null;
   if (explanationCache.size >= MAX_CACHE_ENTRIES && !explanationCache.has(key))
     explanationCache.delete(explanationCache.keys().next().value as string);
   explanationCache.set(key, { explanation, expiresAt: now + CACHE_TTL_MS });
   return explanation;
+}
+
+export function getCachedExplanation(
+  reportHash: string,
+  nodeId: string,
+  now = Date.now(),
+): GardenExplanation | null {
+  for (const [key, entry] of explanationCache) {
+    if (entry.expiresAt <= now) explanationCache.delete(key);
+  }
+  return explanationCache.get(`${reportHash}:${nodeId}`)?.explanation ?? null;
 }
 
 export function resetExplanationCache() {

@@ -14,9 +14,9 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
    - `OPENAI_API_KEY` — optional; without it the app still supports public read-only analysis and
      serves deterministic explanations, with the cached sample garden as the no-network fallback.
    - Any Codex task-dispatch credentials required by the change pipeline (see Execution Plan §6.8) — server-side only, never exposed to the client.
-4. Public analysis is best-effort protected without a new service: five uncached analyses per
-   client IP per ten minutes, five-minute in-memory report caching, and ten-second GitHub request
-   timeouts. Vercel instances may enforce these limits independently.
+4. Public analysis is best-effort protected without a new service: five requests per client IP per
+   ten minutes, five-minute in-memory report caching keyed by normalized URL plus resolved commit,
+   and ten-second GitHub request timeouts. Vercel instances may enforce these limits independently.
 5. Bounded reports disclose analyzed versus omitted supported files in the UI. The existing limits
    remain 120 files, 256 KB per file, and 2 MB total.
 6. Keep the first public release login-free for public GitHub repositories. Private repository
@@ -24,8 +24,12 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
 7. Enable preview deployments on every PR; record the preview URL in `PROJECT_STATUS.md`.
 8. The Magnifying Glass explanation route accepts the validated report currently being viewed. With
    `OPENAI_API_KEY`, GPT-5.6 is called server-side with an eight-second timeout and a five-minute
-   report/node cache. Without the key, or if the model fails validation, the deterministic grounded
+   report/node cache. Requests are bounded and uncached calls are best-effort limited to 30 per IP
+   per ten minutes. Without the key, or if the model fails validation, the deterministic grounded
    explanation remains the release fallback.
+9. Public GitHub reports are strictly read-only. Clippers, Watering Can, and Pesticide are demo
+   rehearsals against the bundled sample only, with an explicit confirmation card and an
+   in-memory server-authoritative lifecycle. A restart may expire an in-progress rehearsal.
 
 ## Verification after each deploy
 

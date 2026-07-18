@@ -19,6 +19,7 @@ A tip-to-tail plan for building, testing, reviewing, and submitting Code Garden 
 - 7. Engineering Quality, Testing, and Review
 - 8. Codex Operating Model
 - 9. Stage-by-Stage Execution Roadmap
+- 9.1 Execution Bundles
 - 10. Program Management & Schedule
 - 11. Research Backlog
 - 12. Risk Register (pointer)
@@ -47,6 +48,10 @@ This document is the single implementation source of truth for Code Garden. It c
 3. Copy the stage's goal block into Codex verbatim; use `/plan` for the slice; do not plan ahead in code.
 4. A stage is complete only when its acceptance criteria are checked, the required checks pass, self-review and independent review are done, and the human owner accepts.
 5. The invariants in `AGENTS.md` (Appendix A) override any convenience. When an invariant blocks a shortcut, the invariant wins.
+
+Execution is grouped into bounded bundles in §9.1. Bundles are a delivery cadence inside this
+roadmap, not a second plan. Execute one bundle, review it, run the project-status audit, reconcile
+the authoritative trackers, and wait for human acceptance before starting the next bundle.
 
 ## Executive Summary
 
@@ -351,13 +356,13 @@ State-machine rule: a ToolCommand can only advance in order; "understood" requir
 - `GET /api/health` → service status + mode (live | sample).
 - `GET /api/garden?repo=` → HealthReport + GardenScene.
 - `POST /api/explain` `{ findingId | nodeId }` → grounded explanation (cached; canned in sample mode).
-- `POST /api/tend` `{ command }` → advances the ToolCommand lifecycle; returns task/PR status. Rejects any command skipping states.
+- `POST /api/tend` `{ report, command }` → advances the sample-only demo lifecycle from a seed command through server-authoritative see → understand → confirm → act → verify → re-analyze states. Rejects forged, replayed, expired, public-report, or skipped commands.
 
 ## 6.7 AI orchestration (GPT-5.6)
 
 - Prompt layers: system (role, grounding rules, non-coder voice) + registry excerpt + HealthReport entry + source excerpt. Versioned prompt files in `lib/ai/prompts/`.
 - Hard grounding rule in the system prompt and enforced by evals: never assert a finding not in the provided context.
-- Caching: explanation keyed by (nodeId, report hash). Budget: cap tokens per explanation; log usage.
+- Caching: explanation keyed by (nodeId, report hash). Reports and serialized requests are bounded; uncached anonymous explanation calls use a best-effort per-IP budget. Budget: cap tokens per explanation; log usage.
 
 ## 6.8 Codex change pipeline
 
@@ -545,6 +550,107 @@ narration remains gated on `OPENAI_API_KEY` and prompt/evidence acceptance.
 ### Stage 10 — Deploy, Video, Submission
 **Goal:** production deploy verified; demo video shot per §15 storyboard; README submission narrative; Devpost form completed and submitted.
 **Acceptance:** BUILD_WEEK_REQUIREMENTS.md checklist fully checked; final verification pass done; submission confirmed before July 21 5:00 PM PT.
+
+## 9.1 Execution Bundles
+
+The Stage 0–10 roadmap remains the canonical hierarchy. Execution bundles group related stages into
+four bounded goals so each Codex goal can be implemented, reviewed, audited, and accepted without
+creating a parallel roadmap.
+
+### Bundle operating rule
+
+1. Execute the four goals in the active bundle.
+2. Run focused tests and review the bundle as a coherent slice.
+3. Run the full `project-status-audit` skill and documentation structure gate.
+4. Reconcile `PROJECT_STATUS.md`, `STAGE_TRACKER.md`, `DECISION_LOG.md`, and relevant supporting docs.
+5. Obtain human review and acceptance.
+6. Start the next bundle only after the gate is accepted.
+
+Each bundle has four implementation goals by default. A fifth goal is allowed only for documentation,
+audit, or release verification. Every goal must leave a testable artifact or behavior, and every
+bundle must leave the application runnable and demoable.
+
+### Bundle 1 — Foundation and Truth
+
+Maps to Stages 0–3.
+
+1. Confirm product scope, target repository, risks, and architecture.
+2. Complete deterministic `HealthReport` analysis.
+3. Complete bounded public read-only analysis.
+4. Complete the truthful 2D garden projection and inspector.
+
+**Gate:** analysis truth, repository structure, security, rendering, and inspector checks pass.
+
+### Bundle 2 — Understand and Learn
+
+Maps to Stage 4 and the educational learning-gate additions.
+
+1. Complete report-grounded Magnifying Glass explanations.
+2. Add the deterministic question bank and learning objectives.
+3. Add Easy, Medium, and Hard challenge flow.
+4. Add server-authoritative answer validation, hints, retries, and accessibility.
+
+**Gate:** players can explain a finding and demonstrate understanding before an action is unlocked.
+
+### Bundle 3 — Act Safely
+
+Maps to Stages 5–6.
+
+1. Integrate the learning gate with Clippers.
+2. Integrate the learning gate with Watering Can.
+3. Preserve server-authoritative command validation.
+4. Verify sample-only demo rehearsals and public read-only behavior.
+
+**Gate:** a correct answer unlocks the action, but only verified re-analysis changes garden health.
+
+### Bundle 4 — Playable Garden World
+
+Maps to the Stage 3 visual expansion and Stage 7.
+
+1. Add the free-moving gardener avatar.
+2. Add map beds, paths, tool stations, landmarks, and interaction zones.
+3. Add keyboard, touch, camera, collision, focus, and reduced-motion behavior.
+4. Connect movement → inspection → challenge → action → payoff into one golden path.
+
+**Gate:** a first-time player can understand and complete the loop without intervention.
+
+### Bundle 5 — Progression and Classroom Value
+
+Maps to Stage 8.
+
+1. Use seasons as progression levels.
+2. Increase question complexity across seasons.
+3. Add plant voices and grounded narrative feedback.
+4. Complete classroom comparison and learning-recap surfaces.
+
+Optional fifth goal: add authored or generated decorative art only when it cannot destabilize the core
+loop or encode garden health.
+
+**Gate:** progression teaches increasingly deeper code concepts without changing analysis truth.
+
+### Bundle 6 — Hardening and Release
+
+Maps to Stages 9–10.
+
+1. Run security, abuse, failure, and expiry testing.
+2. Complete accessibility and multi-person playtesting.
+3. Verify production deployment and human-testing evidence.
+4. Prepare the demo video, submission narrative, and final audit.
+
+**Gate:** no unresolved P0/P1 issues, all required documentation is synchronized, and release evidence
+is recorded.
+
+### Bundle assumptions
+
+- Bundles are a delivery cadence, not a second execution plan or tracker.
+- Bundle 2 may proceed before the free-movement world because the learning gate improves the current UI
+  and later transfers into the map.
+- Questions are deterministic, authored, report-grounded, and server-validated; the LLM does not grade
+  answers or mutate garden state.
+- Public reports remain read-only and demo rehearsals remain sample-only until a separate live
+  branch/PR integration gate is accepted.
+- Every bundle ends with focused checks, the full project-status audit, documentation reconciliation,
+  and explicit human acceptance.
 
 ---
 

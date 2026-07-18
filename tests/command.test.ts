@@ -29,16 +29,14 @@ describe("tending command lifecycle", () => {
     expect(() => advanceToolCommand(command)).toThrow();
   });
 
-  it("cannot confirm without an explanation state", () => {
+  it("advances one lifecycle state at a time", () => {
     const command = createToolCommand({
       id: "demo",
       tool: "clippers",
       findingId: "dead-src-unused",
       nodeId: "src/unused.ts",
     });
-    expect(() =>
-      advanceToolCommand({ ...command, state: "confirmed" }),
-    ).not.toThrow();
+    expect(advanceToolCommand(command).state).toBe("understood");
     expect(failToolCommand(command, "failed").state).toBe("failed");
   });
 

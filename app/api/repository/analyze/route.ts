@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { analyzePublicGitHubRepository } from "@/lib/analysis/github";
+import {
+  analyzePublicGitHubRepository,
+  resolvePublicGitHubRepository,
+} from "@/lib/analysis/github";
 import {
   publicGitHubRepositoryFromUrl,
   publicRepositoryRequestSchema,
@@ -15,7 +18,7 @@ const CACHE_TTL_MS = 5 * 60 * 1000;
 const MAX_CACHE_ENTRIES = 100;
 
 type RateLimitEntry = { count: number; expiresAt: number };
-type CachedReport = { key: string; report: HealthReport; expiresAt: number };
+type CachedReport = { report: HealthReport; expiresAt: number };
 
 const rateLimitEntries = new Map<string, RateLimitEntry>();
 const analysisCache = new Map<string, CachedReport>();
@@ -60,33 +63,25 @@ function consumeRateLimit(request: Request, now = Date.now()): number | null {
 }
 
 function getCachedReport(
-  repositoryUrl: string,
+  cacheKey: string,
   now = Date.now(),
 ): CachedReport | null {
-  const cached = analysisCache.get(repositoryUrl);
+  const cached = analysisCache.get(cacheKey);
   if (!cached) return null;
   if (cached.expiresAt <= now) {
-    analysisCache.delete(repositoryUrl);
+    analysisCache.delete(cacheKey);
     return null;
   }
   return cached;
 }
 
-function cacheReport(
-  repositoryUrl: string,
-  report: HealthReport,
-  now = Date.now(),
-) {
+function cacheReport(cacheKey: string, report: HealthReport, now = Date.now()) {
   pruneExpired(analysisCache, now);
-  if (
-    analysisCache.size >= MAX_CACHE_ENTRIES &&
-    !analysisCache.has(repositoryUrl)
-  ) {
+  if (analysisCache.size >= MAX_CACHE_ENTRIES && !analysisCache.has(cacheKey)) {
     const oldestKey = analysisCache.keys().next().value;
     if (oldestKey) analysisCache.delete(oldestKey);
   }
-  analysisCache.set(repositoryUrl, {
-    key: `${repositoryUrl}@${report.repo.commit}`,
+  analysisCache.set(cacheKey, {
     report,
     expiresAt: now + CACHE_TTL_MS,
   });
@@ -129,14 +124,6 @@ export async function POST(request: Request) {
       { status: 400 },
     );
 
-  const cached = getCachedReport(repository.location);
-  if (cached)
-    return NextResponse.json({
-      mode: "public-read-only",
-      report: cached.report,
-      cached: true,
-    });
-
   const retryAfter = consumeRateLimit(request);
   if (retryAfter !== null)
     return NextResponse.json(
@@ -145,8 +132,22 @@ export async function POST(request: Request) {
     );
 
   try {
-    const report = await analyzePublicGitHubRepository(repository.location);
-    cacheReport(repository.location, report);
+    const resolved = await resolvePublicGitHubRepository(repository.location);
+    const cacheKey = `${repository.location}@${resolved.sha}`;
+    const cached = getCachedReport(cacheKey);
+    if (cached)
+      return NextResponse.json({
+        mode: "public-read-only",
+        report: cached.report,
+        cached: true,
+      });
+
+    const report = await analyzePublicGitHubRepository(
+      repository.location,
+      fetch,
+      resolved,
+    );
+    cacheReport(cacheKey, report);
     return NextResponse.json({ mode: "public-read-only", report });
   } catch (error) {
     const message =

@@ -29,4 +29,17 @@ describe("POST /api/repository", () => {
 
     expect(response.status).toBe(400);
   });
+
+  it("rejects non-string URL values instead of coercing them", async () => {
+    const response = await POST(
+      new Request("http://localhost/api/repository", {
+        method: "POST",
+        body: JSON.stringify({
+          url: ["https://github.com/ColorlibHQ/gentelella"],
+        }),
+      }),
+    );
+
+    expect(response.status).toBe(400);
+  });
 });
