@@ -14,7 +14,7 @@ Updated: 2026-07-17, America/Denver
   sample analysis, garden projection, inspector, explanation foundation, and public GitHub URL boundary.
 - Passing checks: format:check, lint, typecheck, 17 tests, analysis:validate, build, GitHub CI.
 - Failing checks: none.
-- Preview URL: https://coding-garden-brlf2kkis-code-garden.vercel.app
+- Preview URL: https://coding-garden-551m8dsjc-code-garden.vercel.app
 - Production URL: none.
 - Release boundary: standalone public Vercel app; public GitHub URL input is the first external
   repository path, with sample mode as the no-credential fallback.
@@ -95,3 +95,17 @@ Updated: 2026-07-17, America/Denver
 - README: baseline written; submission narrative pending.
 - Demo video: not started.
 - Devpost submission fields: not started.
+
+## Stage 2 closeout verification
+
+- Stage 2 promoted complete on 2026-07-17 after the full project-status audit.
+- Hosted preview deployment `56d2c9e` is ready; anonymous `POST /api/repository/analyze` returned
+  HTTP 200 with the cached Gentelella evidence: 31 nodes, 63 findings, hash `da302756ed12d03b`.
+- GitHub CI quality and both Vercel checks passed.
+- Structure gate passed: one canonical execution plan, one named set of active trackers, no generic
+  duplicate plan/status/decision files, and historical source package separated under `_archive/`.
+- Sensitive-content scan passed: no tracked credential files or actual secret/key material found.
+- Slack channel discovery/read and a project-specific search found no Code Garden item requiring
+  routing or resolution. Unrelated Slack work remains outside this project's scope.
+- Known non-blocking warning: Next/Turbopack reports filesystem tracing for the hosted adapter; the
+  build still completes and this is carried as a Stage 3 deployment-optimization risk.

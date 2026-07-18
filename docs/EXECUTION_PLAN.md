@@ -501,8 +501,9 @@ Operating rules: stages are strictly ordered through Stage 7; a stage is not beg
 Implementation note (2026-07-17): the first public adapter uses bounded GitHub metadata/tree/raw
 fetches into a temporary workspace. It accepts only supported text/source blobs, caps files and
 bytes, never installs dependencies or executes target code, and exposes the result through the
-Node-runtime `/api/repository/analyze` route. A deliberate target snapshot and hosted smoke test
-are the remaining Stage 2 slices.
+Node-runtime `/api/repository/analyze` route. The target evidence manifest and anonymous hosted
+smoke test completed in the Stage 2 closeout; the filesystem-tracing build warning is carried as a
+Stage 3 deployment-optimization risk.
 
 ### Stage 3 — Garden Rendering
 **Goal:** `lib/garden/` projection + React/SVG renderer: plants, beds, roots, drought/wither/pest states from the sample report; inspector panel (registry-driven text mirror); keyboard navigation; reduced motion.
