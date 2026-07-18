@@ -654,7 +654,8 @@ connected visible walkway; buildings, ponds, bushes, beds, trees, and landmarks 
 never directs the player through a blocked area. No accounts, leaderboard, or server persistence is required.
 
 Implementation note (2026-07-18): authored navigation paths now include dedicated learning, Magnifying Glass, tool,
-and reflection routes. Collision padding is explicit and reachability regression coverage is the next bounded slice.
+and reflection routes. Collision padding is explicit, every required approach point is checked by deterministic grid
+reachability, and the local Garden Journal records the session learning loop without server persistence.
 
 ### Stage 18 — Final Visual and Release Hardening
 
@@ -664,6 +665,10 @@ and release audits.
 map layouts remain usable; reduced-motion mode removes target animation; browser checks cover map visibility,
 collision, route guidance, challenge placement, keyboard movement, and zero console errors; and no unresolved P0/P1
 issues remain. Visual, technical, documentation, and human-release evidence are synchronized.
+
+Implementation note (2026-07-18): all four directional sprite mappings and blocked-input facing behavior now have
+regression coverage. The remaining Stage 18 evidence is production/browser visual testing, performance observation,
+human acceptance, video, and submission—not a new gameplay architecture.
 
 ### Visual navigation decisions
 

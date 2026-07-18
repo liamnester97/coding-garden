@@ -6,8 +6,11 @@ import {
   moveGardener,
   moveGardenerWithFacing,
   isWorldPointWalkable,
+  canReachWorldPoint,
+  gardenNavigationTargets,
   toolStations,
 } from "@/lib/garden/world";
+import { authoredGardenMap } from "@/lib/garden/map";
 
 describe("garden world controls", () => {
   it("moves with keyboard directions and stays inside the map", () => {
@@ -54,6 +57,17 @@ describe("garden world controls", () => {
     });
   });
 
+  it.each([
+    ["ArrowUp", "up"],
+    ["ArrowDown", "down"],
+    ["ArrowLeft", "left"],
+    ["ArrowRight", "right"],
+  ] as const)("maps %s to the %s gardener facing", (direction, facing) => {
+    expect(
+      moveGardenerWithFacing({ x: 50, y: 50 }, "down", direction, []).facing,
+    ).toBe(facing);
+  });
+
   it("supports proximity interaction zones", () => {
     expect(distanceBetween({ x: 10, y: 10 }, { x: 13, y: 14 })).toBe(5);
     expect(isNearWorldPoint({ x: 10, y: 10 }, { x: 13, y: 14 }, 5)).toBe(true);
@@ -64,5 +78,42 @@ describe("garden world controls", () => {
     const pond = { x: 67, y: 2, width: 16, height: 14 };
     expect(isWorldPointWalkable({ x: 66, y: 10 }, [pond])).toBe(false);
     expect(isWorldPointWalkable({ x: 60, y: 20 }, [pond])).toBe(true);
+  });
+
+  it("keeps every required destination reachable from the entrance", () => {
+    for (const target of gardenNavigationTargets) {
+      expect(
+        canReachWorldPoint(
+          gardenerStart,
+          target.point,
+          authoredGardenMap.solids,
+        ),
+        target.label,
+      ).toBe(true);
+    }
+  });
+
+  it("keeps authored route points outside solid areas", () => {
+    for (const path of authoredGardenMap.paths) {
+      for (const point of path.points.split(" ")) {
+        const [x, y] = point.split(",").map(Number);
+        expect(
+          isWorldPointWalkable({ x, y }, authoredGardenMap.solids),
+          path.label,
+        ).toBe(true);
+      }
+    }
+  });
+
+  it("changes facing even when a movement command is blocked", () => {
+    const result = moveGardenerWithFacing(
+      { x: 66, y: 10 },
+      "down",
+      "ArrowRight",
+      [{ x: 67, y: 2, width: 16, height: 14 }],
+    );
+    expect(result.point).toEqual({ x: 66, y: 10 });
+    expect(result.facing).toBe("right");
+    expect(result.moved).toBe(false);
   });
 });

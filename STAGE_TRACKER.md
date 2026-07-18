@@ -2,21 +2,21 @@
 
 ## Stage
 
-Stage 16 — Map Readability and Interaction Guidance / Bundle 8 — Progression, Feedback, and Release Polish
+Stage 18 — Final Visual and Release Hardening / Bundle 8 — Progression, Feedback, and Release Polish
 
 ## Execution Bundle
 
 - **Bundle:** 8 — Progression, Feedback, and Release Polish
-- **Current goal:** Make the 2D garden map large, legible, self-contained, and obvious to navigate with a compact
-  objective ribbon, target halo, and visible guided walkways.
+- **Current goal:** Complete responsive/reduced-motion/browser evidence and final release synchronization after the
+  Stage 16 readability and Stage 17 walkability implementation slices.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; Stage 14–15 human acceptance remains open, and the Stage 16–18 visual/navigation slice is
-  now active.
-- **Audit status:** Stage 9/10, Stage 12, Stage 13, and Stage 14–15 technical audits completed 2026-07-18; Stage 16
-  technical audit is pending until the visual/navigation slice is complete.
+- **Bundle gate:** Open; implementation slices through Stage 18 are complete, while human/review/release evidence
+  remains open.
+- **Audit status:** Stage 9/10, Stage 12, Stage 13, Stage 14–15, and the Stage 16–18 technical slice are complete;
+  the final end-of-stage audit is pending this verification pass.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
 
 ## Stage 11 Goals
@@ -106,26 +106,41 @@ Stage 16 — Map Readability and Interaction Guidance / Bundle 8 — Progression
 
 ### Stage 16 Verification Evidence — 2026-07-18
 
-- [x] Focused world/projection tests pass; the suite is now 65 tests across 14 files.
-- [x] Format, lint, typecheck, and focused tests pass after clearing stale generated `.next/types` duplicates.
-- [ ] Full project checks, browser visual smoke, project-status audit, and human acceptance remain open.
+- [x] Focused world/projection tests pass; the suite is now 73 tests across 14 files.
+- [x] Format, lint, typecheck, full test suite, analysis validation, production build, and `git diff --check` pass.
+- [x] Production HTTP smoke returned 200 for `/` and `/api/health`, 400 for malformed repository input, and rendered
+      the journal, map halo, learning journey, and gardener surfaces.
+- [x] Final structure/security audit found one roadmap, one root tracker/status/decision set, no generic duplicates,
+      and no detected secret literals.
+- [ ] Human visual/release acceptance remains open.
 
-## Stage 17–18 Planned Goals — Walkability and release polish
+## Stage 17–18 Goals — Walkability and release polish
 
-- [ ] Add deterministic reachability coverage from the entrance to every required interaction target.
-- [ ] Verify visible walkway geometry agrees with collision geometry and route guidance never crosses solids.
-- [ ] Verify all four facing sprites, including blocked-input facing changes, in browser and regression tests.
+- [x] Add deterministic reachability coverage from the entrance to every required interaction target.
+- [x] Verify authored route points agree with collision geometry and route guidance avoids solids.
+- [x] Verify all four facing sprites, including blocked-input facing changes, in regression tests.
+- [x] Add the local Garden Journal and classroom comparison recap without accounts or server persistence.
 - [ ] Complete responsive/mobile/reduced-motion/performance checks and final visual human acceptance.
+
+### Stage 17–18 Verification Evidence — 2026-07-18
+
+- [x] `gardenNavigationTargets` defines walkable approach points for the entrance, learning greenhouse, all tools,
+      and reflection bench; BFS reachability tests pass from the gardener start.
+- [x] Authored route vertices are tested against solid geometry; collision padding and blocked-input facing are
+      covered by focused regression tests.
+- [x] Garden Journal and classroom comparison are visible in the app and explicitly local/session-only.
+- [x] Full automated checks and final repository structure/security audit pass.
+- [ ] Human desktop/mobile/reduced-motion acceptance, performance observation, video, and submission remain open.
 
 ## Resume Checkpoint — 2026-07-18
 
 - **State:** active after the overnight pause.
-- **State update:** Stage 12 implementation and technical verification are complete; Stage 13 map-first
-  movement/learning is active.
-- **Resume at:** Bundle 8 / Stage 16 map readability; the visual/navigation implementation slice is active and its
-  human gate is open.
+- **State update:** Stages 16–18 implementation and technical verification are complete; Stage 18 human/release
+  evidence is active.
+- **Resume at:** Bundle 8 / Stage 18 final visual and release hardening; implementation is complete and its human/
+  release gate is open.
 - **Release to test:** `https://coding-garden-iota.vercel.app` at verified commit `bd77258`.
-- **Resume order:** Stage 16 map readability → Stage 17 walkability/collision → Stage 18 facing and release polish.
+- **Resume order:** Stage 18 browser/release evidence → final audit → human acceptance, video, and submission.
 
 ## Stage Status
 

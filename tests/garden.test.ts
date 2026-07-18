@@ -22,12 +22,13 @@ describe("HealthReport garden projection", () => {
       "tool-shed",
       "payoff",
     ]);
-    expect(authoredGardenMap.paths).toHaveLength(5);
+    expect(authoredGardenMap.paths).toHaveLength(6);
     expect(authoredGardenMap.paths.map((path) => path.id)).toEqual([
       "main-walk",
       "learning-walk",
       "magnify-walk",
       "tool-walk",
+      "clippers-walk",
       "reflection-walk",
     ]);
     expect(first.plants).toEqual(second.plants);
@@ -187,5 +188,19 @@ describe("HealthReport garden projection", () => {
       backgroundSize: "400% 400%",
       backgroundPosition: "0% 66.66666666666667%",
     });
+  });
+
+  it("keeps all four directional gardener sprites distinct and addressable", () => {
+    const sprites = [
+      "gardener-up",
+      "gardener-down",
+      "gardener-left",
+      "gardener-right",
+    ] as const;
+    expect(
+      new Set(
+        sprites.map((sprite) => spritePosition(sprite).backgroundPosition),
+      ).size,
+    ).toBe(4);
   });
 });

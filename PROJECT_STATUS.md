@@ -4,9 +4,9 @@ Updated: 2026-07-18, America/Denver
 
 ## Active Bundle and Goal
 
-- Bundle: 7 — World, Map, and Visual Language
-- Current goal: Stage 16 map readability and interaction guidance; make the large map the dominant, self-contained
-  game surface before the Stage 17 walkability and Stage 18 release-polish slices.
+- Bundle: 8 — Progression, Feedback, and Release Polish
+- Current goal: Stage 18 final visual and release hardening after completing the Stage 16 readability and Stage 17
+  walkability/journal implementation slices.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
@@ -28,8 +28,8 @@ Updated: 2026-07-18, America/Denver
 - Bundle 6 — Hardening and Release: technical slice complete; human/release acceptance remains open.
 - Bundle 7 — World, Map, and Visual Language: Stage 12–14 implementation slices complete; human acceptance remains
   open.
-- Bundle 8 — Progression, Feedback, and Release Polish: Stage 16 visual/navigation slice is active; Stage 17
-  reachability and Stage 18 facing/release checks remain queued.
+- Bundle 8 — Progression, Feedback, and Release Polish: Stage 16 readability, Stage 17 reachability/journal, and
+  Stage 18 facing implementation slices are complete; browser/release/human gates remain open.
 - Bundle gate: open pending Stage 11 verification, later visual stages, human acceptance, and final
   submission artifacts.
 
@@ -63,8 +63,11 @@ Updated: 2026-07-18, America/Denver
 - The current map readability issues are now tracked as implementation work: the former small playfield, oversized
   instructional overlay, faint/distracting map chrome, incomplete route coverage, and forward/backward facing concern.
 - The map now has a larger responsive surface, subdued zone borders, visible guided paths, a yellow next-target halo,
-  and a compact in-map objective ribbon. Collision padding is explicit; reachability and final facing verification
-  remain open.
+  and a compact in-map objective ribbon. Collision padding is explicit; deterministic target reachability, route
+  safety, all four facing directions, and blocked-input facing are now covered by regression tests.
+- The map now exposes a local Garden Journal and classroom comparison recap. It records learning evidence only for
+  the current session; it does not create accounts, persist to a server, mutate repositories, or replace HealthReport
+  truth.
 - Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
   the classroom payoff explains the learning loop and current rehearsal progress.
 - The app remains login-free and works without `OPENAI_API_KEY` through deterministic fallbacks.
@@ -95,9 +98,9 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Run the full checks and stage-end audit for the Stage 16 visual/navigation slice.
-2. Human-test desktop/mobile map scale, target halo, compact overlay, walkways, and facing.
-3. Implement Stage 17 reachability/collision coverage, then Stage 18 final facing and release polish.
+1. Run the full checks, production/browser smoke, and final project-status audit for Stages 16–18.
+2. Human-test desktop/mobile map scale, target halo, compact overlay, reachability, collision, journal, and facing.
+3. Record remaining human/release evidence, then complete the video and Devpost submission gates.
 
 ## Synchronization Rules
 
@@ -109,15 +112,15 @@ Updated: 2026-07-18, America/Denver
 
 ## Resume Checkpoint — 2026-07-18
 
-- **Execution state:** active; Stages 14–15 implementation is complete and the Stage 16 visual/navigation slice is
+- **Execution state:** active; implementation slices through Stage 18 are complete and final human/release gates are
   in progress.
-- **State update:** Stage 16 enlarges and declutters the map, keeps instructions in-map, and makes the next target
-  visible through a yellow halo and guided walkways.
-- **Safe resume point:** Bundle 8 / Stage 16 map readability.
+- **State update:** Stages 16–18 enlarge and declutter the map, make routes/collisions truthful, add the local journal,
+  and verify directional facing; final human/release evidence remains open.
+- **Safe resume point:** Bundle 8 / Stage 18 final visual and release hardening.
 - **Verified release:** production `https://coding-garden-iota.vercel.app`, commit `bd77258`,
   deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`.
-- **Resume sequence:** read this file and `STAGE_TRACKER.md`; run the Stage 16 visual/navigation checks, then proceed
-  to Stage 17 reachability and Stage 18 facing/release polish.
+- **Resume sequence:** read this file and `STAGE_TRACKER.md`; run the final browser/release checks and audit, then
+  complete the human acceptance, video, and submission evidence.
 - **Scope guard:** do not begin a new bundle or claim Stage 9/10 complete until the open human and
   submission gates below have evidence.
 
@@ -127,6 +130,18 @@ Updated: 2026-07-18, America/Denver
   Vercel deployment, and Vercel Preview Comments), then was intentionally promoted to production on
   2026-07-18. Live smoke verified `/` 200, `/api/health` 200, keyless `POST /api/explain` 200, malformed
   repository/tending payloads 400, mobile sample mode, and zero page/console errors.
+
+## Stage 16–18 Verification Note — 2026-07-18
+
+- The completed visual implementation slice adds six authored navigation paths, walkable approach targets for every
+  required interaction destination, a local Garden Journal/classroom recap, and regression coverage for all four
+  facing directions plus blocked-input facing changes.
+- Full local checks pass: format, lint, typecheck, 73 tests across 14 files, analysis validation, production build,
+  and `git diff --check`.
+- Production-style HTTP smoke returned `/` 200, `/api/health` 200, malformed repository input 400, and rendered
+  the journal, map halo, learning journey, and gardener surfaces.
+- Final structure/security audit found one canonical execution plan, one root tracker/status/decision set, no generic
+  duplicate tracker files, and no detected secret literals. Human visual/release acceptance remains open.
 
 ## Stage 13 Verification Note — 2026-07-18
 

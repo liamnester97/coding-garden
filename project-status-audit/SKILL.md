@@ -105,7 +105,9 @@ reconcile it before the stage can be promoted.
 For Stages 16–18, also check the map-specific navigation contract: the play surface has a usable responsive size,
 the map is the dominant interaction surface, gameplay controls are not duplicated below it, the next target guidance
 is visible and reduced-motion safe, authored walkways connect the entrance to every required interaction target,
-collision geometry agrees with visible paths, and all four facing directions are covered by tests or browser evidence.
+collision geometry agrees with visible paths, all four facing directions are covered by tests or browser evidence,
+and the Garden Journal/classroom recap is clearly local-session-only without inventing HealthReport truth or implying
+server persistence.
 
 ### Stage completion tracking
 

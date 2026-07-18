@@ -97,6 +97,9 @@ export default function HomePage() {
   );
   const [goldenPath, setGoldenPath] = useState(initialGoldenPathState);
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
+  const [journalEntries, setJournalEntries] = useState<string[]>([
+    "You entered the garden. Walk to the golden glow to begin.",
+  ]);
   const [seasonId, setSeasonId] = useState("early-spring");
   const seasons = sampleSeasons(sampleHealthReport);
   const currentSeason =
@@ -146,6 +149,11 @@ export default function HomePage() {
       : { x: 50, y: 43, label: "Main garden walk" };
   const nextTargetLabel =
     source === "report" ? "Inspect a public-report plant" : nextTarget.label;
+  function recordJournalEntry(entry: string) {
+    setJournalEntries((current) =>
+      current.includes(entry) ? current : [...current, entry].slice(-6),
+    );
+  }
   useEffect(() => {
     if (!selectedId) return;
     let cancelled = false;
@@ -222,6 +230,9 @@ export default function HomePage() {
     setChallengeFeedback(null);
     setShowHint(false);
     setGoldenPath((current) => advanceGoldenPath(current, "inspected"));
+    recordJournalEntry(
+      `You inspected ${finding.nodeId} and opened a learning question.`,
+    );
     void startChallenge(finding, challengeDifficulty);
   }
 
@@ -249,6 +260,7 @@ export default function HomePage() {
     setInteractionMessage(null);
     if (next.moved) {
       setGoldenPath((current) => advanceGoldenPath(current, "explored"));
+      recordJournalEntry("You explored a new part of the garden.");
     }
   }
 
@@ -356,6 +368,9 @@ export default function HomePage() {
           "Correct. Review the proposed scope before starting the rehearsal.",
         );
         setGoldenPath((current) => advanceGoldenPath(current, "answered"));
+        recordJournalEntry(
+          "You explained the finding correctly and unlocked the tool rehearsal.",
+        );
       } else {
         setChallengeFeedback(
           [payload.feedback, payload.explanation].filter(Boolean).join(" ") ||
@@ -435,6 +450,9 @@ export default function HomePage() {
       }
       setReport(currentReport);
       setGoldenPath((current) => advanceGoldenPath(current, "reanalyzed"));
+      recordJournalEntry(
+        `The garden was re-analyzed after the ${tool} rehearsal.`,
+      );
       setSource("sample");
       setSelectedId(finding.nodeId);
       setCompletedCommands((completed) => [...completed, currentCommand]);
@@ -1101,6 +1119,34 @@ export default function HomePage() {
             </div>
           </section>
         ) : null}
+        <section className="journal-panel" aria-labelledby="journal-title">
+          <div>
+            <span className="eyebrow">Garden journal</span>
+            <h2 id="journal-title">What you learned this visit</h2>
+            <p>
+              This local session recap connects code evidence, your answer, and
+              the verified report change. It is not saved to a repository or
+              shared with anyone.
+            </p>
+          </div>
+          <ol>
+            {journalEntries.map((entry) => (
+              <li key={entry}>{entry}</li>
+            ))}
+          </ol>
+          <div className="journal-comparison">
+            <strong>Classroom comparison</strong>
+            <span>
+              {report.findings.length} current signals ·{" "}
+              {currentSeason.gradeBand} · {currentSeason.learningFocus}
+            </span>
+            <small>
+              Public repository gardens stay read-only. Only the bundled sample
+              can complete a demo rehearsal, and only verified re-analysis
+              changes its health.
+            </small>
+          </div>
+        </section>
       </section>
     </main>
   );

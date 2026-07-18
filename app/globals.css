@@ -259,6 +259,36 @@ main {
   padding-top: 0.75rem;
   border-top: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
 }
+.journal-panel {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--paper) 88%, #d4ad6b);
+}
+.journal-panel h2 {
+  margin: 0.25rem 0;
+}
+.journal-panel p,
+.journal-panel small,
+.journal-panel span {
+  color: #455944;
+  font-size: 0.86rem;
+}
+.journal-panel ol {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.journal-comparison {
+  display: grid;
+  gap: 0.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+}
 .garden-stage {
   position: relative;
   width: 100%;

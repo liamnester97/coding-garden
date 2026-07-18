@@ -176,6 +176,10 @@ still serve the earlier verified release until the visual bundle is deliberately
       area; confirm every destination has a clear walkway.
 - [ ] Walk into buildings, ponds, bushes, trees, beds, and landmarks; confirm the gardener stops outside them.
 - [ ] Press each direction, including into a blocked object, and confirm the avatar faces the last direction pressed.
+- [ ] Open the Garden Journal after moving, inspecting, answering, or rehearsing; confirm it is a local session recap
+      and does not claim server persistence or repository mutation.
+- [ ] Confirm the classroom comparison names the current grade band/learning focus and preserves the read-only/public
+      report boundary.
 - [ ] Resize to a phone-sized viewport and repeat the map, halo, collision, overlay, keyboard, and reduced-motion
       checks without horizontal overflow.
 

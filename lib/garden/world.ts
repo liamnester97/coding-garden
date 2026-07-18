@@ -21,9 +21,19 @@ export function isNearWorldPoint(
 
 export const gardenerStart: WorldPoint = { x: 50, y: 86 };
 export const toolStations = [
-  { id: "magnify", label: "Magnifying Glass", x: 12, y: 16 },
+  { id: "magnify", label: "Magnifying Glass", x: 20, y: 20 },
   { id: "clippers", label: "Clippers", x: 88, y: 18 },
   { id: "watering-can", label: "Watering Can", x: 86, y: 82 },
+] as const;
+
+/** Walkable approach points used by the authored route and its tests. */
+export const gardenNavigationTargets = [
+  { id: "entrance", label: "Garden gate", point: gardenerStart },
+  { id: "magnify", label: "Magnifying Glass", point: { x: 20, y: 20 } },
+  { id: "learning", label: "Learning greenhouse", point: { x: 75, y: 20 } },
+  { id: "clippers", label: "Clippers", point: { x: 88, y: 18 } },
+  { id: "watering-can", label: "Watering Can", point: { x: 86, y: 82 } },
+  { id: "reflection", label: "Reflection bench", point: { x: 55, y: 86 } },
 ] as const;
 
 export type SolidArea = { x: number; y: number; width: number; height: number };
@@ -56,6 +66,45 @@ export function isWorldPointWalkable(point: WorldPoint, solids: SolidArea[]) {
     point.y <= 94 &&
     !overlapsSolid(point, solids)
   );
+}
+
+export function canReachWorldPoint(
+  start: WorldPoint,
+  target: WorldPoint,
+  solids: SolidArea[],
+  step = 4,
+) {
+  if (
+    !isWorldPointWalkable(start, solids) ||
+    !isWorldPointWalkable(target, solids)
+  ) {
+    return false;
+  }
+  const key = (point: WorldPoint) => `${point.x},${point.y}`;
+  const queue = [start];
+  const visited = new Set([key(start)]);
+  const directions = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+
+  while (queue.length) {
+    const current = queue.shift();
+    if (!current) break;
+    if (distanceBetween(current, target) <= step) return true;
+    for (const direction of directions) {
+      const next = moveGardenerWithFacing(
+        current,
+        "down",
+        direction,
+        solids,
+        step,
+      );
+      const nextKey = key(next.point);
+      if (next.moved && !visited.has(nextKey)) {
+        visited.add(nextKey);
+        queue.push(next.point);
+      }
+    }
+  }
+  return false;
 }
 
 export function moveGardenerWithFacing(

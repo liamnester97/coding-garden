@@ -426,3 +426,9 @@ walkways as navigation data and requires collision/reachability evidence for eve
 verifies that blocked movement preserves position but immediately changes the gardener's facing direction. These changes
 are presentation/navigation improvements only; HealthReport truth, public read-only behavior, and sample-only tending
 boundaries remain unchanged.
+# Decision — Stage 17/18 walkability and session learning recap (2026-07-18)
+
+The authored map now treats required destinations as explicit walkable approach points, with deterministic grid
+reachability and route-vertex collision tests. The gardener keeps its last pressed direction even when an obstacle
+blocks movement. A Garden Journal and classroom comparison are local/session surfaces only: they summarize learning
+and report changes without accounts, server persistence, repository mutation, or any new source of HealthReport truth.
