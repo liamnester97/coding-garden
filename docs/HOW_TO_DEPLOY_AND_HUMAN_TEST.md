@@ -126,8 +126,11 @@ server restart; restart it from the sample garden if that happens.
 - [ ] The payoff panel shows the original-versus-current finding comparison.
 - [ ] The classroom comparison remains understandable without reading source code.
 - [ ] Switch between Early spring, Mid-summer, and Late summer.
-- [ ] Confirm the selected season changes the report and garden consistently.
+- [ ] Confirm the selected season changes the report and garden consistently, and recommends Level 1/Easy,
+      Level 2/Medium, then Level 3/Hard.
 - [ ] Select plants and confirm their voice text is grounded in their current findings.
+- [ ] After a rehearsal, confirm the classroom panel explains the learning loop and counts completed
+      demo rehearsals without claiming a real PR.
 - [ ] Focus the garden map and move the gardener with arrow keys or WASD; verify the avatar stays
       inside the map and the three tool stations remain visible.
 

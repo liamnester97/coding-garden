@@ -281,3 +281,11 @@ and Vercel Preview Comments. The preview URL is
 `https://coding-garden-git-agent-health-report-foundation-code-garden.vercel.app`. This proves preview
 readiness only; production promotion, video, Devpost submission, real live PR evidence, and human
 acceptance remain open.
+
+## 2026-07-18 — Season progression maps to challenge difficulty
+
+The offline sample seasons now provide a deterministic educational progression: Early spring is Level 1
+with Easy recognition questions, Mid-summer is Level 2 with Medium evidence-connection questions, and
+Late summer is Level 3 with Hard reasoning questions. Selecting a season resets stale challenge state;
+it does not alter public reports or invent HealthReport findings. The classroom payoff explains the loop
+and counts only completed sample rehearsals.

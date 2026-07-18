@@ -35,6 +35,8 @@ Updated: 2026-07-18, America/Denver
   server validation, hints, retries, and confirmation gating.
 - The garden now includes a 2D world layer with a keyboard-operable gardener avatar and named tool
   stations; the map remains a deterministic projection of the report.
+- Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
+  the classroom payoff explains the learning loop and current rehearsal progress.
 - The app remains login-free and works without `OPENAI_API_KEY` through deterministic fallbacks.
 - Hardening coverage now exercises expiry, proof replay, oversized challenge input, failed rehearsal,
   and health-preservation behavior.

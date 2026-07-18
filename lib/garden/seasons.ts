@@ -1,8 +1,11 @@
 import type { HealthReport } from "@/lib/analysis/schema";
+import type { ChallengeDifficulty } from "./challenges";
 import { reanalyzeDemoReport } from "./reanalysis";
 
 export type GardenSeason = {
   id: string;
+  level: number;
+  recommendedDifficulty: ChallengeDifficulty;
   label: string;
   description: string;
   report: HealthReport;
@@ -20,18 +23,24 @@ export function sampleSeasons(report: HealthReport): GardenSeason[] {
   return [
     {
       id: "early-spring",
+      level: 1,
+      recommendedDifficulty: "easy",
       label: "Early spring",
       description: "The garden wakes with its original warning signals.",
       report,
     },
     {
       id: "mid-summer",
+      level: 2,
+      recommendedDifficulty: "medium",
       label: "Mid-summer",
       description: "One real tending action has cleared a withered branch.",
       report: tendedDead,
     },
     {
       id: "late-summer",
+      level: 3,
+      recommendedDifficulty: "hard",
       label: "Late summer",
       description: "A second tending action has restored the drought patch.",
       report: tended,

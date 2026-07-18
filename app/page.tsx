@@ -51,6 +51,8 @@ export default function HomePage() {
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
   const [seasonId, setSeasonId] = useState("early-spring");
   const seasons = sampleSeasons(sampleHealthReport);
+  const currentSeason =
+    seasons.find((season) => season.id === seasonId) ?? seasons[0];
   const scene = projectHealthReport(report);
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
@@ -360,6 +362,9 @@ export default function HomePage() {
               if (next) {
                 setSeasonId(next.id);
                 setReport(next.report);
+                setChallengeDifficulty(next.recommendedDifficulty);
+                setPendingFinding(null);
+                setChallenge(null);
                 setSelectedId(next.report.nodes[0]?.id);
               }
             }}
@@ -371,7 +376,8 @@ export default function HomePage() {
             ))}
           </select>
           <small>
-            {seasons.find((season) => season.id === seasonId)?.description}
+            Level {currentSeason.level} · {currentSeason.description}{" "}
+            Recommended challenge: {currentSeason.recommendedDifficulty}.
           </small>
         </div>
         {report.scope.kind === "bounded" ? (
@@ -735,6 +741,17 @@ export default function HomePage() {
                 {sampleHealthReport.findings.length} original signals →{" "}
                 {report.findings.length} current signals
               </span>
+              <span>
+                Season {currentSeason.level}:{" "}
+                {currentSeason.recommendedDifficulty} reasoning ·{" "}
+                {completedCommands.length} verified rehearsal
+                {completedCommands.length === 1 ? "" : "s"}
+              </span>
+              <small>
+                Learning recap: explain the evidence, choose a safe next step,
+                answer the challenge, then observe re-analysis. The
+                public-report path stays read-only.
+              </small>
             </div>
           </section>
         ) : null}

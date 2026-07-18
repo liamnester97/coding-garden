@@ -640,6 +640,11 @@ loop or encode garden health.
 
 **Gate:** progression teaches increasingly deeper code concepts without changing analysis truth.
 
+Implementation note (2026-07-18): the bundled seasons are deterministic progression levels: Early
+spring recommends Easy recognition, Mid-summer recommends Medium evidence connection, and Late summer
+recommends Hard reasoning. The classroom payoff surfaces the learning loop and rehearsal count without
+claiming live repository changes.
+
 ### Bundle 6 — Hardening and Release
 
 Maps to Stages 9–10.

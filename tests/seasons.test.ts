@@ -14,6 +14,12 @@ describe("season and plant voice stretch slices", () => {
     expect(seasons[1].report.findings.length).toBeLessThan(
       seasons[0].report.findings.length,
     );
+    expect(seasons.map((season) => season.level)).toEqual([1, 2, 3]);
+    expect(seasons.map((season) => season.recommendedDifficulty)).toEqual([
+      "easy",
+      "medium",
+      "hard",
+    ]);
   });
 
   it("keeps plant voices grounded in findings", () => {

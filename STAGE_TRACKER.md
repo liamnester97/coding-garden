@@ -37,8 +37,9 @@ Stage 9 — Hardening / Bundle 6 — Hardening and Release
   generated-test PR remains an external credential/rehearsal gate.
 - **Stage 7 — Demo Path Polish:** Local 2D world, gardener movement, tool stations, learning gate,
   payoff, seasons, and voices are implemented; browser/human wide-shot acceptance remains open.
-- **Stage 8 — Stretch Features:** Two individually bounded slices complete (seasons and deterministic
-  plant voices); final stretch gate and demo stability audit remain open.
+- **Stage 8 — Stretch Features:** Seasons now provide Levels 1–3 with Easy/Medium/Hard recommended
+  challenge progression, alongside deterministic plant voices; final stretch gate and demo stability
+  audit remain open.
 - **Stage 9 — Hardening:** Failure/expiry/replay/oversized-input regression coverage is complete;
   security checklist, accessibility evidence, and final audit remain in progress.
 - **Stage 10 — Deploy, Video, Submission:** Preview deployment and remote CI are verified at commit
@@ -74,6 +75,8 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
   format check, and diff check.
 - [x] Stage 9 regression coverage added: 54 tests now cover challenge/command expiry, proof replay,
   oversized answers, failed rehearsals, and health preservation.
+- [x] Stage 8 progression slice: seasons expose deterministic level/difficulty metadata, reset stale
+  challenge state on selection, and the payoff includes a classroom learning recap.
 - [ ] External gates: non-coder explanation read-through, real demo-fork PRs, two-person wide-shot
   legibility, human acceptance, and production evidence.
 
