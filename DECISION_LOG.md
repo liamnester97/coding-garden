@@ -155,3 +155,22 @@ Liam approved the Stage 0 scope freeze and Stage 1 promotion. Stage 0 and Stage 
 the tracker. Automated GitHub CI/PR verification plus agent self-review are the independent review
 evidence available for this milestone; no separate human reviewer was available. Stage 2 is now
 the sole active stage and must use the existing canonical Stage 0–10 execution plan.
+
+## 2026-07-17 — Bounded public GitHub analysis adapter
+
+Stage 2 uses GitHub's public metadata/tree/raw endpoints rather than cloning, installing, or
+executing an untrusted repository. The adapter resolves the default branch, downloads only
+JavaScript/TypeScript/HTML/JSON blobs into a temporary workspace, caps intake at 120 files, 256 KB
+per file, and 2 MB total, then runs the deterministic analyzer and deletes the workspace. The
+Gentelella rehearsal completed at commit `c4515bd2682660d79d6d0e64160a57cd86482451` with 31 nodes,
+63 findings, and report hash `da302756ed12d03b`. A deliberate cached snapshot and hosted-route
+smoke test remain before the Stage 2 boundary audit.
+
+## 2026-07-17 — Stage 2 closeout
+
+Stage 2 acceptance is complete. The bounded public GitHub adapter was rehearsed against
+ColorlibHQ/gentelella at commit `c4515bd2682660d79d6d0e64160a57cd86482451`, producing 31 nodes,
+63 advisory findings, and report hash `da302756ed12d03b`; the evidence manifest is committed at
+`fixtures/gentelella-rehearsal.json`. The hosted Node route was smoke-tested anonymously, the full
+quality suite passed, and the project-status audit plus documentation structure gate found no
+duplicate roadmap or tracker files. Stage 3 is now the sole active stage.

@@ -498,6 +498,12 @@ Operating rules: stages are strictly ordered through Stage 7; a stage is not beg
 **Acceptance:** determinism tests pass; snapshot stable across two runs; demo repo analyzed successfully (report cached); one public GitHub URL completes a read-only analysis rehearsal without executing target code.
 **Gate:** checks + review + snapshot review.
 
+Implementation note (2026-07-17): the first public adapter uses bounded GitHub metadata/tree/raw
+fetches into a temporary workspace. It accepts only supported text/source blobs, caps files and
+bytes, never installs dependencies or executes target code, and exposes the result through the
+Node-runtime `/api/repository/analyze` route. A deliberate target snapshot and hosted smoke test
+are the remaining Stage 2 slices.
+
 ### Stage 3 — Garden Rendering
 **Goal:** `lib/garden/` projection + React/SVG renderer: plants, beds, roots, drought/wither/pest states from the sample report; inspector panel (registry-driven text mirror); keyboard navigation; reduced motion.
 **Acceptance:** wide-shot legibility check (§5.5) passes informally; projection determinism tests; keyboard-only traversal in E2E.

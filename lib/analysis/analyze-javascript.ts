@@ -38,9 +38,16 @@ async function collectFiles(
   root: string,
   directory = root,
 ): Promise<FileRecord[]> {
-  const entries = await (
-    await import("node:fs/promises")
-  ).readdir(directory, { withFileTypes: true });
+  let entries;
+  try {
+    entries = await (
+      await import("node:fs/promises")
+    ).readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    if (error instanceof Error && "code" in error && error.code === "ENOENT")
+      return [];
+    throw error;
+  }
   const records: FileRecord[] = [];
   for (const entry of entries) {
     if (IGNORED_DIRS.has(entry.name)) continue;
@@ -233,7 +240,7 @@ export async function analyzeJavaScriptRepository(
     repo: {
       name: repository.name,
       ref: repository.ref,
-      commit: "working-tree",
+      commit: repository.ref,
     },
     method: {
       deadCode: "estimated",

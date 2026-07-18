@@ -1,0 +1,21 @@
+{
+  "repository": "https://github.com/ColorlibHQ/gentelella",
+  "commit": "c4515bd2682660d79d6d0e64160a57cd86482451",
+  "reportHash": "da302756ed12d03b",
+  "nodes": 31,
+  "findings": 63,
+  "method": {
+    "deadCode": "estimated",
+    "coverage": "estimated",
+    "complexity": "estimated",
+    "vulnerabilities": "unavailable"
+  },
+  "safety": {
+    "mode": "public-read-only",
+    "targetCodeExecuted": false,
+    "dependenciesInstalled": false,
+    "maxFiles": 120,
+    "maxFileBytes": 256000,
+    "maxTotalBytes": 2000000
+  }
+}

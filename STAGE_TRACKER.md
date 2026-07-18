@@ -12,9 +12,11 @@ Stage 2 - Deterministic Analysis Engine
   adapter rehearsal, calibration, fixture commit, projection, and inspector interaction slices
   are complete. The public standalone repository-input boundary is now defined and tested.
   CI, anonymous Vercel preview, automated PR checks, and human acceptance are complete.
-- **Stage 2 — Deterministic analysis engine:** In progress; sample analysis evidence is complete;
-  the next bounded slice is the public GitHub read-only analysis rehearsal.
-- **Stages 3–10:** Queued.
+- **Stage 2 — Deterministic analysis engine:** Complete; deterministic fixture validation, bounded
+  public GitHub analysis, cached rehearsal evidence, hosted route smoke test, full checks, review,
+  and audit are complete.
+- **Stage 3 — Garden rendering:** In progress; begin the real-analysis garden projection slice.
+- **Stages 4–10:** Queued.
 
 ## Goal
 
@@ -115,16 +117,32 @@ checks.
 
 ## Current slice completion snapshot
 
-- **Completed slices:** Plant selection/inspector detail and grounded Magnifying Glass explanation
-  foundation for sample mode.
-- **Evidence:** Cards are keyboard-focusable buttons; selection is exposed with `aria-pressed`;
-  the inspector announces updates with `aria-live`; `/api/explain` returns typed, report-grounded
-  explanations; no explanation invents findings outside the validated report.
-- **Quality gate:** `format:check`, `lint`, `typecheck`, 14 tests, `analysis:validate`, `build`, and
-  `git diff --check` all pass.
-- **Stage status:** Complete. Implementation, CI, preview deployment, audit synchronization, and
-  human acceptance are complete. Automated PR checks serve as the independent verification record;
-  live-model integration and prompt evaluation belong to later stages.
+- **Completed slices:** Plant selection/inspector detail, grounded Magnifying Glass explanation,
+  and bounded public GitHub read-only analysis.
+- **Evidence:** The GitHub adapter resolves the default branch, reads only supported text/source
+  blobs into a temporary workspace, never installs or executes target code, enforces 120 files /
+  256 KB per file / 2 MB total limits, and produces a schema-validated report. The new
+  `/api/repository/analyze` Node route exposes that path for the standalone app.
+- **Live rehearsal:** `ColorlibHQ/gentelella` completed with commit
+  `c4515bd2682660d79d6d0e64160a57cd86482451`, 31 nodes, 63 findings, report hash
+  `da302756ed12d03b`, and no target-code execution.
+- **Quality gate:** `format:check`, `typecheck`, 17 tests, and `git diff --check` pass for this
+  slice. Full Stage 2 checks and the boundary audit remain open until the snapshot/cache slice is
+  complete.
+- **Stage status:** Complete. Stage 2 acceptance, review evidence, human acceptance, documentation
+  reconciliation, and the project-status audit are complete. Stage 3 is now the only active stage.
+
+## Stage 2 completion record — 2026-07-17
+
+- [x] Deterministic sample report remains schema-validated and stable.
+- [x] Bounded public GitHub adapter resolves a commit, reads supported blobs only, and never
+      installs or executes target code.
+- [x] Gentelella rehearsal evidence cached in `fixtures/gentelella-rehearsal.json`.
+- [x] Hosted `/api/repository/analyze` route smoke-tested anonymously on the public preview.
+- [x] Full technical checks passed; GitHub CI/PR verification is the independent evidence.
+- [x] Human acceptance: Liam requested Stage 2 closeout on 2026-07-17.
+- [x] Project-status audit and documentation structure gate passed; no duplicate execution plans
+      or generic tracker files found.
 
 ## Roadmap clarification
 
