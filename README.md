@@ -14,13 +14,14 @@ for the active stage’s evidence and gates.
 
 ## Source of truth map
 
-| Need | Active file |
-| --- | --- |
-| Live stage tracker | [`STAGE_TRACKER.md`](STAGE_TRACKER.md) |
-| What is done now, blockers, and next actions | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) |
-| Binding decisions | [`DECISION_LOG.md`](DECISION_LOG.md) |
-| Canonical execution plan | [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md) |
-| Project status audit skill | [`project-status-audit/SKILL.md`](project-status-audit/SKILL.md) |
+| Need                                         | Active file                                                                    |
+| -------------------------------------------- | ------------------------------------------------------------------------------ |
+| Live stage tracker                           | [`STAGE_TRACKER.md`](STAGE_TRACKER.md)                                         |
+| What is done now, blockers, and next actions | [`PROJECT_STATUS.md`](PROJECT_STATUS.md)                                       |
+| Binding decisions                            | [`DECISION_LOG.md`](DECISION_LOG.md)                                           |
+| Canonical execution plan                     | [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md)                             |
+| Deploy and human-test guide                  | [`docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md`](docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md) |
+| Project status audit skill                   | [`project-status-audit/SKILL.md`](project-status-audit/SKILL.md)               |
 
 `docs/EXECUTION_PLAN.md` is the original long-form product and submission blueprint and the only
 execution plan. There is no separate status, tracker, or decision log at another layer.

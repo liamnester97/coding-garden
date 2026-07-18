@@ -1,5 +1,8 @@
 # Deployment
 
+For the complete step-by-step deployment and human-testing flow, see
+[HOW_TO_DEPLOY_AND_HUMAN_TEST.md](HOW_TO_DEPLOY_AND_HUMAN_TEST.md).
+
 Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judging).
 
 ## Setup (Stage 1)
