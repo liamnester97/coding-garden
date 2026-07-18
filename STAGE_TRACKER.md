@@ -120,6 +120,9 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
   entered an input; invalid repository input produced an alert; public analysis showed read-only mode
   with zero tending buttons; reduced-motion Watering Can reached `landed` after confirmation. Zero page
   or console errors were observed.
+- [x] Magnifying Glass clarity slice: deterministic Inspector copy now translates analyzer labels into
+  plain-language issue, health, evidence-source, and next-step text; a regression test protects the
+  copy boundary. Human non-coder read-through remains an explicit acceptance gate.
 - [x] Stage 10 documentation readiness: root README now contains the project description and fresh-clone
   setup flow and Build Week submission narrative; public-repository MIT license is committed as
   `LICENSE`; submission checklist reflects the completed track, description, repository, and README

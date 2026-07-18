@@ -11,6 +11,16 @@ export type GardenExplanation = {
   mode: "sample" | "report" | "fallback";
 };
 
+function readableTool(tool: string) {
+  const labels: Record<string, string> = {
+    "import-graph": "import map",
+    "test-file-mapping": "test-file check",
+    "syntax-count": "branching check",
+    "npm-audit": "dependency security check",
+  };
+  return labels[tool] ?? tool;
+}
+
 export function explainNode(
   report: HealthReport,
   nodeId: string,
@@ -25,19 +35,19 @@ export function explainNode(
   const metaphor = healthMetaphor[node.health];
   const evidence = findings.map(
     (finding) =>
-      `${findingMetaphor[finding.type]}: ${finding.summary} (${finding.evidence.tool} · ${finding.evidence.file})`,
+      `${findingMetaphor[finding.type]}: ${finding.summary} Source: ${finding.evidence.file}. Check: ${readableTool(finding.evidence.tool)}.`,
   );
 
   return {
     nodeId,
     title: node.path,
     summary: findings.length
-      ? `${node.path} is ${metaphor.label.toLowerCase()} because the report recorded ${findings.length} warning signal${findings.length === 1 ? "" : "s"}.`
-      : `${node.path} is currently healthy; the report recorded no warning signals for this module.`,
+      ? `${node.path} looks ${metaphor.label.toLowerCase()} because the analysis found ${findings.length} issue${findings.length === 1 ? "" : "s"} to inspect.`
+      : `${node.path} looks healthy; the analysis found no issues to flag right now.`,
     health: metaphor.description,
     needs: findings.length
-      ? "Use the evidence below to understand the issue before choosing a tending tool."
-      : "Keep this module protected with tests as the codebase changes.",
+      ? "Start with the evidence below to understand what is happening before choosing a tending tool."
+      : "Keep protecting this part of the code with tests as the codebase changes.",
     evidence,
     mode,
   };

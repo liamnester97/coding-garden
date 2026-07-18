@@ -334,3 +334,8 @@ Production browser rehearsal covered both sample tools: Clippers and Watering Ca
 `/api/tend` requests before confirmation and reached `landed` only after a correct answer. The same
 matrix covered mobile layout, Level 3/Hard season selection, keyboard focus, invalid-input alerts,
 public read-only controls, reduced motion, and zero page/console errors.
+
+The Inspector copy was tightened for the non-coder acceptance gate: raw analyzer tool identifiers are
+translated into readable labels such as “import map” and “test-file check,” while the deterministic
+evidence remains unchanged. The copy is protected by a regression test; human comprehension review is
+still required.

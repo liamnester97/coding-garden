@@ -40,15 +40,24 @@ describe("HealthReport garden projection", () => {
     expect(explanation?.mode).toBe("sample");
     expect(explanation?.summary).toContain("withered");
     expect(explanation?.evidence).toEqual([
-      "unreachable branch: This module has no incoming imports. (import-graph · src/unused.ts)",
+      "unreachable branch: This module has no incoming imports. Source: src/unused.ts. Check: import map.",
     ]);
   });
 
   it("returns a calm explanation for a healthy plant", () => {
     const explanation = explainNode(sampleHealthReport, "src/health.ts");
 
-    expect(explanation?.summary).toContain("currently healthy");
+    expect(explanation?.summary).toContain("looks healthy");
     expect(explanation?.evidence).toEqual([]);
+  });
+
+  it("keeps the inspector explanation understandable without static-analysis jargon", () => {
+    const explanation = explainNode(sampleHealthReport, "src/unused.ts");
+
+    expect(explanation?.summary).toContain("issue");
+    expect(explanation?.health).toContain("needs attention");
+    expect(explanation?.evidence[0]).toContain("import map");
+    expect(explanation?.needs).toContain("understand what is happening");
   });
 
   it("projects a real-analysis-shaped report without changing its health truth", () => {

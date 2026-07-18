@@ -45,6 +45,8 @@ Updated: 2026-07-18, America/Denver
   the remaining submission artifacts are the video, human evidence, and Devpost form.
 - Hardening coverage now exercises expiry, proof replay, oversized challenge input, failed rehearsal,
   and health-preservation behavior.
+- The Magnifying Glass Inspector now uses non-coder-first copy for issues, health, evidence sources, and
+  next steps; the human read-through is still required before calling that acceptance gate complete.
 - Local and deployed production-mode route smoke passed: `/` 200, `/api/health` 200, and malformed
   repository input 400 on the production deployment. Production browser smoke also verified mobile
   rendering, zero page/console errors, confirmation-gated Clippers reaching `landed`, and anonymous
