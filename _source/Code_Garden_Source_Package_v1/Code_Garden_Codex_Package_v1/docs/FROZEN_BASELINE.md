@@ -1,4 +1,7 @@
-# Code Garden — Execution Plan v1.0
+# Code Garden — Frozen Execution Baseline v1.0
+
+> Historical source-package material. The active project uses
+> `../../../../docs/EXECUTION_PLAN.md`.
 
 A tip-to-tail plan for building, testing, reviewing, and submitting Code Garden for OpenAI Build Week 2026.
 

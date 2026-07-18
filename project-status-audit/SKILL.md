@@ -18,7 +18,13 @@ in Slack, or post messages without explicit authorization.
 
 ## 1. Establish project context
 
-Work from the active repository root, identified by the nearest `AGENTS.md`. Read, in order:
+Work from the Code Garden workspace root. The single canonical execution plan is
+`docs/EXECUTION_PLAN.md`; `PLAN.md` and `STATUS.md` are trackers, not alternative roadmaps.
+Before auditing content, verify that exactly one file named `EXECUTION_PLAN.md` exists under the
+workspace and flag any duplicate or missing copy as a P1 documentation issue. Never silently treat
+a source package, copied artifact, or similarly named file as the active plan.
+
+Read, in order:
 
 1. `AGENTS.md`
 2. `PLAN.md`
@@ -28,8 +34,7 @@ Work from the active repository root, identified by the nearest `AGENTS.md`. Rea
 6. Relevant `docs/adr/`, `docs/RISK_REGISTER.md`, `docs/BUILD_WEEK_REQUIREMENTS.md`, and nested
    `AGENTS.md` files.
 
-If `docs/EXECUTION_PLAN.md` is referenced but missing, flag it as a P1 documentation gap. Do not
-silently treat a source package, copied artifact, or similarly named file as the active plan.
+If `docs/EXECUTION_PLAN.md` is missing, flag it as a P1 documentation gap.
 
 Also perform the required durable-context check:
 

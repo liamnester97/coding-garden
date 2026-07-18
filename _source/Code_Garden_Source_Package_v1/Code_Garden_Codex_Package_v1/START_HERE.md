@@ -6,8 +6,10 @@ This package contains the controlled version 1.0 execution baseline for **Code G
 
 1. Create the project repository (empty; the human owner creates it manually).
 2. Copy the contents of the sibling `repo/` folder into the repository root (README, AGENTS.md, PLAN.md, STATUS.md, DECISIONS.md, `docs/`, `.github/`).
-3. Copy this package's `docs/EXECUTION_PLAN.md` into the repository at `docs/EXECUTION_PLAN.md`.
-4. Ask Codex to read `AGENTS.md` and `docs/EXECUTION_PLAN.md` in full before changing any code.
+3. The original package baseline is preserved as `docs/FROZEN_BASELINE.md`; the workspace's
+   canonical execution plan is `docs/EXECUTION_PLAN.md`.
+4. Ask Codex to read the active repository's `AGENTS.md` and the workspace's `docs/EXECUTION_PLAN.md` in full before
+   changing any code.
 5. Begin at **Stage 0 — Discovery, Scope Freeze, and Demo Repo Selection**.
 6. Copy that stage's goal block from Section 9 of the execution plan into Codex.
 7. Use `/plan` only for the next bounded vertical slice — never plan more than one stage ahead in code.
@@ -18,8 +20,10 @@ This package contains the controlled version 1.0 execution baseline for **Code G
 
 - `START_HERE.md` — this file.
 - `REVISION_NOTES.md` — concept provenance and the approved MVP interpretation.
-- `docs/EXECUTION_PLAN.md` — the tip-to-tail master plan. This is the implementation source Codex should search and quote.
+- `docs/FROZEN_BASELINE.md` — the original tip-to-tail source baseline, retained for provenance only.
 - `../repo/` — ready-to-copy repository scaffold (root docs, ADRs, risk register, PR template, scoped AGENTS.md files).
 - `../code_garden_brief.pdf` — the original human-authored concept brief.
 
-The brief PDF is the human-readable concept baseline. The Markdown execution plan is the implementation source of truth; where they differ, the execution plan wins because it encodes the approved scope freeze.
+The brief PDF is the human-readable concept baseline. The workspace Markdown execution plan is the
+implementation source of truth; where they differ, the execution plan wins because it encodes the
+approved scope freeze.

@@ -20,7 +20,7 @@ Source: `code_garden_brief.pdf` (OpenAI Build Week Challenge, Devpost).
   - If **private**: shared with `testing@devpost.com` and `build-week-event@openai.com`.
   - If **public**: must carry an open source license.
 - [ ] A **README** with setup instructions, sample data if needed, and clear steps to run the project.
-- [x] **Documentation of architecture and key decisions** (satisfied by `docs/EXECUTION_PLAN.md`, `docs/adr/`, and `DECISIONS.md`).
+- [x] **Documentation of architecture and key decisions** (satisfied by `../../../../docs/EXECUTION_PLAN.md`, `docs/adr/`, and `DECISIONS.md`).
 
 ## Judging criteria (weight the demo accordingly)
 

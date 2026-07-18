@@ -1,5 +1,8 @@
 # Code Garden — Execution Plan v1.0
 
+> This is the single canonical execution plan. The nested repo's `PLAN.md` and `STATUS.md` are
+> trackers and snapshots only; they do not define a second roadmap.
+
 A tip-to-tail plan for building, testing, reviewing, and submitting Code Garden for OpenAI Build Week 2026.
 
 ---
@@ -383,8 +386,8 @@ State-machine rule: a ToolCommand can only advance in order; "understood" requir
 
 ## 6.13 ADR index
 
-- ADR-001 MVP scope (docs/adr/).
-- ADR-002 Deterministic garden truth (docs/adr/).
+- ADR-001 MVP scope (`../_source/Code_Garden_Source_Package_v1/repo/docs/adr/ADR-001-MVP-SCOPE.md`).
+- ADR-002 Deterministic garden truth (`../_source/Code_Garden_Source_Package_v1/repo/docs/adr/ADR-002-DETERMINISTIC-GARDEN-TRUTH.md`).
 - Future ADRs numbered sequentially; template: Context / Decision / Consequences; accepted via `DECISIONS.md`.
 
 ---
@@ -559,7 +562,7 @@ Human owner: scope changes, demo repo, track selection, stage acceptance, submis
 
 # 12. Risk Register
 
-Maintained in `docs/RISK_REGISTER.md` (R01–R10). Review at every stage boundary; record deltas in STATUS.md.
+Maintained in `../_source/Code_Garden_Source_Package_v1/repo/docs/RISK_REGISTER.md` (R01–R10). Review at every stage boundary; record deltas in STATUS.md.
 
 # 13. Playtesting & Product Evaluation
 
@@ -570,7 +573,7 @@ Maintained in `docs/RISK_REGISTER.md` (R01–R10). Review at every stage boundar
 
 # 14. Deployment, Operations, Incident Response
 
-Deployment per `docs/DEPLOYMENT.md` (Vercel, env vars, per-deploy verification). Operations during judging (Jul 22–Aug 5): keep production frozen; monitor `/api/health` daily; if the live path degrades, sample mode is the incident fallback — it must remain indistinguishable in quality for the read-only experience. Incident playbook: reproduce → check mode flag → roll back to last verified deploy → note in STATUS.md.
+Deployment per `../_source/Code_Garden_Source_Package_v1/repo/docs/DEPLOYMENT.md` (Vercel, env vars, per-deploy verification). Operations during judging (Jul 22–Aug 5): keep production frozen; monitor `/api/health` daily; if the live path degrades, sample mode is the incident fallback — it must remain indistinguishable in quality for the read-only experience. Incident playbook: reproduce → check mode flag → roll back to last verified deploy → note in STATUS.md.
 
 # 15. Demo Video & Submission Plan
 
@@ -590,7 +593,7 @@ What it is (one paragraph from §1.2) · how it works (analysis→garden→tools
 
 ## 15.3 Final checklist
 
-Run `docs/BUILD_WEEK_REQUIREMENTS.md` top to bottom, including the fresh-clone README test and the video rewatch, one day before the deadline. Submit with hours of buffer, not minutes.
+Run `../_source/Code_Garden_Source_Package_v1/repo/docs/BUILD_WEEK_REQUIREMENTS.md` top to bottom, including the fresh-clone README test and the video rewatch, one day before the deadline. Submit with hours of buffer, not minutes.
 
 # 16. Post-Event Roadmap
 

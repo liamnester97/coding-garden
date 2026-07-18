@@ -10,7 +10,7 @@ Build a reliable, delightful, non-coder-first garden interface over real codebas
 2. `STATUS.md`
 3. `DECISIONS.md`
 4. Relevant records in `docs/adr/` and the nearest nested `AGENTS.md`
-5. `docs/EXECUTION_PLAN.md`
+5. `../../../docs/EXECUTION_PLAN.md` (the single canonical execution plan)
 
 For a project-wide execution/status check, use `../../../project-status-audit/SKILL.md`.
 

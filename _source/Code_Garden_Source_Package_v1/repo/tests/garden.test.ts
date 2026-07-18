@@ -24,5 +24,12 @@ describe("HealthReport garden projection", () => {
 
     expect(unused?.findingLabels).toEqual(["unreachable branch"]);
     expect(unused?.ariaLabel).toContain("Withered");
+    expect(unused?.findings).toEqual([
+      {
+        label: "unreachable branch",
+        summary: "This module has no incoming imports.",
+        evidence: "import-graph · src/unused.ts",
+      },
+    ]);
   });
 });

@@ -9,6 +9,11 @@ export type GardenPlant = {
   y: number;
   findingCount: number;
   findingLabels: string[];
+  findings: Array<{
+    label: string;
+    summary: string;
+    evidence: string;
+  }>;
   ariaLabel: string;
   color: string;
 };
@@ -59,6 +64,11 @@ export function projectHealthReport(report: HealthReport): GardenScene {
         ...positionFor(node.id),
         findingCount: findings.length,
         findingLabels,
+        findings: findings.map((finding) => ({
+          label: findingMetaphor[finding.type],
+          summary: finding.summary,
+          evidence: `${finding.evidence.tool} · ${finding.evidence.file}`,
+        })),
         ariaLabel: `${node.path}: ${metaphor.label}${issueText}`,
         color: metaphor.color,
       };

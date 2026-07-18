@@ -9,11 +9,14 @@ Stage 1 - Repository Bootstrap, Analysis, and Garden Truth
 - **Stage 0 — Scope, target, and evidence:** In progress; target, tool policy, risk review, and
   fixture evidence are recorded, but human scope approval and ADR-001 acceptance remain open.
 - **Stage 1 — Bootstrap, analysis, and garden truth:** In progress; bootstrap, HealthReport,
-  adapter rehearsal, calibration, fixture commit, and initial projection slice are complete.
+  adapter rehearsal, calibration, fixture commit, projection, and inspector interaction slices
+  are complete.
   Vercel preview, independent review, human acceptance, and the project status audit remain open.
-- **Stage 2 — Garden projection and renderer:** Queued; inspector/detail interaction remains before
-  the stage can be considered complete.
-- **Stages 3–5:** Queued.
+- **Stage 2 — Deterministic analysis engine:** Implementation evidence is complete; formal stage
+  promotion remains tied to the Stage 1 gate and the stage-boundary review cadence.
+- **Stage 3 — Garden rendering:** Projection and inspector implementation slices are complete;
+  visual review, keyboard verification, and formal stage gates remain open.
+- **Stages 4–10:** Queued.
 
 ## Goal
 
@@ -33,7 +36,7 @@ and the first deterministic garden projection before building explanation or cha
 
 ## Completed Stage 0 evidence
 
-- `docs/EXECUTION_PLAN.md` is present and is the active execution source of truth.
+- `../../../docs/EXECUTION_PLAN.md` is the single execution source of truth.
 - Gentelella is the provisional target; dumber is the fallback.
 - The JavaScript/TypeScript signal policy is recorded in `DECISIONS.md`.
 - The curated fixture is committed in the pushed foundation branch; human scope approval remains open.
@@ -87,9 +90,9 @@ At the end of every stage, before promoting the project to the next stage:
    and Slack routing context.
 5. Resolve documentation drift and record any plan change before starting the next stage.
 
-The audit is also run at the end of each workday during active execution and once during final
-submission closeout. It is a synchronization and decision checkpoint, not a replacement for
-human acceptance, independent review, or the required technical checks.
+The audit is also run during final submission closeout. It is a synchronization and decision
+checkpoint, not a replacement for human acceptance, independent review, or the required technical
+checks.
 
 ## Calibration evidence
 
@@ -108,4 +111,21 @@ human acceptance, independent review, or the required technical checks.
 - [x] Health states and finding types use a single metaphor/accessibility registry.
 - [x] Renderer consumes projected plants and exposes report-grounded labels in sample mode.
 - [x] Projection regression tests cover deterministic output, health preservation, and finding labels.
-- [ ] Add inspector detail and interaction states before entering the explanation stage.
+- [x] Add accessible inspector detail and selection interaction states.
+
+## Current slice completion snapshot
+
+- **Completed slice:** Plant selection and inspector detail for the projected scene.
+- **Evidence:** Cards are keyboard-focusable buttons; selection is exposed with `aria-pressed`;
+  the inspector announces updates with `aria-live`; finding summaries and evidence are projected
+  from the validated report; the regression suite covers the projected finding details.
+- **Quality gate:** `format:check`, `lint`, `typecheck`, 7 tests, `analysis:validate`, `build`, and
+  `git diff --check` all pass.
+- **Stage status:** Implementation slice complete; promotion remains open for independent review,
+  human acceptance, preview deployment, and the project status audit.
+
+## Roadmap clarification
+
+The canonical roadmap is the ordered Stage 0–10 roadmap in the outer
+`../../../docs/EXECUTION_PLAN.md`. This file is only the live tracker for the current stage and
+its bounded implementation slices, not a replacement roadmap.

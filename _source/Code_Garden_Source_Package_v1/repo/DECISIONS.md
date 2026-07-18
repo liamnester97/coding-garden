@@ -95,3 +95,33 @@ The first garden renderer consumes a typed `GardenScene` produced solely by the 
 and finding labels, and accessibility text is generated from the same evidence. The renderer may
 show pending interaction states later, but it cannot improve a plant until re-analysis confirms
 the change.
+
+## 2026-07-17 — Inspector selection is a report-grounded view state
+
+Plant cards are accessible buttons. Selecting a plant changes only local view state and opens an
+inspector with the projected health label, finding summary, and evidence source. The inspector
+does not infer new findings or authorize changes; it is a read-only bridge into the later
+explanation flow.
+
+## 2026-07-17 — Stage-sized review cadence
+
+Implementation should proceed through a complete stage before interrupting the human owner for a
+full quality review. Focused checks may be used during individual slices, while the complete
+technical suite, documentation reconciliation, independent review, human acceptance, and
+project-status audit run together at the stage boundary. This keeps execution moving while
+preserving a deliberate promotion gate.
+
+## 2026-07-17 — Restore the canonical Stage 0–10 roadmap
+
+The long-form Build Week blueprint defines eleven ordered execution stages, numbered 0 through
+10. A six-stage condensation was introduced during documentation cleanup and was not the intended
+roadmap. The outer `docs/EXECUTION_PLAN.md` is the sole canonical roadmap with Stage 0–10;
+`PLAN.md` remains only the live stage and slice tracker.
+
+## 2026-07-17 — Documentation ownership boundary
+
+The workspace has one canonical execution roadmap at `docs/EXECUTION_PLAN.md`. The nested
+repository owns active supporting records (`PLAN.md`, `STATUS.md`, `DECISIONS.md`, ADRs, risks,
+requirements, journey, and deployment notes). Outer duplicate copies are removed; the source
+package's `FROZEN_BASELINE.md` is retained only for historical provenance. New documentation must
+use an existing owner rather than creating a parallel copy.

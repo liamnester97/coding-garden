@@ -4,9 +4,9 @@ Updated: 2026-07-17, America/Denver
 
 ## Active Stage and Goal
 
-- Stage: 1 - Repository Bootstrap (started under human direction)
+- Stage: 1 - Repository Bootstrap, Analysis, and Garden Truth
 - Goal: Establish trustworthy repository analysis and the deterministic garden foundation before building action tools.
-- Branch/PR: local `main`; bootstrap slice not yet committed
+- Branch/PR: `agent/health-report-foundation`; draft PR #1
 
 ## Current State
 
@@ -31,6 +31,11 @@ Updated: 2026-07-17, America/Denver
   gaps. The snapshot is committed in foundation commit `5403100` and pushed to the draft PR.
 - Garden projection is deterministic and pure: plant health, finding labels, colors, and stable
   positions are derived from the validated report; the renderer does not recalculate health.
+- Plant cards now support accessible selection and an inspector panel with report-backed finding
+  summaries and evidence. This slice is complete locally and all quality gates pass.
+- Documentation ownership is now explicit: the workspace-level `docs/EXECUTION_PLAN.md` is the
+  only execution roadmap; this repository owns active supporting records and trackers; the source
+  package is historical only.
 
 ## Risks Changed
 
@@ -50,14 +55,16 @@ Updated: 2026-07-17, America/Denver
 
 ## Next Three Actions
 
-1. Add the accessible inspector/detail interaction for projected plants.
-2. Complete independent review and human acceptance for the current stage gates.
+1. Complete independent review and human acceptance for the current stage gates.
+2. Connect a Vercel preview and verify the sample-mode interaction there.
 3. Run the project status audit at the next stage gate and resolve documentation drift.
 
 ## Submission Readiness
 
-- App: Stage 1 bootstrap running locally; garden renderer and real analysis are next.
-- Repository: local Git repository exists and is synced with `origin/main` before this slice.
+- App: Stage 1 bootstrap, analysis, garden renderer, and inspector slice running locally; explanation
+  and verified change flows are next.
+- Repository: local branch is synced with the draft PR branch; the inspector slice is not yet
+  committed or pushed.
 - README: baseline written; submission narrative pending.
 - Demo video: not started.
 - Devpost submission fields: not started.

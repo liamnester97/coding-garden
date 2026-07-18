@@ -59,6 +59,7 @@ main {
   margin-top: 3rem;
 }
 .plant-card {
+  appearance: none;
   display: flex;
   gap: 0.8rem;
   align-items: flex-start;
@@ -67,6 +68,27 @@ main {
   border: 1px solid #294332;
   border-radius: 1rem;
   background: #15241c;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    background 160ms ease;
+}
+.plant-card:hover,
+.plant-card:focus-visible,
+.plant-card.selected {
+  border-color: #a8c983;
+  background: #1b3024;
+}
+.plant-card:focus-visible {
+  outline: 2px solid #f0bd62;
+  outline-offset: 3px;
+}
+.plant-card:hover {
+  transform: translateY(-2px);
 }
 .plant-card strong {
   display: block;
@@ -102,4 +124,39 @@ main {
   width: 0.55rem;
   height: 0.55rem;
   border-radius: 50%;
+}
+.inspector {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px solid #39553d;
+  border-radius: 1rem;
+  background: #122019;
+}
+.inspector h2 {
+  margin: 0.5rem 0;
+  overflow-wrap: anywhere;
+}
+.inspector p {
+  margin: 0;
+}
+.inspector ul {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.inspector li {
+  display: grid;
+  gap: 0.25rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #294332;
+}
+.inspector li span,
+.inspector small,
+.quiet {
+  color: #c7d5bf;
+}
+.inspector small {
+  font-size: 0.78rem;
 }

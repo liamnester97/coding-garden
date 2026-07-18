@@ -8,7 +8,7 @@ Built for the **OpenAI Build Week Challenge 2026** with **Codex + GPT-5.6**. Pri
 
 ## Status
 
-Stage 1 (analysis foundation) — see `STATUS.md` for the live snapshot, `PLAN.md` for the active slice, and `docs/EXECUTION_PLAN.md` for the roadmap.
+Stage 1 (analysis foundation) — see `STATUS.md` for the live snapshot, `PLAN.md` for the active slice, and `../../../docs/EXECUTION_PLAN.md` for the canonical roadmap.
 
 ## Run
 
@@ -37,7 +37,7 @@ All six must pass before a stage is declared complete. CI runs them on every PR.
 
 ## Documentation
 
-- `docs/EXECUTION_PLAN.md` — the tip-to-tail master plan (source of truth).
+- `../../../docs/EXECUTION_PLAN.md` — the single tip-to-tail master plan (source of truth).
 - `AGENTS.md` — repository instructions for Codex (read first).
 - `docs/adr/` — architecture decision records.
 - `docs/GARDENER_JOURNEY.md` — the demo path, minute by minute.

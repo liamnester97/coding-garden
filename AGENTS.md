@@ -1,4 +1,14 @@
-# Code Garden - Repository Instructions
+# Code Garden Workspace Instructions
+
+This outer directory is the workspace/control layer for Code Garden. The active application
+repository is nested at:
+
+`_source/Code_Garden_Source_Package_v1/repo/`
+
+Use the nested repo's `AGENTS.md`, `PLAN.md`, `STATUS.md`, and `DECISIONS.md` for current
+implementation tracking. Use the outer `docs/EXECUTION_PLAN.md` as the one and only execution
+roadmap. Supporting ADRs, requirements, risk, journey, and deployment records live in the nested
+repo's `docs/`; the outer workspace must not create duplicate copies.
 
 ## Mission
 
@@ -6,13 +16,26 @@ Build a reliable, delightful, non-coder-first garden interface over real codebas
 
 ## Read First
 
-1. `PLAN.md`
-2. `STATUS.md`
-3. `DECISIONS.md`
-4. Relevant records in `docs/adr/` and the nearest nested `AGENTS.md`
-5. `docs/EXECUTION_PLAN.md`
+1. `_source/Code_Garden_Source_Package_v1/repo/AGENTS.md`
+2. `_source/Code_Garden_Source_Package_v1/repo/PLAN.md`
+3. `_source/Code_Garden_Source_Package_v1/repo/STATUS.md`
+4. `_source/Code_Garden_Source_Package_v1/repo/DECISIONS.md`
+5. `docs/EXECUTION_PLAN.md` (the single canonical roadmap)
+6. Relevant records in the nested repo's `docs/adr/` and nearest nested `AGENTS.md`
 
 For a project-wide execution/status check, use `project-status-audit/SKILL.md`.
+
+## Documentation Ownership
+
+- `docs/EXECUTION_PLAN.md` — sole canonical execution roadmap.
+- Nested `repo/PLAN.md` — current stage and bounded slice tracker only.
+- Nested `repo/STATUS.md` — current snapshot, blockers, and next actions only.
+- Nested `repo/DECISIONS.md` and `repo/docs/` — active decisions and supporting project records.
+- `_source/.../Code_Garden_Codex_Package_v1/` — frozen historical source material only.
+
+Before creating a Markdown file, search for an existing authoritative owner. Do not create a
+second plan, status snapshot, decision log, ADR, requirements list, risk register, journey, or
+deployment document at another layer.
 
 ## Non-Negotiable Invariants
 
@@ -29,9 +52,9 @@ For a project-wide execution/status check, use `project-status-audit/SKILL.md`.
 
 ## Work Process
 
-- Work against the active goal in `STATUS.md`; keep the slice bounded by `PLAN.md`.
+- Work against the active goal in the nested repo's `STATUS.md`; keep the slice bounded by its `PLAN.md`.
 - Keep diffs focused and add tests with behavior changes.
-- Update `STATUS.md`, `PLAN.md` evidence, and relevant documentation before declaring a stage complete.
+- Update the nested repo's `STATUS.md`, `PLAN.md` evidence, and relevant documentation before declaring a stage complete.
 - Do not begin Stage 1 until the human owner approves the Stage 0 scope decision.
 - Do not begin any Should-Have feature until the Must-Have demo path passes all gates.
 
