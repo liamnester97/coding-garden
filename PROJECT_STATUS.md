@@ -148,12 +148,24 @@ Updated: 2026-07-18, America/Denver
   build, and `git diff --check`.
 - Production HTTP smoke passed for `/` and `/api/health`; malformed repository and explanation requests returned
   readable 400 responses. The rendered homepage contains the journal, map halo, learning journey, and gardener.
-- Browser automation was not rerun because Playwright is not installed in this checkout; manual desktop/mobile,
-  reduced-motion, keyboard, and performance acceptance remain open.
-- `npm audit --omit=dev --audit-level=high` was attempted but could not reach `registry.npmjs.org` due DNS/network
-  resolution, so dependency advisories are unverified rather than reported clean.
+- The initial browser automation gap is closed: Playwright Chromium desktop/mobile smoke coverage now passes.
+- `npm audit --omit=dev --audit-level=high` initially hit DNS failure, then passed after a compatible PostCSS
+  override; npm's unsafe forced Next.js downgrade was not applied.
 - Running `typecheck` concurrently with `next build` produced transient missing `.next/types` errors; sequential
   reruns passed. This is a verification-order/tooling risk, not a source type error.
+
+## Code review remediation note — 2026-07-18
+
+- Plant map buttons now restore pointer/touch interaction and browser coverage confirms the in-map challenge overlay
+  opens from a plant action.
+- Explanation caching now derives identity from canonical validated report content and rejects unknown nodes before
+  serving cached results; client-supplied `reportHash` is no longer trusted as cache identity.
+- Demo tending now uses server-issued opaque command tokens instead of predictable client IDs, while retaining
+  server-authoritative state, proof, expiry, sample-only, and re-analysis rules.
+- Plant placement now resolves hash-slot collisions deterministically so public reports do not hide modules on top of
+  one another.
+- Playwright browser smoke coverage is installed and passes 12 desktop/mobile checks. The dependency audit now passes
+  with a PostCSS override; no forced Next.js downgrade was used.
 
 ## Stage 13 Verification Note — 2026-07-18
 

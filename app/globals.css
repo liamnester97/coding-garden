@@ -684,6 +684,7 @@ main {
   transform: translate(-50%, -50%);
   background: rgb(16 31 22 / 0.18);
   cursor: pointer;
+  pointer-events: auto;
 }
 .map-plant-button.selected {
   border-color: #f0bd62;

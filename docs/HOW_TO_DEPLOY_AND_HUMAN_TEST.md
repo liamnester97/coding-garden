@@ -260,6 +260,20 @@ behavior.
 - [ ] On a narrow viewport, confirm the form, garden, Inspector, and payoff content remain usable.
 - [ ] Confirm there are zero browser console errors and zero uncaught page errors.
 
+### Automated browser smoke checks
+
+After installing dependencies, run:
+
+```text
+npx playwright install chromium
+npm run test:browser
+```
+
+The smoke suite starts the local Next.js server and checks desktop plus Chromium-based mobile emulation for plant
+pointer inspection, the in-map challenge overlay, keyboard-facing updates, horizontal overflow, reduced-motion
+behavior, public read-only mode, and page/console errors. If port 3000 is occupied by an old development server,
+stop that server and rerun the command so the suite can manage its own server.
+
 ## Troubleshooting
 
 | Symptom                                    | Check                                                                                                                           |

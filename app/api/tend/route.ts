@@ -18,13 +18,15 @@ const requestSchema = z.object({
   report: healthReportSchema,
   command: z.union([
     toolCommandSchema,
-    z.object({
-      id: z.string().min(1),
-      tool: toolCommandSchema.shape.tool,
-      findingId: z.string().min(1),
-      nodeId: z.string().min(1),
-    }),
+    z
+      .object({
+        tool: toolCommandSchema.shape.tool,
+        findingId: z.string().min(1),
+        nodeId: z.string().min(1),
+      })
+      .strict(),
   ]),
+  commandToken: z.string().min(1).optional(),
   proof: z.string().min(1).optional(),
   action: z.enum(["advance", "fail"]).default("advance"),
 });
@@ -113,7 +115,11 @@ export async function POST(request: Request) {
   try {
     pruneCommands();
     const input = parsed.data.command;
-    const existing = "state" in input ? activeCommands.get(input.id) : null;
+    let commandToken = parsed.data.commandToken;
+    const existing =
+      "state" in input && parsed.data.commandToken
+        ? activeCommands.get(parsed.data.commandToken)
+        : null;
     if ("state" in input) {
       if (!existing)
         throw new Error("Command expired or the server restarted; start again");
@@ -131,22 +137,24 @@ export async function POST(request: Request) {
         throw new Error(
           "A correct learning challenge is required before tending",
         );
-      if (activeCommands.has(input.id))
-        throw new Error("A command with this ID is already active");
-      const command = createToolCommand(input);
+      const command = createToolCommand({
+        ...input,
+        id: `demo-${crypto.randomUUID()}`,
+      });
       if (!toolMatchesFinding(report, command))
         throw new Error("The selected tool does not match the report finding");
       if (activeCommands.size >= MAX_ACTIVE_COMMANDS) {
         const oldest = activeCommands.keys().next().value;
         if (oldest) activeCommands.delete(oldest);
       }
-      activeCommands.set(command.id, {
+      commandToken = `command-${crypto.randomUUID()}`;
+      activeCommands.set(commandToken, {
         command,
         report,
         expiresAt: Date.now() + COMMAND_TTL_MS,
       });
     }
-    const active = activeCommands.get(input.id);
+    const active = commandToken ? activeCommands.get(commandToken) : undefined;
     if (!active) throw new Error("Command expired; start the rehearsal again");
     const command = active.command;
     const currentReport = active.report;
@@ -162,7 +170,7 @@ export async function POST(request: Request) {
         ? reanalyzeDemoReport(currentReport, command.findingId)
         : currentReport;
     if (next.state === "failed" || next.state === "landed")
-      activeCommands.delete(command.id);
+      activeCommands.delete(commandToken!);
     else {
       active.command = next;
       active.report = healedReport;
@@ -170,6 +178,7 @@ export async function POST(request: Request) {
     }
     return NextResponse.json({
       command: next,
+      commandToken,
       report: healedReport,
       mode: "demo-rehearsal",
       prUrl: null,

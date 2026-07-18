@@ -412,35 +412,34 @@ export default function HomePage() {
       );
       return;
     }
-    let currentCommand: ToolCommand = {
-      ...seed,
-      state: "seen",
-      mode: "demo-rehearsal",
-      prUrl: null,
-    };
+    let currentCommand: ToolCommand | null = null;
+    let commandToken: string | null = null;
     let currentReport = report;
     let firstRequest = true;
     try {
       setGoldenPath((current) => advanceGoldenPath(current, "confirmed"));
-      while (currentCommand.state !== "landed") {
+      while (!currentCommand || currentCommand.state !== "landed") {
         const response = await fetch("/api/tend", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
             report: currentReport,
             command: firstRequest ? seed : currentCommand,
+            commandToken: firstRequest ? undefined : commandToken,
             proof: firstRequest ? challenge.proof : undefined,
             action: "advance",
           }),
         });
         const payload = (await response.json()) as {
           command?: ToolCommand;
+          commandToken?: string;
           report?: typeof report;
           error?: string;
         };
         if (!response.ok || !payload.command || !payload.report)
           throw new Error(payload.error ?? "Tending failed");
         currentCommand = payload.command;
+        commandToken = payload.commandToken ?? commandToken;
         currentReport = payload.report;
         firstRequest = false;
         setCommand(currentCommand);
@@ -455,13 +454,16 @@ export default function HomePage() {
       );
       setSource("sample");
       setSelectedId(finding.nodeId);
-      setCompletedCommands((completed) => [...completed, currentCommand]);
+      if (currentCommand)
+        setCompletedCommands((completed) => [...completed, currentCommand!]);
       setGoldenPath((current) => advanceGoldenPath(current, "reflected"));
       setPendingFinding(null);
       setChallenge(null);
     } catch (caught) {
       setTendError(caught instanceof Error ? caught.message : "Tending failed");
-      setCommand({ ...currentCommand, state: "failed" });
+      setCommand(
+        currentCommand ? { ...currentCommand, state: "failed" } : null,
+      );
     }
   }
 

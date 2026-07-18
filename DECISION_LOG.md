@@ -435,9 +435,20 @@ and report changes without accounts, server persistence, repository mutation, or
 
 ## 2026-07-18 — Full verification findings and release boundary
 
-The Stage 16–18 implementation slice is verified on development commit `6e616e3`, while production remains on the
-previously verified commit `bd77258` until human visual/release acceptance is recorded. The supported quality suite
-passes when run sequentially; `next build` regenerates `.next/types`, so parallel typecheck/build execution is not a
-reliable verification mode. Playwright is not installed in this checkout, so browser automation is an open evidence
-gate. An npm audit attempt was blocked by DNS resolution to the npm registry and is recorded as unverified rather than
-clean. These are release-evidence constraints, not claims about HealthReport or public repository behavior.
+The Stage 16–18 implementation slice was initially verified on development commit `6e616e3`, while production remained
+on the previously verified commit `bd77258` until human visual/release acceptance. The supported quality suite passes
+when run sequentially; `next build` regenerates `.next/types`, so parallel typecheck/build execution is not a reliable
+verification mode. The browser evidence gap is now closed by Chromium-based Playwright desktop/mobile smoke checks.
+The npm audit first hit DNS resolution failure, then passed after a compatible PostCSS override; no forced Next.js
+downgrade was accepted. These remain release-evidence constraints only where human acceptance is still open.
+
+## 2026-07-18 — Code review remediation and browser verification
+
+The map plant action layer explicitly restores pointer events so mouse and touch inspection use the same in-map path
+as keyboard interaction. Explanation cache keys are now derived from canonical validated report content rather than the
+client-provided `reportHash`, and unknown nodes are rejected before cache lookup. Anonymous demo rehearsals use a
+server-issued opaque command token for every transition; predictable client command IDs are not authoritative. The
+stable hash layout now resolves occupied plant slots deterministically so larger public reports remain readable.
+
+Playwright desktop and Chromium-based mobile smoke coverage is now part of the project checks. A compatible PostCSS
+override removes the current production dependency advisory without accepting npm's unsafe forced Next.js downgrade.

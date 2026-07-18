@@ -55,12 +55,12 @@ describe("POST /api/tend", () => {
 
   it("advances a valid demo command and heals only at landed", async () => {
     let command = {
-      id: "demo-clip",
       tool: "clippers" as const,
       findingId: "dead-src-unused",
       nodeId: "src/unused.ts",
     };
     let report = sampleHealthReport;
+    let commandToken: string | undefined;
     const proof = await proofFor("dead-src-unused");
     for (const expected of [
       "understood",
@@ -73,15 +73,18 @@ describe("POST /api/tend", () => {
         request({
           report,
           command,
+          ...(commandToken ? { commandToken } : {}),
           ...(expected === "understood" ? { proof } : {}),
         }),
       );
       expect(response.status).toBe(200);
       const payload = (await response.json()) as {
         command: DemoCommand;
+        commandToken: string;
         report: typeof report;
       };
       command = payload.command;
+      commandToken = payload.commandToken;
       report = payload.report;
       expect((command as DemoCommand).state).toBe(expected);
       if (expected !== "landed") expect(report.findings).toHaveLength(2);
@@ -96,7 +99,6 @@ describe("POST /api/tend", () => {
       request({
         report: sampleHealthReport,
         command: {
-          id: "bad",
           tool: "clippers",
           findingId: "missing",
           nodeId: "src/missing.ts",
@@ -111,7 +113,6 @@ describe("POST /api/tend", () => {
       request({
         report: sampleHealthReport,
         command: {
-          id: "no-proof",
           tool: "clippers",
           findingId: "dead-src-unused",
           nodeId: "src/unused.ts",
@@ -126,7 +127,6 @@ describe("POST /api/tend", () => {
     vi.useFakeTimers();
     const proof = await proofFor("dead-src-unused");
     const seed = {
-      id: "expiring-clip",
       tool: "clippers" as const,
       findingId: "dead-src-unused",
       nodeId: "src/unused.ts",
@@ -135,7 +135,11 @@ describe("POST /api/tend", () => {
       request({ report: sampleHealthReport, command: seed, proof }),
     );
     expect(started.status).toBe(200);
-    const command = (await started.json()).command as ToolCommand;
+    const startedPayload = (await started.json()) as {
+      command: ToolCommand;
+      commandToken: string;
+    };
+    const command = startedPayload.command;
     const replay = await POST(
       request({ report: sampleHealthReport, command: seed, proof }),
     );
@@ -143,7 +147,11 @@ describe("POST /api/tend", () => {
     expect((await replay.json()).error).toContain("learning challenge");
     vi.advanceTimersByTime(10 * 60 * 1000 + 1);
     const expired = await POST(
-      request({ report: sampleHealthReport, command }),
+      request({
+        report: sampleHealthReport,
+        command,
+        commandToken: startedPayload.commandToken,
+      }),
     );
     expect(expired.status).toBe(409);
     expect((await expired.json()).error).toContain("expired");
@@ -155,7 +163,6 @@ describe("POST /api/tend", () => {
       request({
         report: sampleHealthReport,
         command: {
-          id: "failed-water",
           tool: "watering-can",
           findingId: "coverage-src-garden",
           nodeId: "src/garden.ts",
@@ -163,9 +170,18 @@ describe("POST /api/tend", () => {
         proof,
       }),
     );
-    const command = (await started.json()).command as ToolCommand;
+    const startedPayload = (await started.json()) as {
+      command: ToolCommand;
+      commandToken: string;
+    };
+    const command = startedPayload.command;
     const failed = await POST(
-      request({ report: sampleHealthReport, command, action: "fail" }),
+      request({
+        report: sampleHealthReport,
+        command,
+        commandToken: startedPayload.commandToken,
+        action: "fail",
+      }),
     );
     expect(failed.status).toBe(200);
     const payload = (await failed.json()) as {
@@ -191,11 +207,46 @@ describe("POST /api/tend", () => {
           mode: "demo-rehearsal",
           prUrl: null,
         },
+        commandToken: "command-not-yours",
       }),
     );
 
     expect(response.status).toBe(409);
     expect((await response.json()).error).toContain("expired");
+  });
+
+  it("requires the server-issued token for an active command", async () => {
+    const proof = await proofFor("dead-src-unused");
+    const started = await POST(
+      request({
+        report: sampleHealthReport,
+        command: {
+          tool: "clippers",
+          findingId: "dead-src-unused",
+          nodeId: "src/unused.ts",
+        },
+        proof,
+      }),
+    );
+    const payload = (await started.json()) as {
+      command: ToolCommand;
+      commandToken: string;
+    };
+    expect(payload.commandToken).toMatch(/^command-/);
+
+    const withoutToken = await POST(
+      request({ report: sampleHealthReport, command: payload.command }),
+    );
+    expect(withoutToken.status).toBe(409);
+
+    const withWrongToken = await POST(
+      request({
+        report: sampleHealthReport,
+        command: payload.command,
+        commandToken: "command-not-yours",
+      }),
+    );
+    expect(withWrongToken.status).toBe(409);
   });
 
   it("rejects tending a public report", async () => {
@@ -207,7 +258,6 @@ describe("POST /api/tend", () => {
       request({
         report: publicReport,
         command: {
-          id: "public-clip",
           tool: "clippers",
           findingId: "dead-src-unused",
           nodeId: "src/unused.ts",

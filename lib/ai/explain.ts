@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { createHash } from "node:crypto";
 import type { HealthReport } from "@/lib/analysis/schema";
 import { explainNode, type GardenExplanation } from "@/lib/garden/explanation";
 
@@ -32,6 +33,27 @@ export const explanationLimits = {
 };
 
 export const explanationSystemPrompt = `You explain a static-analysis report to a non-coder. Use only the supplied report context. Never claim a finding, metric, dependency, behavior, or source fact that is not present in the context. Preserve uncertainty such as possibly unused and estimated coverage. Explain jargon briefly. Return JSON with exactly three string fields: summary, health, needs.`;
+
+function canonicalValue(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(canonicalValue);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value)
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([key, entry]) => [key, canonicalValue(entry)]),
+    );
+  }
+  return value;
+}
+
+/** Derive cache identity from validated report content, never client metadata. */
+export function reportCacheIdentity(report: HealthReport) {
+  const { reportHash: _clientHash, ...content } = report;
+  return createHash("sha256")
+    .update(JSON.stringify(canonicalValue(content)))
+    .digest("hex")
+    .slice(0, 32);
+}
 
 function contextFor(report: HealthReport, nodeId: string) {
   const node = report.nodes.find((candidate) => candidate.id === nodeId);
@@ -133,9 +155,10 @@ export async function explainNodeWithModel(
   nodeId: string,
   now = Date.now(),
 ): Promise<GardenExplanation | null> {
-  const cached = getCachedExplanation(report.reportHash, nodeId, now);
+  const cacheIdentity = reportCacheIdentity(report);
+  const cached = getCachedExplanation(cacheIdentity, nodeId, now);
   if (cached) return cached;
-  const key = `${report.reportHash}:${nodeId}`;
+  const key = `${cacheIdentity}:${nodeId}`;
   const explanation = await liveExplanation(report, nodeId);
   if (!explanation) return null;
   if (explanationCache.size >= MAX_CACHE_ENTRIES && !explanationCache.has(key))
@@ -145,14 +168,16 @@ export async function explainNodeWithModel(
 }
 
 export function getCachedExplanation(
-  reportHash: string,
+  reportIdentity: string,
   nodeId: string,
   now = Date.now(),
 ): GardenExplanation | null {
   for (const [key, entry] of explanationCache) {
     if (entry.expiresAt <= now) explanationCache.delete(key);
   }
-  return explanationCache.get(`${reportHash}:${nodeId}`)?.explanation ?? null;
+  return (
+    explanationCache.get(`${reportIdentity}:${nodeId}`)?.explanation ?? null
+  );
 }
 
 export function resetExplanationCache() {

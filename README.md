@@ -87,7 +87,8 @@ npm run start
 ```
 
 Run the full verification suite sequentially with `npm run format:check`, `npm run lint`,
-`npm run typecheck`, `npm run test`, `npm run analysis:validate`, and `npm run build`; `next build`
+`npm run typecheck`, `npm run test`, `npm run analysis:validate`, `npm run build`, and
+`npm run test:browser`; run `npx playwright install chromium` once before the browser suite. `next build`
 regenerates `.next/types`, so running typecheck and build concurrently can produce transient missing-file
 errors. See
 [docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md](docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md) for anonymous Vercel

@@ -56,6 +56,33 @@ describe("HealthReport garden projection", () => {
     );
   });
 
+  it("resolves colliding hash slots without changing stable placement", () => {
+    const report = {
+      ...sampleHealthReport,
+      nodes: [
+        {
+          id: "src/module-22.ts",
+          path: "src/module-22.ts",
+          health: "healthy" as const,
+        },
+        {
+          id: "src/module-147.ts",
+          path: "src/module-147.ts",
+          health: "healthy" as const,
+        },
+      ],
+      findings: [],
+      edges: [],
+    };
+    const first = projectHealthReport(report);
+    const second = projectHealthReport(report);
+    expect(first).toEqual(second);
+    expect(first.plants[0]).not.toMatchObject({
+      x: first.plants[1]?.x,
+      y: first.plants[1]?.y,
+    });
+  });
+
   it("anchors finding labels to report evidence", () => {
     const scene = projectHealthReport(sampleHealthReport);
     const unused = scene.plants.find((plant) => plant.id === "src/unused.ts");

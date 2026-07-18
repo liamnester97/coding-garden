@@ -42,7 +42,11 @@ describe("POST /api/explain", () => {
       const response = await POST(
         request({
           nodeId: "src/unused.ts",
-          report: { ...sampleHealthReport, reportHash: `hash-${index}` },
+          report: {
+            ...sampleHealthReport,
+            reportHash: `hash-${index}`,
+            repo: { ...sampleHealthReport.repo, name: `sample-${index}` },
+          },
         }),
       );
       expect(response.status).toBe(200);
@@ -69,10 +73,37 @@ describe("POST /api/explain", () => {
       await POST(
         request({
           nodeId: "src/unused.ts",
-          report: { ...sampleHealthReport, reportHash: `other-${index}` },
+          report: {
+            ...sampleHealthReport,
+            reportHash: `other-${index}`,
+            repo: { ...sampleHealthReport.repo, name: `other-${index}` },
+          },
         }),
       );
     }
     expect((await POST(request(body))).status).toBe(200);
+  });
+
+  it("does not reuse an explanation for a different report with the same hash", async () => {
+    const first = await POST(
+      request({ nodeId: "src/unused.ts", report: sampleHealthReport }),
+    );
+    expect(first.status).toBe(200);
+
+    const differentReport = {
+      ...sampleHealthReport,
+      repo: { ...sampleHealthReport.repo, name: "different-report" },
+    };
+    const second = await POST(
+      request({ nodeId: "src/unused.ts", report: differentReport }),
+    );
+    expect(second.status).toBe(200);
+  });
+
+  it("rejects a valid report when the requested node is absent", async () => {
+    const response = await POST(
+      request({ nodeId: "src/missing.ts", report: sampleHealthReport }),
+    );
+    expect(response.status).toBe(404);
   });
 });

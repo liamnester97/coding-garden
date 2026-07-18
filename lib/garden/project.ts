@@ -43,17 +43,28 @@ function stableHash(value: string) {
   return hash >>> 0;
 }
 
-function positionFor(nodeId: string) {
+function positionFor(nodeId: string, occupied: Set<string>) {
   const hash = stableHash(nodeId);
-  return {
-    x: 10 + (hash % 80),
-    y: 18 + (Math.floor(hash / 97) % 66),
-  };
+  const start = hash % (80 * 66);
+  for (let offset = 0; offset < 80 * 66; offset += 1) {
+    const slot = (start + offset) % (80 * 66);
+    const point = {
+      x: 10 + (slot % 80),
+      y: 18 + Math.floor(slot / 80),
+    };
+    const key = `${point.x},${point.y}`;
+    if (!occupied.has(key)) {
+      occupied.add(key);
+      return point;
+    }
+  }
+  throw new Error("Garden map has no available plant positions");
 }
 
 export function projectHealthReport(report: HealthReport): GardenScene {
+  const occupied = new Set<string>();
   const positions = new Map(
-    report.nodes.map((node) => [node.id, positionFor(node.id)]),
+    report.nodes.map((node) => [node.id, positionFor(node.id, occupied)]),
   );
   return {
     repoName: report.repo.name,

@@ -5,6 +5,7 @@ import {
   explainNodeWithModel,
   explanationLimits,
   getCachedExplanation,
+  reportCacheIdentity,
 } from "@/lib/ai/explain";
 
 const requestSchema = z.object({
@@ -101,8 +102,11 @@ export async function POST(request: Request) {
       { status: 400 },
     );
 
+  if (!parsed.data.report.nodes.some((node) => node.id === parsed.data.nodeId))
+    return NextResponse.json({ error: "Plant not found" }, { status: 404 });
+
   const cached = getCachedExplanation(
-    parsed.data.report.reportHash,
+    reportCacheIdentity(parsed.data.report),
     parsed.data.nodeId,
   );
   if (cached) return NextResponse.json(cached);

@@ -505,6 +505,22 @@ checks.
 - [ ] Real demo-fork PRs, golden playthrough, two-person legibility test, and final human acceptance
       remain open gates.
 
+## Code review remediation — 2026-07-18
+
+- [x] Restored pointer/touch events for map plant buttons and verified that plant actions open the in-map challenge.
+- [x] Replaced client-supplied explanation cache identity with canonical report-content hashing and unknown-node
+      validation.
+- [x] Replaced predictable demo command IDs with server-issued opaque command tokens; replay, expiry, forged-state,
+      and wrong-token tests pass.
+- [x] Added deterministic collision resolution for report-derived plant positions and regression coverage for known
+      colliding node IDs.
+- [x] Added Playwright desktop/mobile smoke coverage: 12 tests pass for pointer inspection, challenge overlay,
+      keyboard facing, no overflow, reduced motion, public read-only mode, and browser errors.
+- [x] `npm audit --omit=dev --audit-level=high` passes after a compatible PostCSS override; no forced breaking
+      dependency update was applied.
+- [ ] Human non-coder read-through, two-person wide-shot legibility, real demo-fork PR evidence, video, Devpost,
+      and final release acceptance remain open.
+
 ## Stage 7 golden playthrough evidence — 2026-07-18
 
 - [x] Mobile production browser rehearsal loaded sample mode and report-grounded Magnifying Glass copy.

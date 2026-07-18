@@ -42,6 +42,10 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
   `/` 200, `/api/health` 200, and malformed repository input 400 on 2026-07-18.
 - [x] No secrets appear in client bundles; the generated `.next/static` and `.next/server` artifacts
   were scanned for key prefixes on 2026-07-18.
+- [x] Desktop/mobile Playwright smoke checks pass for map interaction, challenge placement, keyboard facing,
+  reduced motion, public read-only mode, and browser errors; see the human-testing guide for the command.
+- [x] Production dependency audit passes with the compatible PostCSS override; npm's forced Next.js downgrade was not
+  applied.
 
 ## Production cut for submission
 
