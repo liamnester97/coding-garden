@@ -327,3 +327,10 @@ report-to-garden architecture, Codex/GPT-5.6 roles, and the honest sample-only r
 The canonical storyboard and human-test guide now use the same release boundary: the public recording
 shows sample-only server-authoritative rehearsals and before/after HealthReport evidence, while any
 credentialed real branch/PR work must be a separately labeled future integration segment.
+
+## 2026-07-18 — Production browser matrix evidence
+
+Production browser rehearsal covered both sample tools: Clippers and Watering Can each made zero
+`/api/tend` requests before confirmation and reached `landed` only after a correct answer. The same
+matrix covered mobile layout, Level 3/Hard season selection, keyboard focus, invalid-input alerts,
+public read-only controls, reduced motion, and zero page/console errors.

@@ -115,6 +115,11 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Anonymous production analysis of `ColorlibHQ/gentelella` completed read-only on 2026-07-18 at
   commit `c4515bd2682660d79d6d0e64160a57cd86482451`: 31 nodes, 63 findings, and a complete bounded
   scope of 96 supported/analyzed files with zero omissions.
+- [x] Broader production browser matrix on 2026-07-18 passed: mobile sample mode showed three plants
+  and four movement controls; Early/Mid/Late season selection reached Level 3/Hard; keyboard focus
+  entered an input; invalid repository input produced an alert; public analysis showed read-only mode
+  with zero tending buttons; reduced-motion Watering Can reached `landed` after confirmation. Zero page
+  or console errors were observed.
 - [x] Stage 10 documentation readiness: root README now contains the project description and fresh-clone
   setup flow and Build Week submission narrative; public-repository MIT license is committed as
   `LICENSE`; submission checklist reflects the completed track, description, repository, and README

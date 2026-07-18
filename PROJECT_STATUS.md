@@ -49,6 +49,8 @@ Updated: 2026-07-18, America/Denver
   repository input 400 on the production deployment. Production browser smoke also verified mobile
   rendering, zero page/console errors, confirmation-gated Clippers reaching `landed`, and anonymous
   read-only analysis of the selected demo repository (31 nodes, 63 findings, 96 files, zero omissions).
+  A broader matrix also verified seasons, keyboard focus, invalid-input alerts, public read-only controls,
+  and reduced-motion Watering Can reaching `landed` with zero browser errors.
 
 ## Blockers and Open Gates
 
