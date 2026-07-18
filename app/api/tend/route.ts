@@ -10,6 +10,7 @@ import {
 import { reanalyzeDemoReport } from "@/lib/garden/reanalysis";
 import { sampleSeasons } from "@/lib/garden/seasons";
 import { z } from "zod";
+import { consumeChallengeProof } from "@/app/api/challenge/route";
 
 export const runtime = "nodejs";
 
@@ -24,6 +25,7 @@ const requestSchema = z.object({
       nodeId: z.string().min(1),
     }),
   ]),
+  proof: z.string().min(1).optional(),
   action: z.enum(["advance", "fail"]).default("advance"),
 });
 
@@ -118,6 +120,17 @@ export async function POST(request: Request) {
       if (!sameCommandIdentity(input, existing.command))
         throw new Error("Command is stale or tried to skip a state");
     } else {
+      if (
+        !parsed.data.proof ||
+        !consumeChallengeProof(
+          parsed.data.proof,
+          input.findingId,
+          report.reportHash,
+        )
+      )
+        throw new Error(
+          "A correct learning challenge is required before tending",
+        );
       if (activeCommands.has(input.id))
         throw new Error("A command with this ID is already active");
       const command = createToolCommand(input);

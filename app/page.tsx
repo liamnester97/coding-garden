@@ -7,6 +7,16 @@ import { healthMetaphor } from "@/lib/garden/metaphor";
 import { projectHealthReport } from "@/lib/garden/project";
 import type { ToolCommand } from "@/lib/garden/command";
 import { plantVoice, sampleSeasons } from "@/lib/garden/seasons";
+import type {
+  PublicChallengeQuestion,
+  ChallengeDifficulty,
+} from "@/lib/garden/challenges";
+import {
+  gardenerStart,
+  moveGardener,
+  toolStations,
+  type WorldPoint,
+} from "@/lib/garden/world";
 
 export default function HomePage() {
   const [report, setReport] = useState(sampleHealthReport);
@@ -26,6 +36,18 @@ export default function HomePage() {
     (typeof report.findings)[number] | null
   >(null);
   const [tendError, setTendError] = useState<string | null>(null);
+  const [challenge, setChallenge] = useState<{
+    attemptId: string;
+    question: PublicChallengeQuestion;
+    proof?: string;
+  } | null>(null);
+  const [challengeAnswer, setChallengeAnswer] = useState("");
+  const [challengeDifficulty, setChallengeDifficulty] =
+    useState<ChallengeDifficulty>("easy");
+  const [challengeFeedback, setChallengeFeedback] = useState<string | null>(
+    null,
+  );
+  const [gardener, setGardener] = useState<WorldPoint>(gardenerStart);
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
   const [seasonId, setSeasonId] = useState("early-spring");
   const seasons = sampleSeasons(sampleHealthReport);
@@ -102,6 +124,94 @@ export default function HomePage() {
     }
     setTendError(null);
     setPendingFinding(finding);
+    setChallenge(null);
+    setChallengeAnswer("");
+    setChallengeFeedback(null);
+    void startChallenge(finding, challengeDifficulty);
+  }
+
+  function focusStation(stationId: (typeof toolStations)[number]["id"]) {
+    const finding =
+      stationId === "clippers"
+        ? report.findings.find((candidate) => candidate.type === "dead-code")
+        : stationId === "watering-can"
+          ? report.findings.find(
+              (candidate) => candidate.type === "coverage-gap",
+            )
+          : undefined;
+    setSelectedId(finding?.nodeId ?? report.nodes[0]?.id);
+  }
+
+  async function startChallenge(
+    finding: (typeof report.findings)[number],
+    difficulty: ChallengeDifficulty,
+  ) {
+    try {
+      const response = await fetch("/api/challenge", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ report, findingId: finding.id, difficulty }),
+      });
+      const payload = (await response.json()) as {
+        attemptId?: string;
+        question?: PublicChallengeQuestion;
+        error?: string;
+      };
+      if (!response.ok || !payload.attemptId || !payload.question)
+        throw new Error(
+          payload.error ?? "Could not start the learning challenge",
+        );
+      setChallenge({
+        attemptId: payload.attemptId,
+        question: payload.question,
+      });
+    } catch (caught) {
+      setTendError(
+        caught instanceof Error ? caught.message : "Challenge could not start",
+      );
+    }
+  }
+
+  async function submitChallenge() {
+    if (!challenge) return;
+    try {
+      const response = await fetch("/api/challenge", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          report,
+          findingId: challenge.question.findingId,
+          difficulty: challenge.question.difficulty,
+          attemptId: challenge.attemptId,
+          answer: challengeAnswer,
+        }),
+      });
+      const payload = (await response.json()) as {
+        correct?: boolean;
+        proof?: string;
+        feedback?: string;
+        hint?: string;
+        error?: string;
+      };
+      if (payload.correct && payload.proof) {
+        setChallenge((current) =>
+          current ? { ...current, proof: payload.proof } : current,
+        );
+        setChallengeFeedback(
+          "Correct. Review the proposed scope before starting the rehearsal.",
+        );
+      } else {
+        setChallengeFeedback(
+          payload.feedback ?? payload.error ?? payload.hint ?? "Try again.",
+        );
+      }
+    } catch (caught) {
+      setChallengeFeedback(
+        caught instanceof Error
+          ? caught.message
+          : "Answer could not be checked",
+      );
+    }
   }
 
   async function tendFinding(finding: (typeof report.findings)[number]) {
@@ -121,6 +231,12 @@ export default function HomePage() {
       findingId: finding.id,
       nodeId: finding.nodeId,
     } as const;
+    if (!challenge?.proof) {
+      setTendError(
+        "Answer the learning challenge before starting the rehearsal.",
+      );
+      return;
+    }
     let currentCommand: ToolCommand = {
       ...seed,
       state: "seen",
@@ -137,6 +253,7 @@ export default function HomePage() {
           body: JSON.stringify({
             report: currentReport,
             command: firstRequest ? seed : currentCommand,
+            proof: firstRequest ? challenge.proof : undefined,
             action: "advance",
           }),
         });
@@ -157,6 +274,7 @@ export default function HomePage() {
       setSelectedId(finding.nodeId);
       setCompletedCommands((completed) => [...completed, currentCommand]);
       setPendingFinding(null);
+      setChallenge(null);
     } catch (caught) {
       setTendError(caught instanceof Error ? caught.message : "Tending failed");
       setCommand({ ...currentCommand, state: "failed" });
@@ -233,14 +351,15 @@ export default function HomePage() {
           <select
             id="season-select"
             value={seasonId}
+            disabled={source !== "sample"}
             onChange={(event) => {
+              if (source !== "sample") return;
               const next = seasons.find(
                 (season) => season.id === event.target.value,
               );
               if (next) {
                 setSeasonId(next.id);
                 setReport(next.report);
-                setSource("sample");
                 setSelectedId(next.report.nodes[0]?.id);
               }
             }}
@@ -267,7 +386,35 @@ export default function HomePage() {
             viewBox="0 0 100 100"
             role="img"
             aria-label={`${scene.repoName} module map with ${scene.plants.length} plants and ${scene.roots.length} roots`}
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (
+                [
+                  "ArrowUp",
+                  "ArrowDown",
+                  "ArrowLeft",
+                  "ArrowRight",
+                  "w",
+                  "a",
+                  "s",
+                  "d",
+                ].includes(event.key)
+              ) {
+                event.preventDefault();
+                setGardener((current) => moveGardener(current, event.key));
+              }
+            }}
           >
+            <g className="tool-stations" aria-label="Tool stations">
+              {toolStations.map((station) => (
+                <g key={station.id}>
+                  <circle cx={station.x} cy={station.y} r="3.5" />
+                  <text x={station.x} y={station.y + 7} textAnchor="middle">
+                    {station.label}
+                  </text>
+                </g>
+              ))}
+            </g>
             <g className="roots" aria-hidden="true">
               {scene.roots.map((root, index) => (
                 <line
@@ -296,11 +443,72 @@ export default function HomePage() {
                 />
               ))}
             </g>
+            <g className="gardener-avatar" aria-label="Gardener">
+              <circle cx={gardener.x} cy={gardener.y} r="2.2" />
+              <text x={gardener.x} y={gardener.y - 3} textAnchor="middle">
+                you
+              </text>
+            </g>
           </svg>
           <span className="garden-stage-note">
-            Roots show analyzed relative imports. Select a plant below for the
-            full evidence.
+            Move with arrow keys or WASD. Roots show analyzed relative imports;
+            select a plant below for full evidence.
           </span>
+        </div>
+        <div
+          className="world-controls"
+          aria-label="Garden movement and tool stations"
+        >
+          <div className="movement-controls" aria-label="Move gardener">
+            <span>Move</span>
+            <button
+              type="button"
+              aria-label="Move up"
+              onClick={() =>
+                setGardener((current) => moveGardener(current, "ArrowUp"))
+              }
+            >
+              ↑
+            </button>
+            <button
+              type="button"
+              aria-label="Move left"
+              onClick={() =>
+                setGardener((current) => moveGardener(current, "ArrowLeft"))
+              }
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              aria-label="Move down"
+              onClick={() =>
+                setGardener((current) => moveGardener(current, "ArrowDown"))
+              }
+            >
+              ↓
+            </button>
+            <button
+              type="button"
+              aria-label="Move right"
+              onClick={() =>
+                setGardener((current) => moveGardener(current, "ArrowRight"))
+              }
+            >
+              →
+            </button>
+          </div>
+          <div className="station-controls" aria-label="Visit tool station">
+            {toolStations.map((station) => (
+              <button
+                key={station.id}
+                type="button"
+                onClick={() => focusStation(station.id)}
+              >
+                Visit {station.label}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="plant-grid" aria-label="Code garden plants">
           {scene.plants.map((plant) => (
@@ -349,27 +557,83 @@ export default function HomePage() {
                 ) : null}
               </div>
             ) : null}
-            {pendingFinding && source === "sample" && visibleExplanation ? (
+            {pendingFinding &&
+            source === "sample" &&
+            visibleExplanation &&
+            challenge ? (
               <div
                 className="confirmation-card"
                 role="dialog"
                 aria-labelledby="confirm-title"
               >
                 <span className="eyebrow">Ready to tend</span>
-                <h3 id="confirm-title">Review the proposed demo change</h3>
+                <h3 id="confirm-title">Understand, then review the change</h3>
                 <p>
                   This rehearsal targets{" "}
                   <strong>{pendingFinding.evidence.file}</strong>. The selected
                   finding will be cleared only after the rehearsal reaches
                   verification and re-analysis.
                 </p>
+                <div className="challenge-card" aria-live="polite">
+                  <span className="eyebrow">
+                    Learning gate · {challenge.question.difficulty}
+                  </span>
+                  <strong>{challenge.question.objective}</strong>
+                  <label htmlFor="challenge-difficulty">
+                    Choose a challenge level
+                  </label>
+                  <select
+                    id="challenge-difficulty"
+                    value={challengeDifficulty}
+                    disabled={Boolean(challenge.proof)}
+                    onChange={(event) => {
+                      const nextDifficulty = event.target
+                        .value as ChallengeDifficulty;
+                      setChallengeDifficulty(nextDifficulty);
+                      void startChallenge(pendingFinding, nextDifficulty);
+                    }}
+                  >
+                    <option value="easy">Easy · recognize</option>
+                    <option value="medium">Medium · connect evidence</option>
+                    <option value="hard">Hard · reason about action</option>
+                  </select>
+                  <label htmlFor="challenge-answer">
+                    {challenge.question.prompt}
+                  </label>
+                  <input
+                    id="challenge-answer"
+                    value={challengeAnswer}
+                    onChange={(event) => setChallengeAnswer(event.target.value)}
+                    disabled={Boolean(challenge.proof)}
+                    aria-describedby="challenge-hint challenge-feedback"
+                  />
+                  <small id="challenge-hint">
+                    Hint: {challenge.question.hint}
+                  </small>
+                  {challengeFeedback ? (
+                    <p id="challenge-feedback" role="status">
+                      {challengeFeedback}
+                    </p>
+                  ) : null}
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={submitChallenge}
+                    disabled={
+                      Boolean(challenge.proof) || !challengeAnswer.trim()
+                    }
+                  >
+                    Check answer
+                  </button>
+                </div>
                 <div className="confirmation-actions">
                   <button
                     type="button"
                     className="tool-button"
+                    disabled={!challenge.proof}
                     onClick={() => void tendFinding(pendingFinding)}
                   >
-                    Confirm demo rehearsal
+                    Confirm and rehearse
                   </button>
                   <button
                     type="button"

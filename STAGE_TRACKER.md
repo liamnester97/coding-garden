@@ -2,20 +2,19 @@
 
 ## Stage
 
-Stage 4 — Magnifying Glass / Bundle 2 — Understand and Learn
+Stage 9 — Hardening / Bundle 6 — Hardening and Release
 
 ## Execution Bundle
 
-- **Bundle:** 2 — Understand and Learn
-- **Current goal:** Goal 1 — close the Magnifying Glass quality gate and define the learning-objective
-  boundary for the question bank.
+- **Bundle:** 6 — Hardening and Release
+- **Current goal:** Complete abuse, expiry, failure, accessibility, and release-evidence checks.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
-- **Bundle 2 status:** In progress; the explanation implementation exists, while non-coder review and
-  the learning-gate implementation remain open.
-- **Bundle gate:** Open.
-- **Audit status:** Required at bundle close; not yet run for Bundle 2.
-- **Human acceptance:** Bundle 1 bundle-level acceptance and Bundle 2 acceptance are not yet recorded.
+- **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
+  the roadmap requires external evidence.
+- **Bundle gate:** Open; Stage 9 hardening implementation is in progress.
+- **Audit status:** Stage 9 technical audit completed 2026-07-18; human/release gates remain open.
+- **Human acceptance:** Bundle-level acceptance is not yet recorded.
 
 ## Stage Status
 
@@ -30,29 +29,76 @@ Stage 4 — Magnifying Glass / Bundle 2 — Understand and Learn
   and audit are complete.
 - **Stage 3 — Garden rendering:** Complete; real public reports now render as deterministic plants,
   analyzed import roots, health states, summaries, inspector evidence, and accessible selection.
-- **Stage 4 — Magnifying Glass:** Implementation complete and promoted by Liam's authorization to
-  continue through Stage 8; live service-key exercise and a separately logged non-coder read-through
-  remain external evidence gaps.
-- **Stage 5 — Clippers End-to-End:** Implementation complete in demo-rehearsal mode; real demo-fork PR
-  remains an external credential/rehearsal gate.
-- **Stage 6 — Watering Can End-to-End:** Implementation complete in the shared lifecycle; real generated
-  test PR remains an external credential/rehearsal gate.
-- **Stage 7 — Demo Path Polish:** Local golden playthrough implementation complete; two-person visual
-  legibility and human acceptance remain open.
+- **Stage 4 — Magnifying Glass:** Implementation complete with deterministic learning objectives and
+  Easy/Medium/Hard challenge gating; non-coder read-through and optional live-key evidence remain open.
+- **Stage 5 — Clippers End-to-End:** Implementation complete in sample demo-rehearsal mode; real
+  demo-fork PR remains an external credential/rehearsal gate.
+- **Stage 6 — Watering Can End-to-End:** Implementation complete in the shared lifecycle; real
+  generated-test PR remains an external credential/rehearsal gate.
+- **Stage 7 — Demo Path Polish:** Local 2D world, gardener movement, tool stations, learning gate,
+  payoff, seasons, and voices are implemented; browser/human wide-shot acceptance remains open.
 - **Stage 8 — Stretch Features:** Two individually bounded slices complete (seasons and deterministic
   plant voices); final stretch gate and demo stability audit remain open.
+- **Stage 9 — Hardening:** Failure/expiry/replay/oversized-input regression coverage is complete;
+  security checklist, accessibility evidence, and final audit remain in progress.
+- **Stage 10 — Deploy, Video, Submission:** Queued; no production/video/Devpost completion is claimed.
 
 ## Goal
 
-Complete the Understand and Learn bundle: report-grounded explanations, deterministic learning
-objectives and questions, difficulty flow, and server-authoritative answer gating before actions.
+Complete the hardening gate for the implemented garden: adversarial lifecycle checks, bounded inputs,
+read-only public behavior, accessibility/runtime smoke, and release evidence.
 
 ## Bundle Goals
 
-- [ ] Goal 1 — Magnifying Glass quality gate and learning-objective boundary.
-- [ ] Goal 2 — Deterministic question bank and authored learning content.
-- [ ] Goal 3 — Easy, Medium, and Hard challenge flow.
-- [ ] Goal 4 — Server-authoritative answer validation, hints, retries, and accessibility.
+- [x] Goal 1 — Magnifying Glass quality gate and learning-objective boundary (implementation evidence).
+- [x] Goal 2 — Deterministic question bank and authored learning content.
+- [x] Goal 3 — Easy, Medium, and Hard challenge flow.
+- [x] Goal 4 — Server-authoritative answer validation, hints, retries, and accessibility.
+
+## Four-stage implementation cycle — 2026-07-18
+
+- [x] Stage 4 slice: report-grounded explanations now lead into deterministic learning objectives;
+  challenge answers are checked server-side and never graded by the model.
+- [x] Stage 5 slice: Clippers requires a valid challenge proof before the server command registry can
+  start the sample rehearsal.
+- [x] Stage 6 slice: Watering Can uses the same proof/lifecycle/re-analysis contract; public reports
+  remain read-only.
+- [x] Stage 7 slice: the SVG garden now has a keyboard-operable gardener avatar and named tool stations;
+  the golden path is visible from movement through payoff.
+- [x] Browser smoke: sample movement controls moved the avatar from `cy=86` to `cy=82`; the full
+  sample Clippers path locked confirmation before an answer, unlocked it after the correct answer,
+  reached `landed`, and reported zero page errors. Mocked public-report mode showed the read-only notice,
+  no tending buttons, and zero page errors.
+- [x] Focused and full technical checks passed: 51 tests, lint, typecheck, analysis validation, build,
+  format check, and diff check.
+- [x] Stage 9 regression coverage added: 54 tests now cover challenge/command expiry, proof replay,
+  oversized answers, failed rehearsals, and health preservation.
+- [ ] External gates: non-coder explanation read-through, real demo-fork PRs, two-person wide-shot
+  legibility, human acceptance, and production evidence.
+
+### Four-stage audit evidence — 2026-07-18
+
+- [x] One canonical `docs/EXECUTION_PLAN.md`; exactly one root `STAGE_TRACKER.md`,
+  `PROJECT_STATUS.md`, and `DECISION_LOG.md`; no generic `PLAN.md`, `STATUS.md`, or `DECISIONS.md`.
+- [x] Root navigation resolves to the current status, tracker, decisions, roadmap, and human-test guide.
+- [x] Sensitive-content scan found no committed secret; `.env.example` is the only environment template.
+- [x] `git diff --check`, format check, lint, typecheck, 54 tests, analysis validation, and production
+  build passed.
+- [x] Obsidian project note and session log reconciled; Slack connector was unavailable in this session,
+  so no new Slack-backed claim was made.
+
+### Stage 9 hardening evidence — 2026-07-18
+
+- [x] 54 tests pass, including expiry, replay, oversized input, failed rehearsal, and health-preservation
+  cases.
+- [x] Browser smoke covered sample golden path, touch movement, public read-only mode, and zero page
+  errors.
+- [x] Generated build artifacts contain no detected secret prefixes.
+- [x] Stage 10 remains queued; production deployment, public video, Devpost submission, and external
+  human review are not claimed complete.
+- [x] Local production-mode smoke passed on `next start`: `/` 200, `/api/health` 200,
+  `/api/explain` 200 without a key, invalid repository/challenge/tend payloads 400, and mobile map
+  movement completed without page errors.
 
 ## Bundle Gate Protocol
 
@@ -88,9 +134,11 @@ At the end of every execution bundle:
 - Choosing a demo repo whose language/toolchain the analysis pipeline cannot cover in time (mitigate: pick a repo in the same language as the app's own toolchain).
 - Scope creep into Should-Have features before the demo path exists.
 
-## Out of Scope
+## Historical Scope Boundary
 
-- All application code. Seasons scrubbing, plant voices, pesticide, generated artwork, org view, overnight tending, computer use.
+- The original Stage 0 scope kept live PR execution, generated artwork, org view, overnight tending,
+  and computer use outside the initial slice. Seasons and plant voices are now implemented as bounded
+  offline stretch slices; live PR execution remains an external gate.
 
 ## Evidence
 

@@ -62,6 +62,7 @@ The deployed app supports these routes:
 - `/api/health` — service health and current mode.
 - `/api/explain` — validated report-grounded explanation.
 - `/api/repository/analyze` — bounded, read-only public GitHub analysis.
+- `/api/challenge` — sample-only, report-grounded learning questions and answer proofs.
 - `/api/tend` — explicit demo-rehearsal command lifecycle.
 
 A separate demo fork is not required for deployment or normal human testing.
@@ -102,6 +103,8 @@ viewport when possible.
   read-only and do not show tending controls.
 - [ ] Select the sample withered plant and choose **Use Clippers**.
 - [ ] Confirm the Magnifying Glass explanation is visible before the confirmation card appears.
+- [ ] Try Easy, Medium, and Hard; an incorrect answer shows a hint and keeps confirmation locked.
+- [ ] Answer correctly and verify the proposed-scope confirmation becomes available.
 - [ ] Review the proposed file scope and choose **Confirm demo rehearsal**; verify no `/api/tend`
   request occurs before confirmation.
 - [ ] Confirm the status advances through the lifecycle and ends at `landed`.
@@ -109,6 +112,9 @@ viewport when possible.
 - [ ] Select the sample stressed plant and choose **Use Watering Can**.
 - [ ] Confirm the coverage finding disappears only after its rehearsal re-analysis.
 - [ ] Confirm the payoff panel records both completed rehearsals.
+- [ ] Let a command or challenge expire/restart and verify the UI reports a recoverable error without
+      changing garden health.
+- [ ] Reuse a learning proof or forge a lifecycle state and verify the server rejects it.
 
 These are intentionally labeled **demo rehearsals**. They do not create a real branch or PR, do not
 mutate the analyzed repository, and do not claim that a real code change landed. Real branch/PR
@@ -122,6 +128,8 @@ server restart; restart it from the sample garden if that happens.
 - [ ] Switch between Early spring, Mid-summer, and Late summer.
 - [ ] Confirm the selected season changes the report and garden consistently.
 - [ ] Select plants and confirm their voice text is grounded in their current findings.
+- [ ] Focus the garden map and move the gardener with arrow keys or WASD; verify the avatar stays
+      inside the map and the three tool stations remain visible.
 
 ### Accessibility and failure behavior
 

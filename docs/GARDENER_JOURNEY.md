@@ -9,11 +9,16 @@ You open a codebase you've never seen. Instead of ten thousand lines of text, yo
 1. **Open the garden.** Point Code Garden at the demo repo. The analysis pipeline runs (or the cached sample loads) and the garden renders: one plant per module/function cluster, roots showing imports, sunlight showing coverage.
 2. **Read the landscape.** The overgrown, brown, pest-ridden state is legible without any UI reading: drought zones are visibly dry, dead code is visibly withered, vulnerabilities visibly crawl.
 3. **Magnifying Glass.** Hover any plant → a plain-English explanation of what that code does, grounded strictly in the HealthReport and the code itself. This is the non-coder magic moment.
-4. **Clippers.** Select a withered branch. The garden explains what this dead code is and why it appears unused. Confirm → Codex removes it on a branch, opens a PR, analysis re-runs → the decay visibly clears.
-5. **Watering Can.** Pour water on a drought zone. The garden explains what's untested and what a test would protect. Confirm → Codex writes the missing tests on a branch, tests run green, analysis re-runs → the patch greens up.
-6. **The payoff.** Wide shot: the same garden, now lush. Then the reveal — the actual PRs, real diffs, real passing tests that produced every visual change.
+4. **Learn before tending.** Choose Easy, Medium, or Hard and answer a short report-grounded question. A wrong answer gives a hint; a correct answer unlocks the proposed-scope confirmation.
+5. **Clippers.** Select a withered branch. The garden explains what this dead code is and why it appears unused. Confirm → the sample rehearsal advances through the server-authoritative lifecycle → re-analysis visibly clears the decay. Public reports remain read-only.
+6. **Watering Can.** Pour water on a drought zone. The garden explains what's untested and what a test would protect. Confirm → the sample rehearsal advances through the lifecycle → re-analysis greens the patch.
+7. **The payoff.** Wide shot: the same garden, now lush. Then the reveal — the actual PRs, real diffs, real passing tests that produced every visual change.
 
 ## Evidence chain (tool → deterministic signal → real change → visual result)
+
+For the current standalone release, Clippers and Watering Can use an explicitly labeled sample-only
+demo rehearsal. The lifecycle, learning gate, and re-analysis contract are real; branch/PR execution
+and real diffs remain a future/live integration gate and are never implied by the rehearsal UI.
 
 | Tool                        | Health signal (deterministic)   | What Codex actually does                                       | Garden result                         |
 | --------------------------- | ------------------------------- | -------------------------------------------------------------- | ------------------------------------- |

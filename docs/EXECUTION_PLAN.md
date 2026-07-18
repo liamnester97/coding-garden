@@ -517,26 +517,32 @@ Stage 3 deployment-optimization risk.
 
 ### Stage 4 — Magnifying Glass
 **Goal:** `/api/explain` with GPT-5.6 grounded explanations; canned fallback for sample mode; explanation card UI; prompt eval suite running.
-**Acceptance:** evals green; non-coder read-through of five explanations (§13) logged; works with key unset.
+**Acceptance:** evals green; non-coder read-through of five explanations (§13) logged; works with key unset;
+learning objectives and the report-grounded challenge boundary remain deterministic and key-optional.
 **Gate:** checks + evals + review.
 
-Implementation note (2026-07-17): Stage 3 completed with a deterministic SVG garden map, validated
+Implementation note (2026-07-18): Stage 3 completed with a deterministic SVG garden map, validated
 import-root edges, accessible plant-card selection, reduced-motion support, and hosted public-report
-smoke evidence. Stage 4 begins from the existing report-grounded explanation fallback; live GPT-5.6
-narration remains gated on `OPENAI_API_KEY` and prompt/evidence acceptance.
+smoke evidence. Stage 4 now includes a deterministic, server-validated learning gate with authored
+Easy/Medium/Hard questions; live GPT-5.6 narration remains optional and gated on `OPENAI_API_KEY`.
 
 ### Stage 5 — Clippers End-to-End
 **Goal:** full command lifecycle for dead-code removal: confirm card with change scope → Codex task on `garden/*` branch → checks → PR → re-analysis → visual heal. Mocked Codex adapter for CI; real path exercised manually on the demo repo.
-**Acceptance:** lifecycle state-machine tests; one real PR produced on the demo fork with the withered branch visibly clearing; failure path (task fails) returns plant to true state.
+**Acceptance:** lifecycle state-machine tests; a correct learning answer unlocks the confirmed demo
+rehearsal; one real PR produced on the demo fork with the withered branch visibly clearing; failure
+path (task fails) returns plant to true state.
 **Gate:** checks + review + recorded real run.
 
 ### Stage 6 — Watering Can End-to-End
 **Goal:** same lifecycle for test generation; coverage (or estimate) improves on re-analysis; drought patch greens.
-**Acceptance:** one real PR with passing generated tests on the demo fork; heal-only-after-reanalysis test.
+**Acceptance:** one real PR with passing generated tests on the demo fork; heal-only-after-reanalysis
+test; the public-report path remains read-only.
 **Gate:** checks + review + recorded real run.
 
 ### Stage 7 — Demo Path Polish (the payoff)
-**Goal:** the full golden playthrough is smooth: load messy demo garden → magnify → clip → water → before/after wide shot → "reveal the diffs" panel listing the real PRs. Art pass to final placeholder quality; copy pass on all explanations; classroom comparison panel (§4.5).
+**Goal:** the full golden playthrough is smooth: move through the 2D garden → magnify → answer a
+learning challenge → clip → water → before/after wide shot → reveal panel. Art pass to final
+placeholder quality; copy pass on all explanations; classroom comparison panel (§4.5).
 **Acceptance:** golden playthrough recorded end-to-end without intervention; §5.5 legibility test with two people passes; accessibility pass (keyboard, inspector, reduced motion).
 **Gate:** checks + review + human acceptance. **← minimum submittable product.**
 
@@ -546,6 +552,12 @@ narration remains gated on `OPENAI_API_KEY` and prompt/evidence acceptance.
 ### Stage 9 — Hardening
 **Goal:** failure-mode drills (§6.9) exercised; red-team session (§8.4); cost/log review; security checklist (§6.10) walked.
 **Acceptance:** every fallback demonstrated; no P0/P1 open.
+
+Implementation note (2026-07-18): deterministic regression coverage now exercises expired challenge
+attempts, oversized answers, replayed learning proofs, expired command states, failed demo rehearsals,
+and the invariant that failed rehearsals preserve HealthReport findings. Browser smoke covers the sample
+golden path, touch movement, and public read-only mode; credentialed live PR, multi-person, and production
+release evidence remain open.
 
 ### Stage 10 — Deploy, Video, Submission
 **Goal:** production deploy verified; demo video shot per §15 storyboard; README submission narrative; Devpost form completed and submitted.
@@ -643,6 +655,8 @@ is recorded.
 ### Bundle assumptions
 
 - Bundles are a delivery cadence, not a second execution plan or tracker.
+- Bundle 1 has implementation evidence from Stages 0–3; bundle-level acceptance remains an explicit
+  human gate rather than an implied completion claim.
 - Bundle 2 may proceed before the free-movement world because the learning gate improves the current UI
   and later transfers into the map.
 - Questions are deterministic, authored, report-grounded, and server-validated; the LLM does not grade

@@ -193,6 +193,34 @@ main {
   gap: 0.5rem;
 }
 
+.challenge-card {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.9rem 0;
+  padding: 0.8rem;
+  border: 1px solid #71856d;
+  border-radius: 0.65rem;
+  background: #f4f7ed;
+}
+
+.challenge-card strong,
+.challenge-card label,
+.challenge-card small,
+.challenge-card p {
+  color: #455944;
+}
+
+.challenge-card input,
+.challenge-card select {
+  min-height: 2.4rem;
+  border: 1px solid #71856d;
+  border-radius: 0.45rem;
+  padding: 0.35rem 0.5rem;
+  background: #fff;
+  color: #263d2b;
+  font: inherit;
+}
+
 .tend-status {
   border-left: 3px solid var(--moss);
   padding-left: 0.7rem;
@@ -246,6 +274,28 @@ main {
   width: 100%;
   min-height: 360px;
 }
+.garden-stage svg:focus-visible {
+  outline: 2px solid #f0bd62;
+  outline-offset: -4px;
+}
+.tool-stations circle {
+  fill: #f0bd62;
+  stroke: #fff5d6;
+  stroke-width: 0.45;
+}
+.tool-stations text,
+.gardener-avatar text {
+  fill: #edf5e9;
+  font-size: 2.4px;
+  paint-order: stroke;
+  stroke: #0e1b14;
+  stroke-width: 0.7px;
+}
+.gardener-avatar circle {
+  fill: #9ee4ff;
+  stroke: #fff;
+  stroke-width: 0.5;
+}
 .roots line {
   stroke: #527357;
   stroke-width: 0.55;
@@ -271,6 +321,46 @@ main {
   bottom: 0.75rem;
   color: #c7d5bf;
   font-size: 0.75rem;
+}
+.world-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.8rem;
+  padding: 0.8rem;
+  border: 1px solid #39553d;
+  border-radius: 0.8rem;
+  background: #122019;
+}
+.movement-controls,
+.station-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+.movement-controls span {
+  width: 100%;
+  color: #a8c983;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.movement-controls button,
+.station-controls button {
+  min-height: 2.2rem;
+  border: 1px solid #527357;
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  background: #182b20;
+  color: #edf5e9;
+  font: inherit;
+  cursor: pointer;
+}
+.movement-controls button:focus-visible,
+.station-controls button:focus-visible {
+  outline: 2px solid #f0bd62;
+  outline-offset: 2px;
 }
 .plant-grid {
   display: grid;

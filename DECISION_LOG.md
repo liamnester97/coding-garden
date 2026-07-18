@@ -250,6 +250,25 @@ manageable in bounded Codex goals, work is now grouped into six execution bundle
 Truth; Understand and Learn; Act Safely; Playable Garden World; Progression and Classroom Value; and
 Hardening and Release. A bundle contains four implementation goals by default and closes with focused
 review, the project-status audit, documentation reconciliation, and human acceptance. Bundles are a
-delivery cadence inside `docs/EXECUTION_PLAN.md`, not a second roadmap or tracker. Bundle 1 is accepted
-from the existing Stages 0–3 evidence; Bundle 2 is now active with the Magnifying Glass quality gate
-and learning-objective boundary as its first goal.
+delivery cadence inside `docs/EXECUTION_PLAN.md`, not a second roadmap or tracker. Bundle 1 has
+implementation evidence from Stages 0–3, but bundle-level human acceptance remains open. The four-stage
+implementation cycle has now completed its local slices; external acceptance gates remain explicit.
+
+## 2026-07-18 — Learning gate and first playable garden world
+
+The next four implementation stages now share a deterministic learning contract. Before a sample
+Clippers, Watering Can, or Pesticide rehearsal can start, the player receives an authored,
+report-grounded Easy/Medium/Hard question; the server validates the answer and issues a short-lived
+proof, while `/api/tend` remains the authority for command state. Incorrect answers provide a hint
+and never change the report. Public GitHub reports remain read-only. The garden also gained a
+keyboard-operable 2D gardener avatar and named tool stations; movement is presentation state and
+does not alter HealthReport truth. Real branch/PR execution, non-coder comprehension, and two-person
+wide-shot evidence remain open gates rather than simulated claims.
+
+## 2026-07-18 — Stage 9 hardening boundary
+
+The release keeps all protection in bounded in-memory registries and schemas: challenge answers are
+limited before grading, challenge proofs are single-use and expiring, command transitions expire and
+reject replay/forgery, and failed rehearsals leave HealthReport findings unchanged. The release remains
+login-free and public-report read-only. Stage 10 production deployment, video, and Devpost evidence are
+not marked complete until independently observed and recorded.

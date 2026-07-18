@@ -4,20 +4,21 @@ Updated: 2026-07-18, America/Denver
 
 ## Active Bundle and Goal
 
-- Bundle: 2 — Understand and Learn
-- Current goal: Goal 1 — close the Magnifying Glass quality gate and define the learning-objective
-  boundary for the question bank.
+- Bundle: 6 — Hardening and Release
+- Current goal: Complete abuse, expiry, failure, accessibility, and release-evidence checks.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
 
 ## Bundle Status
 
-- Bundle 1 — Foundation and Truth: implementation complete based on the completed Stages 0–3 evidence;
-  bundle-level human acceptance remains to be recorded.
-- Bundle 2 — Understand and Learn: in progress.
-- Bundles 3–6: queued.
-- Bundle 2 gate: open; the audit and human acceptance occur after all four goals are complete.
+- Bundle 1 — Foundation and Truth: implementation complete; bundle-level acceptance remains open.
+- Bundle 2 — Understand and Learn: four implementation goals complete; non-coder/review acceptance open.
+- Bundle 3 — Act Safely: sample-only implementation complete; real PR evidence open.
+- Bundle 4 — Playable Garden World: local world/controls implementation complete; human playtest open.
+- Bundle 5 — Progression and Classroom Value: seasons and voices implemented; final human review open.
+- Bundle 6 — Hardening and Release: in progress; technical regression coverage is green.
+- Bundle gate: open pending hardening audit and human acceptance.
 
 ## Current State
 
@@ -26,9 +27,14 @@ Updated: 2026-07-18, America/Denver
   re-analysis.
 - The SVG garden projection, roots, inspector, report-grounded explanations, seasons, plant voices,
   confirmation lifecycle, and classroom/payoff surfaces exist locally.
-- The next implementation slice is the educational learning gate: authored questions, three
-  difficulties, answer validation, hints, retries, and accessibility.
+- The learning gate is now implemented: authored report-grounded questions, three difficulties,
+  server validation, hints, retries, and confirmation gating.
+- The garden now includes a 2D world layer with a keyboard-operable gardener avatar and named tool
+  stations; the map remains a deterministic projection of the report.
 - The app remains login-free and works without `OPENAI_API_KEY` through deterministic fallbacks.
+- Hardening coverage now exercises expiry, proof replay, oversized challenge input, failed rehearsal,
+  and health-preservation behavior.
+- Local production-mode route smoke passed; this is not a substitute for a deployed public URL.
 
 ## Blockers and Open Gates
 
@@ -41,10 +47,11 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Define learning objectives and the deterministic question schema for the existing tools/findings.
-2. Implement and test the Bundle 2 question bank and difficulty flow.
-3. Finish Bundle 2, run the full project-status audit, reconcile documentation, and request human
-   acceptance before starting Bundle 3.
+1. Capture the five-explanation non-coder read-through and two-person map-legibility evidence.
+2. Rehearse or record real demo-fork PR evidence where credentials permit; keep demo mode explicit
+   until then.
+3. Complete the Stage 9 security/accessibility audit, then gather Stage 10 deployment/video/submission
+   evidence.
 
 ## Synchronization Rules
 

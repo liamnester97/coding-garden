@@ -37,7 +37,8 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
 - [x] `/api/health` returns OK and reports whether live-AI mode is enabled.
 - [x] Magnifying Glass returns an explanation (canned in offline mode).
 - [x] `/api/repository` accepts a normalized public GitHub URL without requiring login.
-- [ ] No secrets appear in client bundles (`grep` the build output for key prefixes).
+- [x] No secrets appear in client bundles; the generated `.next/static` and `.next/server` artifacts
+  were scanned for key prefixes on 2026-07-18.
 
 ## Production cut for submission
 
