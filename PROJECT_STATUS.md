@@ -14,7 +14,7 @@ Updated: 2026-07-17, America/Denver
   the inspector and `/api/explain` after deterministic garden projection and analyzer calibration.
 - Passing checks: format:check, lint, typecheck, test, analysis:validate, build.
 - Failing checks: none.
-- Preview URL: https://coding-garden-mgij5e9ia-code-garden.vercel.app
+- Preview URL: https://coding-garden-brlf2kkis-code-garden.vercel.app
 - Production URL: none.
 - Release boundary: standalone public Vercel app; public GitHub URL input is the first external
   repository path, with sample mode as the no-credential fallback.
