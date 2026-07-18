@@ -9,7 +9,7 @@ Target: **Vercel** (matches the Next.js stack; free tier is sufficient for judgi
 3. Environment variables (Project Settings → Environment Variables):
    - `OPENAI_API_KEY` — optional; without it the app serves the cached sample garden.
    - Any Codex task-dispatch credentials required by the change pipeline (see Execution Plan §6.8) — server-side only, never exposed to the client.
-4. Enable preview deployments on every PR; record the preview URL in `STATUS.md`.
+4. Enable preview deployments on every PR; record the preview URL in `PROJECT_STATUS.md`.
 
 ## Verification after each deploy
 

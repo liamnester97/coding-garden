@@ -1,6 +1,6 @@
 # Code Garden — Execution Plan v1.0
 
-> This is the single canonical execution plan. The nested repo's `PLAN.md` and `STATUS.md` are
+> This is the single canonical execution plan. The root `STAGE_TRACKER.md` and `PROJECT_STATUS.md` are
 > trackers and snapshots only; they do not define a second roadmap.
 
 A tip-to-tail plan for building, testing, reviewing, and submitting Code Garden for OpenAI Build Week 2026.
@@ -34,16 +34,16 @@ A tip-to-tail plan for building, testing, reviewing, and submitting Code Garden 
 - Source concept: `code_garden_brief.pdf` (human-authored)
 - Owner: Liam (human owner — final decision rights)
 - Executor: Codex + GPT-5.6 (competition requirement)
-- Changing frozen decisions requires a dated entry in `DECISIONS.md` and human approval.
+- Changing frozen decisions requires a dated entry in `DECISION_LOG.md` and human approval.
 
 ## Purpose
 
-This document is the single implementation source of truth for Code Garden. It contains everything needed to execute the project: what to build, in what order, to what quality bar, with what checks, and how to submit it. When a question arises during the build, search this document first; if it isn't answered here or in `DECISIONS.md`, stop and ask the human owner.
+This document is the single implementation source of truth for Code Garden. It contains everything needed to execute the project: what to build, in what order, to what quality bar, with what checks, and how to submit it. When a question arises during the build, search this document first; if it isn't answered here or in `DECISION_LOG.md`, stop and ask the human owner.
 
 ## How to Use This Plan with Codex
 
 1. Follow `START_HERE.md` in the package root for the bootstrap sequence.
-2. Work in **bounded vertical slices**: one stage at a time from Section 9, tracked in `PLAN.md`, statused in `STATUS.md`.
+2. Work in **bounded vertical slices**: one stage at a time from Section 9, tracked in `STAGE_TRACKER.md`, statused in `PROJECT_STATUS.md`.
 3. Copy the stage's goal block into Codex verbatim; use `/plan` for the slice; do not plan ahead in code.
 4. A stage is complete only when its acceptance criteria are checked, the required checks pass, self-review and independent review are done, and the human owner accepts.
 5. The invariants in `AGENTS.md` (Appendix A) override any convenience. When an invariant blocks a shortcut, the invariant wins.
@@ -120,7 +120,7 @@ For the chosen target language (recommendation: TypeScript/JavaScript, same as t
 | Complexity | ESLint `complexity` rule, `typhonjs-escomplex`, simple cyclomatic per-function | Stable numeric output per function |
 | Vulnerabilities | `npm audit --json`, `osv-scanner` | Offline cacheability for sample mode |
 
-Record the chosen tool per signal in `DECISIONS.md`. Rule: a signal without a reliable tool gets dropped or labeled clearly as heuristic — never faked.
+Record the chosen tool per signal in `DECISION_LOG.md`. Rule: a signal without a reliable tool gets dropped or labeled clearly as heuristic — never faked.
 
 ## 2.2 Coverage note (important honesty constraint)
 
@@ -386,9 +386,9 @@ State-machine rule: a ToolCommand can only advance in order; "understood" requir
 
 ## 6.13 ADR index
 
-- ADR-001 MVP scope (`../_source/Code_Garden_Source_Package_v1/repo/docs/adr/ADR-001-MVP-SCOPE.md`).
-- ADR-002 Deterministic garden truth (`../_source/Code_Garden_Source_Package_v1/repo/docs/adr/ADR-002-DETERMINISTIC-GARDEN-TRUTH.md`).
-- Future ADRs numbered sequentially; template: Context / Decision / Consequences; accepted via `DECISIONS.md`.
+- ADR-001 MVP scope (`adr/ADR-001-MVP-SCOPE.md`).
+- ADR-002 Deterministic garden truth (`adr/ADR-002-DETERMINISTIC-GARDEN-TRUTH.md`).
+- Future ADRs numbered sequentially; template: Context / Decision / Consequences; accepted via `DECISION_LOG.md`.
 
 ---
 
@@ -452,7 +452,7 @@ Root `AGENTS.md` (Appendix A) → scoped `lib/analysis/AGENTS.md` (B), `lib/gard
 
 ## 8.3 Slice discipline
 
-One stage at a time. Copy the stage goal block (Section 9) into Codex; `/plan` the slice; keep `PLAN.md` as the live slice contract; evidence (test output, screenshots, URLs) recorded in PLAN.md before review.
+One stage at a time. Copy the stage goal block (Section 9) into Codex; `/plan` the slice; keep `STAGE_TRACKER.md` as the live slice contract; evidence (test output, screenshots, URLs) recorded in STAGE_TRACKER.md before review.
 
 ## 8.4 Recommended agent roles
 
@@ -462,7 +462,7 @@ One stage at a time. Copy the stage goal block (Section 9) into Codex; `/plan` t
 
 ## 8.5 Evidence discipline
 
-No claim without artifact: check output pasted, Playwright report linked, PR URLs recorded, screenshots attached. STATUS.md never says "done" without them.
+No claim without artifact: check output pasted, Playwright report linked, PR URLs recorded, screenshots attached. PROJECT_STATUS.md never says "done" without them.
 
 ---
 
@@ -472,12 +472,12 @@ Operating rules: stages are strictly ordered through Stage 7; a stage is not beg
 
 ### Stage 0 — Discovery, Scope Freeze, Demo Repo Selection
 **Goal:** Freeze MVP scope; choose demo repo + fallback + sample fixture; choose per-signal toolchain; accept ADR-001/002.
-**Acceptance:** all Stage 0 boxes in the repo `PLAN.md`; human approval recorded in `DECISIONS.md`.
+**Acceptance:** all Stage 0 boxes in the repo `STAGE_TRACKER.md`; human approval recorded in `DECISION_LOG.md`.
 **Gate:** human sign-off. *(No code.)*
 
 ### Stage 1 — Repository Bootstrap
 **Goal:** Next.js + TS strict + Zod + Vitest + ESLint/Prettier scaffold; six check scripts wired; CI green; Vercel preview deployed; `/api/health` live; scaffold docs copied in.
-**Acceptance:** fresh clone → README steps → running app; CI green on a trivial PR; preview URL in STATUS.md.
+**Acceptance:** fresh clone → README steps → running app; CI green on a trivial PR; preview URL in PROJECT_STATUS.md.
 **Gate:** checks + review.
 
 ### Stage 2 — Deterministic Analysis Engine
@@ -511,7 +511,7 @@ Operating rules: stages are strictly ordered through Stage 7; a stage is not beg
 **Gate:** checks + review + human acceptance. **← minimum submittable product.**
 
 ### Stage 8 — Stretch Features (individually gated, any order, time-permitting)
-8a Seasons scrubbing (3–4 snapshots) · 8b Plant voices/personality (text) · 8c AI-painted backdrop · 8d Pesticide Spray. Each: bounded slice, own PLAN.md cycle, must not destabilize the demo path (E2E stays green).
+8a Seasons scrubbing (3–4 snapshots) · 8b Plant voices/personality (text) · 8c AI-painted backdrop · 8d Pesticide Spray. Each: bounded slice, own STAGE_TRACKER.md cycle, must not destabilize the demo path (E2E stays green).
 
 ### Stage 9 — Hardening
 **Goal:** failure-mode drills (§6.9) exercised; red-team session (§8.4); cost/log review; security checklist (§6.10) walked.
@@ -539,7 +539,7 @@ Stage 2 (analysis) → 3 (rendering) → 5 (first real change loop) → 7 (payof
 | Mon Jul 20 | Stage 6 + Stage 7 complete; golden playthrough recorded; Stage 8 only if ahead |
 | Tue Jul 21 (AM) | Stage 9 + Stage 10: hardening, production deploy, video, submit by ~2 PM PT (3-hour buffer) |
 
-Slip rule: if any day ends a stage behind, cut the lowest-tier remaining scope immediately (8 first, then 6 — Clippers alone still proves the loop) and record it in `DECISIONS.md`.
+Slip rule: if any day ends a stage behind, cut the lowest-tier remaining scope immediately (8 first, then 6 — Clippers alone still proves the loop) and record it in `DECISION_LOG.md`.
 
 ## 10.3 Decision rights
 
@@ -547,7 +547,7 @@ Human owner: scope changes, demo repo, track selection, stage acceptance, submis
 
 ## 10.4 Status reporting
 
-`STATUS.md` updated at every stage boundary and end of day: active goal, passing/failing checks, blockers, risks changed, next three actions, submission readiness.
+`PROJECT_STATUS.md` updated at every stage boundary and end of day: active goal, passing/failing checks, blockers, risks changed, next three actions, submission readiness.
 
 ---
 
@@ -562,18 +562,18 @@ Human owner: scope changes, demo repo, track selection, stage acceptance, submis
 
 # 12. Risk Register
 
-Maintained in `../_source/Code_Garden_Source_Package_v1/repo/docs/RISK_REGISTER.md` (R01–R10). Review at every stage boundary; record deltas in STATUS.md.
+Maintained in `RISK_REGISTER.md` (R01–R10). Review at every stage boundary; record deltas in PROJECT_STATUS.md.
 
 # 13. Playtesting & Product Evaluation
 
 - **Non-coder comprehension test (required, Stage 4 and 7):** one non-coder uses the Magnifying Glass on five plants and explains back what the codebase does and where it's sick. Success: broadly correct without prompting. Failures become P1 copy/design fixes.
 - **Legibility test (Stage 7):** two people, 5-second wide shot, "healthy or sick?" — must be correct.
 - **Developer credibility check:** one developer reviews two Codex PRs from tool actions — changes must be ones they'd plausibly merge.
-- Log all sessions and resulting fixes in PLAN.md evidence.
+- Log all sessions and resulting fixes in STAGE_TRACKER.md evidence.
 
 # 14. Deployment, Operations, Incident Response
 
-Deployment per `../_source/Code_Garden_Source_Package_v1/repo/docs/DEPLOYMENT.md` (Vercel, env vars, per-deploy verification). Operations during judging (Jul 22–Aug 5): keep production frozen; monitor `/api/health` daily; if the live path degrades, sample mode is the incident fallback — it must remain indistinguishable in quality for the read-only experience. Incident playbook: reproduce → check mode flag → roll back to last verified deploy → note in STATUS.md.
+Deployment per `DEPLOYMENT.md` (Vercel, env vars, per-deploy verification). Operations during judging (Jul 22–Aug 5): keep production frozen; monitor `/api/health` daily; if the live path degrades, sample mode is the incident fallback — it must remain indistinguishable in quality for the read-only experience. Incident playbook: reproduce → check mode flag → roll back to last verified deploy → note in PROJECT_STATUS.md.
 
 # 15. Demo Video & Submission Plan
 
@@ -593,7 +593,7 @@ What it is (one paragraph from §1.2) · how it works (analysis→garden→tools
 
 ## 15.3 Final checklist
 
-Run `../_source/Code_Garden_Source_Package_v1/repo/docs/BUILD_WEEK_REQUIREMENTS.md` top to bottom, including the fresh-clone README test and the video rewatch, one day before the deadline. Submit with hours of buffer, not minutes.
+Run `BUILD_WEEK_REQUIREMENTS.md` top to bottom, including the fresh-clone README test and the video rewatch, one day before the deadline. Submit with hours of buffer, not minutes.
 
 # 16. Post-Event Roadmap
 
@@ -610,14 +610,14 @@ Run `../_source/Code_Garden_Source_Package_v1/repo/docs/BUILD_WEEK_REQUIREMENTS.
 
 # Appendices — Canonical Templates
 
-The files in the sibling `repo/` folder of this package are the authoritative, ready-to-copy instances of these templates:
+The files in this repository are the authoritative, active instances of these templates:
 
-- **Appendix A — Root `AGENTS.md`:** `repo/AGENTS.md`
-- **Appendix B — `lib/analysis/AGENTS.md`:** `repo/lib/analysis/AGENTS.md`
-- **Appendix C — `lib/garden/AGENTS.md`:** `repo/lib/garden/AGENTS.md`
-- **Appendix D — `lib/ai/AGENTS.md`:** `repo/lib/ai/AGENTS.md`
-- **Appendix E — `PLAN.md` (bounded-slice template):** `repo/PLAN.md` (pre-filled for Stage 0; reuse its section skeleton for every stage)
-- **Appendix F — `STATUS.md` (living snapshot template):** `repo/STATUS.md`
-- **Appendix G — Pull request template:** `repo/.github/pull_request_template.md`
+- **Appendix A — Root `AGENTS.md`:** `AGENTS.md`
+- **Appendix B — `lib/analysis/AGENTS.md`:** `lib/analysis/AGENTS.md`
+- **Appendix C — `lib/garden/AGENTS.md`:** `lib/garden/AGENTS.md`
+- **Appendix D — `lib/ai/AGENTS.md`:** `lib/ai/AGENTS.md`
+- **Appendix E — `STAGE_TRACKER.md` (bounded-slice template):** `STAGE_TRACKER.md` (pre-filled for Stage 0; reuse its section skeleton for every stage)
+- **Appendix F — `PROJECT_STATUS.md` (living snapshot template):** `PROJECT_STATUS.md`
+- **Appendix G — Pull request template:** `.github/pull_request_template.md`
 
-When bootstrapping the repository (Stage 1), copy them verbatim, then keep PLAN/STATUS/DECISIONS live per the work process in Appendix A.
+When bootstrapping the repository (Stage 1), copy them verbatim, then keep the stage tracker, project status, and decision log live per the work process in Appendix A.

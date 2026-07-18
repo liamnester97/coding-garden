@@ -8,7 +8,7 @@ The Build Week V2 submission is Code Garden per `code_garden_brief.pdf`: a livin
 
 ## 2026-07-17 — Operating model reused from V1
 
-The project reuses the V1 execution system: master execution plan, AGENTS.md hierarchy, PLAN/STATUS/DECISIONS discipline, bounded vertical slices, stage gates with self-review + independent review + human acceptance.
+The project reuses the V1 execution system: master execution plan, AGENTS.md hierarchy, explicit stage-tracker/status/decision-log discipline, bounded vertical slices, stage gates with self-review + independent review + human acceptance.
 
 ## 2026-07-17 — Project status audit at stage gates
 
@@ -115,13 +115,21 @@ preserving a deliberate promotion gate.
 
 The long-form Build Week blueprint defines eleven ordered execution stages, numbered 0 through
 10. A six-stage condensation was introduced during documentation cleanup and was not the intended
-roadmap. The outer `docs/EXECUTION_PLAN.md` is the sole canonical roadmap with Stage 0–10;
-`PLAN.md` remains only the live stage and slice tracker.
+roadmap. `docs/EXECUTION_PLAN.md` is the sole canonical roadmap with Stage 0–10;
+`STAGE_TRACKER.md` remains only the live stage and slice tracker.
 
 ## 2026-07-17 — Documentation ownership boundary
 
-The workspace has one canonical execution roadmap at `docs/EXECUTION_PLAN.md`. The nested
-repository owns active supporting records (`PLAN.md`, `STATUS.md`, `DECISIONS.md`, ADRs, risks,
+The workspace has one canonical execution roadmap at `docs/EXECUTION_PLAN.md`. This repository
+owns active supporting records (`STAGE_TRACKER.md`, `PROJECT_STATUS.md`, `DECISION_LOG.md`, ADRs, risks,
 requirements, journey, and deployment notes). Outer duplicate copies are removed; the source
 package's `FROZEN_BASELINE.md` is retained only for historical provenance. New documentation must
 use an existing owner rather than creating a parallel copy.
+
+## 2026-07-17 — Documentation structure is a stage gate
+
+Every stage-boundary audit must verify navigation and ownership, not only implementation status:
+the root README must be the front door, the long-form `docs/EXECUTION_PLAN.md` must be the sole
+roadmap, the active repo must use explicitly named tracker files, generic duplicate tracker names
+must be absent, and documented paths must resolve. A structure violation blocks stage promotion
+until reconciled.

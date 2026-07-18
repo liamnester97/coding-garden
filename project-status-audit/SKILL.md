@@ -19,7 +19,7 @@ in Slack, or post messages without explicit authorization.
 ## 1. Establish project context
 
 Work from the Code Garden workspace root. The single canonical execution plan is
-`docs/EXECUTION_PLAN.md`; `PLAN.md` and `STATUS.md` are trackers, not alternative roadmaps.
+`docs/EXECUTION_PLAN.md`; `STAGE_TRACKER.md` and `PROJECT_STATUS.md` are trackers, not alternative roadmaps.
 Before auditing content, verify that exactly one file named `EXECUTION_PLAN.md` exists under the
 workspace and flag any duplicate or missing copy as a P1 documentation issue. Never silently treat
 a source package, copied artifact, or similarly named file as the active plan.
@@ -27,9 +27,9 @@ a source package, copied artifact, or similarly named file as the active plan.
 Read, in order:
 
 1. `AGENTS.md`
-2. `PLAN.md`
-3. `STATUS.md`
-4. `DECISIONS.md`
+2. `STAGE_TRACKER.md`
+3. `PROJECT_STATUS.md`
+4. `DECISION_LOG.md`
 5. `docs/EXECUTION_PLAN.md`
 6. Relevant `docs/adr/`, `docs/RISK_REGISTER.md`, `docs/BUILD_WEEK_REQUIREMENTS.md`, and nested
    `AGENTS.md` files.
@@ -67,13 +67,13 @@ wait for confirmation before posting it.
 
 Build an evidence table from the repository, not from prose alone. Check:
 
-- Stage label and goal agree across `PLAN.md`, `STATUS.md`, README, and the master plan.
+- Stage label and goal agree across `STAGE_TRACKER.md`, `PROJECT_STATUS.md`, README, and the master plan.
 - Every checked acceptance criterion has a corresponding file, test, command result, or external
   confirmation.
 - Every open criterion is still genuinely open; identify criteria that were completed but not
   checked.
-- `STATUS.md` blockers, risks, decisions needed, and next actions match current evidence.
-- `DECISIONS.md` records target repo, scope, toolchain, safety boundaries, and any changed
+- `PROJECT_STATUS.md` blockers, risks, decisions needed, and next actions match current evidence.
+- `DECISION_LOG.md` records target repo, scope, toolchain, safety boundaries, and any changed
   decisions with dates.
 - ADR statuses match actual human approval; never mark a pending human decision accepted based on
   implementation progress.
@@ -83,6 +83,24 @@ Build an evidence table from the repository, not from prose alone. Check:
 
 Use `rg` to find stale references such as old stages, missing files, `TODO`, `pending`,
 `not started`, and references to files that do not exist.
+
+### Documentation structure gate
+
+At every stage-boundary audit, verify that the workspace remains navigable and has one source of
+truth:
+
+1. Root `README.md` is the front door and links directly to `PROJECT_STATUS.md`,
+   `STAGE_TRACKER.md`, `DECISION_LOG.md`, and `docs/EXECUTION_PLAN.md`.
+2. Exactly one `EXECUTION_PLAN.md` exists under the workspace.
+3. The active repository contains exactly one each of `STAGE_TRACKER.md`, `PROJECT_STATUS.md`, and
+   `DECISION_LOG.md`.
+4. No active workspace layer contains generic `PLAN.md`, `STATUS.md`, or `DECISIONS.md` copies.
+5. The source package is clearly marked historical and is not treated as live project state.
+6. Every navigation link and documented path resolves to an existing file or directory.
+
+Use file inventory plus `rg` to check these invariants. Classify any violation as **P1
+documentation drift** when it could cause an agent or human to follow the wrong source, and
+reconcile it before the stage can be promoted.
 
 ### Stage completion tracking
 
@@ -94,10 +112,10 @@ Always produce an explicit stage snapshot from the plan. Distinguish:
 - **Stage complete** — every stage-specific acceptance criterion and required review/gate is
   complete and the audit has been run and reconciled.
 
-Read the `## Stage Status` section in `PLAN.md` when present and compare it with the stage roadmap,
-checkboxes, `STATUS.md`, and repository evidence. Flag stale stage labels or percentages. Never
+Read the `## Stage Status` section in `STAGE_TRACKER.md` when present and compare it with the stage roadmap,
+checkboxes, `PROJECT_STATUS.md`, and repository evidence. Flag stale stage labels or percentages. Never
 mark a stage complete merely because its implementation slice is complete. When Liam asks to
-reconcile the project, update the authoritative stage status in `PLAN.md` with a dated evidence
+reconcile the project, update the authoritative stage status in `STAGE_TRACKER.md` with a dated evidence
 note and keep any human or external gates explicitly open.
 
 ## 4. Verify repository evidence
@@ -148,7 +166,7 @@ over-report or is still being calibrated. Mark those findings advisory and recom
 
 When Liam asks to update the project as part of the audit:
 
-1. Patch the smallest authoritative files: usually `PLAN.md`, `STATUS.md`, `DECISIONS.md`,
+1. Patch the smallest authoritative files: usually `STAGE_TRACKER.md`, `PROJECT_STATUS.md`, `DECISION_LOG.md`,
    `README.md`, an ADR, the risk register, or submission requirements.
 2. Add a dated decision entry only for a durable scope/tooling/architecture decision or a material
    evidence milestone.
@@ -182,7 +200,7 @@ List the specific proposed changes and why.
 
 ### Documentation and synchronization
 
-List files updated or missing. State whether the repo, durable notes, Slack context, and submission
+List files updated or missing, including the documentation structure gate result. State whether the repo, durable notes, Slack context, and submission
 tracking are synchronized. Distinguish “updated locally” from “committed/pushed.”
 
 ### Verification

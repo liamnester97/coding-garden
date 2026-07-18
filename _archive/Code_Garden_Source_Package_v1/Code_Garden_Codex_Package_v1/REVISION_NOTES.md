@@ -31,3 +31,4 @@ Per the brief's own "4-Day Reality Check," the MVP is frozen to the Must-Have ti
 - **Works without an API key:** the app must demo on a cached sample repo with pre-computed analysis and canned explanations if the API is unavailable.
 - **Education track anchor:** framing, copy, and demo emphasize the teaching moment (healthy vs. sick codebase comparison).
 - **Safety:** the analyzed repo is untrusted input; analysis runs sandboxed and never executes target-repo code outside controlled test runners.
+> Historical source-package notes. The live project is the workspace root; see `../../../../README.md`.

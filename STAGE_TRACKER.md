@@ -25,10 +25,10 @@ and the first deterministic garden projection before building explanation or cha
 
 ## Acceptance Criteria
 
-- [ ] MVP scope human-approved and recorded in `DECISIONS.md` (one repo, three tools, before/after payoff; Should/Nice tiers deferred).
+- [ ] MVP scope human-approved and recorded in `DECISION_LOG.md` (one repo, three tools, before/after payoff; Should/Nice tiers deferred).
 - [x] Provisional demo target selected: ColorlibHQ/gentelella; fallback: dumberjs/dumber.
 - [x] Offline sample repo curated from verified findings and committed as fixture data.
-- [x] Initial JavaScript health-signal policy recorded in `DECISIONS.md`.
+- [x] Initial JavaScript health-signal policy recorded in `DECISION_LOG.md`.
 - [ ] ADR-001 (MVP scope) accepted by human owner.
 - [x] ADR-002 (deterministic garden truth) accepted.
 - [x] Risk register reviewed and owners assigned.
@@ -36,9 +36,9 @@ and the first deterministic garden projection before building explanation or cha
 
 ## Completed Stage 0 evidence
 
-- `../../../docs/EXECUTION_PLAN.md` is the single execution source of truth.
+- `docs/EXECUTION_PLAN.md` is the single execution source of truth.
 - Gentelella is the provisional target; dumber is the fallback.
-- The JavaScript/TypeScript signal policy is recorded in `DECISIONS.md`.
+- The JavaScript/TypeScript signal policy is recorded in `DECISION_LOG.md`.
 - The curated fixture is committed in the pushed foundation branch; human scope approval remains open.
 
 ## Risks
@@ -61,7 +61,7 @@ and the first deterministic garden projection before building explanation or cha
 - [ ] Self-review
 - [ ] Independent review
 - [ ] Human acceptance
-- [ ] `STATUS.md` updated
+- [ ] `PROJECT_STATUS.md` updated
 - [ ] Project status audit run using `../../../project-status-audit/SKILL.md`
 - [ ] Audit findings resolved, documented, or explicitly carried forward as open gates
 
@@ -84,11 +84,13 @@ At the end of every stage, before promoting the project to the next stage:
 
 1. Complete the stage's acceptance criteria and required quality checks.
 2. Perform self-review and independent review; obtain human acceptance where required.
-3. Update `PLAN.md`, `STATUS.md`, `DECISIONS.md`, and relevant project documentation with
+3. Update `STAGE_TRACKER.md`, `PROJECT_STATUS.md`, `DECISION_LOG.md`, and relevant project documentation with
    evidence and any remaining gates.
 4. Run the project-local `project-status-audit` skill against the repository, durable notes,
    and Slack routing context.
-5. Resolve documentation drift and record any plan change before starting the next stage.
+5. Run the documentation structure gate: root `README.md` navigates to the live status, stage
+   tracker, decision log, and sole execution plan; no generic duplicate tracker files exist.
+6. Resolve documentation drift and record any roadmap change before starting the next stage.
 
 The audit is also run during final submission closeout. It is a synchronization and decision
 checkpoint, not a replacement for human acceptance, independent review, or the required technical
@@ -127,5 +129,5 @@ checks.
 ## Roadmap clarification
 
 The canonical roadmap is the ordered Stage 0–10 roadmap in the outer
-`../../../docs/EXECUTION_PLAN.md`. This file is only the live tracker for the current stage and
+`docs/EXECUTION_PLAN.md`. This file is only the live tracker for the current stage and
 its bounded implementation slices, not a replacement roadmap.

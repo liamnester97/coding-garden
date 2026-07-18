@@ -1,14 +1,12 @@
-# Code Garden Workspace Instructions
+# Code Garden Workspace-Wide Instructions
 
-This outer directory is the workspace/control layer for Code Garden. The active application
-repository is nested at:
+These instructions govern the entire `coding-garden/` folder, including every nested source,
+documentation, fixture, and historical package directory. The active application repository is
+this folder. The old source package is archived under `_archive/` and is historical only.
 
-`_source/Code_Garden_Source_Package_v1/repo/`
-
-Use the nested repo's `AGENTS.md`, `PLAN.md`, `STATUS.md`, and `DECISIONS.md` for current
-implementation tracking. Use the outer `docs/EXECUTION_PLAN.md` as the one and only execution
-roadmap. Supporting ADRs, requirements, risk, journey, and deployment records live in the nested
-repo's `docs/`; the outer workspace must not create duplicate copies.
+Use `AGENTS.md`, `STAGE_TRACKER.md`, `PROJECT_STATUS.md`, and `DECISION_LOG.md` for current
+implementation tracking. Use `docs/EXECUTION_PLAN.md` as the one and only execution roadmap.
+Supporting ADRs, requirements, risk, journey, and deployment records live in `docs/`.
 
 ## Mission
 
@@ -16,22 +14,24 @@ Build a reliable, delightful, non-coder-first garden interface over real codebas
 
 ## Read First
 
-1. `_source/Code_Garden_Source_Package_v1/repo/AGENTS.md`
-2. `_source/Code_Garden_Source_Package_v1/repo/PLAN.md`
-3. `_source/Code_Garden_Source_Package_v1/repo/STATUS.md`
-4. `_source/Code_Garden_Source_Package_v1/repo/DECISIONS.md`
+1. `README.md` (workspace navigation)
+2. `PROJECT_STATUS.md`
+3. `STAGE_TRACKER.md`
+4. `DECISION_LOG.md`
 5. `docs/EXECUTION_PLAN.md` (the single canonical roadmap)
-6. Relevant records in the nested repo's `docs/adr/` and nearest nested `AGENTS.md`
+6. Relevant records in `docs/adr/` and nearest nested `AGENTS.md`
 
 For a project-wide execution/status check, use `project-status-audit/SKILL.md`.
 
 ## Documentation Ownership
 
 - `docs/EXECUTION_PLAN.md` — sole canonical execution roadmap.
-- Nested `repo/PLAN.md` — current stage and bounded slice tracker only.
-- Nested `repo/STATUS.md` — current snapshot, blockers, and next actions only.
-- Nested `repo/DECISIONS.md` and `repo/docs/` — active decisions and supporting project records.
-- `_source/.../Code_Garden_Codex_Package_v1/` — frozen historical source material only.
+- `STAGE_TRACKER.md` — current stage and bounded slice tracker only.
+- `PROJECT_STATUS.md` — current snapshot, blockers, and next actions only.
+- `DECISION_LOG.md` and `docs/` — active decisions and supporting project records.
+- `_archive/` — frozen historical source material only.
+
+This workspace must not contain duplicate tracker or decision files.
 
 Before creating a Markdown file, search for an existing authoritative owner. Do not create a
 second plan, status snapshot, decision log, ADR, requirements list, risk register, journey, or
@@ -52,9 +52,9 @@ deployment document at another layer.
 
 ## Work Process
 
-- Work against the active goal in the nested repo's `STATUS.md`; keep the slice bounded by its `PLAN.md`.
+- Work against the active goal in `PROJECT_STATUS.md`; keep the slice bounded by `STAGE_TRACKER.md`.
 - Keep diffs focused and add tests with behavior changes.
-- Update the nested repo's `STATUS.md`, `PLAN.md` evidence, and relevant documentation before declaring a stage complete.
+- Update `PROJECT_STATUS.md`, `STAGE_TRACKER.md` evidence, and relevant documentation before declaring a stage complete.
 - Do not begin Stage 1 until the human owner approves the Stage 0 scope decision.
 - Do not begin any Should-Have feature until the Must-Have demo path passes all gates.
 

@@ -1,11 +1,14 @@
 # Start Here — Code Garden Execution Baseline v1.0
 
+> Historical source-package note. Do not use this file to navigate or execute the current project;
+> start at the live workspace root `../../../../README.md` instead.
+
 This package contains the controlled version 1.0 execution baseline for **Code Garden**, the OpenAI Build Week 2026 submission.
 
 ## Codex startup sequence
 
 1. Create the project repository (empty; the human owner creates it manually).
-2. Copy the contents of the sibling `repo/` folder into the repository root (README, AGENTS.md, PLAN.md, STATUS.md, DECISIONS.md, `docs/`, `.github/`).
+2. Copy the contents of the sibling `repo/` folder into the repository root (README, AGENTS.md, STAGE_TRACKER.md, PROJECT_STATUS.md, DECISION_LOG.md, `docs/`, `.github/`).
 3. The original package baseline is preserved as `docs/FROZEN_BASELINE.md`; the workspace's
    canonical execution plan is `docs/EXECUTION_PLAN.md`.
 4. Ask Codex to read the active repository's `AGENTS.md` and the workspace's `docs/EXECUTION_PLAN.md` in full before
