@@ -174,3 +174,14 @@ ColorlibHQ/gentelella at commit `c4515bd2682660d79d6d0e64160a57cd86482451`, prod
 `fixtures/gentelella-rehearsal.json`. The hosted Node route was smoke-tested anonymously, the full
 quality suite passed, and the project-status audit plus documentation structure gate found no
 duplicate roadmap or tracker files. Stage 3 is now the sole active stage.
+
+## 2026-07-17 — Stage 3 closeout: truthful roots and public garden rendering
+
+Stage 3 is complete. The validated HealthReport now carries analyzer import edges into the pure
+`GardenScene` projection, and the public UI renders those edges as SVG roots alongside stable plant
+positions. The hosted Gentelella path rendered 31 plants, 41 roots, and 63 findings at the pinned
+commit `c4515bd2682660d79d6d0e64160a57cd86482451` with report hash `da302756ed12d03b`; target code
+was not executed. Keyboard traversal, mobile rendering, wide-shot legibility, reduced-motion CSS,
+local checks, hosted UI smoke, documentation structure, durable-context, Slack, and sensitive-content
+checks passed. Stage 4 is now the active stage; the existing deterministic explanation fallback stays
+the no-key path while live GPT-5.6 narration awaits `OPENAI_API_KEY` and prompt acceptance.

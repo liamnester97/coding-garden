@@ -4,25 +4,28 @@ Updated: 2026-07-17, America/Denver
 
 ## Active Stage and Goal
 
-- Stage: 3 - Garden Rendering
-- Goal: Project real HealthReport data into deterministic garden scenes and expose the rendering path.
+- Stage: 4 - Magnifying Glass
+- Goal: Extend report-grounded explanations toward the live GPT-5.6 path while preserving the
+  deterministic no-key fallback.
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
 
 ## Current State
 
 - Last completed milestone: Stage 0–1 promotion completed with a public Vercel preview, deterministic
   sample analysis, garden projection, inspector, explanation foundation, and public GitHub URL boundary.
-- Passing checks: format:check, lint, typecheck, 18 tests, analysis:validate, build, GitHub CI.
+- Passing checks: format:check, lint, typecheck, 18 tests, analysis:validate, build, local and hosted
+  browser smoke checks.
 - Failing checks: none.
-- Preview URL: https://coding-garden-551m8dsjc-code-garden.vercel.app
+- Preview URL: https://coding-garden-lfpeu333p-code-garden.vercel.app
 - Production URL: none.
 - Release boundary: standalone public Vercel app; public GitHub URL input is the first external
   repository path, with sample mode as the no-credential fallback.
 
 ## Blockers
 
-- `OPENAI_API_KEY` required for live explanation/change stages; not configured, but it does not block
-  Stage 2 read-only analysis.
+- `OPENAI_API_KEY` is required for live GPT-5.6 explanation work; it is not configured. The
+  deterministic explanation fallback remains available, so Stage 4 can continue with safe prompt
+  and fallback work while live narration is gated.
 - Provisional target is now Gentelella; the bounded public read-only analysis rehearsal succeeded.
 - Gentelella rehearsal completed at commit `c4515bd2682660d79d6d0e64160a57cd86482451`: 31 nodes,
   63 findings, report hash `da302756ed12d03b`; cached evidence is in
@@ -56,6 +59,9 @@ Updated: 2026-07-17, America/Denver
 - The rendering summary now exposes healthy/stressed/withered counts and the analysis method labels;
   a mobile-width local browser smoke check passed with HTTP 200, three sample plants, and no page
   errors.
+- The Stage 3 closeout now carries validated import edges into `GardenScene` and renders a truthful
+  SVG map. Hosted Gentelella UI smoke testing rendered 31 plants, 41 roots, 63 findings, and the
+  selected-node inspector at mobile and wide viewports with no page errors.
 
 ## Risks Changed
 
@@ -70,21 +76,21 @@ Updated: 2026-07-17, America/Denver
 
 ## Decisions Needed From Human Owner
 
-- Confirm Education as the submission track; this is not blocking Stage 2.
+- Confirm Education as the submission track; this is not blocking Stage 4.
 
 ## Next Three Actions
 
-1. Refine the garden presentation for a 31-node public rehearsal while preserving accessible
-   selection and stable layout.
-2. Add a hosted smoke check that loads the public-report path through the UI.
-3. Run the Stage 3 boundary audit before promoting to Stage 4.
+1. Define and test the live explanation adapter boundary without weakening the deterministic fallback.
+2. Add prompt/evidence contracts for five representative report-grounded explanations.
+3. Resolve or explicitly defer the missing `OPENAI_API_KEY` before live narration acceptance.
 
 ## Submission Readiness
 
-- App: Stage 0–2 complete; Stage 3 garden rendering is active. Live explanation and verified change
+- App: Stage 0–3 complete; Stage 4 Magnifying Glass is active. Live explanation and verified change
   flows remain later roadmap stages.
-- Repository: branch is clean and synchronized with `origin`; draft PR #1 is open and GitHub CI is
-  green.
+- Repository: branch is clean and synchronized with `origin`; draft PR #1 is open. Latest GitHub CI
+  status was not re-verified because the local GitHub CLI token is invalid; Vercel preview checks and
+  hosted smoke tests passed.
 
 ## Final Stage 1 verification snapshot
 
@@ -98,7 +104,7 @@ Updated: 2026-07-17, America/Denver
 - Durable context and Slack routing were checked; no Code Garden-specific Slack item was found.
 - Stage 1 is promoted complete. Human acceptance was recorded on 2026-07-17; automated GitHub CI/PR
   verification and agent self-review are the independent evidence available for this milestone.
-- Stage 2 is complete; Stage 3 is now the only active execution stage.
+- Stage 2 and Stage 3 are complete; Stage 4 is now the only active execution stage.
 - README: baseline written; submission narrative pending.
 - Demo video: not started.
 - Devpost submission fields: not started.
@@ -116,3 +122,16 @@ Updated: 2026-07-17, America/Denver
   routing or resolution. Unrelated Slack work remains outside this project's scope.
 - Known non-blocking warning: Next/Turbopack reports filesystem tracing for the hosted adapter; the
   build still completes and this is carried as a Stage 3 deployment-optimization risk.
+
+## Stage 3 closeout verification
+
+- Stage 3 was promoted on 2026-07-17 after the full project-status audit.
+- Commit `5c3661b` is pushed and the latest Vercel preview is ready at
+  `https://coding-garden-lfpeu333p-code-garden.vercel.app`.
+- The live public UI rendered Gentelella's 31 nodes, 41 analyzed import roots, and 63 findings after
+  submitting the public GitHub URL; the report remained `public-read-only` with no target execution.
+- Wide-shot and mobile browser checks passed with keyboard plant traversal and zero page errors.
+- Structure, durable-context, Slack, and sensitive-content checks passed. GitHub CLI API checks were
+  unavailable because the locally stored GitHub token is invalid; this is recorded as a verification
+  limitation, not as a passing GitHub check.
+- Known non-blocking warning remains: Next/Turbopack filesystem tracing for the hosted adapter.

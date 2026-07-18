@@ -2,7 +2,7 @@
 
 ## Stage
 
-Stage 3 - Garden Rendering
+Stage 4 - Magnifying Glass
 
 ## Stage Status
 
@@ -15,8 +15,11 @@ Stage 3 - Garden Rendering
 - **Stage 2 — Deterministic analysis engine:** Complete; deterministic fixture validation, bounded
   public GitHub analysis, cached rehearsal evidence, hosted route smoke test, full checks, review,
   and audit are complete.
-- **Stage 3 — Garden rendering:** In progress; begin the real-analysis garden projection slice.
-- **Stages 4–10:** Queued.
+- **Stage 3 — Garden rendering:** Complete; real public reports now render as deterministic plants,
+  analyzed import roots, health states, summaries, inspector evidence, and accessible selection.
+- **Stage 4 — Magnifying Glass:** In progress; extend the deterministic explanation foundation toward
+  the live GPT-5.6 path while preserving the no-key fallback.
+- **Stages 5–10:** Queued.
 
 ## Goal
 
@@ -126,11 +129,12 @@ checks.
 - **Live rehearsal:** `ColorlibHQ/gentelella` completed with commit
   `c4515bd2682660d79d6d0e64160a57cd86482451`, 31 nodes, 63 findings, report hash
   `da302756ed12d03b`, and no target-code execution.
-- **Quality gate:** `format:check`, `typecheck`, 17 tests, and `git diff --check` pass for this
+- **Quality gate:** `format:check`, `typecheck`, 18 tests, and `git diff --check` pass for this
   slice. Full Stage 2 checks and the boundary audit remain open until the snapshot/cache slice is
   complete.
 - **Stage status:** Complete. Stage 2 acceptance, review evidence, human acceptance, documentation
-  reconciliation, and the project-status audit are complete. Stage 3 is now the only active stage.
+  reconciliation, and the project-status audit are complete. At that time, Stage 3 became the next
+  active stage; it is now complete and Stage 4 is active.
 
 ## Stage 3 active slice — real report rendering
 
@@ -140,8 +144,29 @@ checks.
 - [x] Inspector and Magnifying Glass explanation remain grounded in the selected report node.
 - [x] Rendering regression coverage includes a Gentelella-shaped report with health, finding labels,
       evidence, and deterministic layout assertions.
-- [ ] Stage 3 visual acceptance and boundary audit remain open until the remaining rendering work is
-      complete.
+- [x] SVG garden map renders stable plant positions and only analyzed import edges as roots.
+- [x] Health colors and plant size distinguish healthy, stressed, and withered report states.
+- [x] Reduced-motion CSS and keyboard-selectable plant cards are present; inspector text remains the
+      accessible mirror of the visual state.
+- [x] Hosted Gentelella UI smoke test passed at mobile and wide viewports with no page errors; 31
+      plants and 41 roots rendered after public analysis.
+- [x] Stage 3 visual acceptance and boundary audit completed on 2026-07-17.
+
+## Stage 3 completion record — 2026-07-17
+
+- [x] `HealthReport` now validates import edges and the analyzer preserves them in live and fixture
+      reports.
+- [x] `GardenScene` projects roots from validated edges and stable node positions; the renderer never
+      invents relationships or health.
+- [x] Public Gentelella UI path completed with 31 plants, 41 roots, 63 findings, report hash
+      `da302756ed12d03b`, and commit `c4515bd2682660d79d6d0e64160a57cd86482451`.
+- [x] Local and hosted browser checks passed: mobile rendering, wide-shot legibility, keyboard
+      traversal, and zero page errors.
+- [x] Full technical checks passed: format, lint, typecheck, 18 tests, fixture validation, build,
+      and diff check.
+- [x] Stage 3 implementation committed and pushed in `5c3661b`.
+- [x] Project-status audit, documentation structure gate, durable-context check, Slack routing check,
+      and sensitive-content scan completed; no P1 documentation or security findings remain.
 
 ## Stage 2 completion record — 2026-07-17
 

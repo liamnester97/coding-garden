@@ -515,6 +515,11 @@ Stage 3 deployment-optimization risk.
 **Acceptance:** evals green; non-coder read-through of five explanations (§13) logged; works with key unset.
 **Gate:** checks + evals + review.
 
+Implementation note (2026-07-17): Stage 3 completed with a deterministic SVG garden map, validated
+import-root edges, accessible plant-card selection, reduced-motion support, and hosted public-report
+smoke evidence. Stage 4 begins from the existing report-grounded explanation fallback; live GPT-5.6
+narration remains gated on `OPENAI_API_KEY` and prompt/evidence acceptance.
+
 ### Stage 5 — Clippers End-to-End
 **Goal:** full command lifecycle for dead-code removal: confirm card with change scope → Codex task on `garden/*` branch → checks → PR → re-analysis → visual heal. Mocked Codex adapter for CI; real path exercised manually on the demo repo.
 **Acceptance:** lifecycle state-machine tests; one real PR produced on the demo fork with the withered branch visibly clearing; failure path (task fails) returns plant to true state.
