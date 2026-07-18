@@ -10,12 +10,14 @@ Updated: 2026-07-17, America/Denver
 
 ## Current State
 
-- Last completed milestone: deterministic `HealthReport -> GardenScene` projection rendered in
-  sample mode after analyzer calibration and fixture curation.
+- Last completed milestone: grounded sample-mode Magnifying Glass explanations are available from
+  the inspector and `/api/explain` after deterministic garden projection and analyzer calibration.
 - Passing checks: format:check, lint, typecheck, test, analysis:validate, build.
 - Failing checks: none.
-- Preview URL: none.
+- Preview URL: https://coding-garden-mgij5e9ia-code-garden.vercel.app
 - Production URL: none.
+- Release boundary: standalone public Vercel app; public GitHub URL input is the first external
+  repository path, with sample mode as the no-credential fallback.
 
 ## Blockers
 
@@ -33,6 +35,15 @@ Updated: 2026-07-17, America/Denver
   positions are derived from the validated report; the renderer does not recalculate health.
 - Plant cards now support accessible selection and an inspector panel with report-backed finding
   summaries and evidence. This slice is complete locally and all quality gates pass.
+- Magnifying Glass foundation is now report-grounded and deterministic in sample mode. It explains
+  a selected module's health and evidence without requiring an API key; live GPT narration and
+  prompt evaluations remain a later Stage 4 gate.
+- Public repository intake now has a tested, normalized GitHub URL boundary and a read-only API
+  contract. It validates input only; fetching, bounded analysis, and hosted isolation remain the
+  next analysis slice.
+- Vercel preview is live and anonymous-accessible after correcting the project framework to
+  Next.js and disabling SSO deployment protection. Live smoke checks passed for the homepage,
+  health, explanation, and public-repository boundary routes.
 - Documentation ownership is now explicit: the workspace-level `docs/EXECUTION_PLAN.md` is the
   only execution roadmap; this repository owns active supporting records and trackers; the source
   package is historical only.
@@ -55,16 +66,28 @@ Updated: 2026-07-17, America/Denver
 
 ## Next Three Actions
 
-1. Complete independent review and human acceptance for the current stage gates.
-2. Connect a Vercel preview and verify the sample-mode interaction there.
-3. Run the project status audit at the next stage gate and resolve documentation drift.
+1. Connect the Vercel Hobby project and verify the sample-mode interaction there.
+2. Implement bounded read-only analysis for the public GitHub repository boundary.
+3. Complete independent review and human acceptance, then run the project status audit at the stage
+   gate and resolve documentation drift.
 
 ## Submission Readiness
 
-- App: Stage 1 bootstrap, analysis, garden renderer, and inspector slice running locally; explanation
-  and verified change flows are next.
-- Repository: local branch is synced with the draft PR branch; the inspector slice is not yet
-  committed or pushed.
+- App: Stage 1 bootstrap, analysis, garden renderer, inspector, and sample-mode explanation slice
+  running locally; live explanation and verified change flows are next.
+- Repository: local branch has a new uncommitted explanation slice; commit/push is pending after
+  the next bounded implementation slice.
+
+## Stage-boundary verification snapshot
+
+- Full technical suite passed: format, lint, typecheck, 11 tests, analysis fixture validation,
+  production build, and diff checks.
+- Documentation structure passed: one canonical execution plan, one named set of trackers, no
+  generic duplicate plan/status/decision files, and archive separation intact.
+- Sensitive-content scan passed: no credential files or actual secret values are tracked.
+- Durable context and Slack routing were checked; no Code Garden-specific Slack item was found.
+- Stage 1 is not formally complete until the external preview, independent review, and human
+  acceptance gates are satisfied and the project-status audit is reconciled.
 - README: baseline written; submission narrative pending.
 - Demo video: not started.
 - Devpost submission fields: not started.

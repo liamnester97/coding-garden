@@ -10,13 +10,15 @@ Stage 1 - Repository Bootstrap, Analysis, and Garden Truth
   fixture evidence are recorded, but human scope approval and ADR-001 acceptance remain open.
 - **Stage 1 — Bootstrap, analysis, and garden truth:** In progress; bootstrap, HealthReport,
   adapter rehearsal, calibration, fixture commit, projection, and inspector interaction slices
-  are complete.
+  are complete. The public standalone repository-input boundary is now defined and tested.
   Vercel preview, independent review, human acceptance, and the project status audit remain open.
 - **Stage 2 — Deterministic analysis engine:** Implementation evidence is complete; formal stage
   promotion remains tied to the Stage 1 gate and the stage-boundary review cadence.
 - **Stage 3 — Garden rendering:** Projection and inspector implementation slices are complete;
   visual review, keyboard verification, and formal stage gates remain open.
-- **Stages 4–10:** Queued.
+- **Stage 4 — Magnifying Glass:** Grounded sample-mode explanation foundation is implemented;
+  live model integration, prompt evals, non-coder read-through, and formal stage gates remain open.
+- **Stages 5–10:** Queued.
 
 ## Goal
 
@@ -62,8 +64,8 @@ and the first deterministic garden projection before building explanation or cha
 - [ ] Independent review
 - [ ] Human acceptance
 - [ ] `PROJECT_STATUS.md` updated
-- [ ] Project status audit run using `../../../project-status-audit/SKILL.md`
-- [ ] Audit findings resolved, documented, or explicitly carried forward as open gates
+- [x] Project status audit run using `project-status-audit/SKILL.md`
+- [x] Audit findings resolved, documented, or explicitly carried forward as open gates
 
 ## Stage 1 kickoff evidence
 
@@ -72,7 +74,7 @@ and the first deterministic garden projection before building explanation or cha
 - [x] Zod-validated deterministic sample `HealthReport`
 - [x] Vitest test and `analysis:validate` check
 - [x] GitHub Actions workflow running the six required checks
-- [ ] Vercel preview connection
+- [x] Vercel preview connection
 - [x] Generic read-only JavaScript/TypeScript target-repo analysis adapter
 - [x] Rehearse the target adapter against a temporary Gentelella checkout
 - [x] Curate and commit the offline fixture from verified findings
@@ -99,12 +101,12 @@ checks.
 ## Calibration evidence
 
 - [x] HTML script references, package `main`/`browser`/`bin` metadata, config files, service
-  workers, and `scripts/`/`bin/` tooling are treated as entrypoints.
+      workers, and `scripts/`/`bin/` tooling are treated as entrypoints.
 - [x] Unreachable source files remain the only dead-code candidates in the calibration fixture.
 - [x] Quality gate passed: format, lint, typecheck, test (5 passing tests), analysis fixture
-  validation, and production build.
+      validation, and production build.
 - [x] `fixtures/sample-report.json` captures the analyzer output for `fixtures/sample-repo`: one
-  dead-code finding and two estimated coverage gaps; the schema-backed regression test matches it.
+      dead-code finding and two estimated coverage gaps; the schema-backed regression test matches it.
 - [x] Commit the curated fixture snapshot in `5403100`.
 
 ## Garden projection evidence
@@ -117,17 +119,32 @@ checks.
 
 ## Current slice completion snapshot
 
-- **Completed slice:** Plant selection and inspector detail for the projected scene.
+- **Completed slices:** Plant selection/inspector detail and grounded Magnifying Glass explanation
+  foundation for sample mode.
 - **Evidence:** Cards are keyboard-focusable buttons; selection is exposed with `aria-pressed`;
-  the inspector announces updates with `aria-live`; finding summaries and evidence are projected
-  from the validated report; the regression suite covers the projected finding details.
-- **Quality gate:** `format:check`, `lint`, `typecheck`, 7 tests, `analysis:validate`, `build`, and
+  the inspector announces updates with `aria-live`; `/api/explain` returns typed, report-grounded
+  explanations; no explanation invents findings outside the validated report.
+- **Quality gate:** `format:check`, `lint`, `typecheck`, 9 tests, `analysis:validate`, `build`, and
   `git diff --check` all pass.
 - **Stage status:** Implementation slice complete; promotion remains open for independent review,
-  human acceptance, preview deployment, and the project status audit.
+  human acceptance, preview deployment, live-model integration, prompt evaluation, and the project
+  status audit.
 
 ## Roadmap clarification
 
 The canonical roadmap is the ordered Stage 0–10 roadmap in the outer
 `docs/EXECUTION_PLAN.md`. This file is only the live tracker for the current stage and
 its bounded implementation slices, not a replacement roadmap.
+
+## 2026-07-17 stage-boundary evidence snapshot
+
+- Full repository checks passed: formatting, lint, typecheck, 11 tests, fixture validation,
+  production build, and `git diff --check`.
+- Documentation structure gate passed: one canonical execution plan, one each of the named
+  trackers, no generic duplicate tracker names, active root navigation, and historical archive
+  separation.
+- Sensitive-content scan found no credential files or actual key/token/private-key values. The
+  only credential references are explanatory documentation in `docs/DEPLOYMENT.md`.
+- Durable context and Slack routing were checked; no Code Garden-specific Slack item is open.
+- This is an implementation and synchronization checkpoint, not Stage 1 promotion: Vercel preview,
+  independent review, human acceptance, and the formal audit reconciliation remain open gates.

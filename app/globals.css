@@ -160,3 +160,17 @@ main {
 .inspector small {
   font-size: 0.78rem;
 }
+.explanation {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-left: 3px solid #a8c983;
+  background: #182b20;
+}
+.explanation p {
+  margin: 0;
+}
+.explanation ul {
+  margin: 0.5rem 0 0;
+}

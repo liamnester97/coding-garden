@@ -14,8 +14,7 @@ The project reuses the V1 execution system: master execution plan, AGENTS.md hie
 
 - Run the project-local `project-status-audit` skill at the end of every stage,
   after technical checks, self-review, independent review, and human acceptance.
-- Also run it at the end of each active workday and during final submission
-  closeout.
+- Also run it during final submission closeout.
 - Treat the audit as a synchronization checkpoint for implementation evidence,
   plans, status, durable notes, and Slack routing. It does not replace human
   acceptance, independent review, or technical quality gates.
@@ -113,8 +112,7 @@ preserving a deliberate promotion gate.
 
 ## 2026-07-17 — Restore the canonical Stage 0–10 roadmap
 
-The long-form Build Week blueprint defines eleven ordered execution stages, numbered 0 through
-10. A six-stage condensation was introduced during documentation cleanup and was not the intended
+The long-form Build Week blueprint defines eleven ordered execution stages, numbered 0 through 10. A six-stage condensation was introduced during documentation cleanup and was not the intended
 roadmap. `docs/EXECUTION_PLAN.md` is the sole canonical roadmap with Stage 0–10;
 `STAGE_TRACKER.md` remains only the live stage and slice tracker.
 
@@ -133,3 +131,12 @@ the root README must be the front door, the long-form `docs/EXECUTION_PLAN.md` m
 roadmap, the active repo must use explicitly named tracker files, generic duplicate tracker names
 must be absent, and documented paths must resolve. A structure violation blocks stage promotion
 until reconciled.
+
+## 2026-07-17 — Standalone public-release boundary
+
+The MVP will be a standalone public web app hosted on Vercel. The first repository intake accepts
+only normalized public GitHub URLs for read-only analysis and requires no user login. Sample mode
+remains the deterministic no-credential fallback. Private repositories, OAuth/App permissions,
+long-running hosted analysis jobs, and per-user persistence are later capabilities behind the same
+repository-adapter boundary. This avoids a demo-only architecture while keeping the first release
+safe and achievable.

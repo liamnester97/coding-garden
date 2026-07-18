@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
+import { explainNode } from "@/lib/ai/explain";
 import { healthMetaphor } from "@/lib/garden/metaphor";
 import { projectHealthReport } from "@/lib/garden/project";
 
@@ -9,6 +10,9 @@ export default function HomePage() {
   const scene = projectHealthReport(sampleHealthReport);
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
+  const explanation = selectedPlant
+    ? explainNode(sampleHealthReport, selectedPlant.id)
+    : null;
 
   return (
     <main>
@@ -50,6 +54,24 @@ export default function HomePage() {
             <span className="eyebrow">Inspector</span>
             <h2 id="inspector-title">{selectedPlant.path}</h2>
             <p>{selectedPlant.ariaLabel}</p>
+            {explanation ? (
+              <div
+                className="explanation"
+                aria-label="Magnifying Glass explanation"
+              >
+                <span className="eyebrow">Magnifying Glass · sample mode</span>
+                <p>{explanation.summary}</p>
+                <p>{explanation.health}</p>
+                <p>{explanation.needs}</p>
+                {explanation.evidence.length ? (
+                  <ul>
+                    {explanation.evidence.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            ) : null}
             {selectedPlant.findings.length ? (
               <ul>
                 {selectedPlant.findings.map((finding) => (

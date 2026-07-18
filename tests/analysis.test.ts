@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { readFile } from "node:fs/promises";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
-import { provisionalTargetRepository } from "@/lib/analysis/repository";
+import {
+  provisionalTargetRepository,
+  publicGitHubRepositoryFromUrl,
+} from "@/lib/analysis/repository";
 import { analyzeJavaScriptRepository } from "@/lib/analysis/analyze-javascript";
 import path from "node:path";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
@@ -20,6 +23,23 @@ describe("sample HealthReport", () => {
   it("keeps the live target as a generic repository descriptor", () => {
     expect(provisionalTargetRepository.source).toBe("github");
     expect(provisionalTargetRepository.language).toBe("javascript");
+  });
+
+  it("accepts only normalized public GitHub repository URLs", () => {
+    expect(
+      publicGitHubRepositoryFromUrl(
+        "https://github.com/ColorlibHQ/gentelella.git",
+      ),
+    ).toMatchObject({
+      id: "ColorlibHQ/gentelella",
+      source: "github",
+      location: "https://github.com/ColorlibHQ/gentelella",
+    });
+    expect(publicGitHubRepositoryFromUrl("http://github.com/a/b")).toBeNull();
+    expect(publicGitHubRepositoryFromUrl("https://gitlab.com/a/b")).toBeNull();
+    expect(
+      publicGitHubRepositoryFromUrl("https://github.com/a/b/issues"),
+    ).toBeNull();
   });
 
   it("finds deterministic dead-code and estimated-coverage findings without executing the repo", async () => {

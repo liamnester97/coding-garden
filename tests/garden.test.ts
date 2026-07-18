@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
 import { projectHealthReport } from "@/lib/garden/project";
+import { explainNode } from "@/lib/ai/explain";
 
 describe("HealthReport garden projection", () => {
   it("is deterministic and preserves report health", () => {
@@ -31,5 +32,22 @@ describe("HealthReport garden projection", () => {
         evidence: "import-graph · src/unused.ts",
       },
     ]);
+  });
+
+  it("grounds the magnifying-glass explanation in report evidence", () => {
+    const explanation = explainNode(sampleHealthReport, "src/unused.ts");
+
+    expect(explanation?.mode).toBe("sample");
+    expect(explanation?.summary).toContain("withered");
+    expect(explanation?.evidence).toEqual([
+      "unreachable branch: This module has no incoming imports. (import-graph · src/unused.ts)",
+    ]);
+  });
+
+  it("returns a calm explanation for a healthy plant", () => {
+    const explanation = explainNode(sampleHealthReport, "src/health.ts");
+
+    expect(explanation?.summary).toContain("currently healthy");
+    expect(explanation?.evidence).toEqual([]);
   });
 });
