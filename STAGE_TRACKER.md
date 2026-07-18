@@ -112,6 +112,9 @@ read-only public behavior, accessibility/runtime smoke, and release evidence.
 - [x] Production browser smoke on 2026-07-18 verified mobile rendering, sample-mode labels, zero page
   or console errors, and the Clippers golden path. Opening the tool produced zero `/api/tend` calls
   before confirmation; a correct answer enabled confirmation and the server lifecycle reached `landed`.
+- [x] Anonymous production analysis of `ColorlibHQ/gentelella` completed read-only on 2026-07-18 at
+  commit `c4515bd2682660d79d6d0e64160a57cd86482451`: 31 nodes, 63 findings, and a complete bounded
+  scope of 96 supported/analyzed files with zero omissions.
 
 ## Bundle Gate Protocol
 

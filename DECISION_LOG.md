@@ -305,3 +305,11 @@ mode/source labels, and zero page or console errors. The Clippers golden path ma
 requests before confirmation; after the authored answer was accepted, the server-authoritative sample
 rehearsal completed all transitions to `landed`. This is technical evidence only; second-person
 legibility, human acceptance, real PR evidence, video, and Devpost submission remain open.
+
+## 2026-07-18 — Public production analysis evidence
+
+The production release completed an anonymous read-only analysis of `ColorlibHQ/gentelella` at commit
+`c4515bd2682660d79d6d0e64160a57cd86482451`, producing 31 nodes and 63 findings from 96 supported files
+with no bounded-analysis omissions. This confirms the public repository path without granting the app
+write access to the target repository. Human acceptance, real PR evidence, video, and Devpost submission
+remain open.

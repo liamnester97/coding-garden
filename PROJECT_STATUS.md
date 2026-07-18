@@ -44,7 +44,8 @@ Updated: 2026-07-18, America/Denver
   and health-preservation behavior.
 - Local and deployed production-mode route smoke passed: `/` 200, `/api/health` 200, and malformed
   repository input 400 on the production deployment. Production browser smoke also verified mobile
-  rendering, zero page/console errors, and confirmation-gated Clippers reaching `landed`.
+  rendering, zero page/console errors, confirmation-gated Clippers reaching `landed`, and anonymous
+  read-only analysis of the selected demo repository (31 nodes, 63 findings, 96 files, zero omissions).
 
 ## Blockers and Open Gates
 
