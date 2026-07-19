@@ -1,4 +1,8 @@
 import type { HealthReport } from "@/lib/analysis/schema";
+import {
+  teachingQuestionContent,
+  teachingQuestionContentSchema,
+} from "@/content/teaching-questions";
 import { z } from "zod";
 
 export const challengeDifficultySchema = z.enum(["easy", "medium", "hard"]);
@@ -32,11 +36,16 @@ export const challengeQuestionSchema = z.object({
   scaffolds: z.array(z.string().min(1)).min(1).max(3),
   answer: z.string().min(1),
   explanation: z.string().min(1),
+  codeExcerpt: z.string().min(1).max(1200),
+  language: z.literal("javascript"),
+  choices: z.array(z.string().min(1).max(180)).min(2).max(4),
+  answers: z.array(z.string().min(1)).min(1),
 });
 
 export const challengePublicSchema = challengeQuestionSchema.omit({
   answer: true,
   explanation: true,
+  answers: true,
 });
 export type ChallengeDifficulty = z.infer<typeof challengeDifficultySchema>;
 export type ChallengeQuestion = z.infer<typeof challengeQuestionSchema>;
@@ -70,6 +79,24 @@ function answerFor(
     : finding.type === "coverage-gap"
       ? "add a test for this path"
       : "patch the reported vulnerability and rerun checks";
+}
+
+function fallbackContent(finding: HealthReport["findings"][number]) {
+  const content = teachingQuestionContent[finding.id];
+  if (content) return teachingQuestionContentSchema.parse(content);
+  const choices = [
+    "Read the report evidence before choosing a change.",
+    "The plant is healthy because it is green.",
+    "Change the repository without checking anything.",
+  ];
+  return {
+    findingId: finding.id,
+    codeExcerpt: `// Evidence file: ${finding.evidence.file}\n// ${finding.summary}`,
+    language: "javascript" as const,
+    choices,
+    answers: [choices[0]],
+    explanation: finding.summary,
+  };
 }
 
 function explanationFor(
@@ -143,6 +170,21 @@ export function questionForFinding(
     (candidate) => candidate.id === findingId,
   );
   if (!finding || !(finding.type in toolForFinding)) return null;
+  const content = fallbackContent(finding);
+  const difficultyAnswer = answerFor(finding, difficulty);
+  const isCurated = Boolean(teachingQuestionContent[finding.id]);
+  const answer = isCurated ? content.answers[0] : difficultyAnswer;
+  const prompt = isCurated
+    ? difficulty === "easy"
+      ? "Look at the code. Which answer best describes the problem?"
+      : difficulty === "medium"
+        ? "Use the code and report evidence. Which answer is supported?"
+        : "Choose the safest next step supported by this code and report."
+    : difficulty === "easy"
+      ? `Look at the plant. How many warning signs do you see? Enter a number.`
+      : difficulty === "medium"
+        ? `What should we check first: roots, tests, or safety? Type one word.`
+        : `What is one safe next step for this plant? Keep it short.`;
   return challengeQuestionSchema.parse({
     id: `question-${finding.id}-${difficulty}`,
     findingId: finding.id,
@@ -152,12 +194,7 @@ export function questionForFinding(
     questionType: questionTypeFor(difficulty),
     gradeBand: gradeBandFor(difficulty),
     objective: objectiveFor(finding.type),
-    prompt:
-      difficulty === "easy"
-        ? `Look at the plant. How many warning signs do you see? Enter a number.`
-        : difficulty === "medium"
-          ? `What should we check first: roots, tests, or safety? Type one word.`
-          : `What is one safe next step for this plant? Keep it short.`,
+    prompt,
     hint:
       difficulty === "easy"
         ? "Count the warning signs on the plant."
@@ -169,8 +206,14 @@ export function questionForFinding(
               : "Safety checks help us handle a security warning."
           : "Check first, then make the smallest safe change.",
     scaffolds: scaffoldsFor(finding, difficulty),
-    answer: answerFor(finding, difficulty),
-    explanation: explanationFor(finding, difficulty),
+    answer,
+    explanation: isCurated
+      ? content.explanation
+      : explanationFor(finding, difficulty),
+    codeExcerpt: content.codeExcerpt,
+    language: content.language,
+    choices: content.choices,
+    answers: content.answers,
   });
 }
 
@@ -201,8 +244,8 @@ export function normalizeAnswer(value: string) {
 
 export function answerIsCorrect(question: ChallengeQuestion, value: string) {
   const actual = normalizeAnswer(value);
-  const expected = normalizeAnswer(question.answer);
-  if (actual === expected) return true;
+  const accepted = [question.answer, ...question.answers].map(normalizeAnswer);
+  if (accepted.includes(actual)) return true;
   if (difficultyRank[question.difficulty] === 3) {
     return [
       "remove the unused code after checking imports",

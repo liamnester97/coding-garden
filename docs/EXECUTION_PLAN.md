@@ -712,6 +712,33 @@ the audit and release evidence are synchronized.
 Implementation note (2026-07-18): automated coverage is being extended now; human age-band, device, fullscreen, and
 teaching-repository acceptance remain open gates.
 
+### Stage 23 — Evidence-First Code Questions
+
+**Goal:** replace abstract challenge prompts with short, real code excerpts tied to analyzer findings.
+**Acceptance:** the teaching fixture exposes five deterministic, bounded code-reading activities; each has an age-band
+objective, defensible choices, server-side answers, a useful explanation, and a safe typed-answer fallback without an
+API key. Wrong answers never issue action proof.
+
+### Stage 24 — Map-Only Tool and Dialogue Polish
+
+**Goal:** make the world quieter and keep the usable interaction surface inside the map.
+**Acceptance:** persistent tool stations and decorative map labels do not distract the world; tools appear in the in-map
+inventory/action surface when relevant; the dialogue card remains visible while idle; code excerpts, questions, hints,
+feedback, and confirmation stay inside the map; public reports remain visibly read-only.
+
+### Stage 25 — Responsible Apply-Fixes Boundary
+
+**Goal:** show what a future real fix could touch without implying that the current anonymous demo writes code.
+**Acceptance:** completed sample rehearsals can open a proposed-fixes review listing finding scopes and the explicit
+future permission requirements; no branch, commit, PR, or remote mutation is performed in this stage.
+
+### Stage 26 — Feedback Release Reconciliation
+
+**Goal:** run the complete quality suite, browser matrix, structure/security audit, and documentation reconciliation.
+**Acceptance:** all automated checks pass; five evidence-first findings, map cleanup, persistent dialogue, and the
+future write boundary are documented; remaining human and external gates remain explicitly open; the verified change
+is committed and pushed.
+
 ### Visual navigation decisions
 
 - Use one wide responsive map surface: desktop favors a whole-garden wide shot; small screens may use camera-follow.
@@ -854,6 +881,18 @@ Maps to Stages 19–22.
 
 **Gate:** learners can understand and complete the teaching loop without a wall of text; the app remains generic,
 anonymous, read-only for public repositories, and truthful about sample rehearsals.
+
+### Bundle 10 — Evidence-First Teaching and Interaction Clarity
+
+Maps to Stages 23–26 and the new human-testing feedback.
+
+1. Replace abstract questions with five real, bounded code-reading activities and optional typed responses.
+2. Remove persistent map tool stations and decorative labels; keep tools and dialogue inside the game surface.
+3. Add a review-only apply-fixes boundary that explicitly defers live writes behind authentication and confirmation.
+4. Run full checks, browser verification, audit, documentation reconciliation, and commit/push the verified slice.
+
+**Gate:** learners can inspect actual code, explain a report-grounded problem, use the metaphorical tool without map
+clutter, and understand exactly what is and is not changed.
 
 ### Wave 1 — Trust, Onboarding, and Accessible Recovery
 

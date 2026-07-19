@@ -155,6 +155,30 @@ describe("learning challenge gate", () => {
     expect((await response.json()).question.gradeBand).toBe("grades-1-5");
   });
 
+  it("returns an evidence-first excerpt and choices for curated findings", async () => {
+    const report = teachingLessonReports["first-sprouts"];
+    const response = await POST(
+      request({
+        report,
+        findingId: "first-sprouts-coverage",
+        difficulty: "easy",
+      }),
+    );
+    const payload = (await response.json()) as {
+      question: {
+        codeExcerpt: string;
+        choices: string[];
+        answer?: string;
+        explanation?: string;
+      };
+    };
+    expect(response.status).toBe(200);
+    expect(payload.question.codeExcerpt).toContain("greetGarden");
+    expect(payload.question.choices).toHaveLength(3);
+    expect(payload.question.answer).toBeUndefined();
+    expect(payload.question.explanation).toBeUndefined();
+  });
+
   it("expires attempts and bounds answer input before grading", async () => {
     vi.useFakeTimers();
     const start = await POST(

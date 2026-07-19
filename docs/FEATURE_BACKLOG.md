@@ -136,3 +136,15 @@ Capture observations here before turning them into features:
 An item moves out of this backlog only when it has a clear owner, bounded acceptance criteria, an appropriate place
 in `docs/EXECUTION_PLAN.md`, tests or human evidence, and an explicit decision about whether it affects the frozen
 truth/read-only/accessibility invariants.
+
+## 2026-07-18 feedback promotion — evidence-first questions and quieter map
+
+Promoted into Bundle 10 / Stages 23–26 in `docs/EXECUTION_PLAN.md`:
+
+- Evidence-first questions with real bounded code excerpts and five curated demo findings — designed.
+- Optional typed/NLP response with deterministic no-key fallback — designed.
+- Remove persistent tool stations and distracting map labels — designed.
+- Keep tools, dialogue, questions, and proposed-fix review inside the map — designed.
+- Review-only apply-fixes boundary; live repository writes remain deferred — designed.
+
+The current release must not claim that a sample rehearsal or proposed-fix review changed a remote repository.

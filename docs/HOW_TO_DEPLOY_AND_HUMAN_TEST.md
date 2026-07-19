@@ -292,6 +292,19 @@ behavior.
 - [ ] Choose each learner age band and confirm the label explains Grades 1–5, 6–8, and 9–12 in plain language.
 - [ ] Confirm the recommended challenge depth is visible and can be overridden locally.
 - [ ] Open a sample challenge and reveal clues one at a time; confirm clues do not reveal the answer or unlock tending.
+
+### Evidence-first teaching and quieter map
+
+- [ ] Load each teaching lesson and confirm five curated findings show short, real code excerpts.
+- [ ] Choose a multiple-choice answer and confirm only a server-validated correct answer unlocks the next step.
+- [ ] Type an accepted answer without an OpenAI key and confirm the deterministic fallback works.
+- [ ] Submit a wrong answer and confirm the explanation is grounded in the displayed code and report evidence.
+- [ ] Confirm tool stations and distracting labels are absent from the map, while the in-map tool-ready surface names
+      the metaphorical tool when a finding is nearby.
+- [ ] Confirm the Garden dialogue card remains visible before, during, and after a question.
+- [ ] Complete a sample rehearsal and open **Review possible fixes**. Confirm it lists proposed scopes but claims no
+      branch, commit, PR, or repository mutation.
+- [ ] Analyze a public repository and confirm no challenge or proposed fix can write to it.
 - [ ] Submit a wrong answer and confirm the feedback explains the idea to revisit without shame or health loss.
 - [ ] Submit the correct answer and confirm only then does `Confirm and tend` become available.
 

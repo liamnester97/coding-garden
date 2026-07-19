@@ -2,22 +2,39 @@
 
 ## Stage
 
-Stage 21 — Gameplay Interface and Map Readability / Bundle 9 — Teaching Content and Gameplay Clarity
+Stage 26 — Feedback Release Reconciliation / Bundle 10 — Evidence-First Teaching and Interaction Clarity
 
 ## Execution Bundle
 
-- **Bundle:** 9 — Teaching Content and Gameplay Clarity
-- **Current goal:** Stage 21 — move global controls/instructions to the top toolbar, keep E/Enter as intentional map
-  interaction, add fullscreen, reduce zoom, and collapse detailed evidence.
+- **Bundle:** 10 — Evidence-First Teaching and Interaction Clarity
+- **Current goal:** Stage 26 — verify evidence-first questions, map cleanup, responsible apply-fixes boundary, and the
+  complete release/audit gate.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; the local Stages 19–21 implementation slice is complete, while human/review/release evidence
+- **Bundle gate:** Open; the local Stages 23–26 implementation slice is complete, while human/review/release evidence
   remains open.
-- **Audit status:** Bundle 9 technical audit complete on 2026-07-18; structure, security, documentation, and automated
+- **Audit status:** Bundle 10 technical audit complete on 2026-07-18; structure, security, documentation, and automated
   verification checks passed.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
+
+## Bundle 10 Goals — Evidence-first teaching and interaction clarity
+
+- [x] Replace abstract prompts with five bounded code-reading activities, choices, explanations, and typed-answer
+      fallback.
+- [x] Remove persistent map tool stations and decorative labels; keep tool context and dialogue inside the map.
+- [x] Add a review-only proposed-fixes surface that does not claim or perform repository writes.
+- [x] Run the final full verification, project-status audit, documentation reconciliation, and commit/push.
+- [ ] Human age-band, device, accessibility, and live-NLP acceptance remain open.
+
+### Bundle 10 Verification Evidence — 2026-07-18
+
+- [x] Typecheck, lint, and 85 Vitest tests pass after the implementation slice.
+- [x] Playwright production-style desktop/mobile suite passes: 24 checks with zero page/console errors after removing
+      the duplicate reset message introduced by the persistent dialogue card.
+- [x] Format, analysis validation, build, diff check, and structure/security audit pass.
+- [ ] Human testing and any future authenticated write integration remain separate gates.
 
 ## Wave 3 Goals — Loop Clarity and Learning Reflection
 

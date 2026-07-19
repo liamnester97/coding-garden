@@ -15,7 +15,6 @@ import {
   gardenerStart,
   isNearWorldPoint,
   moveGardenerWithFacing,
-  toolStations,
   type Facing,
   type WorldPoint,
 } from "@/lib/garden/world";
@@ -36,12 +35,6 @@ import {
   goldenPathSteps,
   initialGoldenPathState,
 } from "@/lib/garden/golden-path";
-
-const stationSprites: Record<string, PixelSpriteId> = {
-  magnify: "magnifying-glass",
-  clippers: "clippers",
-  "watering-can": "watering-can",
-};
 
 function spriteStyle(
   sprite: PixelSpriteId,
@@ -111,6 +104,7 @@ export default function HomePage() {
   );
   const [goldenPath, setGoldenPath] = useState(initialGoldenPathState);
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
+  const [showApplyReview, setShowApplyReview] = useState(false);
   const [reflectionNote, setReflectionNote] = useState("");
   const [reflectionSaved, setReflectionSaved] = useState(false);
   const [lessonId, setLessonId] = useState<"sample" | TeachingLesson["id"]>(
@@ -139,9 +133,6 @@ export default function HomePage() {
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
   const nearbyPlant = scene.plants.find((plant) =>
     isNearWorldPoint(gardener, plant, 10),
-  );
-  const nearbyStation = toolStations.find((station) =>
-    isNearWorldPoint(gardener, station, 12),
   );
   const nearbyZone = authoredGardenMap.zones.find((zone) => {
     if (zone.id !== "learning" && zone.id !== "payoff") return false;
@@ -197,6 +188,7 @@ export default function HomePage() {
     setInteractionMessage("Lesson reset. Walk to the golden glow to begin.");
     setGoldenPath(initialGoldenPathState());
     setCompletedCommands([]);
+    setShowApplyReview(false);
     setReflectionNote("");
     setReflectionSaved(false);
     setJournalEntries([
@@ -225,6 +217,7 @@ export default function HomePage() {
     setCommand(null);
     setTendError(null);
     setCompletedCommands([]);
+    setShowApplyReview(false);
     setReflectionNote("");
     setReflectionSaved(false);
     setGoldenPath(initialGoldenPathState());
@@ -332,18 +325,6 @@ export default function HomePage() {
     void startChallenge(finding, challengeDifficulty);
   }
 
-  function focusStation(stationId: (typeof toolStations)[number]["id"]) {
-    const finding =
-      stationId === "clippers"
-        ? report.findings.find((candidate) => candidate.type === "dead-code")
-        : stationId === "watering-can"
-          ? report.findings.find(
-              (candidate) => candidate.type === "coverage-gap",
-            )
-          : undefined;
-    setSelectedId(finding?.nodeId ?? report.nodes[0]?.id);
-  }
-
   function movePlayer(direction: string) {
     const next = moveGardenerWithFacing(
       gardener,
@@ -361,13 +342,6 @@ export default function HomePage() {
   }
 
   function interactNearby() {
-    if (nearbyStation) {
-      focusStation(nearbyStation.id);
-      setInteractionMessage(
-        `${nearbyStation.label} is ready. Choose a plant to practice on.`,
-      );
-      return;
-    }
     if (nearbyPlant) {
       setSelectedId(nearbyPlant.id);
       setGoldenPath((current) => advanceGoldenPath(current, "inspected"));
@@ -400,7 +374,7 @@ export default function HomePage() {
       return;
     }
     setInteractionMessage(
-      "Nothing is close enough yet. Walk toward a plant, station, greenhouse, or bench.",
+      "Nothing is close enough yet. Walk toward a glowing plant, greenhouse, or bench.",
     );
   }
 
@@ -852,10 +826,7 @@ export default function HomePage() {
                     width: `${zone.width}%`,
                     height: `${zone.height}%`,
                   }}
-                >
-                  <strong>{zone.label}</strong>
-                  <small>{zone.description}</small>
-                </span>
+                />
               ))}
             </div>
             <div className="garden-ground" aria-hidden="true">
@@ -919,15 +890,6 @@ export default function HomePage() {
                 }
               }}
             >
-              <g className="tool-stations" aria-label="Tool stations">
-                {toolStations.map((station) => (
-                  <g key={station.id}>
-                    <text x={station.x} y={station.y + 7} textAnchor="middle">
-                      {station.label}
-                    </text>
-                  </g>
-                ))}
-              </g>
               <g className="roots" aria-hidden="true">
                 {authoredGardenMap.paths.map((path) => (
                   <polyline
@@ -948,18 +910,6 @@ export default function HomePage() {
               </g>
             </svg>
             <div className="garden-sprites" aria-hidden="true">
-              {toolStations.map((station) => (
-                <span
-                  className="pixel-sprite station-sprite"
-                  key={station.id}
-                  style={spriteStyle(
-                    stationSprites[station.id],
-                    station.x - 5,
-                    station.y - 5,
-                    "medium",
-                  )}
-                />
-              ))}
               {scene.plants.map((plant) => (
                 <span
                   className={`pixel-sprite plant-sprite ${plant.health}`}
@@ -1007,6 +957,41 @@ export default function HomePage() {
             <div className="map-hud-title">
               <strong>Next: {nextTargetLabel}</strong>
               <small>Walk to the golden glow, then press Enter or E</small>
+            </div>
+            <div className="map-tool-inventory" aria-label="Garden tools">
+              <span className="eyebrow">Tool ready</span>
+              <span>
+                {nearbyPlant && source === "sample"
+                  ? nearbyPlant.findings.some(
+                      (finding) => finding.label === "Dead code",
+                    )
+                    ? "✂ Clippers"
+                    : nearbyPlant.findings.some(
+                          (finding) => finding.label === "Coverage gap",
+                        )
+                      ? "◒ Watering Can"
+                      : "Magnifying Glass"
+                  : "Magnifying Glass for inspection"}
+              </span>
+              <small>
+                Tools appear here when the code gives you a reason to use them.
+              </small>
+            </div>
+            <div
+              className="map-dialogue"
+              aria-live="polite"
+              aria-label="Garden dialogue"
+            >
+              <span className="eyebrow">Garden dialogue</span>
+              <strong>
+                {interactionMessage ??
+                  "The garden is ready. Walk toward a glowing plant."}
+              </strong>
+              <small>
+                {nearbyPlant
+                  ? `Nearby: ${nearbyPlant.path} · press E or Enter to inspect the code.`
+                  : "Your next clue and question will appear here."}
+              </small>
             </div>
             <div
               className="map-action-staging"
@@ -1119,24 +1104,12 @@ export default function HomePage() {
               className="map-interact"
               onClick={interactNearby}
             >
-              {nearbyStation
-                ? `Inspect ${nearbyStation.label}`
-                : nearbyPlant
-                  ? `Inspect ${nearbyPlant.path}`
-                  : nearbyZone
-                    ? `Explore ${nearbyZone.label}`
-                    : "Inspect nearby"}
+              {nearbyPlant
+                ? `Inspect ${nearbyPlant.path}`
+                : nearbyZone
+                  ? `Explore ${nearbyZone.label}`
+                  : "Inspect nearby"}
             </button>
-            <span className="map-proximity" role="status" aria-live="polite">
-              {interactionMessage ??
-                (nearbyStation
-                  ? `Nearby: ${nearbyStation.label}`
-                  : nearbyPlant
-                    ? `Nearby: ${nearbyPlant.path}`
-                    : nearbyZone
-                      ? `Nearby: ${nearbyZone.label}`
-                      : "Walk toward a marked place to interact.")}
-            </span>
           </div>
           {pendingFinding &&
           source === "sample" &&
@@ -1168,6 +1141,16 @@ export default function HomePage() {
               <p id="map-confirm-description">{visibleExplanation.summary}</p>
               <div className="challenge-card" aria-live="polite">
                 <strong>{challenge.question.objective}</strong>
+                <pre className="challenge-code" aria-label="Code excerpt">
+                  <code>{challenge.question.codeExcerpt}</code>
+                </pre>
+                <p className="challenge-question-kind">
+                  {challenge.question.questionType === "notice"
+                    ? "Notice the clue"
+                    : challenge.question.questionType === "evidence"
+                      ? "Use the evidence"
+                      : "Choose a safe next step"}
+                </p>
                 <label htmlFor="map-challenge-difficulty">Level</label>
                 <select
                   id="map-challenge-difficulty"
@@ -1195,6 +1178,24 @@ export default function HomePage() {
                   disabled={Boolean(challenge.proof)}
                   aria-describedby="map-challenge-hint map-challenge-feedback"
                 />
+                <fieldset className="challenge-choices">
+                  <legend>Choose an answer, or type your own</legend>
+                  {challenge.question.choices.map((choice) => (
+                    <label key={choice}>
+                      <input
+                        type="radio"
+                        name="challenge-choice"
+                        value={choice}
+                        checked={challengeAnswer === choice}
+                        disabled={Boolean(challenge.proof)}
+                        onChange={(event) =>
+                          setChallengeAnswer(event.target.value)
+                        }
+                      />
+                      <span>{choice}</span>
+                    </label>
+                  ))}
+                </fieldset>
                 {showHint ? (
                   <small id="map-challenge-hint">
                     Clue{" "}
@@ -1402,6 +1403,39 @@ export default function HomePage() {
                 public-report path stays read-only.
               </small>
             </div>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => setShowApplyReview((current) => !current)}
+              aria-expanded={showApplyReview}
+            >
+              {showApplyReview ? "Close fix review" : "Review possible fixes"}
+            </button>
+            {showApplyReview ? (
+              <div
+                className="apply-review"
+                role="region"
+                aria-label="Possible fixes review"
+              >
+                <strong>Possible fixes from this lesson</strong>
+                <p>
+                  These are proposed scopes from the sample rehearsal. Nothing
+                  has been written to a repository.
+                </p>
+                <ul>
+                  {completedCommands.map((completed) => (
+                    <li key={`review-${completed.id}`}>
+                      {completed.tool}: inspect and verify {completed.findingId}
+                    </li>
+                  ))}
+                </ul>
+                <small>
+                  A future live mode would require your explicit permission,
+                  authentication, a branch, a diff preview, passing checks, and
+                  final confirmation. Public reports remain read-only.
+                </small>
+              </div>
+            ) : null}
           </section>
         ) : null}
         <section className="journal-panel" aria-labelledby="journal-title">

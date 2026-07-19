@@ -127,6 +127,12 @@ evidence is optional; and focused browser coverage verifies desktop/mobile, keyb
 errors, and public read-only behavior. Keep lesson quality, age appropriateness, device acceptance, licensing, and
 teaching-repository publication as human or external gates even when automated checks pass.
 
+For Bundle 10 / Stages 23–26, also check that five bounded teaching findings have real fixture excerpts, multiple-choice
+answers remain server-validated, typed answers have a safe no-key fallback, and wrong answers cannot issue proof. Check
+that map labels/tool stations do not clutter the world, the tool-ready and dialogue surfaces remain inside the map, and
+the proposed-fixes review cannot claim or perform remote writes. Keep age-band teaching quality, live NLP behavior,
+device acceptance, and any future authenticated write integration as separate human/external gates.
+
 ### Stage completion tracking
 
 Always produce an explicit stage snapshot from the plan. Distinguish:

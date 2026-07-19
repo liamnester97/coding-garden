@@ -8,6 +8,7 @@ import {
 } from "@/content/teaching-lessons";
 import { projectHealthReport } from "@/lib/garden/project";
 import { analyzeJavaScriptRepository } from "@/lib/analysis/analyze-javascript";
+import { teachingQuestionContent } from "@/content/teaching-questions";
 
 describe("teaching lesson registry", () => {
   it("covers the three learner grade bands with validated objectives", () => {
@@ -63,5 +64,15 @@ describe("teaching lesson registry", () => {
     expect(
       report.findings.filter((finding) => finding.type === "dead-code"),
     ).toHaveLength(3);
+  });
+
+  it("provides five bounded code-reading activities tied to real findings", () => {
+    expect(Object.keys(teachingQuestionContent)).toHaveLength(5);
+    for (const content of Object.values(teachingQuestionContent)) {
+      expect(content.codeExcerpt.length).toBeLessThanOrEqual(1200);
+      expect(content.choices.length).toBeGreaterThanOrEqual(2);
+      expect(content.answers.length).toBeGreaterThanOrEqual(1);
+      expect(content.explanation).toBeTruthy();
+    }
   });
 });

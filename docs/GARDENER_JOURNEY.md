@@ -100,3 +100,14 @@ During a sample rehearsal, the in-map Current action card tells you whether you 
 waiting for re-analysis, or looking at a verified health change. After a rehearsal, the Reflection bench offers an
 optional one-sentence note saved only in the current Garden Journal session. It is a learning recap, not a repository
 action or account feature.
+
+## Evidence-first questions and tools
+
+Questions now show a short excerpt from the teaching fixture and ask what the learner thinks is wrong. Multiple choice
+is the reliable path; a typed answer is also accepted when it matches the server-side evidence. Tools are metaphorical
+and appear in the in-map tool-ready surface rather than as destinations that clutter the garden. The garden dialogue
+card remains visible while idle so the next clue never disappears.
+
+After sample rehearsals, **Review possible fixes** lists the proposed scopes without writing to any repository. A real
+apply-fixes path is a future, separately approved integration requiring authentication, a branch, a diff preview, checks,
+rollback, and final confirmation. Public repository analysis remains read-only.

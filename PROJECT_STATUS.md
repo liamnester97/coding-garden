@@ -4,12 +4,13 @@ Updated: 2026-07-18, America/Denver
 
 ## Active Bundle and Goal
 
-- Bundle: 9 — Teaching Content and Gameplay Clarity
-- Current goal: Stage 21 — top controls, intentional E/Enter interaction, fullscreen, map zoom, and optional evidence.
+- Bundle: 10 — Evidence-First Teaching and Interaction Clarity
+- Current goal: Stage 26 — feedback release reconciliation after evidence-first questions, map cleanup, and the
+  review-only apply-fixes boundary.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Development branch head: `1706cd2` (`docs: record review verification results`), pushed to
+- Development branch head: `4660769` (`Add evidence-first teaching feedback slice`), ready to push to
   `origin/agent/health-report-foundation`.
 - Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`). The
   deployed release is intentionally behind the development branch until the remaining human visual/release
@@ -33,6 +34,8 @@ Updated: 2026-07-18, America/Denver
   Stage 18 facing implementation slices are complete; browser/release/human gates remain open.
 - Bundle 9 — Teaching Content and Gameplay Clarity: Stages 19–21 local implementation slices are complete; separate
   teaching repository publication, human acceptance, and final release gates remain open.
+- Bundle 10 — Evidence-First Teaching and Interaction Clarity: Stages 23–25 implementation slices are complete;
+  Stage 26 verification/audit/commit gate is active.
 - Wave 1 — Trust, Onboarding, and Accessible Recovery: implementation complete locally; human acceptance and the
   end-of-wave project-status audit are complete; human acceptance remains open.
 - Wave 2 — Learning Progression and Scaffolding: implementation complete locally; browser rerun, human acceptance,
@@ -51,8 +54,8 @@ Updated: 2026-07-18, America/Denver
   confirmation lifecycle, and classroom/payoff surfaces exist locally.
 - The learning gate is now implemented: authored report-grounded questions, three difficulties,
   server validation, hints, retries, and confirmation gating.
-- The garden now includes a 2D world layer with a keyboard-operable gardener avatar and named tool
-  stations; the map remains a deterministic projection of the report.
+- The garden now includes a 2D world layer with a keyboard-operable gardener avatar; tools are represented in the
+  in-map HUD rather than as persistent map stations, and the map remains a deterministic projection of the report.
 - Stage 11 visual foundation is complete as an implementation slice: original cozy pixel-garden WebP
   atlases, a typed asset manifest, HealthReport-driven plant sprite selection, and authored decorations
   are integrated. Final visual/human gates remain open.
@@ -84,9 +87,13 @@ Updated: 2026-07-18, America/Denver
   and 9–12. Each lesson has two intentional findings and uses the existing sample-only challenge/tending lifecycle.
   The separate public teaching repository remains a release-owner GitHub gate; the app remains generic for any repo.
 - Challenge questions identify whether they teach noticing, evidence, or a safe next step, plus their grade band.
+- The feedback slice now shows five real bounded code excerpts with multiple-choice answers and deterministic typed
+  fallback; map tool stations and decorative labels are removed, and an idle Garden dialogue card stays visible.
+- Review possible fixes is explicitly read-only: it summarizes sample scopes and lists the future authentication,
+  branch, diff, checks, rollback, and confirmation requirements without writing to any repository.
 - Global controls and instructions sit above the game surface; selecting a plant is read-only, while approaching and
   pressing E/Enter opens the learning interaction. Fullscreen and optional detailed evidence are available.
-- Bundle 9 automated evidence is current: 83 Vitest tests, 24 production-style Playwright desktop/mobile checks,
+- Bundle 10 automated evidence is current: 85 Vitest tests, 24 production-style Playwright desktop/mobile checks,
   analysis validation, production build, format, lint, typecheck, and diff checks pass in the documented order. The
   project-status audit also passed its structure, navigation, documentation, and secret-scan checks.
 - The public repository now includes an MIT license and a README project/setup/submission narrative;
@@ -117,9 +124,10 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Human-test Grades 1–5, 6–8, and 9–12 lessons across desktop/mobile, including fullscreen and keyboard flow.
-2. Publish/pin the separate teaching repository when the release owner is ready, then record its commit and license.
-3. Complete the remaining release-boundary review: teaching quality, visual acceptance, deployment evidence, video,
+1. Run the final verification/audit and commit/push the feedback slice after all checks pass.
+2. Human-test Grades 1–5, 6–8, and 9–12 lessons across desktop/mobile, including excerpts, dialogue, fullscreen,
+   and keyboard flow.
+3. Publish/pin the separate teaching repository when the release owner is ready, then complete visual acceptance, video,
    and submission artifacts.
 
 ## Synchronization Rules

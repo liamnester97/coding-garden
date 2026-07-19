@@ -495,3 +495,15 @@ HealthReports are verified as one runnable slice. Focused tests pass, the full s
 production-style desktop/mobile browser suite is 24/24 with zero page or console errors. The technical audit found one
 canonical execution plan, no active duplicate trackers, and no detected secret literals. Human lesson-quality/device
 acceptance and publication of the separate public teaching repository remain intentionally open gates.
+
+## 2026-07-18 — Evidence-first teaching and responsible write boundary
+
+Human testing promoted the challenge model from abstract counts/keywords to real bounded excerpts from the committed
+teaching fixture. The first implementation slice uses multiple choice plus an optional typed response with deterministic
+matching; live model interpretation remains optional and key-gated. Five curated findings are the demo teaching scope.
+
+Persistent tool stations and decorative map labels are removed from the primary world surface. Tools are represented
+inside the map HUD when a finding gives the learner a reason to use one, and a dialogue card remains visible while idle.
+The current anonymous release remains sample-rehearsal/read-only. A proposed-fixes review may explain a future write,
+but live branch/commit/PR mutation requires a later approved integration gate with authentication, diff preview, checks,
+rollback, and explicit final confirmation.
