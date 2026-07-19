@@ -133,6 +133,20 @@ that map labels/tool stations do not clutter the world, the tool-ready and dialo
 the proposed-fixes review cannot claim or perform remote writes. Keep age-band teaching quality, live NLP behavior,
 device acceptance, and any future authenticated write integration as separate human/external gates.
 
+For Bundle 11 / Stages 27–32, also check that the dedicated teaching fixture contains exactly the authored five-finding
+proof-of-concept scope with stable IDs, safe bounded excerpts, deterministic fixes, no secrets, and no requirement to
+execute target code. Check that all five targets are visible and independently playable in any order; solved plants,
+reset behavior, and the all-five completion modal are session-local. Verify the level labels are exactly clear for
+Grades 1–5, 6–8, and 9–12, every playable lesson uses four multiple-choice answers, and hints, examples, retries,
+wrong-answer explanations, and direct action wording are present without grading or shame. Check that the active
+dialogue expands inside the map while idle surfaces remain quiet and no stale external panels, unexplained map lines,
+or overlapping authored objects remain. Verify proposed fixes are reviewable, the demo never silently overwrites
+source files, corrected-copy/diff output is explicit, and future ZIP/folder/branch/PR choices are labeled by readiness.
+Findings without authored content must appear as `More to explore` and must not become playable by inference. The full
+Bundle 11 gate also requires focused tests, the sequential complete check suite, configuration-management and
+documentation reconciliation, human desktop/mobile/keyboard/age-band testing, and a clean working tree before
+commit/push.
+
 ### Stage completion tracking
 
 Always produce an explicit stage snapshot from the plan. Distinguish:

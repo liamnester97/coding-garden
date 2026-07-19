@@ -1,16 +1,16 @@
 # Project Status
 
-Updated: 2026-07-18, America/Denver
+Updated: 2026-07-19, America/Denver
 
 ## Active Bundle and Goal
 
-- Bundle: 10 — Evidence-First Teaching and Interaction Clarity
-- Current goal: Stage 26 — feedback release reconciliation after evidence-first questions, map cleanup, and the
-  review-only apply-fixes boundary.
+- Bundle: 11 — Open-Ended Learning Demo and Verified Fix Payoff
+- Current goal: Stage 32 — final verification, full coding-garden audit, human-test preparation, and release gate.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Development branch head: `4660769` (`Add evidence-first teaching feedback slice`), ready to push to
+- Development branch head: `bee6d57` (`Add evidence-first teaching feedback slice`), with the Bundle 11 implementation
+  changes currently uncommitted locally and not yet pushed to
   `origin/agent/health-report-foundation`.
 - Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`). The
   deployed release is intentionally behind the development branch until the remaining human visual/release
@@ -36,6 +36,10 @@ Updated: 2026-07-18, America/Denver
   teaching repository publication, human acceptance, and final release gates remain open.
 - Bundle 10 — Evidence-First Teaching and Interaction Clarity: Stages 23–25 implementation slices are complete;
   Stage 26 verification/audit/commit gate is active.
+- Bundle 11 — Open-Ended Learning Demo and Verified Fix Payoff: Stages 27–31 are implemented locally. The default
+  offline demo now has five independent plants/questions, three clearly named grade levels, supportive examples and
+  retries, and a reviewable all-five completion payoff. Stage 32 verification, audit, human acceptance, and push gate
+  remain open.
 - Wave 1 — Trust, Onboarding, and Accessible Recovery: implementation complete locally; human acceptance and the
   end-of-wave project-status audit are complete; human acceptance remains open.
 - Wave 2 — Learning Progression and Scaffolding: implementation complete locally; browser rerun, human acceptance,
@@ -83,19 +87,24 @@ Updated: 2026-07-18, America/Denver
 - Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
   the classroom payoff explains the learning loop and current rehearsal progress.
 - The app remains login-free and works without `OPENAI_API_KEY` through deterministic fallbacks.
-- A local teaching-lesson registry, deterministic reports, lesson selector, and offline fixtures cover Grades 1–5, 6–8,
-  and 9–12. Each lesson has two intentional findings and uses the existing sample-only challenge/tending lifecycle.
+- The dedicated default teaching fixture now exposes five intentional deterministic findings across syntax, unused
+  code, coverage, logic, and a missing function. Each playable finding has four choices, a bounded code excerpt,
+  direct action wording, a hint ladder, an example, wrong-answer explanation, and a safe proposed fix.
   The separate public teaching repository remains a release-owner GitHub gate; the app remains generic for any repo.
-- Challenge questions identify whether they teach noticing, evidence, or a safe next step, plus their grade band.
+- Challenge questions identify whether they teach noticing, evidence, or a safe next step, plus their grade band;
+  the five default questions deliberately mix those modes.
 - The feedback slice now shows five real bounded code excerpts with multiple-choice answers and deterministic typed
   fallback; map tool stations and decorative labels are removed, and an idle Garden dialogue card stays visible.
 - Review possible fixes is explicitly read-only: it summarizes sample scopes and lists the future authentication,
   branch, diff, checks, rollback, and confirmation requirements without writing to any repository.
 - Global controls and instructions sit above the game surface; selecting a plant is read-only, while approaching and
   pressing E/Enter opens the learning interaction. Fullscreen and optional detailed evidence are available.
-- Bundle 10 automated evidence is current: 85 Vitest tests, 24 production-style Playwright desktop/mobile checks,
+- Bundle 11 automated evidence is current: 87 Vitest tests, 24 production-style Playwright desktop/mobile checks,
   analysis validation, production build, format, lint, typecheck, and diff checks pass in the documented order. The
   project-status audit also passed its structure, navigation, documentation, and secret-scan checks.
+- Bundle 11 audit preparation on 2026-07-19 found exactly one execution plan, one root tracker/status/decision set,
+  no generic duplicate plan/status/decision files, no sensitive files, five dedicated fixture source files, and no
+  detected secret literals. The full audit record remains open until the human acceptance evidence is supplied.
 - The public repository now includes an MIT license and a README project/setup/submission narrative;
   the remaining submission artifacts are the video, human evidence, and Devpost form.
 - Hardening coverage now exercises expiry, proof replay, oversized challenge input, failed rehearsal,
@@ -113,6 +122,8 @@ Updated: 2026-07-18, America/Denver
 
 ## Blockers and Open Gates
 
+- Bundle 11 implementation is complete through Stage 31. Stage 32 remains open for the full project-status audit,
+  human playthrough, and final evidence reconciliation.
 - Human non-coder and grade-band read-through of the teaching questions and explanations remains open.
 - Separate public teaching repository publication and pinned-commit evidence remain open.
 - Real demo-fork PR evidence remains an external credential/rehearsal gate.
@@ -124,11 +135,9 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Run the final verification/audit and commit/push the feedback slice after all checks pass.
-2. Human-test Grades 1–5, 6–8, and 9–12 lessons across desktop/mobile, including excerpts, dialogue, fullscreen,
-   and keyboard flow.
-3. Publish/pin the separate teaching repository when the release owner is ready, then complete visual acceptance, video,
-   and submission artifacts.
+1. Run the complete documented check sequence again after the final documentation/configuration reconciliation.
+2. Run the full project-status audit across the entire coding-garden folder and record its result.
+3. Complete human desktop/mobile/keyboard/grade-band checks, then commit and push only after all evidence passes.
 
 ## Synchronization Rules
 

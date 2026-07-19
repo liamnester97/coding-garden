@@ -25,6 +25,9 @@ export const findingMetaphor = {
   "coverage-gap": "unwatered test path",
   vulnerability: "pest risk",
   complexity: "overgrown logic",
+  "syntax-error": "tangled syntax",
+  "logic-bug": "crooked logic",
+  "missing-function": "missing sprout",
 } as const;
 
 export type HealthState = keyof typeof healthMetaphor;

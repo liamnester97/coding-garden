@@ -894,6 +894,72 @@ Maps to Stages 23–26 and the new human-testing feedback.
 **Gate:** learners can inspect actual code, explain a report-grounded problem, use the metaphorical tool without map
 clutter, and understand exactly what is and is not changed.
 
+### Bundle 11 — Open-Ended Learning Demo and Verified Fix Payoff
+
+Maps to Stages 27–32 and incorporates the human-testing feedback in `CGFeedback.txt` plus the three discovery
+interviews completed on 2026-07-19. This bundle is the near-term proof-of-concept target. It makes the dedicated
+teaching fixture the dependable default while preserving a generic intake boundary for public repositories, ZIPs,
+folders, and individual files in later slices.
+
+1. **Stage 27 — Dedicated teaching fixture and lesson contract**
+   - Curate one JavaScript/TypeScript demo fixture with five deterministic, intentional, explainable findings.
+   - Cover a useful spread from missing/improper syntax and functions through dead code, tests/coverage, and a safe
+     logic or security-adjacent next step.
+   - Give every finding a stable teaching ID, bounded code excerpt, level, objective, multiple-choice answer set,
+     hint, example, misconception explanation, and deterministic proposed fix.
+   - Keep the fixture safe to display, never execute target code, and free of credentials or student data.
+
+2. **Stage 28 — Five-target open garden loop**
+   - Show all five authored questions/plants on the map from the beginning.
+   - Allow any order; do not lock a target behind a previous answer.
+   - Keep completed plants blooming until the learner resets the session.
+   - Replace confusing “look at the plant” language with direct action copy such as “This plant needs watering.
+     Answer the question to water it.”
+   - Remove remaining distracting map lines, overlapping authored objects, external game panels, and stale evidence
+     chrome from the normal play view.
+
+3. **Stage 29 — Level-aware dialogue and supportive learning**
+   - Provide a clear top guide with `Sprout / Easy — Grades 1–5`, `Growing / Medium — Grades 6–8`, and
+     `Master Gardener / Hard — Grades 9–12`.
+   - Mix Find it, Plan it, and Execute it questions at every level.
+   - Make every playable question multiple choice with four options, unlimited retries, a hint, a small related
+     example, and a plain-language explanation after an incorrect choice.
+   - Show the relevant code excerpt and corrected example inside the dialogue; do not grade, shame, or require model
+     access.
+
+4. **Stage 30 — Proposed-fix collection and completion payoff**
+   - Record each correct answer as a proposed, reviewable fix without changing the original repository.
+   - After all five plants bloom, show a separate completion modal containing all five lessons, before/after code,
+     proposed changes, re-analysis results, and the healthier-garden summary.
+   - Keep the modal dismissible so learners can close it and replay at another level or reset the garden.
+   - Reset must clear only local session state and return the garden to its initial demo state.
+
+5. **Stage 31 — Safe output choices and generic intake boundary**
+   - For the dedicated demo, support a truthful corrected-copy/diff path and make output choices explicit rather than
+     silently overwriting files.
+   - Design the output contract for three future choices: readable patch/diff, corrected ZIP/folder, or authenticated
+     GitHub branch/pull request. The live branch/PR path remains separately gated and deferred until credentials,
+     permissions, checks, rollback, and human approval exist.
+   - Preserve the input contract for the eventual choices of demo, public GitHub URL, ZIP/folder, and individual files.
+     The dedicated demo remains the default now; unfinished inputs must be clearly labeled rather than pretending to
+     be ready.
+   - Show unsupported but real findings as **More to explore**; only authored validated lessons become playable.
+
+6. **Stage 32 — Verification, configuration management, and release evidence**
+   - Add focused unit, route, component, and browser coverage for all five targets, open ordering, reset, level copy,
+     hints/examples, wrong answers, completion modal, proposed fixes, output choices, and read-only boundaries.
+   - Run the full suite in the documented order, including format, lint, typecheck, tests, analysis validation, build,
+     browser smoke, and `git diff --check`.
+   - Run the full project-status audit over the entire coding-garden folder, including duplicate-document checks,
+     stale status/path checks, secret scanning, demo-fixture integrity, and documentation synchronization.
+   - Reconcile the roadmap, tracker, status, decisions, journey, feature backlog, fixture README, and human-testing
+     guide; then perform human desktop/mobile/keyboard/age-band testing before commit and push.
+
+**Bundle gate:** the five-question demo is playable in any order, understandable across all three level bands,
+supportive when learners need help, and produces a truthful verified payoff. The completion modal clearly separates
+reviewable demo output from future live repository writes. Automated checks, configuration/release evidence, the full
+project audit, and human acceptance must all be recorded before the bundle is promoted.
+
 ### Wave 1 — Trust, Onboarding, and Accessible Recovery
 
 This is the first rolling feature wave from `docs/FEATURE_BACKLOG.md`. It refines the existing playable map without
@@ -966,6 +1032,15 @@ legibility remains a separate gate.
   branch/PR integration gate is accepted.
 - Every bundle ends with focused checks, the full project-status audit, documentation reconciliation,
   and explicit human acceptance.
+- Bundle 11 is intentionally demo-first: the dedicated JavaScript/TypeScript teaching fixture is the default and
+  must be deterministic, safe, and available without network or credentials.
+- All five lessons are visible and independently playable; completion is session-local until reset, and no question
+  order is required.
+- A correct answer records a proposed fix, but only a verified apply-and-reanalyze flow may claim that code improved.
+  The demo may produce a corrected copy or diff; direct remote repository writes remain a future authenticated gate.
+- The next execution cycle follows this order: plan and configuration checkpoint → implementation → focused tests →
+  full validation → repository/configuration management and documentation reconciliation → project-status audit →
+  human testing and acceptance → commit/push.
 
 ---
 

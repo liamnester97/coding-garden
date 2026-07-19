@@ -41,9 +41,11 @@ acceptance is recorded.
 
 Bundle 9 adds a curated teaching-repository shape for Grades 1–5, 6–8, and 9–12. The local lesson
 registry, deterministic reports, selector, and offline fixtures live under `content/`, `lib/garden/`,
-and `fixtures/teaching-repo/`; each local lesson contains two intentional findings for interactive use. A separate
-public repository is planned for the published classroom lessons. The app remains generic for any public repository,
-and public analysis remains read-only.
+and `fixtures/teaching-repo/`; Bundle 11 now provides a five-finding, open-order proof of concept with direct action
+wording, four-choice learning, hints, examples, and a dismissible completion payoff.
+The dedicated demo remains the default while future intake supports public GitHub URLs, ZIP/folder uploads, and
+individual files. A separate public repository is planned for the published classroom lessons. The app remains
+generic for any public repository, and public analysis remains read-only.
 
 ## If you want to know where we are
 

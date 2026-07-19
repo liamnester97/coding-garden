@@ -89,7 +89,7 @@ count questions, Grades 6–8 with Medium clue-connection questions, and Grades 
 The recommended depth is explained and can be overridden. A challenge offers up to three clues in order; wrong
 answers receive a specific misconception hint, while only a server-validated correct answer unlocks confirmation.
 
-The Lesson selector in the same toolbar loads one of the three local teaching fixtures. Each fixture has a healthy
+The Lesson selector in the same toolbar can load older local comparison fixtures. The default demo has a healthy
 entry point, an intentional missing-test signal, and an intentionally unimported helper so learners can inspect why a
 plant is stressed or withered. The selected lesson remains an offline sample rehearsal; choosing it does not analyze,
 execute, or mutate the fixture repository.
@@ -111,3 +111,28 @@ card remains visible while idle so the next clue never disappears.
 After sample rehearsals, **Review possible fixes** lists the proposed scopes without writing to any repository. A real
 apply-fixes path is a future, separately approved integration requiring authentication, a branch, a diff preview, checks,
 rollback, and final confirmation. Public repository analysis remains read-only.
+
+## Bundle 11 proof-of-concept journey
+
+The dedicated teaching demo is the default starting point. It contains five known,
+intentional JavaScript/TypeScript findings with authored lessons and deterministic proposed fixes. All five plants are
+visible immediately and may be completed in any order; there is no required route through the garden. The learner
+chooses one of:
+
+- **Sprout / Easy — Grades 1–5**
+- **Growing / Medium — Grades 6–8**
+- **Master Gardener / Hard — Grades 9–12**
+
+Every playable lesson uses four multiple-choice answers and mixes Find it, Plan it, and Execute it activities. The
+dialogue begins compactly and expands across the map when active. It shows the relevant code, the problem in direct
+language, possible fixes, a hint, a small example, and an explanation after a wrong answer. Learners may retry freely;
+this is practice, not grading.
+
+When a learner solves a target, its plant blooms and stays complete for the local session. Solving all five opens a
+dismissible completion window with the five blooms, before/after code, proposed fixes, re-analysis evidence, and a
+healthier-garden summary. Reset Garden clears only the local session so the learner can choose another level or replay.
+
+For the demo, output is reviewable and must not silently overwrite source files. The planned safe choices are a readable
+diff/corrected copy now, with corrected ZIP/folder output and authenticated GitHub branch/PR output designed as future
+input-specific options. A finding without an authored lesson appears as **More to explore** and is not playable until
+content is validated.

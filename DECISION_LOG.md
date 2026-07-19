@@ -507,3 +507,43 @@ inside the map HUD when a finding gives the learner a reason to use one, and a d
 The current anonymous release remains sample-rehearsal/read-only. A proposed-fixes review may explain a future write,
 but live branch/commit/PR mutation requires a later approved integration gate with authentication, diff preview, checks,
 rollback, and explicit final confirmation.
+
+## 2026-07-19 — Bundle 11 proof-of-concept product contract
+
+The near-term product is an open-ended five-question Code Garden demo for learners from Grade 1 through Grade 12.
+The dedicated JavaScript/TypeScript teaching fixture is the default source and contains five deterministic,
+intentional, explainable findings with matching authored lessons. All five plants/questions are visible from the start
+and may be completed in any order; completion is local to the current session until Reset Garden is chosen.
+
+The level picker combines clear academic ranges with playful names: `Sprout / Easy — Grades 1–5`,
+`Growing / Medium — Grades 6–8`, and `Master Gardener / Hard — Grades 9–12`. Each level receives a healthy mixture
+of Find it, Plan it, and Execute it activities. Every playable question uses four multiple-choice answers plus
+unlimited retries, a hint, a small example, and plain-language explanations. The dialogue shows the relevant code
+and corrected example, expands when active, and stays quiet when idle. The game does not grade learners or require an
+OpenAI key.
+
+After all five lessons are solved, the app shows a dismissible completion modal with the five blooms, before/after
+code, proposed fixes, re-analysis results, and a healthier-garden summary. The learner may reset and replay at another
+level. The demo must never silently overwrite original code: near-term output is a reviewable corrected copy/diff,
+while corrected ZIP/folder output and authenticated GitHub branch/PR output are designed as explicit choices for later
+intake modes. Public repository analysis remains read-only. Findings without an authored lesson are visible as
+`More to explore` and are not playable until validated content exists.
+
+## 2026-07-19 — Bundle 11 delivery and evidence order
+
+Bundle 11 follows one controlled sequence: canonical plan and configuration checkpoint; bounded implementation;
+focused tests; full validation; configuration-management and documentation reconciliation; full coding-garden audit;
+human desktop/mobile/keyboard/age-band testing; then commit and push. The execution plan remains the only roadmap.
+
+## 2026-07-19 — Bundle 11 implementation evidence
+
+The default offline demo now uses five stable authored findings in the dedicated teaching fixture. Every playable
+question has four choices, a bounded excerpt, an example, supportive retry feedback, and an explicit proposed fix.
+The map exposes all five plants at once and accepts them in any order. Sprout/Easy (Grades 1–5), Growing/Medium
+(Grades 6–8), and Master Gardener/Hard (Grades 9–12) are visible labels, while the five questions mix notice,
+evidence, and safe-next-step modes. Completion remains session-local and shows a dismissible before/after review.
+No code is silently overwritten, public report behavior remains read-only, and unsupported findings remain More to
+explore. Automated evidence is 87 Vitest tests and 24/24 Playwright checks; full audit and human acceptance remain
+open until the Stage 32 gate.
+No account, teacher dashboard, cloud progress, automatic lesson generation, or live repository mutation is part of
+this proof-of-concept gate; those remain future backlog decisions.

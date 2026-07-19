@@ -379,7 +379,8 @@ main {
 .garden-stage {
   position: relative;
   width: 100%;
-  height: clamp(34rem, 68vw, 52rem);
+  min-height: 42rem;
+  height: clamp(42rem, 72vw, 58rem);
   margin-top: 1.5rem;
   overflow: hidden;
   border: 1px solid #39553d;
@@ -432,6 +433,10 @@ main {
 .map-welcome {
   left: 0.8rem;
   top: 3.7rem;
+  pointer-events: none;
+}
+.map-welcome button {
+  pointer-events: auto;
 }
 .map-welcome .eyebrow {
   color: #507344;
@@ -494,7 +499,7 @@ main {
   align-content: start;
   gap: 0.15rem;
   padding: 0.5rem;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 0.7rem;
   color: rgb(237 245 233 / 0.82);
   font-size: 0.68rem;
@@ -730,6 +735,9 @@ main {
   border: 1px solid #527357;
   background: rgb(35 77 48 / 0.66);
 }
+.map-dialogue strong {
+  max-width: 42rem;
+}
 .map-tool-inventory span:not(.eyebrow),
 .map-dialogue strong {
   color: #f0f7eb;
@@ -885,14 +893,74 @@ main {
   right: 1rem;
   top: 1rem;
   z-index: 10;
-  width: min(22rem, calc(100% - 2rem));
-  max-height: min(64%, 25rem);
+  width: min(42rem, calc(100% - 2rem));
+  max-height: min(82%, 42rem);
   overflow: auto;
   padding: 0.9rem;
   border: 2px solid #f0bd62;
   background: #f4f7ed;
   color: #263d2b;
   box-shadow: 0.3rem 0.3rem 0 #0e1b14;
+}
+.challenge-example {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  border: 1px solid #b6c8ac;
+  background: #edf4e7;
+  color: #455944;
+  font-size: 0.78rem;
+}
+.challenge-example code {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.completion-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(6 18 10 / 0.68);
+}
+.completion-card {
+  width: min(54rem, 100%);
+  max-height: 92%;
+  overflow: auto;
+  padding: 1.25rem;
+  border: 2px solid #f0bd62;
+  background: #f4f7ed;
+  color: #263d2b;
+  box-shadow: 0.35rem 0.35rem 0 #0e1b14;
+}
+.completion-card h2 {
+  margin: 0.35rem 0;
+}
+.completion-card p,
+.completion-card li {
+  color: #455944;
+}
+.completion-card ul {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+.completion-card li {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.65rem;
+  border: 1px solid #b6c8ac;
+  background: #edf4e7;
+}
+.completion-card pre {
+  margin: 0;
+  padding: 0.5rem;
+  overflow: auto;
+  background: #dfead8;
+  font-size: 0.72rem;
+  white-space: pre-wrap;
 }
 .inspector-details {
   margin-top: 1rem;
@@ -1115,7 +1183,8 @@ main {
   }
 
   .garden-stage {
-    height: 38rem;
+    min-height: 36rem;
+    height: 42rem;
     margin-top: 1rem;
   }
 
@@ -1142,7 +1211,7 @@ main {
     top: 0.75rem;
     right: 0.75rem;
     width: calc(100% - 1.5rem);
-    max-height: calc(100% - 11rem);
+    max-height: calc(100% - 2rem);
   }
 
   .map-help-panel {

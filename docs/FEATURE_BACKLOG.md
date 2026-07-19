@@ -148,3 +148,24 @@ Promoted into Bundle 10 / Stages 23–26 in `docs/EXECUTION_PLAN.md`:
 - Review-only apply-fixes boundary; live repository writes remain deferred — designed.
 
 The current release must not claim that a sample rehearsal or proposed-fix review changed a remote repository.
+
+## 2026-07-19 discovery promotion — Bundle 11 proof-of-concept contract
+
+Promoted into Bundle 11 / Stages 27–32 in `docs/EXECUTION_PLAN.md`:
+
+- Dedicated JavaScript/TypeScript teaching fixture with five deterministic intentional findings and matching fixes.
+- Five visible, independently playable plants/questions with no required order and session-local reset.
+- Clear combined level labels: Sprout / Easy (Grades 1–5), Growing / Medium (Grades 6–8), and Master Gardener /
+  Hard (Grades 9–12).
+- Mixed Find it, Plan it, and Execute it questions; four multiple-choice answers; unlimited retries; hints;
+  examples; explanations; and code excerpts in an expandable dialogue.
+- Dismissible all-five completion modal with proposed fixes, before/after code, re-analysis evidence, and safe output
+  choices.
+- Dedicated demo as the default while eventual intake supports GitHub URLs, ZIP/folders, and individual files;
+  un-authored findings are visible as More to explore.
+
+Deferred by explicit scope decision:
+
+- Accounts, teacher dashboards, cloud progress, automatic lesson generation, and live branch/PR mutation.
+- Corrected ZIP/folder output and authenticated GitHub output until the demo corrected-copy/diff path and safety gates
+  are proven.

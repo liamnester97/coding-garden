@@ -82,6 +82,63 @@ export const teachingLessons = [
   },
 ] satisfies TeachingLesson[];
 
+export const demoTeachingReport = lessonReport(
+  "demo-garden",
+  [
+    { id: "src/greeting.js", path: "src/greeting.js", health: "stressed" },
+    {
+      id: "src/unused-helper.js",
+      path: "src/unused-helper.js",
+      health: "withered",
+    },
+    { id: "src/score.js", path: "src/score.js", health: "stressed" },
+    { id: "src/format.js", path: "src/format.js", health: "stressed" },
+    { id: "src/lesson.js", path: "src/lesson.js", health: "stressed" },
+  ],
+  [
+    {
+      id: "demo-syntax",
+      type: "syntax-error",
+      nodeId: "src/greeting.js",
+      summary: "A closing brace is missing from this function.",
+      evidence: { tool: "teaching-fixture", file: "src/greeting.js" },
+    },
+    {
+      id: "demo-dead-code",
+      type: "dead-code",
+      nodeId: "src/unused-helper.js",
+      summary: "No incoming import was found for this helper.",
+      evidence: { tool: "teaching-fixture", file: "src/unused-helper.js" },
+    },
+    {
+      id: "demo-coverage",
+      type: "coverage-gap",
+      nodeId: "src/score.js",
+      summary: "This score path has no matching test yet.",
+      evidence: { tool: "teaching-fixture", file: "src/score.js" },
+    },
+    {
+      id: "demo-logic",
+      type: "logic-bug",
+      nodeId: "src/format.js",
+      summary: "The formatter uses the wrong separator for a friendly message.",
+      evidence: { tool: "teaching-fixture", file: "src/format.js" },
+    },
+    {
+      id: "demo-function",
+      type: "missing-function",
+      nodeId: "src/lesson.js",
+      summary: "The lesson calls a function that has not been defined.",
+      evidence: { tool: "teaching-fixture", file: "src/lesson.js" },
+    },
+  ],
+  [
+    { from: "src/lesson.js", to: "src/greeting.js" },
+    { from: "src/lesson.js", to: "src/score.js" },
+    { from: "src/lesson.js", to: "src/format.js" },
+  ],
+);
+
 export const teachingLessonReports: Record<string, HealthReport> = {
   "first-sprouts": lessonReport(
     "first-sprouts",

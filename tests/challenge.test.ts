@@ -6,7 +6,10 @@ import {
   misconceptionFeedback,
   questionForFinding,
 } from "@/lib/garden/challenges";
-import { teachingLessonReports } from "@/content/teaching-lessons";
+import {
+  demoTeachingReport,
+  teachingLessonReports,
+} from "@/content/teaching-lessons";
 
 function request(body: unknown) {
   return new Request("http://localhost/api/challenge", {
@@ -155,6 +158,24 @@ describe("learning challenge gate", () => {
     expect((await response.json()).question.gradeBand).toBe("grades-1-5");
   });
 
+  it("serves every default demo plant with four choices", async () => {
+    for (const finding of demoTeachingReport.findings) {
+      const response = await POST(
+        request({
+          report: demoTeachingReport,
+          findingId: finding.id,
+          difficulty: "easy",
+        }),
+      );
+      const payload = (await response.json()) as {
+        question: { choices: string[]; findingId: string };
+      };
+      expect(response.status).toBe(200);
+      expect(payload.question.findingId).toBe(finding.id);
+      expect(payload.question.choices).toHaveLength(4);
+    }
+  });
+
   it("returns an evidence-first excerpt and choices for curated findings", async () => {
     const report = teachingLessonReports["first-sprouts"];
     const response = await POST(
@@ -174,7 +195,7 @@ describe("learning challenge gate", () => {
     };
     expect(response.status).toBe(200);
     expect(payload.question.codeExcerpt).toContain("greetGarden");
-    expect(payload.question.choices).toHaveLength(3);
+    expect(payload.question.choices).toHaveLength(4);
     expect(payload.question.answer).toBeUndefined();
     expect(payload.question.explanation).toBeUndefined();
   });

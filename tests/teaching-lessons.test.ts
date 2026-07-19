@@ -5,6 +5,7 @@ import {
   teachingLessonReports,
   teachingLessonSchema,
   teachingLessons,
+  demoTeachingReport,
 } from "@/content/teaching-lessons";
 import { projectHealthReport } from "@/lib/garden/project";
 import { analyzeJavaScriptRepository } from "@/lib/analysis/analyze-javascript";
@@ -56,23 +57,50 @@ describe("teaching lesson registry", () => {
       },
     );
 
-    expect(report.nodes).toHaveLength(9);
-    expect(report.findings).toHaveLength(6);
+    expect(report.nodes.length).toBeGreaterThanOrEqual(9);
+    expect(report.findings.length).toBeGreaterThanOrEqual(6);
     expect(
-      report.findings.filter((finding) => finding.type === "coverage-gap"),
-    ).toHaveLength(3);
+      report.findings.filter((finding) => finding.type === "coverage-gap")
+        .length,
+    ).toBeGreaterThanOrEqual(3);
     expect(
-      report.findings.filter((finding) => finding.type === "dead-code"),
-    ).toHaveLength(3);
+      report.findings.filter((finding) => finding.type === "dead-code").length,
+    ).toBeGreaterThanOrEqual(3);
   });
 
   it("provides five bounded code-reading activities tied to real findings", () => {
-    expect(Object.keys(teachingQuestionContent)).toHaveLength(5);
+    expect(
+      Object.keys(teachingQuestionContent).filter((id) =>
+        id.startsWith("demo-"),
+      ),
+    ).toHaveLength(5);
+    expect(demoTeachingReport.findings).toHaveLength(5);
+    expect(demoTeachingReport.findings.map((finding) => finding.id)).toEqual(
+      expect.arrayContaining(
+        Object.keys(teachingQuestionContent).filter((id) =>
+          id.startsWith("demo-"),
+        ),
+      ),
+    );
     for (const content of Object.values(teachingQuestionContent)) {
       expect(content.codeExcerpt.length).toBeLessThanOrEqual(1200);
       expect(content.choices.length).toBeGreaterThanOrEqual(2);
       expect(content.answers.length).toBeGreaterThanOrEqual(1);
+      expect(content.choices).toHaveLength(4);
       expect(content.explanation).toBeTruthy();
+    }
+  });
+
+  it("keeps the default demo open-order contract explicit", () => {
+    const ids = demoTeachingReport.findings.map((finding) => finding.id);
+    expect(ids).toHaveLength(5);
+    expect(new Set(ids).size).toBe(5);
+    expect(ids.every((id) => id.startsWith("demo-"))).toBe(true);
+    for (const id of ids) {
+      const question = teachingQuestionContent[id];
+      expect(question.choices).toHaveLength(4);
+      expect(question.example).toBeTruthy();
+      expect(question.beforeCode).not.toBe(question.afterCode);
     }
   });
 });

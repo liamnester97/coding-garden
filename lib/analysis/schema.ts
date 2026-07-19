@@ -2,7 +2,15 @@ import { z } from "zod";
 
 export const findingSchema = z.object({
   id: z.string(),
-  type: z.enum(["dead-code", "coverage-gap", "vulnerability", "complexity"]),
+  type: z.enum([
+    "dead-code",
+    "coverage-gap",
+    "vulnerability",
+    "complexity",
+    "syntax-error",
+    "logic-bug",
+    "missing-function",
+  ]),
   nodeId: z.string(),
   summary: z.string(),
   evidence: z.object({

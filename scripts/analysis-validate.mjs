@@ -4,6 +4,11 @@ const required = [
   "lib/analysis/schema.ts",
   "lib/analysis/sample-report.ts",
   "fixtures/sample-report.json",
+  "fixtures/teaching-repo/src/greeting.js",
+  "fixtures/teaching-repo/src/unused-helper.js",
+  "fixtures/teaching-repo/src/score.js",
+  "fixtures/teaching-repo/src/format.js",
+  "fixtures/teaching-repo/src/lesson.js",
 ];
 for (const file of required) await readFile(file, "utf8");
 const report = JSON.parse(

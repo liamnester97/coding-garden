@@ -40,6 +40,10 @@ export const challengeQuestionSchema = z.object({
   language: z.literal("javascript"),
   choices: z.array(z.string().min(1).max(180)).min(2).max(4),
   answers: z.array(z.string().min(1)).min(1),
+  actionLabel: z.string().min(1),
+  example: z.string().min(1),
+  beforeCode: z.string().min(1),
+  afterCode: z.string().min(1),
 });
 
 export const challengePublicSchema = challengeQuestionSchema.omit({
@@ -55,6 +59,9 @@ const toolForFinding = {
   "dead-code": "clippers",
   "coverage-gap": "watering-can",
   vulnerability: "pesticide",
+  "syntax-error": "clippers",
+  "logic-bug": "watering-can",
+  "missing-function": "watering-can",
 } as const;
 
 const difficultyRank: Record<ChallengeDifficulty, number> = {
@@ -96,6 +103,10 @@ function fallbackContent(finding: HealthReport["findings"][number]) {
     choices,
     answers: [choices[0]],
     explanation: finding.summary,
+    actionLabel: "Tend this plant",
+    example: "Read the clue, choose an answer, and try again if needed.",
+    beforeCode: `// ${finding.summary}`,
+    afterCode: `// Proposed fix for: ${finding.summary}`,
   };
 }
 
@@ -153,7 +164,14 @@ function gradeBandFor(difficulty: ChallengeDifficulty) {
       : "grades-9-12";
 }
 
-function questionTypeFor(difficulty: ChallengeDifficulty) {
+function questionTypeFor(difficulty: ChallengeDifficulty, findingId: string) {
+  if (findingId.startsWith("demo-")) {
+    if (findingId === "demo-syntax" || findingId === "demo-logic")
+      return "notice";
+    if (findingId === "demo-dead-code" || findingId === "demo-function")
+      return "evidence";
+    return "safe-next-step";
+  }
   return difficulty === "easy"
     ? "notice"
     : difficulty === "medium"
@@ -191,7 +209,7 @@ export function questionForFinding(
     nodeId: finding.nodeId,
     tool: toolForFinding[finding.type as keyof typeof toolForFinding],
     difficulty,
-    questionType: questionTypeFor(difficulty),
+    questionType: questionTypeFor(difficulty, finding.id),
     gradeBand: gradeBandFor(difficulty),
     objective: objectiveFor(finding.type),
     prompt,
@@ -214,6 +232,10 @@ export function questionForFinding(
     language: content.language,
     choices: content.choices,
     answers: content.answers,
+    actionLabel: content.actionLabel,
+    example: content.example,
+    beforeCode: content.beforeCode,
+    afterCode: content.afterCode,
   });
 }
 

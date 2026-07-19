@@ -188,8 +188,8 @@ still serve the earlier verified release until the visual bundle is deliberately
 
 - [ ] Confirm the local teaching fixture contains lessons for Grades 1–5, 6–8, and 9–12 and loads without network
       access.
-- [ ] Use the Lesson selector to load First Sprouts, Root Riddles, and Safe Harvest; confirm each shows three plants
-      with one coverage finding and one unimported-helper finding.
+- [ ] Use the Lesson selector to compare First Sprouts, Root Riddles, and Safe Harvest; confirm the default demo shows
+      five plants while the older comparison lessons remain available.
 - [ ] Confirm the future public teaching repository contains no secrets, student data, private code, or unlicensed
       assets, and record the pinned commit once published.
 - [ ] Verify the top toolbar contains the controls and instructions; the map remains the dominant surface.
@@ -283,7 +283,7 @@ behavior.
 - [ ] On a fresh session, read the small First visit guide; dismiss it with `Got it` and reopen it from `Help / pause`.
 - [ ] Confirm the map always labels the current mode as `Sample rehearsal` or `Public read-only`.
 - [ ] Open `Help / pause` and confirm it stays inside the map, explains the golden path, and does not hide the whole world.
-- [ ] Use `Reset sample lesson` after moving or starting a challenge; confirm the gardener, journal, season, and local
+- [ ] Use `Reset lesson` after moving or starting a challenge; confirm the gardener, journal, season, and local
       rehearsal state return to the sample starting point without a page refresh.
 - [ ] Confirm reset does not claim a repository change, branch, PR, or live health update.
 
@@ -355,3 +355,23 @@ second execution plan.
       re-analysis, and verified health change.
 - [ ] Complete a sample rehearsal and verify the optional Reflection bench saves a short note only to the local
       Garden Journal session; it must not claim a repository change or require an account.
+
+### Bundle 11 open-ended teaching demo checks
+
+- [ ] Confirm the dedicated teaching demo loads by default without GitHub login, an API key, or network access.
+- [ ] Confirm the guide clearly labels `Sprout / Easy — Grades 1–5`, `Growing / Medium — Grades 6–8`, and
+      `Master Gardener / Hard — Grades 9–12`.
+- [ ] Confirm all five plants/questions are visible before answering anything and can be completed in any order.
+- [ ] Confirm every playable question uses four multiple-choice answers and mixes Find it, Plan it, and Execute it
+      activities for the selected level.
+- [ ] Confirm the active dialogue expands inside the game surface and shows the bounded code excerpt, direct action
+      wording, choices, hint, small example, and explanation after a wrong answer.
+- [ ] Confirm wrong answers are non-punitive, retries remain available, and a correct answer blooms only its own plant.
+- [ ] Solve all five targets and confirm the separate completion window shows all blooms, before/after code,
+      proposed fixes, re-analysis results, and the healthier-garden summary.
+- [ ] Close the completion window and confirm the learner can replay or reset at another level without refreshing.
+- [ ] Confirm reset clears only local session state and does not claim a remote repository change.
+- [ ] Confirm unsupported real findings are labeled `More to explore` rather than presented as playable lessons.
+- [ ] Confirm the demo never silently overwrites source files; output choices are explicit and reviewable.
+- [ ] Record whether the demo produced the expected corrected copy/diff. ZIP/folder and authenticated branch/PR
+      outputs remain future gates unless separately enabled and evidenced.

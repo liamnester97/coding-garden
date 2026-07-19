@@ -2,22 +2,65 @@
 
 ## Stage
 
-Stage 26 — Feedback Release Reconciliation / Bundle 10 — Evidence-First Teaching and Interaction Clarity
+Stage 27 — Dedicated Teaching Fixture and Lesson Contract / Bundle 11 — Open-Ended Learning Demo and Verified Fix Payoff
 
 ## Execution Bundle
 
-- **Bundle:** 10 — Evidence-First Teaching and Interaction Clarity
-- **Current goal:** Stage 26 — verify evidence-first questions, map cleanup, responsible apply-fixes boundary, and the
-  complete release/audit gate.
+- **Bundle:** 11 — Open-Ended Learning Demo and Verified Fix Payoff
+- **Current goal:** Stage 32 — finish verification, audit, human-test preparation, and the commit/push gate for the
+  implemented five-finding open-order learning demo.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; the local Stages 23–26 implementation slice is complete, while human/review/release evidence
-  remains open.
-- **Audit status:** Bundle 10 technical audit complete on 2026-07-18; structure, security, documentation, and automated
-  verification checks passed.
-- **Human acceptance:** Bundle-level acceptance is not yet recorded.
+- **Bundle gate:** Technical implementation and automated verification are complete; full project audit and human
+  acceptance remain open until the evidence is recorded.
+- **Audit status:** Prior Bundle 10 technical audit passed on 2026-07-18. Bundle 11 audit is pending the final
+  documentation/security/structure pass after implementation.
+- **Human acceptance:** Bundle 11 human acceptance is not started; prior bundle human/release gates remain explicitly
+  open.
+
+## Bundle 11 Goals — Open-ended learning demo and verified fix payoff
+
+- [x] Stage 27 — Curate five deterministic intentional findings, matching fixes, excerpts, answer choices, hints,
+      examples, explanations, and level/objective metadata in the dedicated teaching fixture.
+- [x] Stage 28 — Show all five targets on the map, allow any order, simplify copy, remove remaining map clutter, and
+      keep completion/reset session-local.
+- [x] Stage 29 — Add Sprout/Easy Grades 1–5, Growing/Medium Grades 6–8, and Master Gardener/Hard Grades 9–12 with a
+      mixed Find it / Plan it / Execute it multiple-choice learning dialogue.
+- [x] Stage 30 — Record proposed fixes and add the dismissible all-five completion modal with before/after code and
+      verified re-analysis results.
+- [x] Stage 31 — Define safe corrected-copy/diff output and future ZIP/folder/branch/PR choices; label unsupported
+      inputs and findings as future or More to explore.
+- [ ] Stage 32 — Run focused and full checks, configuration/documentation reconciliation, full project audit, and
+      human desktop/mobile/keyboard/age-band acceptance before commit/push.
+
+### Bundle 11 implementation evidence — 2026-07-19
+
+- [x] Five default demo plants use stable `demo-*` findings with bounded excerpts, four choices, examples,
+      explanations, and deterministic before/after proposals.
+- [x] All five are visible immediately; selecting any plant is independent, and the sample session can reset locally.
+- [x] Mixed notice/evidence/safe-next-step question types and clearly named Sprout, Growing, and Master Gardener
+      levels are implemented.
+- [x] The map is larger, zone borders are restrained, and active dialogue/examples/completion recap stay in the
+      game surface. Public reports remain read-only and unsupported signals are labeled More to explore.
+- [x] Focused Vitest coverage is 87 tests; Playwright production-style smoke is 24/24 on desktop/mobile with zero
+      page or console errors after the overlay/accessibility fix.
+- [ ] Full project-status audit and human acceptance remain to be recorded before the commit/push gate.
+- [x] Audit preparation: one roadmap, one root tracker/status/decision set, no generic duplicate docs, no sensitive
+      files, five fixture source files, and no detected secret literals.
+- [ ] Human acceptance: desktop/mobile wide shot, keyboard-only movement, all three level labels, open-order solving,
+      hints/examples/wrong answers, completion recap, reset, and safe-output wording.
+
+### Bundle 11 execution gate
+
+1. Plan/configuration checkpoint complete.
+2. Implementation complete for the bounded stage.
+3. Focused tests and full validation pass in documented order.
+4. Configuration management and all authoritative documentation reconciled.
+5. Full coding-garden project-status audit passes.
+6. Human tests pass for desktop, mobile, keyboard flow, all three levels, open ordering, reset, and completion payoff.
+7. Commit and push only after the preceding evidence is recorded.
 
 ## Bundle 10 Goals — Evidence-first teaching and interaction clarity
 

@@ -25,6 +25,7 @@ import {
 } from "@/lib/garden/assets";
 import { authoredGardenMap } from "@/lib/garden/map";
 import {
+  demoTeachingReport,
   teachingLessonForGradeBand,
   teachingLessons,
   type TeachingLesson,
@@ -59,7 +60,7 @@ function spriteStyle(
 }
 
 export default function HomePage() {
-  const [report, setReport] = useState(sampleHealthReport);
+  const [report, setReport] = useState(demoTeachingReport);
   const [repositoryUrl, setRepositoryUrl] = useState(
     "https://github.com/ColorlibHQ/gentelella",
   );
@@ -108,8 +109,12 @@ export default function HomePage() {
   const [reflectionNote, setReflectionNote] = useState("");
   const [reflectionSaved, setReflectionSaved] = useState(false);
   const [lessonId, setLessonId] = useState<"sample" | TeachingLesson["id"]>(
-    "sample",
+    "demo-garden",
   );
+  const [completionFixes, setCompletionFixes] = useState<
+    PublicChallengeQuestion[]
+  >([]);
+  const [showCompletion, setShowCompletion] = useState(false);
   const [journalEntries, setJournalEntries] = useState<string[]>([
     "You entered the garden. Walk to the golden glow to begin.",
   ]);
@@ -119,14 +124,20 @@ export default function HomePage() {
   const currentSeason =
     seasons.find((season) => season.id === seasonId) ?? seasons[0];
   const currentLesson =
-    teachingLessons.find((lesson) => lesson.id === lessonId) ??
-    teachingLessonForGradeBand(
-      learnerBand === "younger"
-        ? "grades-1-5"
-        : learnerBand === "middle"
-          ? "grades-6-8"
-          : "grades-9-12",
-    );
+    lessonId === "sample"
+      ? {
+          title: "Five friendly code plants",
+          learningObjective:
+            "Notice, explain, and safely improve five small code problems in any order.",
+        }
+      : (teachingLessons.find((lesson) => lesson.id === lessonId) ??
+        teachingLessonForGradeBand(
+          learnerBand === "younger"
+            ? "grades-1-5"
+            : learnerBand === "middle"
+              ? "grades-6-8"
+              : "grades-9-12",
+        ));
   const scene = projectHealthReport(report);
   const solids = authoredGardenMap.solids;
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
@@ -168,7 +179,7 @@ export default function HomePage() {
 
   function resetSampleLesson() {
     setLessonId("sample");
-    setReport(sampleHealthReport);
+    setReport(demoTeachingReport);
     setSource("sample");
     setRepositoryUrl("https://github.com/ColorlibHQ/gentelella");
     setRequestState("idle");
@@ -196,7 +207,9 @@ export default function HomePage() {
     ]);
     setSeasonId("early-spring");
     setChallengeDifficulty("easy");
-    setSelectedId(sampleHealthReport.nodes[0]?.id);
+    setCompletionFixes([]);
+    setShowCompletion(false);
+    setSelectedId(demoTeachingReport.nodes[0]?.id);
     setShowHelp(false);
   }
 
@@ -217,6 +230,8 @@ export default function HomePage() {
     setCommand(null);
     setTendError(null);
     setCompletedCommands([]);
+    setCompletionFixes([]);
+    setShowCompletion(false);
     setShowApplyReview(false);
     setReflectionNote("");
     setReflectionSaved(false);
@@ -469,7 +484,10 @@ export default function HomePage() {
           ? "watering-can"
           : finding.type === "vulnerability"
             ? "pesticide"
-            : null;
+            : finding.type === "logic-bug" ||
+                finding.type === "missing-function"
+              ? "watering-can"
+              : "clippers";
     if (!tool) return;
     setTendError(null);
     const seed = {
@@ -528,6 +546,12 @@ export default function HomePage() {
       setSelectedId(finding.nodeId);
       if (currentCommand)
         setCompletedCommands((completed) => [...completed, currentCommand!]);
+      setCompletionFixes((current) =>
+        current.some((item) => item.findingId === challenge.question.findingId)
+          ? current
+          : [...current, challenge.question],
+      );
+      if (completionFixes.length + 1 >= 5) setShowCompletion(true);
       setGoldenPath((current) => advanceGoldenPath(current, "reflected"));
       setReflectionSaved(false);
       setPendingFinding(null);
@@ -724,7 +748,11 @@ export default function HomePage() {
             >
               {seasons.map((season) => (
                 <option key={season.id} value={season.id}>
-                  Level {season.level} · {season.label}
+                  {season.level === 1
+                    ? "Sprout / Easy · Grades 1–5"
+                    : season.level === 2
+                      ? "Growing / Medium · Grades 6–8"
+                      : "Master Gardener / Hard · Grades 9–12"}
                 </option>
               ))}
             </select>
@@ -933,13 +961,14 @@ export default function HomePage() {
               />
             </div>
             <div className="map-plants" aria-label="Plants in the garden">
-              {scene.plants.map((plant) => (
+              {scene.plants.map((plant, index) => (
                 <button
                   key={plant.id}
                   type="button"
                   className={`map-plant-button ${plant.health} ${plant.id === selectedId ? "selected" : ""}`}
                   style={{ left: `${plant.x}%`, top: `${plant.y}%` }}
-                  aria-label={`Inspect ${plant.path}`}
+                  aria-label={`Inspect plant ${index + 1}`}
+                  title={plant.path}
                   aria-pressed={plant.id === selectedId}
                   onClick={() => {
                     setSelectedId(plant.id);
@@ -1137,13 +1166,17 @@ export default function HomePage() {
               <span className="eyebrow">
                 Learning greenhouse · {challenge.question.difficulty}
               </span>
-              <h2 id="map-confirm-title">Answer to tend this plant</h2>
+              <h2 id="map-confirm-title">{challenge.question.actionLabel}</h2>
               <p id="map-confirm-description">{visibleExplanation.summary}</p>
               <div className="challenge-card" aria-live="polite">
                 <strong>{challenge.question.objective}</strong>
                 <pre className="challenge-code" aria-label="Code excerpt">
                   <code>{challenge.question.codeExcerpt}</code>
                 </pre>
+                <details className="challenge-example">
+                  <summary>Show a small example</summary>
+                  <code>{challenge.question.example}</code>
+                </details>
                 <p className="challenge-question-kind">
                   {challenge.question.questionType === "notice"
                     ? "Notice the clue"
@@ -1163,9 +1196,11 @@ export default function HomePage() {
                     void startChallenge(pendingFinding, nextDifficulty);
                   }}
                 >
-                  <option value="easy">Easy · spot it</option>
-                  <option value="medium">Medium · connect it</option>
-                  <option value="hard">Hard · explain it</option>
+                  <option value="easy">Sprout / Easy · Grades 1–5</option>
+                  <option value="medium">Growing / Medium · Grades 6–8</option>
+                  <option value="hard">
+                    Master Gardener / Hard · Grades 9–12
+                  </option>
                 </select>
                 <label htmlFor="map-challenge-answer">
                   {challenge.question.prompt}
@@ -1179,7 +1214,7 @@ export default function HomePage() {
                   aria-describedby="map-challenge-hint map-challenge-feedback"
                 />
                 <fieldset className="challenge-choices">
-                  <legend>Choose an answer, or type your own</legend>
+                  <legend>Choose one answer</legend>
                   {challenge.question.choices.map((choice) => (
                     <label key={choice}>
                       <input
@@ -1288,7 +1323,11 @@ export default function HomePage() {
               <span className="plant-dot" style={{ background: plant.color }} />
               <div>
                 <strong>{plant.path}</strong>
-                <p>{plant.ariaLabel}</p>
+                <p>
+                  {plant.findingCount
+                    ? plant.ariaLabel
+                    : "More to explore · no authored lesson yet."}
+                </p>
               </div>
             </div>
           ))}
@@ -1361,6 +1400,58 @@ export default function HomePage() {
               </p>
             ) : null}
           </aside>
+        ) : null}
+        {showCompletion && source === "sample" ? (
+          <section
+            className="completion-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="completion-title"
+          >
+            <div className="completion-card">
+              <span className="eyebrow">Garden celebration</span>
+              <h2 id="completion-title">All five plants are blooming!</h2>
+              <p>
+                You explored every lesson in this session. Here is the
+                reviewable before-and-after work.
+              </p>
+              <ul>
+                {completionFixes.map((fix) => (
+                  <li key={fix.findingId}>
+                    <strong>{fix.actionLabel}</strong>
+                    <span>{fix.findingId}</span>
+                    <pre>
+                      <code>{fix.beforeCode}</code>
+                    </pre>
+                    <pre>
+                      <code>{fix.afterCode}</code>
+                    </pre>
+                  </li>
+                ))}
+              </ul>
+              <p className="read-only-notice">
+                This demo proposes a corrected copy for review. It never
+                silently overwrites code, creates a PR, or changes a public
+                repository.
+              </p>
+              <div className="confirmation-actions">
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => setShowCompletion(false)}
+                >
+                  Close recap
+                </button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={resetSampleLesson}
+                >
+                  Reset Garden
+                </button>
+              </div>
+            </div>
+          </section>
         ) : null}
         <div className="legend" aria-label="Garden health legend">
           {Object.entries(healthMetaphor).map(([state, metaphor]) => (
