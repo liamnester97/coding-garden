@@ -260,6 +260,23 @@ behavior.
 - [ ] On a narrow viewport, confirm the form, garden, Inspector, and payoff content remain usable.
 - [ ] Confirm there are zero browser console errors and zero uncaught page errors.
 
+### Wave 1 in-map trust and recovery checks
+
+- [ ] On a fresh session, read the small First visit guide; dismiss it with `Got it` and reopen it from `Help / pause`.
+- [ ] Confirm the map always labels the current mode as `Sample rehearsal` or `Public read-only`.
+- [ ] Open `Help / pause` and confirm it stays inside the map, explains the golden path, and does not hide the whole world.
+- [ ] Use `Reset sample lesson` after moving or starting a challenge; confirm the gardener, journal, season, and local
+      rehearsal state return to the sample starting point without a page refresh.
+- [ ] Confirm reset does not claim a repository change, branch, PR, or live health update.
+
+### Wave 2 learning progression checks
+
+- [ ] Choose each learner age band and confirm the label explains Grades 1–5, 6–8, and 9–12 in plain language.
+- [ ] Confirm the recommended challenge depth is visible and can be overridden locally.
+- [ ] Open a sample challenge and reveal clues one at a time; confirm clues do not reveal the answer or unlock tending.
+- [ ] Submit a wrong answer and confirm the feedback explains the idea to revisit without shame or health loss.
+- [ ] Submit the correct answer and confirm only then does `Confirm and tend` become available.
+
 ### Automated browser smoke checks
 
 After installing dependencies, run:
@@ -300,3 +317,9 @@ stop that server and rerun the command so the suite can manage its own server.
 For project status and stage gates, use the root [PROJECT_STATUS.md](../PROJECT_STATUS.md) and
 [STAGE_TRACKER.md](../STAGE_TRACKER.md). This document is a how-to and test record template, not a
 second execution plan.
+### Wave 3 loop clarity checks
+
+- [ ] Confirm the in-map Current action card clearly changes from learning question to confirmation/rehearsal,
+      re-analysis, and verified health change.
+- [ ] Complete a sample rehearsal and verify the optional Reflection bench saves a short note only to the local
+      Garden Journal session; it must not claim a repository change or require an account.

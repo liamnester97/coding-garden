@@ -228,6 +228,47 @@ main {
   font-size: 0.85rem;
 }
 
+.map-action-staging,
+.map-reflection-card {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 0.7rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, var(--paper) 88%, #d4ad6b);
+}
+
+.map-action-staging strong,
+.map-reflection-card strong {
+  color: var(--ink);
+}
+
+.map-action-staging small,
+.map-reflection-card small,
+.map-action-command {
+  color: #455944;
+  font-size: 0.78rem;
+}
+
+.map-action-command {
+  justify-self: start;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.3rem;
+  background: #e4edd8;
+  font-family: var(--font-mono, monospace);
+}
+
+.map-reflection-card input {
+  min-height: 2.2rem;
+  border: 1px solid #71856d;
+  border-radius: 0.45rem;
+  padding: 0.35rem 0.5rem;
+  background: #fff;
+  color: #263d2b;
+  font: inherit;
+}
+
 .season-controls,
 .payoff {
   display: grid;
@@ -298,6 +339,76 @@ main {
   border: 1px solid #39553d;
   border-radius: 1.25rem;
   background: #234d30;
+}
+.map-mode-banner {
+  position: absolute;
+  left: 0.8rem;
+  top: 0.8rem;
+  z-index: 9;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.6rem;
+  align-items: baseline;
+  max-width: min(34rem, calc(100% - 1.6rem));
+  padding: 0.45rem 0.65rem;
+  border: 1px solid #d4ad6b;
+  background: rgb(16 31 22 / 0.88);
+  color: #f0f7eb;
+  font-size: 0.72rem;
+  box-shadow: 0 0.2rem 0 #0e1b14;
+}
+.map-mode-banner.public {
+  border-color: #ef9d83;
+}
+.map-mode-banner span {
+  color: #c7d5bf;
+}
+.map-welcome,
+.map-help-panel {
+  position: absolute;
+  z-index: 11;
+  display: grid;
+  gap: 0.35rem;
+  width: min(20rem, calc(100% - 1.6rem));
+  padding: 0.75rem;
+  border: 1px solid #f0bd62;
+  background: #f4f7ed;
+  color: #263d2b;
+  box-shadow: 0.25rem 0.25rem 0 #0e1b14;
+}
+.map-welcome {
+  left: 0.8rem;
+  top: 3.7rem;
+}
+.map-welcome .eyebrow {
+  color: #507344;
+}
+.map-welcome strong,
+.map-help-panel strong {
+  color: #263d2b;
+}
+.map-welcome ol {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #455944;
+  font-size: 0.78rem;
+}
+.map-help-panel {
+  right: 0.7rem;
+  bottom: 3.2rem;
+  z-index: 12;
+}
+.map-help-panel p {
+  margin: 0;
+  color: #455944;
+  font-size: 0.78rem;
+}
+.map-utility-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
 }
 .garden-ground,
 .garden-map-zones,
@@ -857,11 +968,29 @@ main {
     max-height: 10rem;
   }
 
+  .map-mode-banner {
+    top: 0.5rem;
+    left: 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+
+  .map-welcome {
+    top: 4.4rem;
+    left: 0.5rem;
+    width: calc(100% - 1rem);
+  }
+
   .map-challenge-overlay {
     top: 0.75rem;
     right: 0.75rem;
     width: calc(100% - 1.5rem);
     max-height: calc(100% - 11rem);
+  }
+
+  .map-help-panel {
+    right: 0.5rem;
+    bottom: 10.8rem;
+    width: calc(100% - 1rem);
   }
 
   .repository-form-row {

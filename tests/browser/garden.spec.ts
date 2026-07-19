@@ -29,6 +29,57 @@ test("initial sample mode has no browser errors", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("first-visit guide and mode banner stay inside the map", async ({
+  page,
+}) => {
+  await expect(page.getByText("Sample rehearsal").first()).toBeVisible();
+  await expect(
+    page.getByRole("complementary", { name: "First visit guide" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got it" }).click();
+  await expect(
+    page.getByRole("complementary", { name: "First visit guide" }),
+  ).toBeHidden();
+  await page.getByRole("button", { name: "Help / pause" }).click();
+  await expect(
+    page.getByRole("complementary", { name: "Garden help" }),
+  ).toBeVisible();
+});
+
+test("sample lesson can be reset without a page reload", async ({ page }) => {
+  await page.getByRole("button", { name: "Reset sample lesson" }).click();
+  await expect(
+    page.getByText("Lesson reset. Walk to the golden glow to begin."),
+  ).toBeVisible();
+  await expect(page.getByText("Sample rehearsal").first()).toBeVisible();
+});
+
+test("learner age band explains the recommended challenge depth", async ({
+  page,
+}) => {
+  const band = page.locator("#learner-band-select");
+  await band.selectOption("older");
+  await expect(band).toHaveValue("older");
+  await expect(
+    page.getByText(/recommended level changes the question depth/),
+  ).toBeVisible();
+});
+
+test("in-map action status explains the current phase", async ({ page }) => {
+  const status = page.locator(".map-action-staging");
+  await expect(status).toBeVisible();
+  await expect(status).toContainText("Explore and inspect");
+  await page
+    .locator(".map-plant-button.withered, .map-plant-button.stressed")
+    .first()
+    .click();
+  await page
+    .getByRole("button", { name: /Press to use/ })
+    .first()
+    .click();
+  await expect(status).toContainText("Learning question");
+});
+
 test("keyboard movement changes facing and keeps the map usable", async ({
   page,
 }) => {

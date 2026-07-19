@@ -55,10 +55,12 @@ for the active stage’s evidence and gates.
 | Binding decisions                            | [`DECISION_LOG.md`](DECISION_LOG.md)                                           |
 | Canonical execution plan                     | [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md)                             |
 | Deploy and human-test guide                  | [`docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md`](docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md) |
+| Candidate feature ideas                       | [`docs/FEATURE_BACKLOG.md`](docs/FEATURE_BACKLOG.md)                           |
 | Project status audit skill                   | [`project-status-audit/SKILL.md`](project-status-audit/SKILL.md)               |
 
 `docs/EXECUTION_PLAN.md` is the original long-form product and submission blueprint and the only
-execution plan. There is no separate status, tracker, or decision log at another layer.
+execution plan. `docs/FEATURE_BACKLOG.md` is only a running candidate list and does not add a second
+roadmap. There is no separate status, tracker, or decision log at another layer.
 
 ## Folder map
 

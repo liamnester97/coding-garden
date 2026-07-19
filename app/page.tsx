@@ -89,6 +89,12 @@ export default function HomePage() {
     null,
   );
   const [showHint, setShowHint] = useState(false);
+  const [scaffoldLevel, setScaffoldLevel] = useState(0);
+  const [learnerBand, setLearnerBand] = useState<
+    "younger" | "middle" | "older"
+  >("younger");
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [showHelp, setShowHelp] = useState(false);
   const challengeAnswerRef = useRef<HTMLInputElement>(null);
   const [gardener, setGardener] = useState<WorldPoint>(gardenerStart);
   const [gardenerFacing, setGardenerFacing] = useState<Facing>("down");
@@ -97,6 +103,8 @@ export default function HomePage() {
   );
   const [goldenPath, setGoldenPath] = useState(initialGoldenPathState);
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
+  const [reflectionNote, setReflectionNote] = useState("");
+  const [reflectionSaved, setReflectionSaved] = useState(false);
   const [journalEntries, setJournalEntries] = useState<string[]>([
     "You entered the garden. Walk to the golden glow to begin.",
   ]);
@@ -153,6 +161,38 @@ export default function HomePage() {
     setJournalEntries((current) =>
       current.includes(entry) ? current : [...current, entry].slice(-6),
     );
+  }
+
+  function resetSampleLesson() {
+    setReport(sampleHealthReport);
+    setSource("sample");
+    setRepositoryUrl("https://github.com/ColorlibHQ/gentelella");
+    setRequestState("idle");
+    setError(null);
+    setExplanation(null);
+    setCommand(null);
+    setPendingFinding(null);
+    setTendError(null);
+    setChallenge(null);
+    setChallengeAnswer("");
+    setChallengeFeedback(null);
+    setShowHint(false);
+    setScaffoldLevel(0);
+    setLearnerBand("younger");
+    setGardener(gardenerStart);
+    setGardenerFacing("down");
+    setInteractionMessage("Lesson reset. Walk to the golden glow to begin.");
+    setGoldenPath(initialGoldenPathState());
+    setCompletedCommands([]);
+    setReflectionNote("");
+    setReflectionSaved(false);
+    setJournalEntries([
+      "You entered the garden. Walk to the golden glow to begin.",
+    ]);
+    setSeasonId("early-spring");
+    setChallengeDifficulty("easy");
+    setSelectedId(sampleHealthReport.nodes[0]?.id);
+    setShowHelp(false);
   }
   useEffect(() => {
     if (!selectedId) return;
@@ -229,6 +269,7 @@ export default function HomePage() {
     setChallengeAnswer("");
     setChallengeFeedback(null);
     setShowHint(false);
+    setScaffoldLevel(0);
     setGoldenPath((current) => advanceGoldenPath(current, "inspected"));
     recordJournalEntry(
       `You inspected ${finding.nodeId} and opened a learning question.`,
@@ -331,6 +372,7 @@ export default function HomePage() {
         attemptId: payload.attemptId,
         question: payload.question,
       });
+      setScaffoldLevel(0);
     } catch (caught) {
       setTendError(
         caught instanceof Error ? caught.message : "Challenge could not start",
@@ -379,6 +421,7 @@ export default function HomePage() {
             "Try again.",
         );
         setShowHint(true);
+        setScaffoldLevel((current) => Math.max(current, 1));
       }
     } catch (caught) {
       setChallengeFeedback(
@@ -457,6 +500,7 @@ export default function HomePage() {
       if (currentCommand)
         setCompletedCommands((completed) => [...completed, currentCommand!]);
       setGoldenPath((current) => advanceGoldenPath(current, "reflected"));
+      setReflectionSaved(false);
       setPendingFinding(null);
       setChallenge(null);
     } catch (caught) {
@@ -465,6 +509,53 @@ export default function HomePage() {
         currentCommand ? { ...currentCommand, state: "failed" } : null,
       );
     }
+  }
+
+  const actionStage =
+    source === "report"
+      ? {
+          label: "Read-only inspection",
+          detail:
+            "Explore and inspect evidence; no tools can change this report.",
+        }
+      : command?.state === "acting"
+        ? {
+            label: "Rehearsal running",
+            detail:
+              "The sample-only tool rehearsal is preparing a verification.",
+          }
+        : command?.state === "verifying"
+          ? {
+              label: "Re-analysis running",
+              detail: "The garden is checking the bounded sample report again.",
+            }
+          : command?.state === "landed"
+            ? {
+                label: "Health change verified",
+                detail:
+                  "The garden changed only after the verified re-analysis.",
+              }
+            : challenge?.proof
+              ? {
+                  label: "Ready to confirm",
+                  detail: "Your answer unlocked a proposed sample-only scope.",
+                }
+              : pendingFinding
+                ? {
+                    label: "Learning question",
+                    detail:
+                      "Read the evidence and answer before choosing a tool.",
+                  }
+                : {
+                    label: "Explore and inspect",
+                    detail: "Walk to a glowing plant, then press Enter or E.",
+                  };
+
+  function saveReflection() {
+    const note = reflectionNote.trim();
+    if (!note) return;
+    setReflectionSaved(true);
+    recordJournalEntry(`Reflection: ${note}`);
   }
 
   return (
@@ -543,6 +634,37 @@ export default function HomePage() {
           className={`garden-stage season-${currentSeason.id}`}
           aria-label="Code garden map"
         >
+          <div
+            className={`map-mode-banner ${source === "sample" ? "sample" : "public"}`}
+            role="status"
+          >
+            <strong>
+              {source === "sample" ? "Sample rehearsal" : "Public read-only"}
+            </strong>
+            <span>
+              {source === "sample"
+                ? "Practice safely: only verified sample re-analysis changes garden health."
+                : "Explore and inspect only: the analyzed repository is never changed."}
+            </span>
+          </div>
+          {showWelcome ? (
+            <aside className="map-welcome" aria-label="First visit guide">
+              <span className="eyebrow">First visit</span>
+              <strong>Learn the garden in three steps</strong>
+              <ol>
+                <li>Use the arrow keys or WASD to walk.</li>
+                <li>Follow the golden glow to a plant.</li>
+                <li>Press Enter or E, then answer the question.</li>
+              </ol>
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={() => setShowWelcome(false)}
+              >
+                Got it
+              </button>
+            </aside>
+          ) : null}
           <div className="garden-camera-world" style={cameraStyle}>
             <span
               className="map-target-halo"
@@ -719,6 +841,50 @@ export default function HomePage() {
               <strong>Next: {nextTargetLabel}</strong>
               <small>Walk to the golden glow, then press Enter or E</small>
             </div>
+            <div
+              className="map-action-staging"
+              aria-live="polite"
+              aria-label="Current action status"
+            >
+              <span className="eyebrow">Current action</span>
+              <strong>{actionStage.label}</strong>
+              <small>{actionStage.detail}</small>
+              {command ? (
+                <span className="map-action-command">
+                  {command.tool} · {command.state}
+                </span>
+              ) : null}
+            </div>
+            {completedCommands.length && source === "sample" ? (
+              <div className="map-reflection-card" aria-label="Learning recap">
+                <span className="eyebrow">Reflection bench</span>
+                <strong>What did you notice?</strong>
+                <small>
+                  In one short sentence, name the evidence or safe step you
+                  learned.
+                </small>
+                <label htmlFor="map-reflection-note">Your reflection</label>
+                <input
+                  id="map-reflection-note"
+                  value={reflectionNote}
+                  onChange={(event) => {
+                    setReflectionNote(event.target.value);
+                    setReflectionSaved(false);
+                  }}
+                  placeholder="I noticed…"
+                  maxLength={240}
+                  disabled={reflectionSaved}
+                />
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={saveReflection}
+                  disabled={reflectionSaved || !reflectionNote.trim()}
+                >
+                  {reflectionSaved ? "Saved to journal" : "Save reflection"}
+                </button>
+              </div>
+            ) : null}
             <div className="golden-path" aria-label="Learning journey">
               <div className="golden-path-heading">
                 <strong>Learning journey</strong>
@@ -801,6 +967,48 @@ export default function HomePage() {
             <span className="map-hud-help">
               Arrows/WASD move · Enter/E interact · H shows a hint
             </span>
+            <div className="map-utility-actions">
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={() => setShowHelp((current) => !current)}
+                aria-expanded={showHelp}
+                aria-controls="map-help-panel"
+              >
+                {showHelp ? "Close help" : "Help / pause"}
+              </button>
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={resetSampleLesson}
+              >
+                Reset sample lesson
+              </button>
+            </div>
+            {showHelp ? (
+              <aside
+                id="map-help-panel"
+                className="map-help-panel"
+                aria-label="Garden help"
+              >
+                <strong>Garden help</strong>
+                <p>
+                  Walk, inspect, answer, confirm, and watch the sample garden
+                  re-analyze.
+                </p>
+                <p>
+                  Public reports are read-only. H opens a question hint when a
+                  challenge is active.
+                </p>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => setShowWelcome(true)}
+                >
+                  Show first-visit guide
+                </button>
+              </aside>
+            ) : null}
             {source === "sample" && selectedPlant ? (
               <div className="map-selection" aria-label="Selected plant action">
                 <strong>Selected: {selectedPlant.path}</strong>
@@ -852,6 +1060,30 @@ export default function HomePage() {
               <small>
                 {currentSeason.gradeBand} · {currentSeason.learningFocus} ·{" "}
                 {currentSeason.recommendedDifficulty}
+              </small>
+              <label htmlFor="learner-band-select">Learner age band</label>
+              <select
+                id="learner-band-select"
+                value={learnerBand}
+                onChange={(event) => {
+                  const nextBand = event.target.value as typeof learnerBand;
+                  setLearnerBand(nextBand);
+                  setChallengeDifficulty(
+                    nextBand === "younger"
+                      ? "easy"
+                      : nextBand === "middle"
+                        ? "medium"
+                        : "hard",
+                  );
+                }}
+              >
+                <option value="younger">Grades 1–5 · notice and count</option>
+                <option value="middle">Grades 6–8 · connect clues</option>
+                <option value="older">Grades 9–12 · explain a safe step</option>
+              </select>
+              <small>
+                The recommended level changes the question depth, not the
+                garden’s report truth.
               </small>
             </div>
             <button
@@ -937,7 +1169,15 @@ export default function HomePage() {
                 />
                 {showHint ? (
                   <small id="map-challenge-hint">
-                    Hint: {challenge.question.hint}
+                    Clue{" "}
+                    {Math.min(
+                      scaffoldLevel,
+                      challenge.question.scaffolds.length,
+                    )}
+                    :{" "}
+                    {challenge.question.scaffolds[
+                      Math.max(0, scaffoldLevel - 1)
+                    ] ?? challenge.question.hint}
                   </small>
                 ) : null}
                 {challengeFeedback ? (
@@ -960,6 +1200,25 @@ export default function HomePage() {
                   disabled={Boolean(challenge.proof)}
                 >
                   Show hint
+                </button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => {
+                    setShowHint(true);
+                    setScaffoldLevel((current) =>
+                      Math.min(
+                        current + 1,
+                        challenge.question.scaffolds.length,
+                      ),
+                    );
+                  }}
+                  disabled={
+                    Boolean(challenge.proof) ||
+                    scaffoldLevel >= challenge.question.scaffolds.length
+                  }
+                >
+                  Show next clue
                 </button>
               </div>
               <div className="confirmation-actions">

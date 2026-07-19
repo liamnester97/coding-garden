@@ -7,17 +7,74 @@ Stage 18 — Final Visual and Release Hardening / Bundle 8 — Progression, Feed
 ## Execution Bundle
 
 - **Bundle:** 8 — Progression, Feedback, and Release Polish
-- **Current goal:** Complete responsive/reduced-motion/browser evidence and final release synchronization after the
-  Stage 16 readability and Stage 17 walkability implementation slices.
+- **Current goal:** Wave 3 — Loop Clarity and Learning Reflection; verify in-map action status and the local recap
+  while preserving the Stage 18 release gates.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; implementation slices through Stage 18 are complete, while human/review/release evidence
-  remains open.
+- **Bundle gate:** Open; Stage 18 technical implementation and Wave 1 implementation are complete, while human/review/
+  release evidence remains open.
 - **Audit status:** Stage 9/10, Stage 12, Stage 13, Stage 14–15, and the Stage 16–18 technical slice are complete;
   the final technical audit is complete on 2026-07-18, while human/release gates remain open.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
+
+## Wave 3 Goals — Loop Clarity and Learning Reflection
+
+- [x] Add an in-map action-status card for learning, confirmation, rehearsal, re-analysis, and verified health change.
+- [x] Add an optional local reflection prompt after a completed sample rehearsal.
+- [x] Keep the Garden Journal and objective status aligned with the current session only.
+- [x] Add browser regression coverage for the in-map status surface.
+- [x] Run the full project-status audit and reconcile the completed feature records.
+- [ ] Human acceptance for wording, map legibility, and keyboard/touch flow remains open.
+
+## Wave 1 Goals — Trust, Onboarding, and Accessible Recovery
+
+- [x] Add a dismissible first-visit guide inside the map.
+- [x] Show a persistent Sample Rehearsal/Public Read-only mode banner.
+- [x] Add in-map Help/Pause guidance with a re-openable first-visit guide.
+- [x] Add a local sample-lesson reset for recoverable demo state.
+- [x] Add focused desktop/mobile browser coverage for the new surfaces.
+- [x] Run the full project-status audit and reconcile the completed feature records.
+- [ ] Human acceptance for desktop, mobile, keyboard-only, and reduced-motion play remains open.
+
+## Wave 2 Goals — Learning Progression and Scaffolding
+
+- [x] Add no-account learner age-band selection for Grades 1–5, 6–8, and 9–12.
+- [x] Explain and locally override recommended challenge depth.
+- [x] Add a progressive three-step clue ladder without exposing answers or proof.
+- [x] Add misconception-aware wrong-answer feedback.
+- [x] Add unit and browser regression coverage for the learning surfaces.
+- [x] Run the full project-status audit and reconcile the completed feature records.
+- [ ] Human acceptance for age appropriateness and accessibility remains open.
+
+### Wave 2 Verification Evidence — 2026-07-18
+
+- [x] Format, lint, typecheck, and 78-test Vitest suite pass.
+- [x] Browser matrix rerun after the corrected native-select assertion: 18 desktop/mobile checks pass.
+- [x] Full project-status audit: one roadmap, no generic duplicate trackers, no detected secrets, and navigation
+      records reconciled.
+- [x] End-of-wave structure/security audit rerun: one roadmap, no active duplicate trackers, no detected secrets, and
+      required navigation records are present.
+- [ ] Human acceptance for age appropriateness and accessibility remains open.
+
+### Wave 3 Verification Evidence — 2026-07-18
+
+- [x] Format, lint, typecheck, 78-test Vitest suite, analysis validation, production build, and `git diff --check` pass.
+- [x] Playwright desktop/mobile browser matrix passes: 20 checks, including the in-map action-status transition,
+      public read-only mode, reduced motion, keyboard movement, and zero page/console errors.
+- [x] Full project-status audit: one canonical execution plan, no active generic duplicate trackers, no detected
+      secrets, and required documentation paths present.
+- [ ] Human acceptance for age appropriateness, map legibility, reflection wording, and keyboard/touch flow remains
+      open.
+
+### Wave 1 Verification Evidence — 2026-07-18
+
+- [x] Format, lint, typecheck, and 77-test Vitest suite pass.
+- [x] Playwright desktop/mobile browser suite passes: 16 tests, including onboarding, mode truth, help, reset,
+      public read-only behavior, reduced motion, keyboard facing, and zero page/console errors.
+- [x] Full project-status audit and documentation structure/security reconciliation pass.
+- [ ] Human acceptance remains open.
 
 ## Stage 11 Goals
 
@@ -155,7 +212,7 @@ Stage 18 — Final Visual and Release Hardening / Bundle 8 — Progression, Feed
 - **Resume at:** Bundle 8 / Stage 18 final visual and release hardening; implementation is complete and its human/
   release gate is open.
 - **Release to test:** `https://coding-garden-iota.vercel.app` at verified production commit `bd77258`; development
-  branch head is `1bf7667` and is not yet promoted.
+  branch head is `1706cd2` and is not yet promoted.
 - **Resume order:** Stage 18 browser/release evidence → final audit → human acceptance, video, and submission.
 
 ## Stage Status

@@ -17,6 +17,7 @@ export const challengeQuestionSchema = z.object({
   objective: z.string().min(1),
   prompt: z.string().min(1),
   hint: z.string().min(1),
+  scaffolds: z.array(z.string().min(1)).min(1).max(3),
   answer: z.string().min(1),
   explanation: z.string().min(1),
 });
@@ -78,6 +79,25 @@ function explanationFor(
       : "Patch the reported issue, then run the checks again.";
 }
 
+function scaffoldsFor(
+  finding: HealthReport["findings"][number],
+  difficulty: ChallengeDifficulty,
+) {
+  const topic =
+    finding.type === "dead-code"
+      ? "roots"
+      : finding.type === "coverage-gap"
+        ? "tests"
+        : "safety";
+  return [
+    "Look at the plant and name the kind of warning you see.",
+    `For this warning, check ${topic} first.`,
+    difficulty === "hard"
+      ? "Say one small, safe next step before making a change."
+      : "Use the clue, then try your answer again.",
+  ];
+}
+
 function objectiveFor(type: HealthReport["findings"][number]["type"]) {
   if (type === "dead-code") return "Notice when a code plant may be unused.";
   if (type === "coverage-gap") return "See how a test helps protect code.";
@@ -118,9 +138,25 @@ export function questionForFinding(
               ? "Tests give a plant sunlight."
               : "Safety checks help us handle a security warning."
           : "Check first, then make the smallest safe change.",
+    scaffolds: scaffoldsFor(finding, difficulty),
     answer: answerFor(finding, difficulty),
     explanation: explanationFor(finding, difficulty),
   });
+}
+
+export function misconceptionFeedback(
+  question: ChallengeQuestion,
+  answer: string,
+) {
+  const actual = normalizeAnswer(answer);
+  if (!actual) return "Type an answer so we can look at the idea together.";
+  if (question.difficulty === "easy")
+    return "Try counting only the warning signs shown for this plant.";
+  if (question.difficulty === "medium") {
+    const expected = normalizeAnswer(question.answer);
+    return `That choice does not match this warning. For this plant, check ${expected} first.`;
+  }
+  return "That next step is not quite safe yet. Start by checking the evidence, then choose the smallest change.";
 }
 
 export function publicQuestion(

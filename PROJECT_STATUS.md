@@ -5,12 +5,11 @@ Updated: 2026-07-18, America/Denver
 ## Active Bundle and Goal
 
 - Bundle: 8 — Progression, Feedback, and Release Polish
-- Current goal: Stage 18 final visual and release hardening after completing the Stage 16 readability and Stage 17
-  walkability/journal implementation slices.
+- Current goal: Wave 3 — Loop Clarity and Learning Reflection, layered onto the Stage 18 visual/release gates.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Development branch head: `1bf7667` (`fix: close code review release findings`), pushed to
+- Development branch head: `1706cd2` (`docs: record review verification results`), pushed to
   `origin/agent/health-report-foundation`.
 - Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`). The
   deployed release is intentionally behind the development branch until the remaining human visual/release
@@ -32,8 +31,14 @@ Updated: 2026-07-18, America/Denver
   open.
 - Bundle 8 — Progression, Feedback, and Release Polish: Stage 16 readability, Stage 17 reachability/journal, and
   Stage 18 facing implementation slices are complete; browser/release/human gates remain open.
-- Bundle gate: open pending Stage 11 verification, later visual stages, human acceptance, and final
-  submission artifacts.
+- Wave 1 — Trust, Onboarding, and Accessible Recovery: implementation complete locally; human acceptance and the
+  end-of-wave project-status audit are complete; human acceptance remains open.
+- Wave 2 — Learning Progression and Scaffolding: implementation complete locally; browser rerun, human acceptance,
+  and the end-of-wave project-status audit are complete; human acceptance remains open.
+- Wave 3 — Loop Clarity and Learning Reflection: implementation complete locally; human acceptance and the end-of-wave
+  project-status audit are complete; human acceptance remains open.
+- Bundle gate: open pending human visual/accessibility acceptance, final release evidence, and submission
+  artifacts; implementation evidence through Stage 18 and Wave 3 is current.
 
 ## Current State
 
@@ -100,9 +105,9 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Human-test desktop/mobile map scale, target halo, compact overlay, reachability, collision, journal, and facing.
-2. Record browser/performance evidence and decide whether the current branch should be promoted to production.
-3. Complete the final code review, video, and Devpost submission gates.
+1. Human-test Waves 1–3 together: action status, reflection prompt, age-band wording, clues, mobile, keyboard, and reduced motion.
+2. Run the full project-status audit and archive only the human-accepted feature records in `docs/FEATURE_BACKLOG.md`.
+3. Record remaining visual/performance/release evidence, then complete the final code review, video, and Devpost gates.
 
 ## Synchronization Rules
 
@@ -127,6 +132,19 @@ Updated: 2026-07-18, America/Denver
   submission gates below have evidence.
 
 ## Latest Verification Note
+
+- Wave 1 in-map trust/recovery slice is implemented locally: first-visit guide, persistent mode truth banner,
+  Help/Pause surface, and local sample-lesson reset. Format, lint, typecheck, 77 Vitest tests, 16 Playwright
+  desktop/mobile tests, analysis validation, production build, and diff check pass. Human acceptance remains open.
+
+- Wave 2 learning slice is implemented locally: no-account age-band selection, visible difficulty rationale, three-step
+  clue scaffolding, and misconception-aware feedback. Full checks pass at 78 tests and 18 Playwright desktop/mobile
+  checks; the structure/security audit is clean. Human age-appropriateness acceptance remains open.
+
+- Wave 3 loop-clarity slice is implemented locally: the map names the current action phase and offers an optional
+  local reflection note after a completed sample rehearsal. The note stays in the session Garden Journal; it does not
+  create an account, persist remotely, mutate a repository, or add HealthReport truth. Full verification and the
+  end-of-wave structure/security audit pass; human acceptance remains open.
 
 - Commit `bd77258` passed the full local check suite and draft PR #1 remote checks (GitHub CI quality,
   Vercel deployment, and Vercel Preview Comments), then was intentionally promoted to production on

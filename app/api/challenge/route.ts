@@ -4,6 +4,7 @@ import {
   answerIsCorrect,
   challengeDifficultySchema,
   challengeQuestionSchema,
+  misconceptionFeedback,
   publicQuestion,
   questionForFinding,
 } from "@/lib/garden/challenges";
@@ -135,7 +136,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         correct: false,
-        feedback: "Not quite. Read the clue, then try again.",
+        feedback: misconceptionFeedback(attempt.question, parsed.data.answer),
         hint: attempt.question.hint,
         explanation: attempt.question.explanation,
       },

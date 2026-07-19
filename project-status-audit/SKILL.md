@@ -109,6 +109,16 @@ collision geometry agrees with visible paths, all four facing directions are cov
 and the Garden Journal/classroom recap is clearly local-session-only without inventing HealthReport truth or implying
 server persistence.
 
+For the rolling feature-cycle Wave 1, also check that the first-visit guide is dismissible and re-openable, the
+Sample Rehearsal/Public Read-only banner is visible in both modes, Help/Pause remains in-map, reset behavior is local
+and sample-only, and focused browser evidence covers desktop/mobile, keyboard, reduced motion, and zero console/page
+errors. Keep these as implementation evidence until human acceptance is recorded; do not archive backlog items early.
+
+For the rolling feature-cycle Wave 2, also check that age-band selection is anonymous/local, recommended difficulty is
+explained and overrideable, scaffold clues are bounded and answer-safe, wrong-answer feedback is misconception-aware,
+and correct answers remain the only path to server-issued action proof. Keep age appropriateness and educator review
+as human gates even when automated checks pass.
+
 ### Stage completion tracking
 
 Always produce an explicit stage snapshot from the plan. Distinguish:
@@ -223,3 +233,5 @@ status, and any external blockers.
 
 Recommend the next bounded, dependency-aware actions. End with the exact decision or approval Liam
 needs to provide, if any.
+- Verify the in-map action-status card distinguishes learning, confirmation, rehearsal, re-analysis, and verified
+  health change; verify the optional reflection note remains session-local and does not imply repository mutation.

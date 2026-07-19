@@ -452,3 +452,24 @@ stable hash layout now resolves occupied plant slots deterministically so larger
 
 Playwright desktop and Chromium-based mobile smoke coverage is now part of the project checks. A compatible PostCSS
 override removes the current production dependency advisory without accepting npm's unsafe forced Next.js downgrade.
+
+## 2026-07-18 — Wave 1 in-map trust and recovery surfaces
+
+The first feature-cycle wave uses the existing map as the sole gameplay surface. A dismissible first-visit guide,
+always-visible Sample Rehearsal/Public Read-only banner, in-map Help/Pause panel, and local sample-lesson reset were
+selected as the first bounded improvements because they reduce confusion without changing HealthReport truth,
+server-authoritative commands, public read-only behavior, or the sample-only rehearsal boundary. The reset is local
+state recovery only: it does not refresh a repository, create an account, persist learner data, or mutate a report.
+
+## 2026-07-18 — Wave 2 age-band learning scaffolds
+
+The next feature wave keeps learner setup anonymous and local. Players may choose Grades 1–5, 6–8, or 9–12, see why
+Easy/Medium/Hard is recommended, and request up to three progressively stronger clues. Wrong answers receive feedback
+about the misconception rather than shame or health loss. The server still owns grading and proof issuance; scaffolds
+never reveal the answer, unlock a tool, change HealthReport truth, or persist learner identity.
+## 2026-07-18 — Wave 3 action staging and local reflection
+
+The map now makes the current golden-path phase explicit: learning question, ready to confirm, rehearsal running,
+re-analysis running, or verified health change. After a completed sample rehearsal, the learner may write a short
+reflection into the current Garden Journal session. This is intentionally optional and local; it does not gate report
+health, create an account, persist to a server, mutate a repository, or imply a public-repository change.

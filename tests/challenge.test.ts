@@ -1,7 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { POST, resetChallengeRegistry } from "@/app/api/challenge/route";
 import { sampleHealthReport } from "@/lib/analysis/sample-report";
-import { answerIsCorrect, questionForFinding } from "@/lib/garden/challenges";
+import {
+  answerIsCorrect,
+  misconceptionFeedback,
+  questionForFinding,
+} from "@/lib/garden/challenges";
 
 function request(body: unknown) {
   return new Request("http://localhost/api/challenge", {
@@ -39,6 +43,16 @@ describe("learning challenge gate", () => {
     expect(question?.prompt).toContain("How many warning signs");
     expect(question?.prompt).toContain("Enter a number");
     expect(question?.objective).not.toContain("module");
+    expect(question?.scaffolds).toHaveLength(3);
+  });
+
+  it("returns misconception-aware feedback without granting proof", () => {
+    const question = questionForFinding(
+      sampleHealthReport,
+      "coverage-src-garden",
+      "medium",
+    );
+    expect(misconceptionFeedback(question!, "roots")).toContain("tests");
   });
 
   it("requires the correct answer before issuing a proof", async () => {
@@ -98,10 +112,12 @@ describe("learning challenge gate", () => {
     const payload = (await wrong.json()) as {
       explanation?: string;
       hint?: string;
+      feedback?: string;
     };
     expect(wrong.status).toBe(422);
     expect(payload.hint).toBeTruthy();
     expect(payload.explanation).toContain("one warning");
+    expect(payload.feedback).toContain("warning");
   });
 
   it("supports all three levels and does not accept arbitrary reports", async () => {

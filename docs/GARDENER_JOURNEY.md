@@ -72,6 +72,23 @@ The objective ribbon is deliberately compact: it names the next target and the k
 visible. Questions open as bounded in-map cards rather than taking over the page. On small screens the camera may
 follow the gardener, but the same target, walkway, collision, and keyboard rules apply.
 
+On a first visit, a small in-map guide explains movement, the golden target, and the interaction key. It can be
+dismissed and reopened from Help / pause. The map also keeps a Sample rehearsal or Public read-only banner visible so
+the learner always knows whether tending is a safe local rehearsal or inspection-only public analysis. Reset sample
+lesson clears local demo progress and returns the gardener to the entrance; it never changes a repository or sends a
+new analysis request.
+
 Questions use short sentences and one small idea at a time. Easy asks for a visible count, Medium asks whether to
 check roots, tests, or safety, and Hard asks for one safe next step. The level labels remain useful for older learners
 without making the Easy path depend on advanced code vocabulary.
+
+The learner can choose an age band inside the map without creating an account. Grades 1–5 start with Easy notice-and-
+count questions, Grades 6–8 with Medium clue-connection questions, and Grades 9–12 with Hard safe-next-step questions.
+The recommended depth is explained and can be overridden. A challenge offers up to three clues in order; wrong
+answers receive a specific misconception hint, while only a server-validated correct answer unlocks confirmation.
+## Wave 3 loop clarity
+
+During a sample rehearsal, the in-map Current action card tells you whether you are answering, confirming, rehearsing,
+waiting for re-analysis, or looking at a verified health change. After a rehearsal, the Reflection bench offers an
+optional one-sentence note saved only in the current Garden Journal session. It is a learning recap, not a repository
+action or account feature.

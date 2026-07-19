@@ -798,6 +798,57 @@ Maps to Stages 15–18.
 **Gate:** the authored garden is visually legible, educationally coherent, accessible, performant, and ready for
 final submission evidence.
 
+### Wave 1 — Trust, Onboarding, and Accessible Recovery
+
+This is the first rolling feature wave from `docs/FEATURE_BACKLOG.md`. It refines the existing playable map without
+creating a second roadmap. The bounded goals are:
+
+1. Add a dismissible first-visit guide inside the map for movement, target halo, interaction, and questions.
+2. Keep Sample Rehearsal and Public Read-only truth boundaries visible on the map at all times.
+3. Add an in-map Help/Pause surface with controls, truth boundaries, hint guidance, and a re-openable first-visit guide.
+4. Add a local sample-lesson reset so stale, interrupted, or confusing demo state can be recovered without a browser refresh.
+
+**Wave gate:** focused unit/browser checks pass; the map remains the dominant surface; keyboard, touch, reduced-motion,
+public read-only, and sample-only invariants remain intact; documentation and status records are reconciled; human
+desktop/mobile acceptance is recorded before the wave is archived.
+
+**Implementation note (2026-07-18):** all four goals are implemented locally. The remaining gate is human playtest and
+the full project-status audit; the four accepted artifacts will then move to the completed archive in the feature
+backlog rather than creating another tracker.
+
+### Wave 2 — Learning Progression and Scaffolding
+
+The next rolling feature wave promotes four bounded learning improvements from `docs/FEATURE_BACKLOG.md`:
+
+1. Add a no-account learner age-band selector for Grades 1–5, 6–8, and 9–12.
+2. Explain the recommended Easy, Medium, or Hard depth and let the learner override it locally.
+3. Add a progressive three-step clue ladder that never reveals the answer or grants action proof.
+4. Return misconception-aware wrong-answer feedback before a challenge can unlock confirmation.
+
+**Wave gate:** questions remain deterministic, report-grounded, age-appropriate, and server-validated; focused unit
+and browser evidence passes; the golden path and public read-only/sample-only invariants remain intact; documentation,
+audit, and human acceptance are complete before the implemented items move to the backlog archive.
+
+**Implementation note (2026-07-18):** all four goals are implemented locally. The remaining gate is browser rerun,
+human playtest, and acceptance; this wave adds no accounts, learner persistence, model grading, or new HealthReport
+truth.
+
+### Wave 3 — Loop Clarity and Learning Reflection
+
+This bounded slice keeps the interaction inside the map while making the existing golden path easier to read:
+
+1. Show an in-map action-status card for the learning question, confirmation, rehearsal, re-analysis, and verified
+   health-change phases.
+2. Add an optional local reflection prompt after a completed sample rehearsal; save only the learner's short note in
+   the current Garden Journal session.
+3. Keep objective, command, journal, and report messaging synchronized without adding accounts, server persistence,
+   or new HealthReport truth.
+4. Add browser coverage for the status surface and run the complete project checks before the wave audit.
+
+**Wave gate:** the player can tell what phase the action is in, can record what they learned without an account, and
+the UI never implies that a public repository was changed. Human confirmation of age-appropriate wording and map
+legibility remains a separate gate.
+
 ### Visual expansion assumptions
 
 - The current production build remains a fallback while Bundles 7–8 move through human visual/release acceptance;
