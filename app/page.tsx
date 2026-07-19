@@ -88,6 +88,7 @@ export default function HomePage() {
   const [challengeFeedback, setChallengeFeedback] = useState<string | null>(
     null,
   );
+  const [showExplanationReview, setShowExplanationReview] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [scaffoldLevel, setScaffoldLevel] = useState(0);
   const [learnerBand, setLearnerBand] = useState<
@@ -103,6 +104,7 @@ export default function HomePage() {
   const [interactionMessage, setInteractionMessage] = useState<string | null>(
     null,
   );
+  const [dialogueExpanded, setDialogueExpanded] = useState(false);
   const [goldenPath, setGoldenPath] = useState(initialGoldenPathState);
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
   const [showApplyReview, setShowApplyReview] = useState(false);
@@ -140,6 +142,16 @@ export default function HomePage() {
         ));
   const scene = projectHealthReport(report);
   const solids = authoredGardenMap.solids;
+  const completedFindingIds = new Set(
+    completionFixes.map((fix) => fix.findingId),
+  );
+  const completedNodeIds = new Set(completionFixes.map((fix) => fix.nodeId));
+  const unfinishedPlants = scene.plants.filter((plant) =>
+    report.findings.some(
+      (finding) =>
+        finding.nodeId === plant.id && !completedFindingIds.has(finding.id),
+    ),
+  );
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
   const nearbyPlant = scene.plants.find((plant) =>
@@ -164,11 +176,24 @@ export default function HomePage() {
       : selectedPlant
         ? explainNode(report, selectedPlant.id, source)
         : null;
-  const nextTarget = goldenPath.reflected
-    ? { x: 38, y: 86, label: "Reflection bench" }
-    : selectedPlant
-      ? { x: selectedPlant.x, y: selectedPlant.y, label: selectedPlant.path }
-      : { x: 50, y: 43, label: "Main garden walk" };
+  const nextUnfinishedPlant = unfinishedPlants[0];
+  const nextTarget = nextUnfinishedPlant
+    ? {
+        x: nextUnfinishedPlant.x,
+        y: nextUnfinishedPlant.y,
+        label: nextUnfinishedPlant.path,
+        isPlant: true,
+      }
+    : goldenPath.reflected
+      ? { x: 38, y: 86, label: "Reflection bench", isPlant: false }
+      : selectedPlant
+        ? {
+            x: selectedPlant.x,
+            y: selectedPlant.y,
+            label: selectedPlant.path,
+            isPlant: false,
+          }
+        : { x: 50, y: 43, label: "Main garden walk", isPlant: false };
   const nextTargetLabel =
     source === "report" ? "Inspect a public-report plant" : nextTarget.label;
   function recordJournalEntry(entry: string) {
@@ -191,12 +216,14 @@ export default function HomePage() {
     setChallenge(null);
     setChallengeAnswer("");
     setChallengeFeedback(null);
+    setShowExplanationReview(false);
     setShowHint(false);
     setScaffoldLevel(0);
     setLearnerBand("younger");
     setGardener(gardenerStart);
     setGardenerFacing("down");
     setInteractionMessage("Lesson reset. Walk to the golden glow to begin.");
+    setDialogueExpanded(false);
     setGoldenPath(initialGoldenPathState());
     setCompletedCommands([]);
     setShowApplyReview(false);
@@ -225,6 +252,7 @@ export default function HomePage() {
     setChallenge(null);
     setChallengeAnswer("");
     setChallengeFeedback(null);
+    setShowExplanationReview(false);
     setShowHint(false);
     setScaffoldLevel(0);
     setCommand(null);
@@ -249,6 +277,7 @@ export default function HomePage() {
         ? `${nextLesson.title} loaded. Walk to a glowing plant and press E to begin.`
         : "Sample lesson loaded. Walk to a glowing plant and press E to begin.",
     );
+    setDialogueExpanded(false);
   }
   useEffect(() => {
     if (!selectedId) return;
@@ -331,6 +360,7 @@ export default function HomePage() {
     setChallenge(null);
     setChallengeAnswer("");
     setChallengeFeedback(null);
+    setShowExplanationReview(false);
     setShowHint(false);
     setScaffoldLevel(0);
     setGoldenPath((current) => advanceGoldenPath(current, "inspected"));
@@ -350,6 +380,7 @@ export default function HomePage() {
     setGardener(next.point);
     setGardenerFacing(next.facing);
     setInteractionMessage(null);
+    setDialogueExpanded(false);
     if (next.moved) {
       setGoldenPath((current) => advanceGoldenPath(current, "explored"));
       recordJournalEntry("You explored a new part of the garden.");
@@ -359,6 +390,24 @@ export default function HomePage() {
   function interactNearby() {
     if (nearbyPlant) {
       setSelectedId(nearbyPlant.id);
+      const nearbyFinding = report.findings.find(
+        (finding) =>
+          finding.nodeId === nearbyPlant.id &&
+          !completedFindingIds.has(finding.id),
+      );
+      if (!nearbyFinding) {
+        setInteractionMessage(
+          `${nearbyPlant.path} is blooming. Choose another golden plant to keep learning.`,
+        );
+        return;
+      }
+      if (!dialogueExpanded) {
+        setDialogueExpanded(true);
+        setInteractionMessage(
+          `${nearbyPlant.path} needs tending. Solve the problem to help this plant bloom. Press E or Enter again to open the question.`,
+        );
+        return;
+      }
       setGoldenPath((current) => advanceGoldenPath(current, "inspected"));
       const finding = report.findings.find(
         (candidate) =>
@@ -377,17 +426,20 @@ export default function HomePage() {
       return;
     }
     if (nearbyZone?.id === "learning") {
+      setDialogueExpanded(false);
       setInteractionMessage(
         "Learning greenhouse: move near a plant, then press Inspect nearby.",
       );
       return;
     }
     if (nearbyZone?.id === "payoff") {
+      setDialogueExpanded(false);
       setInteractionMessage(
         "Reflection bench: this is where the before-and-after learning recap appears.",
       );
       return;
     }
+    setDialogueExpanded(false);
     setInteractionMessage(
       "Nothing is close enough yet. Walk toward a glowing plant, greenhouse, or bench.",
     );
@@ -551,7 +603,12 @@ export default function HomePage() {
           ? current
           : [...current, challenge.question],
       );
-      if (completionFixes.length + 1 >= 5) setShowCompletion(true);
+      const nextCompletionFixes = completionFixes.some(
+        (item) => item.findingId === challenge.question.findingId,
+      )
+        ? completionFixes
+        : [...completionFixes, challenge.question];
+      if (nextCompletionFixes.length >= 5) setShowCompletion(true);
       setGoldenPath((current) => advanceGoldenPath(current, "reflected"));
       setReflectionSaved(false);
       setPendingFinding(null);
@@ -623,7 +680,9 @@ export default function HomePage() {
     <main>
       <section className="garden" aria-labelledby="title">
         <span className="eyebrow">Code Garden · {modeLabel}</span>
-        <h1 id="title">A living view of your codebase.</h1>
+        <h1 id="title">
+          A garden adventure for finding and fixing bugs in code.
+        </h1>
         <p>
           Every plant is a module. Its condition comes from the validated health
           report, and its position is stable across renders.
@@ -756,26 +815,6 @@ export default function HomePage() {
                 </option>
               ))}
             </select>
-            <label htmlFor="toolbar-learner-band">Age band</label>
-            <select
-              id="toolbar-learner-band"
-              value={learnerBand}
-              onChange={(event) => {
-                const nextBand = event.target.value as typeof learnerBand;
-                setLearnerBand(nextBand);
-                setChallengeDifficulty(
-                  nextBand === "younger"
-                    ? "easy"
-                    : nextBand === "middle"
-                      ? "medium"
-                      : "hard",
-                );
-              }}
-            >
-              <option value="younger">Grades 1–5</option>
-              <option value="middle">Grades 6–8</option>
-              <option value="older">Grades 9–12</option>
-            </select>
             <button
               type="button"
               className="secondary-button"
@@ -803,7 +842,7 @@ export default function HomePage() {
         </div>
         <div
           ref={gameSurfaceRef}
-          className={`garden-stage season-${currentSeason.id}`}
+          className={`garden-stage season-${currentSeason.id}${challenge ? " challenge-open" : ""}`}
           aria-label="Code garden map"
         >
           <div
@@ -838,11 +877,14 @@ export default function HomePage() {
             </aside>
           ) : null}
           <div className="garden-camera-world" style={cameraStyle}>
-            <span
-              className="map-target-halo"
-              style={{ left: `${nextTarget.x}%`, top: `${nextTarget.y}%` }}
-              aria-hidden="true"
-            />
+            {unfinishedPlants.map((plant) => (
+              <span
+                className="map-target-halo"
+                key={`halo-${plant.id}`}
+                style={{ left: `${plant.x}%`, top: `${plant.y}%` }}
+                aria-hidden="true"
+              />
+            ))}
             <div className="garden-map-zones" aria-hidden="true">
               {authoredGardenMap.zones.map((zone) => (
                 <span
@@ -965,7 +1007,7 @@ export default function HomePage() {
                 <button
                   key={plant.id}
                   type="button"
-                  className={`map-plant-button ${plant.health} ${plant.id === selectedId ? "selected" : ""}`}
+                  className={`map-plant-button ${plant.health} ${completedNodeIds.has(plant.id) ? "completed" : ""} ${plant.id === selectedId ? "selected" : ""}`}
                   style={{ left: `${plant.x}%`, top: `${plant.y}%` }}
                   aria-label={`Inspect plant ${index + 1}`}
                   title={plant.path}
@@ -1018,7 +1060,9 @@ export default function HomePage() {
               </strong>
               <small>
                 {nearbyPlant
-                  ? `Nearby: ${nearbyPlant.path} · press E or Enter to inspect the code.`
+                  ? dialogueExpanded
+                    ? "Press E or Enter again to open the full question."
+                    : `Nearby: ${nearbyPlant.path} · press E or Enter to talk to this plant.`
                   : "Your next clue and question will appear here."}
               </small>
             </div>
@@ -1150,16 +1194,21 @@ export default function HomePage() {
               aria-modal="true"
               aria-labelledby="map-confirm-title"
               aria-describedby="map-confirm-description"
+              tabIndex={-1}
               onKeyDown={(event) => {
                 if (event.key === "Escape") {
                   event.preventDefault();
                   setPendingFinding(null);
                   setChallenge(null);
                   setChallengeFeedback(null);
+                  setShowExplanationReview(false);
                   setShowHint(false);
                 } else if (event.key.toLowerCase() === "h") {
                   event.preventDefault();
                   setShowHint(true);
+                } else if (event.key.toLowerCase() === "y" && challenge.proof) {
+                  event.preventDefault();
+                  setShowExplanationReview(true);
                 }
               }}
             >
@@ -1184,7 +1233,9 @@ export default function HomePage() {
                       ? "Use the evidence"
                       : "Choose a safe next step"}
                 </p>
-                <label htmlFor="map-challenge-difficulty">Level</label>
+                <label htmlFor="map-challenge-difficulty">
+                  Challenge level
+                </label>
                 <select
                   id="map-challenge-difficulty"
                   value={challengeDifficulty}
@@ -1197,9 +1248,15 @@ export default function HomePage() {
                   }}
                 >
                   <option value="easy">Sprout / Easy · Grades 1–5</option>
-                  <option value="medium">Growing / Medium · Grades 6–8</option>
-                  <option value="hard">
-                    Master Gardener / Hard · Grades 9–12
+                  <option value="medium" disabled={completionFixes.length < 5}>
+                    Growing / Medium · Grades 6–8{" "}
+                    {completionFixes.length < 5 ? "(unlock Easy first)" : ""}
+                  </option>
+                  <option value="hard" disabled={completionFixes.length < 10}>
+                    Master Gardener / Hard · Grades 9–12{" "}
+                    {completionFixes.length < 10
+                      ? "(unlock Growing first)"
+                      : ""}
                   </option>
                 </select>
                 <label htmlFor="map-challenge-answer">
@@ -1249,6 +1306,13 @@ export default function HomePage() {
                     {challengeFeedback}
                   </p>
                 ) : null}
+                {showExplanationReview && challenge.proof ? (
+                  <div className="challenge-explanation-review" role="status">
+                    <strong>Why this answer works</strong>
+                    <p>{visibleExplanation.summary}</p>
+                    <p>{visibleExplanation.needs}</p>
+                  </div>
+                ) : null}
                 <button
                   type="button"
                   className="secondary-button"
@@ -1256,6 +1320,14 @@ export default function HomePage() {
                   disabled={Boolean(challenge.proof) || !challengeAnswer.trim()}
                 >
                   Check answer
+                </button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => setShowExplanationReview(true)}
+                  disabled={!challenge.proof}
+                >
+                  Review explanation (Y)
                 </button>
                 <button
                   type="button"

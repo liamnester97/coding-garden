@@ -547,3 +547,32 @@ explore. Automated evidence is 87 Vitest tests and 24/24 Playwright checks; full
 open until the Stage 32 gate.
 No account, teacher dashboard, cloud progress, automatic lesson generation, or live repository mutation is part of
 this proof-of-concept gate; those remain future backlog decisions.
+
+## 2026-07-19 — Human feedback and Easy-first refinement direction
+
+The next refinement cycle is optimized for an independent Grades 1–5 learner. The student should experience Code
+Garden as “a garden adventure for finding and fixing bugs in code,” not as a generic health dashboard. The first-run
+path will prioritize simple, intentional fixture errors, clear four-choice answer boxes where applicable, short
+in-world dialogue, hints, examples, retries, and no grading. Medium and Hard remain available capabilities but are not
+the primary quality target for this demo.
+
+The interaction contract is: walk to an unfinished plant, press `E` or `Enter` for a short prompt, press it again for
+the full question, answer in any order, and see that plant visibly bloom immediately after a correct answer. The
+learner may press `Y` to review the explanation or continue. Unfinished plants alone receive golden halos; completed
+plants lose their halos. The map must remain large, uncluttered, and keyboard-first.
+
+The demo remains exactly five questions for this release, with scalability of question count deferred. The dedicated
+teaching fixture remains the only first-release source. A completion surface may offer review, corrected-copy, and
+patch/diff outputs, but never silently overwrites code. GitHub URLs, ZIP/folder uploads, individual files, and live
+branch/PR writes remain future, explicit intake/integration choices. Public repository reports remain read-only.
+
+These decisions are scheduled as Bundle 12 / Stages 33–36 in the canonical execution plan. They do not create a second
+roadmap or reopen the HealthReport truth boundary.
+
+## 2026-07-19 — Bundle 12 Easy-first map interaction contract
+
+The first polished Code Garden path is an independent Grades 1–5 learner exploring a large, readable 2D map. The map
+uses one level selector, connected visible walkways, report-grounded plants, and unfinished-only golden guidance.
+Approaching a plant and pressing E/Enter once opens a short direct-action dialogue; pressing it again opens the full
+challenge. Correct sample re-analysis makes the plant bloom; public reports remain read-only. Medium and Hard remain
+available as secondary capabilities, and output remains explicit/review-only rather than silently overwriting code.

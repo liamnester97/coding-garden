@@ -4,14 +4,13 @@ Updated: 2026-07-19, America/Denver
 
 ## Active Bundle and Goal
 
-- Bundle: 11 — Open-Ended Learning Demo and Verified Fix Payoff
-- Current goal: Stage 32 — final verification, full coding-garden audit, human-test preparation, and release gate.
+- Bundle: 12 — Easy-first Interaction Repair and Demo Clarity
+- Current goal: Stage 36 — final verification, full coding-garden audit, human-test preparation, and release gate.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Development branch head: `bee6d57` (`Add evidence-first teaching feedback slice`), with the Bundle 11 implementation
-  changes currently uncommitted locally and not yet pushed to
-  `origin/agent/health-report-foundation`.
+- Development branch head: `436a09e` (`Build Bundle 11 open-order learning demo`), pushed to
+  `origin/agent/health-report-foundation`; Bundle 12 changes are currently uncommitted locally.
 - Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`). The
   deployed release is intentionally behind the development branch until the remaining human visual/release
   gates are accepted; earlier release/documentation commits are preserved in history.
@@ -36,10 +35,12 @@ Updated: 2026-07-19, America/Denver
   teaching repository publication, human acceptance, and final release gates remain open.
 - Bundle 10 — Evidence-First Teaching and Interaction Clarity: Stages 23–25 implementation slices are complete;
   Stage 26 verification/audit/commit gate is active.
-- Bundle 11 — Open-Ended Learning Demo and Verified Fix Payoff: Stages 27–31 are implemented locally. The default
-  offline demo now has five independent plants/questions, three clearly named grade levels, supportive examples and
-  retries, and a reviewable all-five completion payoff. Stage 32 verification, audit, human acceptance, and push gate
-  remain open.
+- Bundle 11 — Open-Ended Learning Demo and Verified Fix Payoff: Stages 27–31 are implemented and pushed. The default
+-  offline demo now has five independent plants/questions, three clearly named grade levels, supportive examples and
+  retries, and a reviewable all-five completion payoff. Its human acceptance remains open.
+- Bundle 12 — Easy-first Interaction Repair and Demo Clarity: Stages 33–36 are implemented locally. The map is larger,
+  the objective guidance is unfinished-target-only, E/Enter uses a two-step dialogue, and the primary framing is
+  Easy-first for Grades 1–5. The full coding-garden audit passed on 2026-07-19; human evidence and push remain open.
 - Wave 1 — Trust, Onboarding, and Accessible Recovery: implementation complete locally; human acceptance and the
   end-of-wave project-status audit are complete; human acceptance remains open.
 - Wave 2 — Learning Progression and Scaffolding: implementation complete locally; browser rerun, human acceptance,
@@ -48,6 +49,9 @@ Updated: 2026-07-19, America/Denver
   project-status audit are complete; human acceptance remains open.
 - Bundle gate: open pending the separate teaching-repository publication, human visual/accessibility/age-band
   acceptance, final release evidence, and submission artifacts.
+- Latest implementation slice: Bundle 12 — Easy-first interaction repair and demo clarity. Its scope is map
+  readability/walkability, reliable E/Enter dialogue, simple Grades 1–5 questions, visible plant healing, replay/reset,
+  and safe completion output.
 
 ## Current State
 
@@ -81,6 +85,8 @@ Updated: 2026-07-19, America/Denver
 - The map now has a larger responsive surface, subdued zone borders, visible guided paths, a yellow next-target halo,
   and a compact in-map objective ribbon. Collision padding is explicit; deterministic target reachability, route
   safety, all four facing directions, and blocked-input facing are now covered by regression tests.
+- Bundle 12 audit evidence (2026-07-19): one canonical execution plan, one active root tracker/status/decision set,
+  no active generic duplicate docs, no sensitive-looking files or secret literals, and no tracked generated files.
 - The map now exposes a local Garden Journal and classroom comparison recap. It records learning evidence only for
   the current session; it does not create accounts, persist to a server, mutate repositories, or replace HealthReport
   truth.
@@ -122,8 +128,9 @@ Updated: 2026-07-19, America/Denver
 
 ## Blockers and Open Gates
 
-- Bundle 11 implementation is complete through Stage 31. Stage 32 remains open for the full project-status audit,
-  human playthrough, and final evidence reconciliation.
+- Bundle 11 implementation and automated gate are complete. Its human acceptance remains open as a release-level gate.
+- Bundle 12 implementation is complete through Stage 36 locally. The full coding-garden audit and human playthrough
+  remain open for map scale, Easy-first clarity, keyboard interaction, and safe-output evidence.
 - Human non-coder and grade-band read-through of the teaching questions and explanations remains open.
 - Separate public teaching repository publication and pinned-commit evidence remain open.
 - Real demo-fork PR evidence remains an external credential/rehearsal gate.
@@ -135,9 +142,9 @@ Updated: 2026-07-19, America/Denver
 
 ## Next Three Actions
 
-1. Run the complete documented check sequence again after the final documentation/configuration reconciliation.
-2. Run the full project-status audit across the entire coding-garden folder and record its result.
-3. Complete human desktop/mobile/keyboard/grade-band checks, then commit and push only after all evidence passes.
+1. Record the full project-status audit across the entire coding-garden folder after documentation reconciliation.
+2. Complete human desktop/mobile/keyboard/Easy-first checks, including all-five open ordering and safe outputs.
+3. Commit and push only after the human gate is accepted; then perform the requested code review.
 
 ## Synchronization Rules
 

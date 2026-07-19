@@ -11,7 +11,9 @@ export default defineConfig({
     command:
       "npm run build && npm run start -- --hostname 127.0.0.1 --port 3100",
     url: "http://127.0.0.1:3100",
-    reuseExistingServer: false,
+    // Keep desktop/mobile projects on one generated Next build. Parallel builds can
+    // leave duplicate .next/types declarations that break the next typecheck.
+    reuseExistingServer: true,
     timeout: 120_000,
   },
   projects: [

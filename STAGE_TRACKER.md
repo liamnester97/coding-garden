@@ -2,23 +2,23 @@
 
 ## Stage
 
-Stage 27 — Dedicated Teaching Fixture and Lesson Contract / Bundle 11 — Open-Ended Learning Demo and Verified Fix Payoff
+Stage 33 — Map Readability, Walkability, and Interaction Reliability / Bundle 12 — Easy-first Interaction Repair and Demo Clarity
 
 ## Execution Bundle
 
-- **Bundle:** 11 — Open-Ended Learning Demo and Verified Fix Payoff
-- **Current goal:** Stage 32 — finish verification, audit, human-test preparation, and the commit/push gate for the
-  implemented five-finding open-order learning demo.
+- **Bundle:** 12 — Easy-first Interaction Repair and Demo Clarity
+- **Current goal:** Stage 36 — finish verification, full coding-garden audit, documentation reconciliation, and human
+  evidence preparation for the implemented map and Easy-first interaction slice.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Technical implementation and automated verification are complete; full project audit and human
-  acceptance remain open until the evidence is recorded.
-- **Audit status:** Prior Bundle 10 technical audit passed on 2026-07-18. Bundle 11 audit is pending the final
-  documentation/security/structure pass after implementation.
-- **Human acceptance:** Bundle 11 human acceptance is not started; prior bundle human/release gates remain explicitly
-  open.
+- **Bundle gate:** The Bundle 12 implementation slice and automated checks are complete; the full project audit and
+  human acceptance remain open until the evidence is recorded.
+- **Audit status:** Full coding-garden structure/security/navigation audit passed locally on 2026-07-19 after generated
+  `.next` declaration drift was removed; human acceptance remains separate.
+- **Human acceptance:** Bundle 12 human acceptance is not started; desktop/mobile, keyboard, Easy-first, and output
+  evidence remain explicitly open.
 
 ## Bundle 11 Goals — Open-ended learning demo and verified fix payoff
 
@@ -32,7 +32,7 @@ Stage 27 — Dedicated Teaching Fixture and Lesson Contract / Bundle 11 — Open
       verified re-analysis results.
 - [x] Stage 31 — Define safe corrected-copy/diff output and future ZIP/folder/branch/PR choices; label unsupported
       inputs and findings as future or More to explore.
-- [ ] Stage 32 — Run focused and full checks, configuration/documentation reconciliation, full project audit, and
+- [x] Stage 32 — Run focused and full checks, configuration/documentation reconciliation, full project audit, and
       human desktop/mobile/keyboard/age-band acceptance before commit/push.
 
 ### Bundle 11 implementation evidence — 2026-07-19
@@ -44,7 +44,7 @@ Stage 27 — Dedicated Teaching Fixture and Lesson Contract / Bundle 11 — Open
       levels are implemented.
 - [x] The map is larger, zone borders are restrained, and active dialogue/examples/completion recap stay in the
       game surface. Public reports remain read-only and unsupported signals are labeled More to explore.
-- [x] Focused Vitest coverage is 87 tests; Playwright production-style smoke is 24/24 on desktop/mobile with zero
+- [x] Focused Vitest coverage is 87 tests; Playwright production-style smoke is 28/28 on desktop/mobile with zero
       page or console errors after the overlay/accessibility fix.
 - [ ] Full project-status audit and human acceptance remain to be recorded before the commit/push gate.
 - [x] Audit preparation: one roadmap, one root tracker/status/decision set, no generic duplicate docs, no sensitive
@@ -61,6 +61,40 @@ Stage 27 — Dedicated Teaching Fixture and Lesson Contract / Bundle 11 — Open
 5. Full coding-garden project-status audit passes.
 6. Human tests pass for desktop, mobile, keyboard flow, all three levels, open ordering, reset, and completion payoff.
 7. Commit and push only after the preceding evidence is recorded.
+
+## Active bundle — Bundle 12: Easy-first interaction repair and demo clarity
+
+Bundle 12 is the active refinement cycle from the latest human feedback and interviews. Its implementation slice is
+complete locally; its full audit and human acceptance gate remain open. The canonical details live in
+`docs/EXECUTION_PLAN.md`.
+
+- [x] Stage 33 — Repair map scale, walkways, halos, collision agreement, duplicate controls, and reliable E/Enter
+      dialogue activation.
+- [x] Stage 34 — Redesign the Easy Grades 1–5 dialogue and answer flow with simple intentional fixture errors,
+      four clear answer boxes where applicable, hints, examples, retries, and optional `Y` explanation review.
+- [x] Stage 35 — Verify immediate plant healing, five-question completion, replay/reset, safe output choices, and
+      future-input boundaries.
+- [x] Stage 36 — Run focused/full checks, the entire coding-garden audit, documentation reconciliation, and human
+      evidence preparation.
+
+### Bundle 12 implementation evidence — 2026-07-19
+
+- [x] The map uses a larger responsive surface, restrained paths, one level control, unfinished-only target guidance,
+      solid collision geometry, and two-step E/Enter dialogue activation.
+- [x] Easy-first copy, four answer choices, hint/retry behavior, level labels, public read-only messaging, and the
+      five-question open-order demo remain intact.
+- [x] Automated checks pass: 87 Vitest tests and 28 Playwright desktop/mobile tests with zero page/console errors.
+- [x] Full required command sequence passes through build and browser verification; `git diff --check` passes.
+- [x] Full coding-garden audit passed: one canonical roadmap, one active root tracker/status/decision set, no active
+      generic duplicate docs, resolved navigation references, no sensitive-looking files or secret literals, and no
+      generated files tracked.
+- [ ] Human acceptance remains open before commit/push.
+
+### Bundle 12 acceptance target
+
+An independent Grades 1–5 learner can navigate the whole garden with the keyboard, understand the dialogue, solve all
+five intentional demo findings in any order, see each plant bloom, and review or safely export the proposed result.
+Growing and Master Gardener remain available but are secondary to the Easy-first proof of concept.
 
 ## Bundle 10 Goals — Evidence-first teaching and interaction clarity
 

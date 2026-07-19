@@ -66,6 +66,11 @@ test("first-visit guide and mode banner stay inside the map", async ({
   ).toBeVisible();
 });
 
+test("unfinished demo plants each have target guidance", async ({ page }) => {
+  await expect(page.locator(".map-plant-button")).toHaveCount(5);
+  await expect(page.locator(".map-target-halo")).toHaveCount(5);
+});
+
 test("sample lesson can be reset without a page reload", async ({ page }) => {
   await page.getByRole("button", { name: "Reset lesson" }).click();
   await expect(
@@ -74,12 +79,12 @@ test("sample lesson can be reset without a page reload", async ({ page }) => {
   await expect(page.getByText("Sample rehearsal").first()).toBeVisible();
 });
 
-test("learner age band explains the recommended challenge depth", async ({
+test("one level control explains the recommended challenge depth", async ({
   page,
 }) => {
-  const band = page.locator("#toolbar-learner-band");
-  await band.selectOption("older");
-  await expect(band).toHaveValue("older");
+  const level = page.locator("#toolbar-season-select");
+  await level.selectOption({ label: "Master Gardener / Hard · Grades 9–12" });
+  await expect(level).toHaveValue("late-summer");
   await expect(
     page.getByText(/recommended level changes the question depth/),
   ).toBeVisible();
@@ -113,6 +118,31 @@ test("keyboard movement changes facing and keeps the map usable", async ({
   await expect(page.locator(".map-hud")).toBeVisible();
 });
 
+test("E opens a short plant dialogue before the full question", async ({
+  page,
+}) => {
+  const map = page.locator("svg[aria-label*='module map']");
+  await map.focus();
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowUp");
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("e");
+  await expect(page.locator(".map-dialogue")).toContainText(
+    "Press E or Enter again",
+  );
+  await expect(page.locator(".map-challenge-overlay")).toBeHidden();
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".map-challenge-overlay")).toBeVisible();
+  await expect(page.locator(".challenge-choices label")).toHaveCount(4);
+  await page.locator(".challenge-choices label").first().click();
+  await page.getByRole("button", { name: "Check answer" }).click();
+  await expect(
+    page.getByRole("button", { name: "Confirm and tend" }),
+  ).toBeEnabled();
+  await page.locator(".map-challenge-overlay").press("y");
+  await expect(page.locator(".challenge-explanation-review")).toBeVisible();
+});
+
 test("mobile layout has no horizontal overflow", async ({ page }) => {
   expect(
     await page.evaluate(
@@ -126,8 +156,8 @@ test("reduced motion disables the target animation", async ({ browser }) => {
   const context = await browser.newContext({ reducedMotion: "reduce" });
   const page = await context.newPage();
   await page.goto("/");
-  await expect(page.locator(".map-target-halo")).toBeVisible();
-  await expect(page.locator(".map-target-halo")).toHaveCSS(
+  await expect(page.locator(".map-target-halo").first()).toBeVisible();
+  await expect(page.locator(".map-target-halo").first()).toHaveCSS(
     "animation-name",
     "none",
   );

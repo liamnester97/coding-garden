@@ -375,3 +375,22 @@ second execution plan.
 - [ ] Confirm the demo never silently overwrites source files; output choices are explicit and reviewable.
 - [ ] Record whether the demo produced the expected corrected copy/diff. ZIP/folder and authenticated branch/PR
       outputs remain future gates unless separately enabled and evidenced.
+
+### Bundle 12 Easy-first feedback checks
+
+- [ ] Confirm the map is not overly zoomed and remains the dominant surface in full-screen and normal browser views.
+- [ ] Confirm there are no unexplained lines, overlapping objects, duplicate grade controls, stale panels, or
+      distracting content outside the game surface.
+- [ ] Walk from the entrance to every plant; confirm the visible walkway matches collision behavior and no target is
+      trapped behind a solid object.
+- [ ] Confirm only unfinished plants have golden halos; after a correct answer the plant visibly blooms and its halo
+      disappears.
+- [ ] Approach a plant and press `E`/`Enter`; confirm a short dialogue appears. Press the key again and confirm the
+      full question opens inside the map.
+- [ ] Test Easy first with short questions, simple intentional bugs, four answer boxes where applicable, hints,
+      examples, wrong-answer retry, and optional `Y` explanation review.
+- [ ] Solve all five in a non-sequential order; confirm every solved plant heals immediately and completion shows the
+      before/after code, proposed fixes, re-analysis evidence, and safe output choices.
+- [ ] Reset and confirm the five-question session returns to the initial state without changing a repository.
+- [ ] Confirm Growing and Master Gardener can be unlocked after Easy, but are not required for the first-run demo.
+- [ ] Confirm the title/framing reads as a garden adventure for finding and fixing bugs in code.

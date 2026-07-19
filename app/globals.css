@@ -379,8 +379,8 @@ main {
 .garden-stage {
   position: relative;
   width: 100%;
-  min-height: 42rem;
-  height: clamp(42rem, 72vw, 58rem);
+  min-height: 48rem;
+  height: clamp(48rem, 76vw, 64rem);
   margin-top: 1.5rem;
   overflow: hidden;
   border: 1px solid #39553d;
@@ -644,13 +644,12 @@ main {
   stroke-width: 2.8;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 0.5;
-  stroke-dasharray: 0.8 2.4;
+  opacity: 0.34;
 }
 .authored-map-path.guided {
   stroke: #f0d69e;
-  stroke-width: 3.4;
-  opacity: 0.72;
+  stroke-width: 2.6;
+  opacity: 0.55;
 }
 .map-plants circle {
   display: none;
@@ -689,6 +688,14 @@ main {
   pointer-events: none;
   animation: target-pulse 1.8s ease-in-out infinite;
 }
+.map-plant-button.completed {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+.map-plant-button.completed .map-plant-sprite {
+  filter: drop-shadow(0 0 0.65rem rgb(170 235 114 / 0.9));
+}
 @keyframes target-pulse {
   0%,
   100% {
@@ -708,12 +715,22 @@ main {
   display: grid;
   gap: 0.35rem;
   width: min(27rem, calc(100% - 1.4rem));
-  max-height: 9.5rem;
+  max-height: 8.5rem;
   overflow: auto;
   padding: 0.55rem;
   border: 1px solid #d4ad6b;
   background: rgb(16 31 22 / 0.86);
   box-shadow: 0 0.25rem 0 #0e1b14;
+}
+.garden-stage.challenge-open .map-tool-inventory,
+.garden-stage.challenge-open .map-action-staging,
+.garden-stage.challenge-open .golden-path,
+.garden-stage.challenge-open .map-interact,
+.garden-stage.challenge-open .map-reflection-card {
+  display: none;
+}
+.garden-stage.challenge-open .map-hud {
+  max-height: 4.25rem;
 }
 .map-hud-title {
   display: grid;
@@ -914,6 +931,19 @@ main {
 .challenge-example code {
   white-space: pre-wrap;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.challenge-explanation-review {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.65rem 0;
+  padding: 0.6rem;
+  border-left: 3px solid #a8c983;
+  background: #e8efe0;
+  color: #455944;
+  font-size: 0.78rem;
+}
+.challenge-explanation-review p {
+  margin: 0;
 }
 .completion-modal {
   position: absolute;
@@ -1183,8 +1213,8 @@ main {
   }
 
   .garden-stage {
-    min-height: 36rem;
-    height: 42rem;
+    min-height: 38rem;
+    height: 44rem;
     margin-top: 1rem;
   }
 

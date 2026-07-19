@@ -960,6 +960,62 @@ supportive when learners need help, and produces a truthful verified payoff. The
 reviewable demo output from future live repository writes. Automated checks, configuration/release evidence, the full
 project audit, and human acceptance must all be recorded before the bundle is promoted.
 
+### Bundle 12 — Easy-first interaction repair and demo clarity
+
+Bundle 12 is the active refinement cycle after the Bundle 11 implementation slice. It incorporates the 2026-07-19
+`CGFeedback.txt` findings and the two ten-question product interviews. The first polished path is for an independent
+Grades 1–5 learner. Medium and Hard remain available as authored capability, but they are not the primary optimization
+target for this demo.
+
+1. **Stage 33 — Map readability, walkability, and interaction reliability**
+   - Make the garden map the dominant surface at full-screen and normal sizes; remove excessive zoom and unexplained
+     lines, borders, overlaps, stale panels, and duplicate grade controls.
+   - Keep a connected visible walkway to every plant and interaction area, with collision behavior matching the art.
+   - Show a soft golden halo only behind unfinished plants; completed plants lose the halo and visibly bloom.
+   - Make approaching a plant plus pressing `E` or `Enter` reliably open the compact dialogue. The first press shows
+     direct in-world copy such as “This plant needs watering. Solve the problem to water it.” A second `E`/`Enter`
+     opens the full challenge.
+   - Verify facing, blocked movement, and keyboard-only movement while preserving the map’s read-only/public truth.
+
+2. **Stage 34 — Easy-first question and dialogue redesign**
+   - Make the primary demo path Sprout / Easy — Grades 1–5, with short sentences, one idea per question, and no
+     grading language.
+   - Keep all five questions visible and open-ended. Preserve mixed Find it, Plan it, and Execute it objectives;
+     where a question asks for a choice, use four large, clearly separated answer boxes.
+   - Keep the intentional fixture errors synchronized with the authored questions: simple syntax/punctuation,
+     variable/dead code, visible test/coverage, and straightforward logic/function problems.
+   - Show only a small code excerpt first, with an expand option. Include direct action wording, a plain-language
+     explanation, a tiny related example, and an optional hint. Wrong answers require/recommend a hint before retry and
+     never reduce health or shame the learner.
+   - After a correct answer, heal the plant immediately and offer `Y` to review the explanation; the learner may
+     continue without opening it.
+
+3. **Stage 35 — Completion, replay, and safe output payoff**
+   - Ensure every correct answer produces an obvious plant/healing sprite transition and a concise success cue.
+   - Keep completion session-local until Reset Garden. Unlock Growing after Easy and Master Gardener after Growing;
+     preserve the capability for harder questions without making them the first-run focus.
+   - After all five plants are complete, show a dismissible completion surface with before/after code, proposed fixes,
+     re-analysis evidence, and healthier-garden summary. Offer replay/reset and explicit review, corrected-copy, and
+     patch/diff choices; never silently overwrite source code.
+   - Keep the dedicated demo as the only first-release source. Preserve future intake boundaries for GitHub URLs,
+     ZIP/folder uploads, and individual files, and label unsupported findings as `More to explore`.
+
+4. **Stage 36 — Product language, verification, and human evidence**
+   - Use the product framing “A garden adventure for finding and fixing bugs in code”; avoid presenting the app as a
+     generic health dashboard or promising automatic bug fixing.
+   - Run focused tests for E/Enter activation, dialogue expansion, answer boxes, hint-before-retry, immediate bloom,
+     completion/reset, halos, walkability, collision, facing, and duplicate controls.
+   - Run the full project checks, configuration/repository-structure checks, and the entire coding-garden audit only
+     after implementation is complete.
+   - Prepare human evidence for Easy first, then availability of Growing/Master Gardener, all-five open ordering,
+     mobile/full-screen map scale, keyboard-only operation, wrong-answer recovery, `Y` explanation review, completion,
+     reset, and safe output wording. Update all authoritative records before commit/push.
+
+**Bundle 12 gate:** an independent student can see the whole garden, understand the next action, walk to every target,
+open each challenge with the keyboard, solve five simple intentional bugs in any order, see each plant visibly heal,
+and understand the safe completion outputs. No public repository is mutated, no code is silently overwritten, and the
+demo remains runnable without accounts or an OpenAI key.
+
 ### Wave 1 — Trust, Onboarding, and Accessible Recovery
 
 This is the first rolling feature wave from `docs/FEATURE_BACKLOG.md`. It refines the existing playable map without
@@ -974,9 +1030,10 @@ creating a second roadmap. The bounded goals are:
 public read-only, and sample-only invariants remain intact; documentation and status records are reconciled; human
 desktop/mobile acceptance is recorded before the wave is archived.
 
-**Implementation note (2026-07-18):** all four goals are implemented locally. The remaining gate is human playtest and
-the full project-status audit; the four accepted artifacts will then move to the completed archive in the feature
-backlog rather than creating another tracker.
+**Implementation note (2026-07-19):** the Bundle 12 implementation slice is complete locally. The larger map,
+unfinished-target guidance, two-step E/Enter dialogue, Easy-first copy, and duplicate-level-control cleanup are covered
+by focused/browser evidence. The remaining gate is the full project-status audit plus human playtest and acceptance;
+these remain open until recorded.
 
 ### Wave 2 — Learning Progression and Scaffolding
 

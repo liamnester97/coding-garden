@@ -8,7 +8,7 @@ You open a codebase you've never seen. Instead of ten thousand lines of text, yo
 
 1. **Open the garden.** Point Code Garden at the demo repo. The analysis pipeline runs (or the cached sample loads) and the garden renders: one plant per module/function cluster, roots showing imports, sunlight showing coverage.
 2. **Read the landscape.** The overgrown, brown, pest-ridden state is legible without any UI reading: drought zones are visibly dry, dead code is visibly withered, vulnerabilities visibly crawl.
-3. **Magnifying Glass.** Select a plant to see a short summary. Walk close to a target and press **E** (or Enter) to open its teaching question. Detailed source evidence is optional, grounded strictly in the HealthReport and the code itself.
+3. **Magnifying Glass.** Select a plant to see a short summary. Walk close to an unfinished target and press **E** (or Enter) once for its short dialogue, then press the key again to open the teaching question. Detailed source evidence is optional, grounded strictly in the HealthReport and the code itself.
 4. **Learn before tending.** Choose a grade-aware Easy, Medium, or Hard level inside the map and answer one short,
    report-grounded question. Grades 1–5 notice and count, Grades 6–8 connect clues, and Grades 9–12 explain a safe
    next step. A wrong answer gives a hint and explains the idea; a correct answer unlocks confirmation.
@@ -50,13 +50,13 @@ map supplies the terrain, paths, landmarks, learning grove, tool clearing, and p
 sprite art is decorative and presentation-focused. It never invents a finding or grants health that the
 report does not support.
 
-The active visual stages are tracked in `docs/EXECUTION_PLAN.md` as Bundle 7 (Stages 11–14) and Bundle 8
-(Stages 15–18). Combat, enemies, bosses, accounts, leaderboards, procedural maps, and multiplayer remain
+The active visual stages are tracked in `docs/EXECUTION_PLAN.md` as Bundle 12 (Stages 33–36). Combat, enemies, bosses, accounts, leaderboards, procedural maps, and multiplayer remain
 deferred so the educational exploration loop stays clear and honest.
 
 ## Map-first controls and audience range
 
-The map is the primary game surface. Global controls and instructions sit in a compact toolbar above it; the player
+The map is the primary game surface. Global configuration remains above it, while the objective ribbon and gameplay
+interaction stay inside the map; the player
 uses the keyboard to move and **E**/Enter to interact. Selecting a plant is read-only. The player must approach a
 target and press the interaction key before a learning question appears. Plant cards and the Inspector below remain a
 text-first evidence fallback for keyboard, screen-reader, and detailed report review—not a second game route.
@@ -84,9 +84,8 @@ Questions use short sentences and one small idea at a time. Easy asks for a visi
 check roots, tests, or safety, and Hard asks for one safe next step. The level labels remain useful for older learners
 without making the Easy path depend on advanced code vocabulary.
 
-The learner can choose an age band in the top toolbar without creating an account. Grades 1–5 start with Easy notice-and-
-count questions, Grades 6–8 with Medium clue-connection questions, and Grades 9–12 with Hard safe-next-step questions.
-The recommended depth is explained and can be overridden. A challenge offers up to three clues in order; wrong
+The single Level control combines the playful name with the age band without creating an account. Grades 1–5 start with
+Easy notice-and-count questions; Growing and Master Gardener remain secondary capabilities. A challenge offers up to three clues in order; wrong
 answers receive a specific misconception hint, while only a server-validated correct answer unlocks confirmation.
 
 The Lesson selector in the same toolbar can load older local comparison fixtures. The default demo has a healthy
@@ -136,3 +135,20 @@ For the demo, output is reviewable and must not silently overwrite source files.
 diff/corrected copy now, with corrected ZIP/folder output and authenticated GitHub branch/PR output designed as future
 input-specific options. A finding without an authored lesson appears as **More to explore** and is not playable until
 content is validated.
+
+## Easy-first refinement target
+
+The first polished demo is for an independent Grades 1–5 learner. The framing is **A garden adventure for finding and
+fixing bugs in code**. A learner walks to one of the five unfinished plants and presses `E` or `Enter`. The first
+interaction is a short dialogue prompt; pressing the key again opens the full challenge. The learner may choose any
+plant in any order.
+
+The Easy path uses short language, small code excerpts, four clear answer boxes where applicable, a hint, a tiny
+example, and an explanation. Wrong answers require or recommend a hint before retry and never reduce health. A correct
+answer makes that plant bloom immediately; `Y` opens the explanation if the learner wants to review it. Completed
+plants lose their golden halos. The map should stay large, uncluttered, and fully walkable with keyboard controls.
+
+The demo remains five questions for now. Growing and Master Gardener unlock after Easy, but their polish is secondary
+to making the Easy path understandable. At completion, the learner can review the before/after code and proposed fixes,
+reset or replay, and choose an explicit safe output. The app never silently overwrites code or mutates a public
+repository.

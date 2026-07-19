@@ -169,3 +169,23 @@ Deferred by explicit scope decision:
 - Accounts, teacher dashboards, cloud progress, automatic lesson generation, and live branch/PR mutation.
 - Corrected ZIP/folder output and authenticated GitHub output until the demo corrected-copy/diff path and safety gates
   are proven.
+
+## 2026-07-19 human-testing promotion — Bundle 12 Easy-first repair
+
+Promoted into Bundle 12 / Stages 33–36 in `docs/EXECUTION_PLAN.md`:
+
+- Map readability and walkability repair: full-garden scale, no unexplained lines/overlaps/stale panels, connected
+  paths, collision agreement, unfinished-only golden halos, and reliable E/Enter interaction.
+- Easy-first Grades 1–5 question redesign: simple intentional fixture errors, mixed learning objectives, clear answer
+  boxes, short dialogue, expandable code excerpts, hints, examples, non-punitive retries, and optional explanation
+  review after a correct answer.
+- Immediate visible plant healing, five-question session completion, replay/reset, and explicit safe output choices.
+- Product language and human evidence: “A garden adventure for finding and fixing bugs in code,” with keyboard-first
+  operation and Growing/Master Gardener retained as secondary capabilities.
+
+The implementation cycle is active locally; its full audit and human acceptance remain open. The five-question count is
+fixed for this demo and remains a future scalability decision.
+
+Implementation evidence (2026-07-19): the map scale/path guidance, unfinished-only halo, two-step E/Enter dialogue,
+single level control, product framing, and focused/browser checks are implemented locally. Human map, age-band,
+keyboard, and safe-output acceptance remain open; keep these items in the active cycle until that gate is recorded.
