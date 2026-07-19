@@ -4,8 +4,8 @@ Updated: 2026-07-18, America/Denver
 
 ## Active Bundle and Goal
 
-- Bundle: 8 — Progression, Feedback, and Release Polish
-- Current goal: Wave 3 — Loop Clarity and Learning Reflection, layered onto the Stage 18 visual/release gates.
+- Bundle: 9 — Teaching Content and Gameplay Clarity
+- Current goal: Stage 21 — top controls, intentional E/Enter interaction, fullscreen, map zoom, and optional evidence.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
@@ -31,14 +31,16 @@ Updated: 2026-07-18, America/Denver
   open.
 - Bundle 8 — Progression, Feedback, and Release Polish: Stage 16 readability, Stage 17 reachability/journal, and
   Stage 18 facing implementation slices are complete; browser/release/human gates remain open.
+- Bundle 9 — Teaching Content and Gameplay Clarity: Stages 19–21 local implementation slices are complete; separate
+  teaching repository publication, human acceptance, and final release gates remain open.
 - Wave 1 — Trust, Onboarding, and Accessible Recovery: implementation complete locally; human acceptance and the
   end-of-wave project-status audit are complete; human acceptance remains open.
 - Wave 2 — Learning Progression and Scaffolding: implementation complete locally; browser rerun, human acceptance,
   and the end-of-wave project-status audit are complete; human acceptance remains open.
 - Wave 3 — Loop Clarity and Learning Reflection: implementation complete locally; human acceptance and the end-of-wave
   project-status audit are complete; human acceptance remains open.
-- Bundle gate: open pending human visual/accessibility acceptance, final release evidence, and submission
-  artifacts; implementation evidence through Stage 18 and Wave 3 is current.
+- Bundle gate: open pending the separate teaching-repository publication, human visual/accessibility/age-band
+  acceptance, final release evidence, and submission artifacts.
 
 ## Current State
 
@@ -78,6 +80,15 @@ Updated: 2026-07-18, America/Denver
 - Seasons now act as Levels 1–3 and recommend Easy, Medium, and Hard challenge reasoning respectively;
   the classroom payoff explains the learning loop and current rehearsal progress.
 - The app remains login-free and works without `OPENAI_API_KEY` through deterministic fallbacks.
+- A local teaching-lesson registry, deterministic reports, lesson selector, and offline fixtures cover Grades 1–5, 6–8,
+  and 9–12. Each lesson has two intentional findings and uses the existing sample-only challenge/tending lifecycle.
+  The separate public teaching repository remains a release-owner GitHub gate; the app remains generic for any repo.
+- Challenge questions identify whether they teach noticing, evidence, or a safe next step, plus their grade band.
+- Global controls and instructions sit above the game surface; selecting a plant is read-only, while approaching and
+  pressing E/Enter opens the learning interaction. Fullscreen and optional detailed evidence are available.
+- Bundle 9 automated evidence is current: 83 Vitest tests, 24 production-style Playwright desktop/mobile checks,
+  analysis validation, production build, format, lint, typecheck, and diff checks pass in the documented order. The
+  project-status audit also passed its structure, navigation, documentation, and secret-scan checks.
 - The public repository now includes an MIT license and a README project/setup/submission narrative;
   the remaining submission artifacts are the video, human evidence, and Devpost form.
 - Hardening coverage now exercises expiry, proof replay, oversized challenge input, failed rehearsal,
@@ -95,7 +106,8 @@ Updated: 2026-07-18, America/Denver
 
 ## Blockers and Open Gates
 
-- Human non-coder read-through of five explanations remains open.
+- Human non-coder and grade-band read-through of the teaching questions and explanations remains open.
+- Separate public teaching repository publication and pinned-commit evidence remain open.
 - Real demo-fork PR evidence remains an external credential/rehearsal gate.
 - Two-person wide-shot legibility and final human acceptance remain open.
 - Live GPT-5.6 narration cannot be exercised locally without `OPENAI_API_KEY`; the no-key fallback is
@@ -105,9 +117,10 @@ Updated: 2026-07-18, America/Denver
 
 ## Next Three Actions
 
-1. Human-test Waves 1–3 together: action status, reflection prompt, age-band wording, clues, mobile, keyboard, and reduced motion.
-2. Run the full project-status audit and archive only the human-accepted feature records in `docs/FEATURE_BACKLOG.md`.
-3. Record remaining visual/performance/release evidence, then complete the final code review, video, and Devpost gates.
+1. Human-test Grades 1–5, 6–8, and 9–12 lessons across desktop/mobile, including fullscreen and keyboard flow.
+2. Publish/pin the separate teaching repository when the release owner is ready, then record its commit and license.
+3. Complete the remaining release-boundary review: teaching quality, visual acceptance, deployment evidence, video,
+   and submission artifacts.
 
 ## Synchronization Rules
 

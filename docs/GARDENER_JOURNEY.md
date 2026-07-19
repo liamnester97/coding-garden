@@ -8,7 +8,7 @@ You open a codebase you've never seen. Instead of ten thousand lines of text, yo
 
 1. **Open the garden.** Point Code Garden at the demo repo. The analysis pipeline runs (or the cached sample loads) and the garden renders: one plant per module/function cluster, roots showing imports, sunlight showing coverage.
 2. **Read the landscape.** The overgrown, brown, pest-ridden state is legible without any UI reading: drought zones are visibly dry, dead code is visibly withered, vulnerabilities visibly crawl.
-3. **Magnifying Glass.** Hover any plant → a plain-English explanation of what that code does, grounded strictly in the HealthReport and the code itself. This is the non-coder magic moment.
+3. **Magnifying Glass.** Select a plant to see a short summary. Walk close to a target and press **E** (or Enter) to open its teaching question. Detailed source evidence is optional, grounded strictly in the HealthReport and the code itself.
 4. **Learn before tending.** Choose a grade-aware Easy, Medium, or Hard level inside the map and answer one short,
    report-grounded question. Grades 1–5 notice and count, Grades 6–8 connect clues, and Grades 9–12 explain a safe
    next step. A wrong answer gives a hint and explains the idea; a correct answer unlocks confirmation.
@@ -56,8 +56,9 @@ deferred so the educational exploration loop stays clear and honest.
 
 ## Map-first controls and audience range
 
-The map is the primary game surface. Movement buttons, tool stations, map plants, and the learning question all
-appear inside the garden so a player can stay in one field of play. The plant cards and Inspector below remain a
+The map is the primary game surface. Global controls and instructions sit in a compact toolbar above it; the player
+uses the keyboard to move and **E**/Enter to interact. Selecting a plant is read-only. The player must approach a
+target and press the interaction key before a learning question appears. Plant cards and the Inspector below remain a
 text-first evidence fallback for keyboard, screen-reader, and detailed report review—not a second game route.
 
 The gardener faces the last direction pressed. Authored buildings, ponds, trees, beds, benches, and classroom
@@ -69,8 +70,9 @@ for plants, stations, the learning greenhouse, and the reflection bench. H and S
 challenge. The lower Inspector and plant list remain detailed, non-interactive evidence fallbacks.
 
 The objective ribbon is deliberately compact: it names the next target and the key action while leaving the garden
-visible. Questions open as bounded in-map cards rather than taking over the page. On small screens the camera may
-follow the gardener, but the same target, walkway, collision, and keyboard rules apply.
+visible. Questions open as bounded in-map cards rather than taking over the page. The map can enter browser
+fullscreen for a focused game view. On small screens the camera may follow the gardener, but the same target,
+walkway, collision, and keyboard rules apply.
 
 On a first visit, a small in-map guide explains movement, the golden target, and the interaction key. It can be
 dismissed and reopened from Help / pause. The map also keeps a Sample rehearsal or Public read-only banner visible so
@@ -82,10 +84,16 @@ Questions use short sentences and one small idea at a time. Easy asks for a visi
 check roots, tests, or safety, and Hard asks for one safe next step. The level labels remain useful for older learners
 without making the Easy path depend on advanced code vocabulary.
 
-The learner can choose an age band inside the map without creating an account. Grades 1–5 start with Easy notice-and-
+The learner can choose an age band in the top toolbar without creating an account. Grades 1–5 start with Easy notice-and-
 count questions, Grades 6–8 with Medium clue-connection questions, and Grades 9–12 with Hard safe-next-step questions.
 The recommended depth is explained and can be overridden. A challenge offers up to three clues in order; wrong
 answers receive a specific misconception hint, while only a server-validated correct answer unlocks confirmation.
+
+The Lesson selector in the same toolbar loads one of the three local teaching fixtures. Each fixture has a healthy
+entry point, an intentional missing-test signal, and an intentionally unimported helper so learners can inspect why a
+plant is stressed or withered. The selected lesson remains an offline sample rehearsal; choosing it does not analyze,
+execute, or mutate the fixture repository.
+
 ## Wave 3 loop clarity
 
 During a sample rehearsal, the in-map Current action card tells you whether you are answering, confirming, rehearsing,

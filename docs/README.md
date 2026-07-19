@@ -9,7 +9,8 @@ supporting project records.
 | `BUILD_WEEK_REQUIREMENTS.md`      | Submission checklist                               | Active          |
 | `GARDENER_JOURNEY.md`             | Demo narrative and user journey                    | Active          |
 | `HOW_TO_DEPLOY_AND_HUMAN_TEST.md` | Local/Vercel deployment and human test checklist   | Active          |
-| `FEATURE_BACKLOG.md`              | Candidate features and playtest ideas             | Supporting list |
+| `FEATURE_BACKLOG.md`              | Candidate features and playtest ideas              | Supporting list |
+| `../content/teaching-lessons.ts`  | Curated lesson objectives and grade bands          | Active content  |
 | `RISK_REGISTER.md`                | Risk register                                      | Active          |
 | `adr/`                            | Architecture decision records                      | Active          |
 | `../STAGE_TRACKER.md`             | Current stage and bounded slice tracker            | Active tracker  |

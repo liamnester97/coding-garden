@@ -6,6 +6,7 @@ import {
   misconceptionFeedback,
   questionForFinding,
 } from "@/lib/garden/challenges";
+import { teachingLessonReports } from "@/content/teaching-lessons";
 
 function request(body: unknown) {
   return new Request("http://localhost/api/challenge", {
@@ -27,6 +28,8 @@ describe("learning challenge gate", () => {
     );
     expect(question?.objective).toContain("unused");
     expect(question?.answer).toBe("roots");
+    expect(question?.questionType).toBe("evidence");
+    expect(question?.gradeBand).toBe("grades-6-8");
     expect(
       JSON.stringify(
         questionForFinding(sampleHealthReport, "dead-src-unused", "medium"),
@@ -43,6 +46,8 @@ describe("learning challenge gate", () => {
     expect(question?.prompt).toContain("How many warning signs");
     expect(question?.prompt).toContain("Enter a number");
     expect(question?.objective).not.toContain("module");
+    expect(question?.questionType).toBe("notice");
+    expect(question?.gradeBand).toBe("grades-1-5");
     expect(question?.scaffolds).toHaveLength(3);
   });
 
@@ -138,6 +143,16 @@ describe("learning challenge gate", () => {
       }),
     );
     expect(response.status).toBe(403);
+  });
+
+  it("supports the curated teaching lessons as sample-only interactive reports", async () => {
+    const report = teachingLessonReports["first-sprouts"];
+    const finding = report.findings[0];
+    const response = await POST(
+      request({ report, findingId: finding.id, difficulty: "easy" }),
+    );
+    expect(response.status).toBe(200);
+    expect((await response.json()).question.gradeBand).toBe("grades-1-5");
   });
 
   it("expires attempts and bounds answer input before grading", async () => {

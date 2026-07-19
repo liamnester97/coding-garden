@@ -7,6 +7,16 @@ export const challengeToolSchema = z.enum([
   "watering-can",
   "pesticide",
 ]);
+export const challengeQuestionTypeSchema = z.enum([
+  "notice",
+  "evidence",
+  "safe-next-step",
+]);
+export const challengeGradeBandSchema = z.enum([
+  "grades-1-5",
+  "grades-6-8",
+  "grades-9-12",
+]);
 
 export const challengeQuestionSchema = z.object({
   id: z.string().min(1),
@@ -14,6 +24,8 @@ export const challengeQuestionSchema = z.object({
   nodeId: z.string().min(1),
   tool: challengeToolSchema,
   difficulty: challengeDifficultySchema,
+  questionType: challengeQuestionTypeSchema,
+  gradeBand: challengeGradeBandSchema,
   objective: z.string().min(1),
   prompt: z.string().min(1),
   hint: z.string().min(1),
@@ -106,6 +118,22 @@ function objectiveFor(type: HealthReport["findings"][number]["type"]) {
   return "Understand one code signal before acting.";
 }
 
+function gradeBandFor(difficulty: ChallengeDifficulty) {
+  return difficulty === "easy"
+    ? "grades-1-5"
+    : difficulty === "medium"
+      ? "grades-6-8"
+      : "grades-9-12";
+}
+
+function questionTypeFor(difficulty: ChallengeDifficulty) {
+  return difficulty === "easy"
+    ? "notice"
+    : difficulty === "medium"
+      ? "evidence"
+      : "safe-next-step";
+}
+
 export function questionForFinding(
   report: HealthReport,
   findingId: string,
@@ -121,6 +149,8 @@ export function questionForFinding(
     nodeId: finding.nodeId,
     tool: toolForFinding[finding.type as keyof typeof toolForFinding],
     difficulty,
+    questionType: questionTypeFor(difficulty),
+    gradeBand: gradeBandFor(difficulty),
     objective: objectiveFor(finding.type),
     prompt:
       difficulty === "easy"

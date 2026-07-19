@@ -31,6 +31,23 @@ Status values: `candidate`, `needs playtest`, `designed`, `implemented`, `deferr
 - Features should preserve keyboard access, touch support, reduced motion, mobile readability, and the accessible
   text/evidence fallback.
 
+## 2026-07-18 feedback promotion — teaching repository and gameplay clarity
+
+Implemented in the current slice:
+
+- Local grade-band lesson registry and offline fixture structure for Grades 1–5, 6–8, and 9–12.
+- Deterministic challenge metadata for noticing, evidence, and safe-next-step questions.
+- Compact global control/instruction toolbar above the map.
+- Plant selection separated from lesson activation; approach plus E/Enter is required to open a question.
+- Larger, less zoomed map surface, browser fullscreen control, and collapsible detailed evidence.
+
+Still needs human validation or external setup:
+
+- Publish the separate public teaching repository and pin its first stable commit.
+- Review every lesson and question with learners or educators across all three grade bands.
+- Verify fullscreen, map scale, keyboard/touch controls, mobile layout, and optional evidence on real devices.
+- Decide whether the detailed Inspector copy should be shortened further after playtesting.
+
 ## P0 — learning, clarity, and safety gaps
 
 | Feature | Why it matters | Status |

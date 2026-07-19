@@ -630,7 +630,7 @@ remains intact.
 
 Implementation note (2026-07-18): the three sample seasons now explicitly map to grade bands: Grades 1–5 use Easy
 notice-and-count questions, Grades 6–8 use Medium clue-connection questions, and Grades 9–12 use Hard safe-next-step
-questions. The map level selector lives inside the game HUD, and each season has a distinct ground palette while
+questions. The map level selector lives in the compact game toolbar above the map, and each season has a distinct ground palette while
 HealthReport plants, roots, findings, and re-analysis truth remain unchanged. Wrong answers return both a hint and a
 plain-language explanation; the player can also reveal the hint with the in-map button or `H` key.
 
@@ -670,10 +670,55 @@ Implementation note (2026-07-18): all four directional sprite mappings and block
 regression coverage. The remaining Stage 18 evidence is production/browser visual testing, performance observation,
 human acceptance, video, and submission—not a new gameplay architecture.
 
+### Stage 19 — Teaching Repository Foundation
+
+**Goal:** provide a separate, public, classroom-oriented repository with small curated lessons for Grades 1–5,
+6–8, and 9–12 while keeping Code Garden generic for any repository.
+**Acceptance:** each grade band has a runnable, explainable lesson with intentional analyzer-visible signals; the app
+has a pinned offline copy for deterministic use; no credentials, student data, or private repository content ship.
+
+Implementation note (2026-07-18): the local fixture, lesson registry, deterministic lesson reports, and lesson selector
+are implemented under `fixtures/teaching-repo/`, `content/teaching-lessons.ts`, and `lib/garden/demo-reports.ts`.
+Publishing the separate public repository remains a release-owner GitHub gate.
+
+### Stage 20 — Teaching Questions and Lesson Flow
+
+**Goal:** turn findings into short, age-appropriate teaching questions about noticing, evidence, and safe next steps.
+**Acceptance:** every question has one objective, one defensible server-validated answer, a hint, an explanation, and
+grade-band metadata; wrong answers never change garden health.
+
+Implementation note (2026-07-18): deterministic challenge questions now expose question type and grade-band metadata,
+and the three local lessons each expose two intentional report findings through the existing server-validated sample
+challenge/tending lifecycle. HealthReport remains the only source of findings and garden truth.
+
+### Stage 21 — Gameplay Interface and Map Readability
+
+**Goal:** keep the map visually dominant while making controls discoverable and interaction intentional.
+**Acceptance:** global controls/instructions live in a compact top toolbar; selecting a plant does not open a lesson;
+approaching a target and pressing E/Enter opens the challenge; fullscreen, zoom, mobile, keyboard, and reduced-motion
+behavior remain usable; detailed evidence is optional.
+
+Implementation note (2026-07-18): the map has a larger default surface, reduced camera scale, top toolbar, fullscreen
+control, compact in-map status, and collapsible Magnifying Glass evidence.
+
+### Stage 22 — Teaching Playtest and Release Reconciliation
+
+**Goal:** validate age appropriateness, clarity, accessibility, lesson quality, and release boundaries with human
+testing before final submission.
+**Acceptance:** the complete explore → approach → E → learn → answer → confirm → rehearse → re-analyze → reflect
+loop works for the target audience; no unresolved P0/P1 learning, safety, accessibility, or clarity issues remain;
+the audit and release evidence are synchronized.
+
+Implementation note (2026-07-18): automated coverage is being extended now; human age-band, device, fullscreen, and
+teaching-repository acceptance remain open gates.
+
 ### Visual navigation decisions
 
 - Use one wide responsive map surface: desktop favors a whole-garden wide shot; small screens may use camera-follow.
-- Keep gameplay instructions in a compact in-map objective ribbon; lower Inspector content is evidence fallback only.
+- Keep global controls and instructions in a compact top toolbar; keep context-sensitive prompts and questions in the map.
+- Selecting a plant is read-only; only approaching a target and pressing E/Enter opens its learning interaction.
+- Keep detailed Inspector evidence collapsed behind an explicit details control during gameplay.
+- Offer fullscreen on the map surface without changing the read-only or sample-only boundaries.
 - Use soft yellow target halos and restrained guided walkways to show what to do without turning the map into a bright
   quest line.
 - Treat authored walkways as navigation data, not decoration only; collision tests and visual paths must agree.
@@ -681,7 +726,7 @@ human acceptance, video, and submission—not a new gameplay architecture.
 
 ## 9.1 Execution Bundles
 
-The Stage 0–18 roadmap remains the canonical hierarchy. Execution bundles group related stages into
+The Stage 0–22 roadmap remains the canonical hierarchy. Execution bundles group related stages into
 four bounded goals so each Codex goal can be implemented, reviewed, audited, and accepted without
 creating a parallel roadmap.
 
@@ -797,6 +842,18 @@ Maps to Stages 15–18.
 
 **Gate:** the authored garden is visually legible, educationally coherent, accessible, performant, and ready for
 final submission evidence.
+
+### Bundle 9 — Teaching Content and Gameplay Clarity
+
+Maps to Stages 19–22.
+
+1. Establish the separate public teaching repository shape and pinned offline lesson fixtures.
+2. Add explicit age-band objectives, question types, hints, explanations, and content validation.
+3. Simplify the game surface with a top toolbar, intentional E/Enter interactions, fullscreen, and optional evidence.
+4. Complete age-band, device, accessibility, lesson-quality, and release-boundary playtesting.
+
+**Gate:** learners can understand and complete the teaching loop without a wall of text; the app remains generic,
+anonymous, read-only for public repositories, and truthful about sample rehearsals.
 
 ### Wave 1 — Trust, Onboarding, and Accessible Recovery
 

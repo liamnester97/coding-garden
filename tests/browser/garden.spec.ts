@@ -6,16 +6,36 @@ test.beforeEach(async ({ page }) => {
   await expect(page.locator(".garden-stage")).toBeVisible();
 });
 
-test("plant buttons support pointer inspection and the challenge stays in-map", async ({
+test("plant buttons select a plant without opening a challenge", async ({
   page,
 }) => {
   await page.locator(".map-plant-button").first().click();
   await expect(page.locator(".inspector")).toBeVisible();
-  const action = page.getByRole("button", { name: /Press to use/ }).first();
-  if (await action.count()) {
-    await action.click();
-    await expect(page.locator(".map-challenge-overlay")).toBeVisible();
-  }
+  await expect(page.locator(".map-challenge-overlay")).toBeHidden();
+});
+
+test("global controls stay above the map and fullscreen is available", async ({
+  page,
+}) => {
+  await expect(page.locator(".game-toolbar")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Fullscreen" })).toBeVisible();
+  await expect(page.getByLabel("Game controls and instructions")).toContainText(
+    "E interacts",
+  );
+});
+
+test("teaching lessons load intentional findings by grade band", async ({
+  page,
+}) => {
+  await page.locator("#toolbar-lesson-select").selectOption("root-riddles");
+  await expect(page.locator("#toolbar-lesson-select")).toHaveValue(
+    "root-riddles",
+  );
+  await expect(
+    page.locator(".game-toolbar > div:first-child small"),
+  ).toContainText("Follow the roots");
+  await expect(page.locator(".status")).toContainText("teaching-root-riddles");
+  await expect(page.locator(".map-plant-button")).toHaveCount(3);
 });
 
 test("initial sample mode has no browser errors", async ({ page }) => {
@@ -40,14 +60,14 @@ test("first-visit guide and mode banner stay inside the map", async ({
   await expect(
     page.getByRole("complementary", { name: "First visit guide" }),
   ).toBeHidden();
-  await page.getByRole("button", { name: "Help / pause" }).click();
+  await page.getByRole("button", { name: "Help" }).click();
   await expect(
     page.getByRole("complementary", { name: "Garden help" }),
   ).toBeVisible();
 });
 
 test("sample lesson can be reset without a page reload", async ({ page }) => {
-  await page.getByRole("button", { name: "Reset sample lesson" }).click();
+  await page.getByRole("button", { name: "Reset lesson" }).click();
   await expect(
     page.getByText("Lesson reset. Walk to the golden glow to begin."),
   ).toBeVisible();
@@ -57,7 +77,7 @@ test("sample lesson can be reset without a page reload", async ({ page }) => {
 test("learner age band explains the recommended challenge depth", async ({
   page,
 }) => {
-  const band = page.locator("#learner-band-select");
+  const band = page.locator("#toolbar-learner-band");
   await band.selectOption("older");
   await expect(band).toHaveValue("older");
   await expect(
@@ -73,11 +93,8 @@ test("in-map action status explains the current phase", async ({ page }) => {
     .locator(".map-plant-button.withered, .map-plant-button.stressed")
     .first()
     .click();
-  await page
-    .getByRole("button", { name: /Press to use/ })
-    .first()
-    .click();
-  await expect(status).toContainText("Learning question");
+  await expect(status).toContainText("Explore and inspect");
+  await expect(page.locator(".map-challenge-overlay")).toBeHidden();
 });
 
 test("keyboard movement changes facing and keeps the map usable", async ({

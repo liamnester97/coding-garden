@@ -119,6 +119,14 @@ explained and overrideable, scaffold clues are bounded and answer-safe, wrong-an
 and correct answers remain the only path to server-issued action proof. Keep age appropriateness and educator review
 as human gates even when automated checks pass.
 
+For Bundle 9 / Stages 19–22, also check that the local teaching registry and offline fixtures cover Grades 1–5, 6–8,
+and 9–12; lesson metadata remains separate from HealthReport truth; the separate public teaching repository is clearly
+an external publication/pinned-commit gate; global controls and instructions are above the map; plant selection does
+not open a challenge; E/Enter is required for nearby interaction; fullscreen has a recoverable Escape path; detailed
+evidence is optional; and focused browser coverage verifies desktop/mobile, keyboard, reduced motion, zero console/page
+errors, and public read-only behavior. Keep lesson quality, age appropriateness, device acceptance, licensing, and
+teaching-repository publication as human or external gates even when automated checks pass.
+
 ### Stage completion tracking
 
 Always produce an explicit stage snapshot from the plan. Distinguish:
@@ -233,5 +241,6 @@ status, and any external blockers.
 
 Recommend the next bounded, dependency-aware actions. End with the exact decision or approval Liam
 needs to provide, if any.
+
 - Verify the in-map action-status card distinguishes learning, confirmation, rehearsal, re-analysis, and verified
   health change; verify the optional reflection note remains session-local and does not imply repository mutation.

@@ -8,8 +8,7 @@ import {
   publicQuestion,
   questionForFinding,
 } from "@/lib/garden/challenges";
-import { sampleHealthReport } from "@/lib/analysis/sample-report";
-import { sampleSeasons } from "@/lib/garden/seasons";
+import { demoReports } from "@/lib/garden/demo-reports";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -34,12 +33,7 @@ const proofs = new Map<
   { findingId: string; reportHash: string; expiresAt: number }
 >();
 
-const sampleReports = [
-  sampleHealthReport,
-  ...sampleSeasons(sampleHealthReport)
-    .slice(1)
-    .map((season) => season.report),
-];
+const sampleReports = demoReports();
 
 function isSampleReport(report: z.infer<typeof healthReportSchema>) {
   return sampleReports.some(

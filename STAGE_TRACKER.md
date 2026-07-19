@@ -2,21 +2,21 @@
 
 ## Stage
 
-Stage 18 — Final Visual and Release Hardening / Bundle 8 — Progression, Feedback, and Release Polish
+Stage 21 — Gameplay Interface and Map Readability / Bundle 9 — Teaching Content and Gameplay Clarity
 
 ## Execution Bundle
 
-- **Bundle:** 8 — Progression, Feedback, and Release Polish
-- **Current goal:** Wave 3 — Loop Clarity and Learning Reflection; verify in-map action status and the local recap
-  while preserving the Stage 18 release gates.
+- **Bundle:** 9 — Teaching Content and Gameplay Clarity
+- **Current goal:** Stage 21 — move global controls/instructions to the top toolbar, keep E/Enter as intentional map
+  interaction, add fullscreen, reduce zoom, and collapse detailed evidence.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** Open; Stage 18 technical implementation and Wave 1 implementation are complete, while human/review/
-  release evidence remains open.
-- **Audit status:** Stage 9/10, Stage 12, Stage 13, Stage 14–15, and the Stage 16–18 technical slice are complete;
-  the final technical audit is complete on 2026-07-18, while human/release gates remain open.
+- **Bundle gate:** Open; the local Stages 19–21 implementation slice is complete, while human/review/release evidence
+  remains open.
+- **Audit status:** Bundle 9 technical audit complete on 2026-07-18; structure, security, documentation, and automated
+  verification checks passed.
 - **Human acceptance:** Bundle-level acceptance is not yet recorded.
 
 ## Wave 3 Goals — Loop Clarity and Learning Reflection
@@ -27,6 +27,32 @@ Stage 18 — Final Visual and Release Hardening / Bundle 8 — Progression, Feed
 - [x] Add browser regression coverage for the in-map status surface.
 - [x] Run the full project-status audit and reconcile the completed feature records.
 - [ ] Human acceptance for wording, map legibility, and keyboard/touch flow remains open.
+
+## Bundle 9 Goals — Teaching content and gameplay clarity
+
+- [x] Add the local grade-band teaching lesson registry and offline fixture structure.
+- [x] Add question-type and grade-band metadata to deterministic challenge questions.
+- [x] Add the top control toolbar, fullscreen action, reduced map zoom, intentional E/Enter interaction, and optional
+      detailed evidence.
+- [ ] Publish and pin the separate public teaching repository.
+- [x] Run focused/full tests and the end-of-stage project-status audit.
+- [ ] Human age-band/device acceptance and release-boundary review remain open.
+
+### Bundle 9 Verification Evidence — 2026-07-18
+
+- [x] TypeScript, ESLint, 83 Vitest tests, analysis validation, production build, format check, and `git diff --check`
+      pass when run in the documented sequential order.
+- [x] Playwright production-style desktop/mobile browser suite passes: 24 checks covering lesson selection, toolbar
+      placement, plant selection without auto-opening, reset, age-band copy, keyboard facing, mobile overflow, reduced
+      motion, public read-only mode, and zero page/console errors.
+- [x] Read-only analysis of `fixtures/teaching-repo/` produces 9 source nodes and 6 findings: one coverage gap and
+      one dead-code signal for each grade band.
+- [x] Structure/security audit finds one execution plan, no active generic duplicate trackers, required navigation
+      records, and no detected secret literals.
+- [ ] The separate public teaching repository, pinned commit, human grade-band review, fullscreen device review, and
+      final release acceptance remain open.
+- [x] The pre-existing local `next-env.d.ts` state is unchanged; the documented sequential check order passes without
+      a generated-file diff.
 
 ## Wave 1 Goals — Trust, Onboarding, and Accessible Recovery
 

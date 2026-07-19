@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { sampleHealthReport } from "@/lib/analysis/sample-report";
 import { healthReportSchema } from "@/lib/analysis/schema";
 import {
   advanceToolCommand,
@@ -8,9 +7,9 @@ import {
   toolCommandSchema,
 } from "@/lib/garden/command";
 import { reanalyzeDemoReport } from "@/lib/garden/reanalysis";
-import { sampleSeasons } from "@/lib/garden/seasons";
 import { z } from "zod";
 import { consumeChallengeProof } from "@/app/api/challenge/route";
+import { demoReports } from "@/lib/garden/demo-reports";
 
 export const runtime = "nodejs";
 
@@ -40,12 +39,7 @@ type ActiveCommand = {
 };
 const activeCommands = new Map<string, ActiveCommand>();
 
-const sampleReports = [
-  sampleHealthReport,
-  ...sampleSeasons(sampleHealthReport)
-    .slice(1)
-    .map((season) => season.report),
-];
+const sampleReports = demoReports();
 
 function isSampleReport(report: z.infer<typeof healthReportSchema>) {
   return sampleReports.some(

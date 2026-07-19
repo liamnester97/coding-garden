@@ -426,6 +426,7 @@ walkways as navigation data and requires collision/reachability evidence for eve
 verifies that blocked movement preserves position but immediately changes the gardener's facing direction. These changes
 are presentation/navigation improvements only; HealthReport truth, public read-only behavior, and sample-only tending
 boundaries remain unchanged.
+
 # Decision — Stage 17/18 walkability and session learning recap (2026-07-18)
 
 The authored map now treats required destinations as explicit walkable approach points, with deterministic grid
@@ -467,9 +468,30 @@ The next feature wave keeps learner setup anonymous and local. Players may choos
 Easy/Medium/Hard is recommended, and request up to three progressively stronger clues. Wrong answers receive feedback
 about the misconception rather than shame or health loss. The server still owns grading and proof issuance; scaffolds
 never reveal the answer, unlock a tool, change HealthReport truth, or persist learner identity.
+
 ## 2026-07-18 — Wave 3 action staging and local reflection
 
 The map now makes the current golden-path phase explicit: learning question, ready to confirm, rehearsal running,
 re-analysis running, or verified health change. After a completed sample rehearsal, the learner may write a short
 reflection into the current Garden Journal session. This is intentionally optional and local; it does not gate report
 health, create an account, persist to a server, mutate a repository, or imply a public-repository change.
+
+## 2026-07-18 — Teaching repository and gameplay surface
+
+The teaching experience will use a separate public repository containing curated, age-banded lessons for Grades 1–5,
+6–8, and 9–12. Code Garden remains generic for arbitrary public repositories, while a pinned local fixture keeps the
+curated lesson deterministic and available without GitHub access. The lesson registry describes teaching objectives;
+HealthReport remains the only authority for findings, plant health, and re-analysis.
+
+Global controls and instructions now live in a compact toolbar above the map. Selecting a plant is read-only; a learner
+must approach a target and press E or Enter to open its question. The map supports browser fullscreen and uses a
+collapsed details surface for source evidence so the garden remains the dominant visual. These presentation decisions
+do not change public read-only behavior or the sample-only rehearsal boundary.
+
+## 2026-07-18 — Bundle 9 local teaching slice verified
+
+The local teaching registry, three grade-band fixtures, lesson selector, toolbar interaction model, and offline
+HealthReports are verified as one runnable slice. Focused tests pass, the full suite is 82 Vitest tests, and the
+production-style desktop/mobile browser suite is 24/24 with zero page or console errors. The technical audit found one
+canonical execution plan, no active duplicate trackers, and no detected secret literals. Human lesson-quality/device
+acceptance and publication of the separate public teaching repository remain intentionally open gates.

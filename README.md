@@ -39,6 +39,12 @@ Its implementation slices are complete on the current development branch; human 
 acceptance remains open, and the currently deployed production build remains the fallback until that
 acceptance is recorded.
 
+Bundle 9 adds a curated teaching-repository shape for Grades 1–5, 6–8, and 9–12. The local lesson
+registry, deterministic reports, selector, and offline fixtures live under `content/`, `lib/garden/`,
+and `fixtures/teaching-repo/`; each local lesson contains two intentional findings for interactive use. A separate
+public repository is planned for the published classroom lessons. The app remains generic for any public repository,
+and public analysis remains read-only.
+
 ## If you want to know where we are
 
 Open [PROJECT_STATUS.md](PROJECT_STATUS.md) first. It is
@@ -55,8 +61,9 @@ for the active stage’s evidence and gates.
 | Binding decisions                            | [`DECISION_LOG.md`](DECISION_LOG.md)                                           |
 | Canonical execution plan                     | [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md)                             |
 | Deploy and human-test guide                  | [`docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md`](docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md) |
-| Candidate feature ideas                       | [`docs/FEATURE_BACKLOG.md`](docs/FEATURE_BACKLOG.md)                           |
+| Candidate feature ideas                      | [`docs/FEATURE_BACKLOG.md`](docs/FEATURE_BACKLOG.md)                           |
 | Project status audit skill                   | [`project-status-audit/SKILL.md`](project-status-audit/SKILL.md)               |
+| Teaching lesson registry and offline fixture | [`content/teaching-lessons.ts`](content/teaching-lessons.ts)                   |
 
 `docs/EXECUTION_PLAN.md` is the original long-form product and submission blueprint and the only
 execution plan. `docs/FEATURE_BACKLOG.md` is only a running candidate list and does not add a second
@@ -90,7 +97,8 @@ npm run start
 
 Run the full verification suite sequentially with `npm run format:check`, `npm run lint`,
 `npm run typecheck`, `npm run test`, `npm run analysis:validate`, `npm run build`, and
-`npm run test:browser`; run `npx playwright install chromium` once before the browser suite. `next build`
+`npm run test:browser`; run `npx playwright install chromium` once before the browser suite. The browser suite builds
+and owns an isolated production-style server on port 3100, so it does not reuse a stale development server. `next build`
 regenerates `.next/types`, so running typecheck and build concurrently can produce transient missing-file
 errors. See
 [docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md](docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md) for anonymous Vercel

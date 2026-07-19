@@ -26,6 +26,12 @@ import {
 } from "@/lib/garden/assets";
 import { authoredGardenMap } from "@/lib/garden/map";
 import {
+  teachingLessonForGradeBand,
+  teachingLessons,
+  type TeachingLesson,
+} from "@/content/teaching-lessons";
+import { teachingReportForLesson } from "@/lib/garden/demo-reports";
+import {
   advanceGoldenPath,
   goldenPathSteps,
   initialGoldenPathState,
@@ -96,6 +102,8 @@ export default function HomePage() {
   const [showWelcome, setShowWelcome] = useState(true);
   const [showHelp, setShowHelp] = useState(false);
   const challengeAnswerRef = useRef<HTMLInputElement>(null);
+  const gameSurfaceRef = useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [gardener, setGardener] = useState<WorldPoint>(gardenerStart);
   const [gardenerFacing, setGardenerFacing] = useState<Facing>("down");
   const [interactionMessage, setInteractionMessage] = useState<string | null>(
@@ -105,26 +113,30 @@ export default function HomePage() {
   const [completedCommands, setCompletedCommands] = useState<ToolCommand[]>([]);
   const [reflectionNote, setReflectionNote] = useState("");
   const [reflectionSaved, setReflectionSaved] = useState(false);
+  const [lessonId, setLessonId] = useState<"sample" | TeachingLesson["id"]>(
+    "sample",
+  );
   const [journalEntries, setJournalEntries] = useState<string[]>([
     "You entered the garden. Walk to the golden glow to begin.",
   ]);
   const [seasonId, setSeasonId] = useState("early-spring");
-  const seasons = sampleSeasons(sampleHealthReport);
+  const activeLessonReport = teachingReportForLesson(lessonId);
+  const seasons = sampleSeasons(activeLessonReport);
   const currentSeason =
     seasons.find((season) => season.id === seasonId) ?? seasons[0];
+  const currentLesson =
+    teachingLessons.find((lesson) => lesson.id === lessonId) ??
+    teachingLessonForGradeBand(
+      learnerBand === "younger"
+        ? "grades-1-5"
+        : learnerBand === "middle"
+          ? "grades-6-8"
+          : "grades-9-12",
+    );
   const scene = projectHealthReport(report);
   const solids = authoredGardenMap.solids;
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
-  const selectedTendFinding = selectedPlant
-    ? report.findings.find(
-        (finding) =>
-          finding.nodeId === selectedPlant.id &&
-          (finding.type === "dead-code" ||
-            finding.type === "coverage-gap" ||
-            finding.type === "vulnerability"),
-      )
-    : null;
   const nearbyPlant = scene.plants.find((plant) =>
     isNearWorldPoint(gardener, plant, 10),
   );
@@ -164,6 +176,7 @@ export default function HomePage() {
   }
 
   function resetSampleLesson() {
+    setLessonId("sample");
     setReport(sampleHealthReport);
     setSource("sample");
     setRepositoryUrl("https://github.com/ColorlibHQ/gentelella");
@@ -194,6 +207,41 @@ export default function HomePage() {
     setSelectedId(sampleHealthReport.nodes[0]?.id);
     setShowHelp(false);
   }
+
+  function selectTeachingLesson(nextLessonId: "sample" | TeachingLesson["id"]) {
+    const nextReport = teachingReportForLesson(nextLessonId);
+    const nextLesson = teachingLessons.find(
+      (lesson) => lesson.id === nextLessonId,
+    );
+    setLessonId(nextLessonId);
+    setReport(nextReport);
+    setSource("sample");
+    setPendingFinding(null);
+    setChallenge(null);
+    setChallengeAnswer("");
+    setChallengeFeedback(null);
+    setShowHint(false);
+    setScaffoldLevel(0);
+    setCommand(null);
+    setTendError(null);
+    setCompletedCommands([]);
+    setReflectionNote("");
+    setReflectionSaved(false);
+    setGoldenPath(initialGoldenPathState());
+    setSelectedId(nextReport.nodes[0]?.id);
+    setChallengeDifficulty(
+      nextLesson?.gradeBand === "grades-9-12"
+        ? "hard"
+        : nextLesson?.gradeBand === "grades-6-8"
+          ? "medium"
+          : "easy",
+    );
+    setInteractionMessage(
+      nextLesson
+        ? `${nextLesson.title} loaded. Walk to a glowing plant and press E to begin.`
+        : "Sample lesson loaded. Walk to a glowing plant and press E to begin.",
+    );
+  }
   useEffect(() => {
     if (!selectedId) return;
     let cancelled = false;
@@ -214,6 +262,13 @@ export default function HomePage() {
       cancelled = true;
     };
   }, [report, selectedId, source]);
+  useEffect(() => {
+    const updateFullscreen = () =>
+      setIsFullscreen(document.fullscreenElement === gameSurfaceRef.current);
+    document.addEventListener("fullscreenchange", updateFullscreen);
+    return () =>
+      document.removeEventListener("fullscreenchange", updateFullscreen);
+  }, []);
   useEffect(() => {
     if (!challenge || !pendingFinding) return;
     const frame = requestAnimationFrame(() => {
@@ -558,6 +613,14 @@ export default function HomePage() {
     recordJournalEntry(`Reflection: ${note}`);
   }
 
+  async function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      return;
+    }
+    await gameSurfaceRef.current?.requestFullscreen();
+  }
+
   return (
     <main>
       <section className="garden" aria-labelledby="title">
@@ -631,6 +694,113 @@ export default function HomePage() {
           </p>
         ) : null}
         <div
+          className="game-toolbar"
+          aria-label="Game controls and instructions"
+        >
+          <div>
+            <span className="eyebrow">Garden controls</span>
+            <strong>
+              Arrow keys or WASD move · E interacts · H shows a clue
+            </strong>
+            <small>
+              {currentLesson.title} · {currentLesson.learningObjective} · The
+              recommended level changes the question depth, not the garden’s
+              report truth.
+            </small>
+          </div>
+          <div className="game-toolbar-actions">
+            <label htmlFor="toolbar-lesson-select">Lesson</label>
+            <select
+              id="toolbar-lesson-select"
+              value={lessonId}
+              onChange={(event) =>
+                selectTeachingLesson(
+                  event.target.value as "sample" | TeachingLesson["id"],
+                )
+              }
+              disabled={source !== "sample"}
+            >
+              <option value="sample">Sample garden</option>
+              {teachingLessons.map((lesson) => (
+                <option key={lesson.id} value={lesson.id}>
+                  {lesson.gradeBand} · {lesson.title}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="toolbar-season-select">Level</label>
+            <select
+              id="toolbar-season-select"
+              value={seasonId}
+              disabled={source !== "sample"}
+              onChange={(event) => {
+                if (source !== "sample") return;
+                const next = seasons.find(
+                  (season) => season.id === event.target.value,
+                );
+                if (next) {
+                  setSeasonId(next.id);
+                  setReport(next.report);
+                  setChallengeDifficulty(next.recommendedDifficulty);
+                  setPendingFinding(null);
+                  setChallenge(null);
+                  setSelectedId(next.report.nodes[0]?.id);
+                  setGoldenPath(initialGoldenPathState());
+                }
+              }}
+            >
+              {seasons.map((season) => (
+                <option key={season.id} value={season.id}>
+                  Level {season.level} · {season.label}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="toolbar-learner-band">Age band</label>
+            <select
+              id="toolbar-learner-band"
+              value={learnerBand}
+              onChange={(event) => {
+                const nextBand = event.target.value as typeof learnerBand;
+                setLearnerBand(nextBand);
+                setChallengeDifficulty(
+                  nextBand === "younger"
+                    ? "easy"
+                    : nextBand === "middle"
+                      ? "medium"
+                      : "hard",
+                );
+              }}
+            >
+              <option value="younger">Grades 1–5</option>
+              <option value="middle">Grades 6–8</option>
+              <option value="older">Grades 9–12</option>
+            </select>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => setShowHelp((current) => !current)}
+              aria-expanded={showHelp}
+              aria-controls="map-help-panel"
+            >
+              {showHelp ? "Close help" : "Help"}
+            </button>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => void toggleFullscreen()}
+            >
+              {isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+            </button>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={resetSampleLesson}
+            >
+              Reset lesson
+            </button>
+          </div>
+        </div>
+        <div
+          ref={gameSurfaceRef}
           className={`garden-stage season-${currentSeason.id}`}
           aria-label="Code garden map"
         >
@@ -823,9 +993,6 @@ export default function HomePage() {
                   aria-pressed={plant.id === selectedId}
                   onClick={() => {
                     setSelectedId(plant.id);
-                    setGoldenPath((current) =>
-                      advanceGoldenPath(current, "inspected"),
-                    );
                   }}
                 >
                   <span
@@ -923,68 +1090,6 @@ export default function HomePage() {
                             : "Use the map to explore the garden."}
               </p>
             </div>
-            <div className="map-movement" aria-label="Move gardener">
-              <button
-                type="button"
-                aria-label="Move up"
-                onClick={() => movePlayer("ArrowUp")}
-              >
-                ↑
-              </button>
-              <button
-                type="button"
-                aria-label="Move left"
-                onClick={() => movePlayer("ArrowLeft")}
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                aria-label="Move down"
-                onClick={() => movePlayer("ArrowDown")}
-              >
-                ↓
-              </button>
-              <button
-                type="button"
-                aria-label="Move right"
-                onClick={() => movePlayer("ArrowRight")}
-              >
-                →
-              </button>
-            </div>
-            <div className="map-stations" aria-label="Garden stations">
-              {toolStations.map((station) => (
-                <button
-                  key={station.id}
-                  type="button"
-                  onClick={() => focusStation(station.id)}
-                >
-                  {station.label}
-                </button>
-              ))}
-            </div>
-            <span className="map-hud-help">
-              Arrows/WASD move · Enter/E interact · H shows a hint
-            </span>
-            <div className="map-utility-actions">
-              <button
-                type="button"
-                className="secondary-button"
-                onClick={() => setShowHelp((current) => !current)}
-                aria-expanded={showHelp}
-                aria-controls="map-help-panel"
-              >
-                {showHelp ? "Close help" : "Help / pause"}
-              </button>
-              <button
-                type="button"
-                className="secondary-button"
-                onClick={resetSampleLesson}
-              >
-                Reset sample lesson
-              </button>
-            </div>
             {showHelp ? (
               <aside
                 id="map-help-panel"
@@ -1009,90 +1114,13 @@ export default function HomePage() {
                 </button>
               </aside>
             ) : null}
-            {source === "sample" && selectedPlant ? (
-              <div className="map-selection" aria-label="Selected plant action">
-                <strong>Selected: {selectedPlant.path}</strong>
-                {selectedTendFinding ? (
-                  <button
-                    type="button"
-                    className="map-interact"
-                    onClick={() => requestTending(selectedTendFinding)}
-                  >
-                    {selectedTendFinding.type === "dead-code"
-                      ? "Press to use Clippers"
-                      : selectedTendFinding.type === "coverage-gap"
-                        ? "Press to use Watering Can"
-                        : "Press to use Pesticide"}
-                  </button>
-                ) : (
-                  <small>This plant is healthy. Keep exploring.</small>
-                )}
-              </div>
-            ) : null}
-            <div className="map-season" aria-label="Garden level">
-              <label htmlFor="map-season-select">Garden level</label>
-              <select
-                id="map-season-select"
-                value={seasonId}
-                disabled={source !== "sample"}
-                onChange={(event) => {
-                  if (source !== "sample") return;
-                  const next = seasons.find(
-                    (season) => season.id === event.target.value,
-                  );
-                  if (next) {
-                    setSeasonId(next.id);
-                    setReport(next.report);
-                    setChallengeDifficulty(next.recommendedDifficulty);
-                    setPendingFinding(null);
-                    setChallenge(null);
-                    setSelectedId(next.report.nodes[0]?.id);
-                    setGoldenPath(initialGoldenPathState());
-                  }
-                }}
-              >
-                {seasons.map((season) => (
-                  <option key={season.id} value={season.id}>
-                    Level {season.level} · {season.label}
-                  </option>
-                ))}
-              </select>
-              <small>
-                {currentSeason.gradeBand} · {currentSeason.learningFocus} ·{" "}
-                {currentSeason.recommendedDifficulty}
-              </small>
-              <label htmlFor="learner-band-select">Learner age band</label>
-              <select
-                id="learner-band-select"
-                value={learnerBand}
-                onChange={(event) => {
-                  const nextBand = event.target.value as typeof learnerBand;
-                  setLearnerBand(nextBand);
-                  setChallengeDifficulty(
-                    nextBand === "younger"
-                      ? "easy"
-                      : nextBand === "middle"
-                        ? "medium"
-                        : "hard",
-                  );
-                }}
-              >
-                <option value="younger">Grades 1–5 · notice and count</option>
-                <option value="middle">Grades 6–8 · connect clues</option>
-                <option value="older">Grades 9–12 · explain a safe step</option>
-              </select>
-              <small>
-                The recommended level changes the question depth, not the
-                garden’s report truth.
-              </small>
-            </div>
             <button
               type="button"
               className="map-interact"
               onClick={interactNearby}
             >
               {nearbyStation
-                ? `Use ${nearbyStation.label}`
+                ? `Inspect ${nearbyStation.label}`
                 : nearbyPlant
                   ? `Inspect ${nearbyPlant.path}`
                   : nearbyZone
@@ -1276,54 +1304,50 @@ export default function HomePage() {
             <p className="plant-voice">
               {plantVoice(report, selectedPlant.id)}
             </p>
-            {visibleExplanation ? (
-              <div
-                className="explanation"
-                aria-label="Magnifying Glass explanation"
-              >
-                <span className="eyebrow">Magnifying Glass · {modeLabel}</span>
-                <p>{visibleExplanation.summary}</p>
-                <p>{visibleExplanation.health}</p>
-                <p>{visibleExplanation.needs}</p>
-                {visibleExplanation.evidence.length ? (
-                  <ul>
-                    {visibleExplanation.evidence.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </div>
-            ) : null}
+            <details className="inspector-details">
+              <summary>Open Magnifying Glass details</summary>
+              {visibleExplanation ? (
+                <div
+                  className="explanation"
+                  aria-label="Magnifying Glass explanation"
+                >
+                  <span className="eyebrow">
+                    Magnifying Glass · {modeLabel}
+                  </span>
+                  <p>{visibleExplanation.summary}</p>
+                  <p>{visibleExplanation.health}</p>
+                  <p>{visibleExplanation.needs}</p>
+                  {visibleExplanation.evidence.length ? (
+                    <ul>
+                      {visibleExplanation.evidence.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              ) : null}
+              {selectedPlant.findings.length ? (
+                <ul>
+                  {selectedPlant.findings.map((finding) => (
+                    <li key={`${finding.label}-${finding.summary}`}>
+                      <strong>{finding.label}</strong>
+                      <span>{finding.summary}</span>
+                      <small>{finding.evidence}</small>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="quiet">
+                  No warning signals were recorded for this module.
+                </p>
+              )}
+            </details>
             {source === "report" && selectedPlant.findings.length ? (
               <p className="read-only-notice" role="status">
                 Public reports are read-only. Demo rehearsals are available only
                 in the offline sample garden.
               </p>
             ) : null}
-            {selectedPlant.findings.length ? (
-              <ul>
-                {selectedPlant.findings.map((finding) => (
-                  <li key={`${finding.label}-${finding.summary}`}>
-                    <strong>{finding.label}</strong>
-                    <span>{finding.summary}</span>
-                    <small>{finding.evidence}</small>
-                    {source === "sample" &&
-                    (finding.label === "unreachable branch" ||
-                      finding.label === "unwatered test path" ||
-                      finding.label === "security pest") ? (
-                      <p className="map-action-note">
-                        Return to the map and choose the selected plant action
-                        in the game controls.
-                      </p>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="quiet">
-                No warning signals were recorded for this module.
-              </p>
-            )}
             {command ? (
               <p className="tend-status" role="status">
                 Demo rehearsal · {command.tool} · {command.state}.{" "}

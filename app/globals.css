@@ -23,7 +23,7 @@ main {
   font-size: 0.75rem;
 }
 .garden {
-  max-width: 920px;
+  max-width: 1180px;
   margin: 0 auto;
 }
 .garden h1 {
@@ -138,6 +138,52 @@ main {
   border-radius: 0.65rem;
   color: #f5d995 !important;
   font-size: 0.82rem;
+}
+
+.game-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1.2rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid #39553d;
+  border-radius: 0.85rem;
+  background: #122019;
+}
+.game-toolbar > div:first-child {
+  display: grid;
+  gap: 0.2rem;
+}
+.game-toolbar strong {
+  color: #f0f7eb;
+  font-size: 0.82rem;
+}
+.game-toolbar small {
+  color: #c7d5bf;
+  font-size: 0.76rem;
+}
+.game-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+.game-toolbar-actions label {
+  color: #c7d5bf;
+  font-size: 0.72rem;
+}
+.game-toolbar-actions select {
+  min-height: 2rem;
+  max-width: 10rem;
+  border: 1px solid #71856d;
+  border-radius: 0.35rem;
+  padding: 0.25rem 0.35rem;
+  background: #182b20;
+  color: #edf5e9;
+  font: inherit;
+  font-size: 0.76rem;
 }
 
 .tool-button {
@@ -333,12 +379,19 @@ main {
 .garden-stage {
   position: relative;
   width: 100%;
-  height: clamp(28rem, 62vw, 44rem);
+  height: clamp(34rem, 68vw, 52rem);
   margin-top: 1.5rem;
   overflow: hidden;
   border: 1px solid #39553d;
   border-radius: 1.25rem;
   background: #234d30;
+}
+.garden-stage:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
 }
 .map-mode-banner {
   position: absolute;
@@ -421,14 +474,14 @@ main {
 }
 .garden-camera-world {
   position: absolute;
-  inset: -6%;
-  width: 112%;
-  height: 112%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   transform: translate(
       calc((50% - var(--camera-x)) * 0.16),
       calc((50% - var(--camera-y)) * 0.16)
     )
-    scale(1.08);
+    scale(1);
   transform-origin: center;
   transition: transform 180ms ease-out;
 }
@@ -645,8 +698,8 @@ main {
   z-index: 8;
   display: grid;
   gap: 0.35rem;
-  width: min(31rem, calc(100% - 1.4rem));
-  max-height: 11rem;
+  width: min(27rem, calc(100% - 1.4rem));
+  max-height: 9.5rem;
   overflow: auto;
   padding: 0.55rem;
   border: 1px solid #d4ad6b;
@@ -809,14 +862,24 @@ main {
   right: 1rem;
   top: 1rem;
   z-index: 10;
-  width: min(25rem, calc(100% - 2rem));
-  max-height: min(70%, 28rem);
+  width: min(22rem, calc(100% - 2rem));
+  max-height: min(64%, 25rem);
   overflow: auto;
   padding: 0.9rem;
   border: 2px solid #f0bd62;
   background: #f4f7ed;
   color: #263d2b;
   box-shadow: 0.3rem 0.3rem 0 #0e1b14;
+}
+.inspector-details {
+  margin-top: 1rem;
+  border-top: 1px solid #294332;
+  padding-top: 0.75rem;
+}
+.inspector-details summary {
+  color: #f0d69e;
+  cursor: pointer;
+  font-weight: 700;
 }
 .map-challenge-overlay h2 {
   margin: 0.25rem 0;
@@ -956,8 +1019,21 @@ main {
   margin: 0;
 }
 @media (max-width: 620px) {
+  main {
+    padding: 2rem 0.8rem;
+  }
+
+  .game-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .game-toolbar-actions {
+    justify-content: flex-start;
+  }
+
   .garden-stage {
-    height: 34rem;
+    height: 38rem;
     margin-top: 1rem;
   }
 

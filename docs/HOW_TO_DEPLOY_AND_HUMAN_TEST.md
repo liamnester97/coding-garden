@@ -155,7 +155,8 @@ still serve the earlier verified release until the visual bundle is deliberately
 - [ ] Level 1 / Early spring identifies **Grades 1–5** and uses Easy notice-and-count questions.
 - [ ] Level 2 / Mid-summer identifies **Grades 6–8** and uses Medium clue-connection questions.
 - [ ] Level 3 / Late summer identifies **Grades 9–12** and uses Hard safe-next-step questions.
-- [ ] The level selector is inside the game map HUD; the season palette changes without changing report truth.
+- [ ] The level and age-band selectors are in the compact toolbar above the map; the season palette changes without
+      changing report truth.
 - [ ] Walk to a finding plant and press Enter or E; the challenge opens without using controls below the map.
 - [ ] Press H or **Show hint** to reveal help. Submit an incorrect answer and confirm the response explains the idea
       in plain language before retrying.
@@ -183,6 +184,23 @@ still serve the earlier verified release until the visual bundle is deliberately
 - [ ] Resize to a phone-sized viewport and repeat the map, halo, collision, overlay, keyboard, and reduced-motion
       checks without horizontal overflow.
 
+### Stages 19–22 teaching repository and gameplay clarity
+
+- [ ] Confirm the local teaching fixture contains lessons for Grades 1–5, 6–8, and 9–12 and loads without network
+      access.
+- [ ] Use the Lesson selector to load First Sprouts, Root Riddles, and Safe Harvest; confirm each shows three plants
+      with one coverage finding and one unimported-helper finding.
+- [ ] Confirm the future public teaching repository contains no secrets, student data, private code, or unlicensed
+      assets, and record the pinned commit once published.
+- [ ] Verify the top toolbar contains the controls and instructions; the map remains the dominant surface.
+- [ ] Click a plant and confirm it only selects/inspects the plant. Walk close to a target and press E or Enter to
+      open the question; proximity alone must not open it.
+- [ ] Use Fullscreen, then Escape or the exit button; confirm focus and keyboard movement still work.
+- [ ] Open and close the optional Magnifying Glass details; confirm the concise in-game teaching card remains readable.
+- [ ] Test each grade band with a learner or reviewer: notice/count, connect evidence, and explain a safe next step.
+- [ ] Submit wrong answers and confirm the learner receives a kind explanation, hint, and retry path without health loss.
+- [ ] Repeat on desktop keyboard, phone-sized touch, reduced motion, and a second browser.
+
 ### Public repository analysis
 
 - [ ] Enter a public URL such as `https://github.com/ColorlibHQ/gentelella`.
@@ -196,7 +214,7 @@ still serve the earlier verified release until the visual bundle is deliberately
 
 - Return to the offline sample garden before using a tool. Public GitHub reports are strictly
   read-only and do not show tending controls.
-- [ ] Select the sample withered plant and choose **Use Clippers**.
+- [ ] Walk to the sample withered plant and press **E** (or Enter) to begin the Clippers lesson.
 - [ ] Confirm the Magnifying Glass explanation is visible before the confirmation card appears.
 - [ ] Try Easy, Medium, and Hard; an incorrect answer shows a hint and keeps confirmation locked.
 - [ ] Answer correctly and verify the proposed-scope confirmation becomes available.
@@ -204,7 +222,7 @@ still serve the earlier verified release until the visual bundle is deliberately
       request occurs before confirmation.
 - [ ] Confirm the status advances through the lifecycle and ends at `landed`.
 - [ ] Confirm the dead-code finding disappears only after the rehearsal re-analysis response.
-- [ ] Select the sample stressed plant and choose **Use Watering Can**.
+- [ ] Walk to the sample stressed plant and press **E** (or Enter) to begin the Watering Can lesson.
 - [ ] Confirm the coverage finding disappears only after its rehearsal re-analysis.
 - [ ] Confirm the payoff panel records both completed rehearsals.
 - [ ] Let a command or challenge expire/restart and verify the UI reports a recoverable error without
@@ -317,6 +335,7 @@ stop that server and rerun the command so the suite can manage its own server.
 For project status and stage gates, use the root [PROJECT_STATUS.md](../PROJECT_STATUS.md) and
 [STAGE_TRACKER.md](../STAGE_TRACKER.md). This document is a how-to and test record template, not a
 second execution plan.
+
 ### Wave 3 loop clarity checks
 
 - [ ] Confirm the in-map Current action card clearly changes from learning question to confirmation/rehearsal,
