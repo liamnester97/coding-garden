@@ -9,9 +9,8 @@ Updated: 2026-07-19, America/Denver
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Development branch head remains `e32ee3b` (`Complete Bundle 12 map and learning refinements`), pushed to
-  `origin/agent/health-report-foundation`; Bundle 13 implementation and documentation changes are ready to commit
-  after the final verification pass. Stage 44 is queued for confirmed human-playtest findings.
+- Development branch head is now `3bca074` (`Complete Bundle 13 Python teaching demo`), pushed to
+  `origin/agent/health-report-foundation`. Stage 44 is queued for confirmed human-playtest findings.
 - Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`). The
   deployed release is intentionally behind the development branch until the remaining human visual/release
   gates are accepted; earlier release/documentation commits are preserved in history.

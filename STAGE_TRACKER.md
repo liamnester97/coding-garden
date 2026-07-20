@@ -14,8 +14,8 @@ Stage 43 — Full Verification and Audit / Bundle 13 — Complete Python Teachin
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
 - **Bundle gate:** Bundle 13 implementation and automated verification are complete locally; human acceptance remains open, with Stage 44 queued for confirmed findings.
-- **Audit status:** Stage 37 documentation preflight passed. Stage 43 full-folder audit is pending after the final
-  implementation reconciliation.
+- **Audit status:** Stage 37 documentation preflight passed. Stage 43 full-folder audit and automated verification passed;
+  human acceptance remains open.
 - **Human acceptance:** Not applicable to the documentation preflight; later stages require desktop/mobile,
   keyboard, beginner-comprehension, map, healing, and safe-output acceptance.
 
@@ -27,7 +27,7 @@ Stage 43 — Full Verification and Audit / Bundle 13 — Complete Python Teachin
 - [x] Stage 40 — Implement the minimal four-choice dialogue, hints/examples, retries, explanation, and healing.
 - [x] Stage 41 — Implement completion recap, before/after, fixes, evidence, copy/download, patch/PDF, replay, reset.
 - [x] Stage 42 — Complete pixel-garden visual, accessibility, reduced-motion, and deployment refinement.
-- [ ] Stage 43 — Commit/push after full checks, browser evidence, entire-folder audit, and documentation reconciliation; human gates remain open.
+- [x] Stage 43 — Commit/push after full checks, browser evidence, entire-folder audit, and documentation reconciliation; human gates remain open.
 
 ### Bundle 13 implementation evidence — 2026-07-19
 
