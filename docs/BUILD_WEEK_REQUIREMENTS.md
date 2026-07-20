@@ -4,23 +4,24 @@ Source: `code_garden_brief.pdf` (OpenAI Build Week Challenge, Devpost).
 
 ## Key dates
 
-| Item | Date |
-|---|---|
+| Item                | Date                                   |
+| ------------------- | -------------------------------------- |
 | Submission deadline | **Tuesday, July 21, 2026, 5:00 PM PT** |
-| Judging period | July 22 – August 5, 2026 |
-| Winners announced | ~August 12, 2026 |
+| Judging period      | July 22 – August 5, 2026               |
+| Winners announced   | ~August 12, 2026                       |
 
 ## Hard requirements checklist
 
 - [ ] A **working project built with Codex using GPT-5.6** (both are required and must be demonstrably used).
-- [ ] A **chosen category/track**. Ours: **Education** (crossover narrative into Developer Tools, Work & Productivity, Apps for Your Life).
-- [ ] A **project description**: what it is and how it works.
+- [x] A **chosen category/track**. Ours: **Education** (crossover narrative into Developer Tools, Work & Productivity, Apps for Your Life).
+- [x] A **project description**: what it is and how it works (see the root `README.md`).
 - [ ] A **public YouTube demo video under 3 minutes**, with **audio explicitly covering how Codex and GPT-5.6 were used**, highlighting where Codex accelerated the workflow and where key decisions were made.
-- [ ] A **code repository link**:
+- [x] A **code repository link**: `https://github.com/liamnester97/coding-garden` (public; MIT license in
+  `LICENSE`).
   - If **private**: shared with `testing@devpost.com` and `build-week-event@openai.com`.
   - If **public**: must carry an open source license.
-- [ ] A **README** with setup instructions, sample data if needed, and clear steps to run the project.
-- [ ] **Documentation of architecture and key decisions** (satisfied by `docs/EXECUTION_PLAN.md`, `docs/adr/`, and `DECISIONS.md`).
+- [x] A **README** with setup instructions, sample data if needed, and clear steps to run the project.
+- [x] **Documentation of architecture and key decisions** (satisfied by `EXECUTION_PLAN.md`, `adr/`, and `../DECISION_LOG.md`).
 
 ## Judging criteria (weight the demo accordingly)
 

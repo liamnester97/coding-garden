@@ -1,0 +1,192 @@
+import { expect, test } from "@playwright/test";
+import sampleReport from "../../fixtures/sample-report.json";
+
+test.beforeEach(async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".garden-stage")).toBeVisible();
+});
+
+test("plant buttons select a plant without opening a challenge", async ({
+  page,
+}) => {
+  await page.locator(".map-plant-button").first().click();
+  await expect(page.locator(".inspector")).toBeVisible();
+  await expect(page.locator(".map-challenge-overlay")).toBeHidden();
+});
+
+test("global controls stay above the map and fullscreen is available", async ({
+  page,
+}) => {
+  await expect(page.locator(".game-toolbar")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Fullscreen" })).toBeVisible();
+  await expect(page.getByLabel("Game controls and instructions")).toContainText(
+    "E interacts",
+  );
+});
+
+test("teaching lessons load intentional findings by grade band", async ({
+  page,
+}) => {
+  await page.locator("#toolbar-lesson-select").selectOption("root-riddles");
+  await expect(page.locator("#toolbar-lesson-select")).toHaveValue(
+    "root-riddles",
+  );
+  await expect(
+    page.locator(".game-toolbar > div:first-child small"),
+  ).toContainText("Follow the roots");
+  await expect(page.locator(".status")).toContainText("teaching-root-riddles");
+  await expect(page.locator(".map-plant-button")).toHaveCount(3);
+});
+
+test("initial sample mode has no browser errors", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
+  await page.reload();
+  await expect(page.locator(".garden-stage")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("first-visit guide and mode banner stay inside the map", async ({
+  page,
+}) => {
+  await expect(page.getByText("Sample rehearsal").first()).toBeVisible();
+  await expect(
+    page.getByRole("complementary", { name: "First visit guide" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got it" }).click();
+  await expect(
+    page.getByRole("complementary", { name: "First visit guide" }),
+  ).toBeHidden();
+  await page.getByRole("button", { name: "Help" }).click();
+  await expect(
+    page.getByRole("complementary", { name: "Garden help" }),
+  ).toBeVisible();
+});
+
+test("unfinished demo plants each have target guidance", async ({ page }) => {
+  await expect(page.locator(".map-plant-button")).toHaveCount(5);
+  await expect(page.locator(".map-target-halo")).toHaveCount(5);
+});
+
+test("sample lesson can be reset without a page reload", async ({ page }) => {
+  await page.getByRole("button", { name: "Reset lesson" }).click();
+  await expect(
+    page.getByText("Lesson reset. Walk to the golden glow to begin."),
+  ).toBeVisible();
+  await expect(page.getByText("Sample rehearsal").first()).toBeVisible();
+});
+
+test("one level control explains the recommended challenge depth", async ({
+  page,
+}) => {
+  const level = page.locator("#toolbar-season-select");
+  await level.selectOption({ label: "Master Gardener / Hard · Grades 9–12" });
+  await expect(level).toHaveValue("late-summer");
+  await expect(
+    page.getByText(/recommended level changes the question depth/),
+  ).toBeVisible();
+});
+
+test("in-map action status explains the current phase", async ({ page }) => {
+  const status = page.locator(".map-action-staging");
+  await expect(status).toBeVisible();
+  await expect(status).toContainText("Explore and inspect");
+  await page
+    .locator(".map-plant-button.withered, .map-plant-button.stressed")
+    .first()
+    .click();
+  await expect(status).toContainText("Explore and inspect");
+  await expect(page.locator(".map-challenge-overlay")).toBeHidden();
+});
+
+test("keyboard movement changes facing and keeps the map usable", async ({
+  page,
+}) => {
+  const map = page.locator("svg[aria-label*='module map']");
+  await map.focus();
+  const before = await page
+    .locator(".gardener-sprite")
+    .evaluate((node) => node.getAttribute("style"));
+  await page.keyboard.press("ArrowRight");
+  const after = await page
+    .locator(".gardener-sprite")
+    .evaluate((node) => node.getAttribute("style"));
+  expect(after).not.toBe(before);
+  await expect(page.locator(".map-hud")).toBeVisible();
+});
+
+test("E opens a short plant dialogue before the full question", async ({
+  page,
+}) => {
+  const map = page.locator("svg[aria-label*='module map']");
+  await map.focus();
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowUp");
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("e");
+  await expect(page.locator(".map-dialogue")).toContainText(
+    "Press E or Enter again",
+  );
+  await expect(page.locator(".map-challenge-overlay")).toBeHidden();
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".map-challenge-overlay")).toBeVisible();
+  await expect(page.locator(".challenge-choices label")).toHaveCount(4);
+  await page.locator(".challenge-choices label").first().click();
+  await page.getByRole("button", { name: "Check answer" }).click();
+  await expect(
+    page.getByRole("button", { name: "Confirm and tend" }),
+  ).toBeEnabled();
+  await page.locator(".map-challenge-overlay").press("y");
+  await expect(page.locator(".challenge-explanation-review")).toBeVisible();
+});
+
+test("mobile layout has no horizontal overflow", async ({ page }) => {
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await expect(page.locator(".garden-stage")).toBeVisible();
+});
+
+test("reduced motion disables the target animation", async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: "reduce" });
+  const page = await context.newPage();
+  await page.goto("/");
+  await expect(page.locator(".map-target-halo").first()).toBeVisible();
+  await expect(page.locator(".map-target-halo").first()).toHaveCSS(
+    "animation-name",
+    "none",
+  );
+  await context.close();
+});
+
+test("public reports expose read-only mode", async ({ page }) => {
+  await page.route("**/api/repository/analyze", async (route) => {
+    await route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        mode: "public-read-only",
+        report: {
+          ...sampleReport,
+          repo: {
+            ...sampleReport.repo,
+            name: "public-test",
+            commit: "public-commit",
+          },
+        },
+      }),
+    });
+  });
+  await page.locator("#repository-url").fill("https://github.com/acme/garden");
+  await page.getByRole("button", { name: "Grow this garden" }).click();
+  await expect(
+    page.getByText("Public report · commit public-commi"),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Public reports are read-only/).first(),
+  ).toBeVisible();
+});

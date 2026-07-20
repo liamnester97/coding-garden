@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Status Audit"
+  short_description: "Audit Code Garden execution and documentation"
+  default_prompt: "Use $project-status-audit to audit Code Garden execution against the plan and report what changed, what is missing, and what happens next."

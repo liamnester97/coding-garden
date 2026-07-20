@@ -1,6 +1,6 @@
 # ADR-001: MVP Scope — One Repo, Three Tools, One Payoff
 
-Status: Accepted (pending Stage 0 human sign-off)
+Status: Accepted
 
 ## Context
 
@@ -14,6 +14,10 @@ Build exactly the Must-Have tier as the MVP:
 2. **Garden rendering** that instantly reads healthy vs. sick.
 3. **Three tools end-to-end:** Magnifying Glass (read-only explanation), Clippers (dead-code removal), Watering Can (test generation) — each producing a real Codex change via branch/PR.
 4. **The before/after payoff moment** with real diffs shown.
+
+The MVP is released as a standalone public web app. Public GitHub repositories are the first
+external input path and require no user login; the bundled sample remains the deterministic
+fallback. Private-repository support is deferred to a separately reviewed GitHub OAuth/App flow.
 
 Should-Have (started only after all MVP stage gates pass): simplified season scrubbing (3–4 git snapshots), text-based plant voices, Codex-generated garden artwork. Nice-to-Have items are written up as roadmap only.
 

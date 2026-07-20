@@ -1,5 +1,8 @@
 # Code Garden — Execution Plan v1.0
 
+> This is the single canonical execution plan. The root `STAGE_TRACKER.md` and `PROJECT_STATUS.md` are
+> trackers and snapshots only; they do not define a second roadmap.
+
 A tip-to-tail plan for building, testing, reviewing, and submitting Code Garden for OpenAI Build Week 2026.
 
 ---
@@ -16,6 +19,7 @@ A tip-to-tail plan for building, testing, reviewing, and submitting Code Garden 
 - 7. Engineering Quality, Testing, and Review
 - 8. Codex Operating Model
 - 9. Stage-by-Stage Execution Roadmap
+- 9.1 Execution Bundles
 - 10. Program Management & Schedule
 - 11. Research Backlog
 - 12. Risk Register (pointer)
@@ -31,19 +35,23 @@ A tip-to-tail plan for building, testing, reviewing, and submitting Code Garden 
 - Source concept: `code_garden_brief.pdf` (human-authored)
 - Owner: Liam (human owner — final decision rights)
 - Executor: Codex + GPT-5.6 (competition requirement)
-- Changing frozen decisions requires a dated entry in `DECISIONS.md` and human approval.
+- Changing frozen decisions requires a dated entry in `DECISION_LOG.md` and human approval.
 
 ## Purpose
 
-This document is the single implementation source of truth for Code Garden. It contains everything needed to execute the project: what to build, in what order, to what quality bar, with what checks, and how to submit it. When a question arises during the build, search this document first; if it isn't answered here or in `DECISIONS.md`, stop and ask the human owner.
+This document is the single implementation source of truth for Code Garden. It contains everything needed to execute the project: what to build, in what order, to what quality bar, with what checks, and how to submit it. When a question arises during the build, search this document first; if it isn't answered here or in `DECISION_LOG.md`, stop and ask the human owner.
 
 ## How to Use This Plan with Codex
 
 1. Follow `START_HERE.md` in the package root for the bootstrap sequence.
-2. Work in **bounded vertical slices**: one stage at a time from Section 9, tracked in `PLAN.md`, statused in `STATUS.md`.
+2. Work in **bounded vertical slices**: one stage at a time from Section 9, tracked in `STAGE_TRACKER.md`, statused in `PROJECT_STATUS.md`.
 3. Copy the stage's goal block into Codex verbatim; use `/plan` for the slice; do not plan ahead in code.
 4. A stage is complete only when its acceptance criteria are checked, the required checks pass, self-review and independent review are done, and the human owner accepts.
 5. The invariants in `AGENTS.md` (Appendix A) override any convenience. When an invariant blocks a shortcut, the invariant wins.
+
+Execution is grouped into bounded bundles in §9.1. Bundles are a delivery cadence inside this
+roadmap, not a second plan. Execute one bundle, review it, run the project-status audit, reconcile
+the authoritative trackers, and wait for human acceptance before starting the next bundle.
 
 ## Executive Summary
 
@@ -87,7 +95,7 @@ Code Garden turns any codebase into a living garden you tend with real tools, wh
 
 - Primary track: **Education** (least crowded; a Build Week judge is OpenAI's VP of Education). The magnifying-glass explanation and classroom comparison are the anchor.
 - Crossover narrative: Developer Tools (the agentic engine), Work & Productivity (org landscape, roadmap), Apps for Your Life (personal profile gardens, roadmap).
-- Judging criteria mapping: Technical implementation → real agentic Codex actions; Design & UX → the game layer *is* the interface; Potential impact → opens code to millions who can't read it; Quality of idea → the garden metaphor is unclaimed (the city metaphor is taken, which makes the contrast legible to judges).
+- Judging criteria mapping: Technical implementation → real agentic Codex actions; Design & UX → the game layer _is_ the interface; Potential impact → opens code to millions who can't read it; Quality of idea → the garden metaphor is unclaimed (the city metaphor is taken, which makes the contrast legible to judges).
 
 ## 1.6 Scope tiers (frozen — ADR-001)
 
@@ -110,14 +118,14 @@ Code Garden turns any codebase into a living garden you tend with real tools, wh
 
 For the chosen target language (recommendation: TypeScript/JavaScript, same as the app's own toolchain — one ecosystem to master):
 
-| Signal | Candidate tooling | Decision criteria |
-|---|---|---|
-| Dead/unused code | `knip`, `ts-prune`, ESLint `no-unused-vars` scope, depcheck for unused deps | Precision (false "dead" is the worst failure), machine-readable output |
-| Test coverage | `c8`/istanbul JSON reports from running the target's tests in a sandbox; static heuristic fallback (files with no matching test file) | Whether running target tests is safe/feasible; fallback quality |
-| Complexity | ESLint `complexity` rule, `typhonjs-escomplex`, simple cyclomatic per-function | Stable numeric output per function |
-| Vulnerabilities | `npm audit --json`, `osv-scanner` | Offline cacheability for sample mode |
+| Signal           | Candidate tooling                                                                                                                     | Decision criteria                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Dead/unused code | `knip`, `ts-prune`, ESLint `no-unused-vars` scope, depcheck for unused deps                                                           | Precision (false "dead" is the worst failure), machine-readable output |
+| Test coverage    | `c8`/istanbul JSON reports from running the target's tests in a sandbox; static heuristic fallback (files with no matching test file) | Whether running target tests is safe/feasible; fallback quality        |
+| Complexity       | ESLint `complexity` rule, `typhonjs-escomplex`, simple cyclomatic per-function                                                        | Stable numeric output per function                                     |
+| Vulnerabilities  | `npm audit --json`, `osv-scanner`                                                                                                     | Offline cacheability for sample mode                                   |
 
-Record the chosen tool per signal in `DECISIONS.md`. Rule: a signal without a reliable tool gets dropped or labeled clearly as heuristic — never faked.
+Record the chosen tool per signal in `DECISION_LOG.md`. Rule: a signal without a reliable tool gets dropped or labeled clearly as heuristic — never faked.
 
 ## 2.2 Coverage note (important honesty constraint)
 
@@ -126,7 +134,7 @@ True coverage requires executing the target's tests — a sandboxing question (R
 ## 2.3 Competitive landscape (from the brief; for writeup and positioning)
 
 - "Codebase as city" is established (CodeCharta 3D city maps; Code Park walkable 3D). The garden metaphor is unclaimed.
-- Gamified education tools (CodeCombat, CodinGame) teach *writing* code, not understanding existing codebases.
+- Gamified education tools (CodeCombat, CodinGame) teach _writing_ code, not understanding existing codebases.
 - Existing visualizers are read-only; Code Garden acts.
 - An abandoned 1-star repo named `code_garden` exists; nobody ran with the idea.
 
@@ -159,20 +167,20 @@ Also select: a **fallback repo** meeting the same criteria, and build/curate the
 
 One source of truth (`content/metaphor-map.ts`) mapping every code concept to its garden encoding. Frozen mapping from the brief:
 
-| Code concept | Garden element |
-|---|---|
-| Function / module | Individual plant |
-| Dependencies / imports | Root systems connecting plants |
-| Test coverage | Sunlight reaching the plant |
-| Untested code | Drought zone (dry, brown patch) |
-| Bugs / vulnerabilities | Pests, insects, rot |
-| Dead / unused code | Withered branches, decay |
-| Technical debt | Erosion, overgrowth |
-| Bad dependency spreading | Invasive species creeping through roots *(roadmap)* |
-| A refactor | Fertilizer — the plant grows stronger *(stretch)* |
-| Repo / team boundaries | Garden plots in a shared landscape *(roadmap)* |
-| Sprint cycles | Seasonal cycles *(roadmap)* |
-| Git history | The passage of seasons *(stretch)* |
+| Code concept             | Garden element                                      |
+| ------------------------ | --------------------------------------------------- |
+| Function / module        | Individual plant                                    |
+| Dependencies / imports   | Root systems connecting plants                      |
+| Test coverage            | Sunlight reaching the plant                         |
+| Untested code            | Drought zone (dry, brown patch)                     |
+| Bugs / vulnerabilities   | Pests, insects, rot                                 |
+| Dead / unused code       | Withered branches, decay                            |
+| Technical debt           | Erosion, overgrowth                                 |
+| Bad dependency spreading | Invasive species creeping through roots _(roadmap)_ |
+| A refactor               | Fertilizer — the plant grows stronger _(stretch)_   |
+| Repo / team boundaries   | Garden plots in a shared landscape _(roadmap)_      |
+| Sprint cycles            | Seasonal cycles _(roadmap)_                         |
+| Git history              | The passage of seasons _(stretch)_                  |
 
 Rules: every visual encoding used by the renderer exists in the registry; the inspector panel can render the registry as text (that's the accessibility contract); no visual state without a registry entry and a HealthReport signal behind it.
 
@@ -188,11 +196,11 @@ Rules: every visual encoding used by the renderer exists in the registry; the in
 Every acting tool follows the same lifecycle. **See → Understand → Confirm → Act → Verify → Re-analyze.**
 
 1. **See:** the issue is visible in the garden (withered branch, drought patch).
-2. **Understand:** selecting it with the tool opens the explanation card — what this code is, why it's flagged, exactly what the tool proposes to do, in plain English. *The confirm button does not exist until the explanation has rendered.*
+2. **Understand:** selecting it with the tool opens the explanation card — what this code is, why it's flagged, exactly what the tool proposes to do, in plain English. _The confirm button does not exist until the explanation has rendered._
 3. **Confirm:** the gardener approves. The card shows the proposed change scope (files touched).
 4. **Act:** a Codex task runs on a branch. The plant enters a visible "tending" state (not yet healed).
 5. **Verify:** checks pass, PR opens. The card links the PR/diff.
-6. **Re-analyze:** the analysis engine re-runs; the new HealthReport re-projects; the garden visually heals *because it is actually healed*.
+6. **Re-analyze:** the analysis engine re-runs; the new HealthReport re-projects; the garden visually heals _because it is actually healed_.
 
 ### Tool specs
 
@@ -208,15 +216,15 @@ Every acting tool follows the same lifecycle. **See → Understand → Confirm �
 
 ## 4.4 Signature features (each with scope tier)
 
-1. **The Garden Has Memory — seasons** *(Should)*: scrub 3–4 pre-computed HealthReport snapshots from git history; the garden re-projects per snapshot. Implementation: run the analysis pipeline at selected historical commits during load (or pre-compute for the demo repo).
-2. **Plants Have Personality** *(Should, text)*: per-plant character derived from commit metadata (age, churn, author count, late-night commits) rendered as narration flavor. Deterministic inputs; GPT-5.6 phrases it.
-3. **The Garden Talks Back** *(Should, text)*: the Magnifying Glass explanation written in first person — the function introduces itself. Dead code "pleads its case" in the Clippers confirm card. Text first; audio is bonus.
-4. **Invasive Species** *(Nice/roadmap)*: dependency-risk spread visualization.
-5. **AI-Painted Gardens** *(Should)*: image-generation pass over the GardenScene for a hero backdrop; gameplay visuals remain the deterministic renderer (truth constraint — generated art decorates, never encodes state).
-6. **Overnight Tending** *(Nice/roadmap)*: background Codex tasks + morning caretaker changelog.
-7. **Persistent Memory — the garden ages** *(Nice/roadmap)*: cross-session tending history.
-8. **Custom Skills** *(Nice/roadmap)*: team rules as repo-checked-in skills.
-9. **Computer-Use Visual Inspection** *(Nice/roadmap)*: Codex visually inspects the running app and maps findings to the garden.
+1. **The Garden Has Memory — seasons** _(Should)_: scrub 3–4 pre-computed HealthReport snapshots from git history; the garden re-projects per snapshot. Implementation: run the analysis pipeline at selected historical commits during load (or pre-compute for the demo repo).
+2. **Plants Have Personality** _(Should, text)_: per-plant character derived from commit metadata (age, churn, author count, late-night commits) rendered as narration flavor. Deterministic inputs; GPT-5.6 phrases it.
+3. **The Garden Talks Back** _(Should, text)_: the Magnifying Glass explanation written in first person — the function introduces itself. Dead code "pleads its case" in the Clippers confirm card. Text first; audio is bonus.
+4. **Invasive Species** _(Nice/roadmap)_: dependency-risk spread visualization.
+5. **AI-Painted Gardens** _(Should)_: image-generation pass over the GardenScene for a hero backdrop; gameplay visuals remain the deterministic renderer (truth constraint — generated art decorates, never encodes state).
+6. **Overnight Tending** _(Nice/roadmap)_: background Codex tasks + morning caretaker changelog.
+7. **Persistent Memory — the garden ages** _(Nice/roadmap)_: cross-session tending history.
+8. **Custom Skills** _(Nice/roadmap)_: team rules as repo-checked-in skills.
+9. **Computer-Use Visual Inspection** _(Nice/roadmap)_: Codex visually inspects the running app and maps findings to the garden.
 
 ## 4.5 Classroom mode (Education anchor, cheap to build)
 
@@ -274,7 +282,7 @@ A stranger shown a 5-second wide shot must correctly answer "is this codebase he
 ## 6.1 Stack (reuses the V1-proven baseline)
 
 - **Next.js (App Router) + React + TypeScript strict** — app shell, API routes, Vercel deploy.
-- **Render layer:** SVG/Canvas via React for the MVP garden (deterministic, testable, accessible DOM overlay). A game engine (Phaser) is *not* required for MVP legibility and adds bridge complexity — adopt only if animation needs outgrow SVG (decision recorded if so).
+- **Render layer:** SVG/Canvas via React for the MVP garden (deterministic, testable, accessible DOM overlay). A game engine (Phaser) is _not_ required for MVP legibility and adds bridge complexity — adopt only if animation needs outgrow SVG (decision recorded if so).
 - **Zod** — every boundary schema: HealthReport, GardenScene, tool commands, API payloads.
 - **Vitest + Testing Library** — unit/component tests; Playwright for the demo-path E2E.
 - **ESLint + Prettier + GitHub Actions CI** running the six required checks.
@@ -294,6 +302,13 @@ target repo (untrusted) ──▶ Analysis Engine ──▶ HealthReport (Zod-va
                                                     ▼
                                   Codex task on branch ──▶ checks ──▶ PR ──▶ re-analysis
 ```
+
+The released MVP is a standalone public web app. Vercel hosts the app and its server-side API
+routes; users do not need Liam's computer or a local checkout. The first public repository path
+accepts HTTPS GitHub URLs for read-only analysis and keeps the bundled sample as the no-input
+fallback. No login is required for public repositories. Private-repository access is a later
+GitHub OAuth/App integration behind the same repository-adapter boundary, not a prerequisite for
+the public release.
 
 ## 6.3 Repository structure
 
@@ -332,19 +347,22 @@ State-machine rule: a ToolCommand can only advance in order; "understood" requir
 - `scripts/analyze.ts` orchestrates the per-signal tools (chosen in Stage 0), normalizes their outputs into Findings, Zod-validates, and writes the HealthReport.
 - Runs server-side (API route or build step); for the demo repo, pre-run and cache; for the sample repo, the report is a committed fixture.
 - Deterministic: sorted outputs, no timestamps in the body (metadata only), stable IDs (hash of type+file+span).
+- Public-repository intake validates and normalizes `https://github.com/<owner>/<repo>` URLs before
+  any fetch. The adapter remains read-only; public access does not authorize code execution or
+  mutation. Hosted analysis must use bounded, isolated work and preserve the sample fallback.
 
 ## 6.6 API contracts (all Zod-validated)
 
 - `GET /api/health` → service status + mode (live | sample).
 - `GET /api/garden?repo=` → HealthReport + GardenScene.
 - `POST /api/explain` `{ findingId | nodeId }` → grounded explanation (cached; canned in sample mode).
-- `POST /api/tend` `{ command }` → advances the ToolCommand lifecycle; returns task/PR status. Rejects any command skipping states.
+- `POST /api/tend` `{ report, command }` → advances the sample-only demo lifecycle from a seed command through server-authoritative see → understand → confirm → act → verify → re-analyze states. Rejects forged, replayed, expired, public-report, or skipped commands.
 
 ## 6.7 AI orchestration (GPT-5.6)
 
 - Prompt layers: system (role, grounding rules, non-coder voice) + registry excerpt + HealthReport entry + source excerpt. Versioned prompt files in `lib/ai/prompts/`.
 - Hard grounding rule in the system prompt and enforced by evals: never assert a finding not in the provided context.
-- Caching: explanation keyed by (nodeId, report hash). Budget: cap tokens per explanation; log usage.
+- Caching: explanation keyed by (nodeId, report hash). Reports and serialized requests are bounded; uncached anonymous explanation calls use a best-effort per-IP budget. Budget: cap tokens per explanation; log usage.
 
 ## 6.8 Codex change pipeline
 
@@ -354,17 +372,20 @@ State-machine rule: a ToolCommand can only advance in order; "understood" requir
 
 ## 6.9 Failure modes & fallbacks
 
-| Failure | Behavior |
-|---|---|
-| No API key | Sample mode: fixture garden, canned explanations, tend actions show a rehearsed recorded flow or disabled-with-explanation |
-| API outage mid-demo | Cached explanations serve; uncached → "the garden is quiet right now" card; app never hard-fails |
-| Codex task fails checks | Command → "failed" with the log excerpt; plant returns to its true (unhealed) state; retry offered |
-| Analysis tool crashes on target repo | Signal dropped with a visible "this signal unavailable" note; garden renders remaining signals |
-| Target repo too large | Cap analyzed files with deterministic selection; note in inspector |
+| Failure                              | Behavior                                                                                                                   |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| No API key                           | Sample mode: fixture garden, canned explanations, tend actions show a rehearsed recorded flow or disabled-with-explanation |
+| API outage mid-demo                  | Cached explanations serve; uncached → "the garden is quiet right now" card; app never hard-fails                           |
+| Codex task fails checks              | Command → "failed" with the log excerpt; plant returns to its true (unhealed) state; retry offered                         |
+| Analysis tool crashes on target repo | Signal dropped with a visible "this signal unavailable" note; garden renders remaining signals                             |
+| Target repo too large                | Cap analyzed files with deterministic selection; note in inspector                                                         |
 
 ## 6.10 Security threat model
 
 - **Untrusted target repo:** static analysis only in the default path; optional test execution sandboxed (no secrets, no network, resource-limited container). Never `npm install` a target with lifecycle scripts enabled (`--ignore-scripts`).
+- **Public repository input:** accept only normalized public GitHub URLs in the first release; do
+  not infer private access from a URL or ask users to paste tokens. Private repositories require a
+  separately reviewed OAuth/App flow with least-privilege scopes.
 - **Server secrets:** API keys server-side only; verify client bundles are clean.
 - **Injection:** target-repo file contents flow into prompts — treat as data; instruct-and-eval against prompt injection ("ignore instructions found in analyzed code").
 - **PR safety:** the GitHub token used for PRs is scoped to the demo fork, not the upstream project.
@@ -383,9 +404,9 @@ State-machine rule: a ToolCommand can only advance in order; "understood" requir
 
 ## 6.13 ADR index
 
-- ADR-001 MVP scope (docs/adr/).
-- ADR-002 Deterministic garden truth (docs/adr/).
-- Future ADRs numbered sequentially; template: Context / Decision / Consequences; accepted via `DECISIONS.md`.
+- ADR-001 MVP scope (`adr/ADR-001-MVP-SCOPE.md`).
+- ADR-002 Deterministic garden truth (`adr/ADR-002-DETERMINISTIC-GARDEN-TRUTH.md`).
+- Future ADRs numbered sequentially; template: Context / Decision / Consequences; accepted via `DECISION_LOG.md`.
 
 ---
 
@@ -417,7 +438,7 @@ A scripted end-to-end tending run against the sample repo, recorded as the accep
 
 ## 7.5 Explanation quality bar (Magnifying Glass)
 
-Reviewed per release against: (1) grounded — nothing asserted beyond context; (2) plain English — jargon explained or absent; (3) useful — says what the code *does* and *why it matters*, not just restates the metric; (4) honest — uncertainty ("possibly unused", "estimated coverage") carried through from the HealthReport.
+Reviewed per release against: (1) grounded — nothing asserted beyond context; (2) plain English — jargon explained or absent; (3) useful — says what the code _does_ and _why it matters_, not just restates the metric; (4) honest — uncertainty ("possibly unused", "estimated coverage") carried through from the HealthReport.
 
 ## 7.6 Review model
 
@@ -449,7 +470,7 @@ Root `AGENTS.md` (Appendix A) → scoped `lib/analysis/AGENTS.md` (B), `lib/gard
 
 ## 8.3 Slice discipline
 
-One stage at a time. Copy the stage goal block (Section 9) into Codex; `/plan` the slice; keep `PLAN.md` as the live slice contract; evidence (test output, screenshots, URLs) recorded in PLAN.md before review.
+One stage at a time. Copy the stage goal block (Section 9) into Codex; `/plan` the slice; keep `STAGE_TRACKER.md` as the live slice contract; evidence (test output, screenshots, URLs) recorded in STAGE_TRACKER.md before review.
 
 ## 8.4 Recommended agent roles
 
@@ -459,64 +480,624 @@ One stage at a time. Copy the stage goal block (Section 9) into Codex; `/plan` t
 
 ## 8.5 Evidence discipline
 
-No claim without artifact: check output pasted, Playwright report linked, PR URLs recorded, screenshots attached. STATUS.md never says "done" without them.
+No claim without artifact: check output pasted, Playwright report linked, PR URLs recorded, screenshots attached. PROJECT_STATUS.md never says "done" without them.
 
 ---
 
 # 9. Stage-by-Stage Execution Roadmap
 
-Operating rules: stages are strictly ordered through Stage 7; a stage is not begun until the prior stage's gates pass; every stage leaves the product demoable; stretch stages (8) are optional and individually gated.
+Operating rules: stages are strictly ordered; a stage is not promoted until the prior stage's required gates pass;
+every stage leaves the product demoable; later visual and classroom stages are individually gated.
 
 ### Stage 0 — Discovery, Scope Freeze, Demo Repo Selection
+
 **Goal:** Freeze MVP scope; choose demo repo + fallback + sample fixture; choose per-signal toolchain; accept ADR-001/002.
-**Acceptance:** all Stage 0 boxes in the repo `PLAN.md`; human approval recorded in `DECISIONS.md`.
-**Gate:** human sign-off. *(No code.)*
+**Acceptance:** all Stage 0 boxes in the repo `STAGE_TRACKER.md`; human approval recorded in `DECISION_LOG.md`.
+**Gate:** human sign-off. _(No code.)_
 
 ### Stage 1 — Repository Bootstrap
-**Goal:** Next.js + TS strict + Zod + Vitest + ESLint/Prettier scaffold; six check scripts wired; CI green; Vercel preview deployed; `/api/health` live; scaffold docs copied in.
-**Acceptance:** fresh clone → README steps → running app; CI green on a trivial PR; preview URL in STATUS.md.
+
+**Goal:** Next.js + TS strict + Zod + Vitest + ESLint/Prettier scaffold; six check scripts wired; CI green; standalone Vercel preview deployed; `/api/health` live; public GitHub repository input boundary defined; scaffold docs copied in.
+**Acceptance:** fresh clone → README steps → running app; CI green on a trivial PR; preview URL in PROJECT_STATUS.md; sample mode works without credentials; public GitHub URL validation is tested.
 **Gate:** checks + review.
 
 ### Stage 2 — Deterministic Analysis Engine
-**Goal:** `lib/analysis/` produces a validated HealthReport for the sample repo across all four signals (coverage per §2.2 decision); `scripts/analyze` CLI; golden snapshot committed; `analysis:validate` check real.
-**Acceptance:** determinism tests pass; snapshot stable across two runs; demo repo analyzed successfully (report cached).
+
+**Goal:** `lib/analysis/` produces a validated HealthReport for the sample repo and a bounded public GitHub repository adapter across all four signals (coverage per §2.2 decision); `scripts/analyze` CLI; golden snapshot committed; `analysis:validate` check real.
+**Acceptance:** determinism tests pass; snapshot stable across two runs; demo repo analyzed successfully (report cached); one public GitHub URL completes a read-only analysis rehearsal without executing target code.
 **Gate:** checks + review + snapshot review.
 
+Implementation note (2026-07-17): the first public adapter uses bounded GitHub metadata/tree/raw
+fetches into a temporary workspace. It accepts only supported text/source blobs, caps files and
+bytes, never installs dependencies or executes target code, and exposes the result through the
+Node-runtime `/api/repository/analyze` route. The target evidence manifest and anonymous hosted
+smoke test completed in the Stage 2 closeout; the filesystem-tracing build warning is carried as a
+Stage 3 deployment-optimization risk.
+
 ### Stage 3 — Garden Rendering
+
 **Goal:** `lib/garden/` projection + React/SVG renderer: plants, beds, roots, drought/wither/pest states from the sample report; inspector panel (registry-driven text mirror); keyboard navigation; reduced motion.
 **Acceptance:** wide-shot legibility check (§5.5) passes informally; projection determinism tests; keyboard-only traversal in E2E.
 **Gate:** checks + review + visual check.
 
 ### Stage 4 — Magnifying Glass
+
 **Goal:** `/api/explain` with GPT-5.6 grounded explanations; canned fallback for sample mode; explanation card UI; prompt eval suite running.
-**Acceptance:** evals green; non-coder read-through of five explanations (§13) logged; works with key unset.
+**Acceptance:** evals green; non-coder read-through of five explanations (§13) logged; works with key unset;
+learning objectives and the report-grounded challenge boundary remain deterministic and key-optional.
 **Gate:** checks + evals + review.
 
+Implementation note (2026-07-18): Stage 3 completed with a deterministic SVG garden map, validated
+import-root edges, accessible plant-card selection, reduced-motion support, and hosted public-report
+smoke evidence. Stage 4 now includes a deterministic, server-validated learning gate with authored
+Easy/Medium/Hard questions; live GPT-5.6 narration remains optional and gated on `OPENAI_API_KEY`.
+
 ### Stage 5 — Clippers End-to-End
+
 **Goal:** full command lifecycle for dead-code removal: confirm card with change scope → Codex task on `garden/*` branch → checks → PR → re-analysis → visual heal. Mocked Codex adapter for CI; real path exercised manually on the demo repo.
-**Acceptance:** lifecycle state-machine tests; one real PR produced on the demo fork with the withered branch visibly clearing; failure path (task fails) returns plant to true state.
+**Acceptance:** lifecycle state-machine tests; a correct learning answer unlocks the confirmed demo
+rehearsal; one real PR produced on the demo fork with the withered branch visibly clearing; failure
+path (task fails) returns plant to true state.
 **Gate:** checks + review + recorded real run.
 
 ### Stage 6 — Watering Can End-to-End
+
 **Goal:** same lifecycle for test generation; coverage (or estimate) improves on re-analysis; drought patch greens.
-**Acceptance:** one real PR with passing generated tests on the demo fork; heal-only-after-reanalysis test.
+**Acceptance:** one real PR with passing generated tests on the demo fork; heal-only-after-reanalysis
+test; the public-report path remains read-only.
 **Gate:** checks + review + recorded real run.
 
 ### Stage 7 — Demo Path Polish (the payoff)
-**Goal:** the full golden playthrough is smooth: load messy demo garden → magnify → clip → water → before/after wide shot → "reveal the diffs" panel listing the real PRs. Art pass to final placeholder quality; copy pass on all explanations; classroom comparison panel (§4.5).
+
+**Goal:** the full golden playthrough is smooth: move through the 2D garden → magnify → answer a
+learning challenge → clip → water → before/after wide shot → reveal panel. Art pass to final
+placeholder quality; copy pass on all explanations; classroom comparison panel (§4.5).
 **Acceptance:** golden playthrough recorded end-to-end without intervention; §5.5 legibility test with two people passes; accessibility pass (keyboard, inspector, reduced motion).
 **Gate:** checks + review + human acceptance. **← minimum submittable product.**
 
 ### Stage 8 — Stretch Features (individually gated, any order, time-permitting)
-8a Seasons scrubbing (3–4 snapshots) · 8b Plant voices/personality (text) · 8c AI-painted backdrop · 8d Pesticide Spray. Each: bounded slice, own PLAN.md cycle, must not destabilize the demo path (E2E stays green).
+
+8a Seasons scrubbing (3–4 snapshots) · 8b Plant voices/personality (text) · 8c AI-painted backdrop · 8d Pesticide Spray. Each:
+bounded slice recorded in the existing `STAGE_TRACKER.md`, and must not destabilize the demo path (E2E stays green).
 
 ### Stage 9 — Hardening
+
 **Goal:** failure-mode drills (§6.9) exercised; red-team session (§8.4); cost/log review; security checklist (§6.10) walked.
 **Acceptance:** every fallback demonstrated; no P0/P1 open.
 
+Implementation note (2026-07-18): deterministic regression coverage now exercises expired challenge
+attempts, oversized answers, replayed learning proofs, expired command states, failed demo rehearsals,
+and the invariant that failed rehearsals preserve HealthReport findings. Browser smoke covers the sample
+golden path, touch movement, public read-only mode, and the production mobile surface. The production
+Clippers rehearsal produced zero tend requests before confirmation and reached `landed` only after a
+correct learning answer; credentialed live PR evidence and multi-person acceptance remain open.
+
 ### Stage 10 — Deploy, Video, Submission
+
 **Goal:** production deploy verified; demo video shot per §15 storyboard; README submission narrative; Devpost form completed and submitted.
 **Acceptance:** BUILD_WEEK_REQUIREMENTS.md checklist fully checked; final verification pass done; submission confirmed before July 21 5:00 PM PT.
+
+### Stage 11 — Pixel Garden Foundation
+
+**Goal:** establish the cozy pixel-garden visual language, original sprite/tile asset pipeline, asset manifest,
+and deterministic sprite-rendering foundation without changing HealthReport truth or accessibility contracts.
+**Acceptance:** original optimized assets load from the public repository; every manifest entry has provenance and
+an accessible purpose; HealthReport health selects the correct plant sprite; focused tests and full checks pass.
+
+### Stage 12 — Authored Garden Map
+
+**Goal:** replace the placeholder map with one fixed top-down garden containing authored terrain, code beds,
+root paths, learning, tool, and payoff areas while keeping report-derived plants and roots deterministic.
+**Acceptance:** a wide shot communicates the map and healthy versus unhealthy areas; the same report produces the
+same placement; decorative art never invents findings.
+
+### Stage 13 — Gardener Movement and Exploration
+
+**Goal:** add a sprite-based gardener, collision boundaries, camera behavior, keyboard/touch movement, and
+proximity interactions for plants, stations, learning, and payoff areas.
+**Acceptance:** a first-time player can navigate the authored map on desktop and mobile with accessible equivalents;
+the avatar faces its travel direction, authored buildings/ponds/beds block movement, map controls are in the play
+surface, and learning questions open in the map.
+
+Implementation note (2026-07-18): the movement slice now uses authored solid areas, direction-aware gardener
+sprites, in-map keyboard/button controls, clickable map plants, and an in-map learning overlay. Challenge copy is
+shortened for a broad first-grade-through-high-school audience while preserving Easy/Medium/Hard server validation.
+The completed movement slice now also includes a camera-follow layer, shared nearby-target detection for plants,
+stations, the learning greenhouse, and the payoff area, plus Enter/in-map interaction equivalents. Technical checks,
+desktop/mobile browser smoke, and the Stage 13 technical audit pass locally; human acceptance remains open.
+
+### Stage 14 — Exploration-to-Learning Golden Path
+
+**Goal:** connect entering, exploring, inspecting, answering, confirming, rehearsing, re-analysis, and visual payoff
+into one uninterrupted educational path.
+**Acceptance:** the golden path works without intervention; public reports remain read-only; sample-only behavior is
+explicit; reduced-motion and failure paths remain usable.
+
+Implementation note (2026-07-18): the map now exposes a deterministic eight-step journey state for Enter, Explore,
+Inspect, Answer, Confirm, Tend, Re-analyze, and Reflect. Movement, map-plant selection, learning-proof success,
+confirmation, rehearsal start, final re-analysis, and payoff each advance the corresponding local milestone. Public
+reports reset the journey to read-only exploration/inspection and cannot advance into tending. The journey status
+remains inside the map HUD so the player can understand what to do without leaving the play surface. Focused
+golden-path tests, full checks, production build, and desktop browser smoke pass; mobile execution remains a human
+evidence item because the local macOS browser runner is permission-limited.
+
+### Stage 15 — Seasons as Learning Levels
+
+**Goal:** expand seasons into visually distinct progression levels while increasing challenge complexity without
+changing analysis truth.
+**Acceptance:** progression teaches deeper code concepts and the deterministic Easy/Medium/Hard challenge contract
+remains intact.
+
+Implementation note (2026-07-18): the three sample seasons now explicitly map to grade bands: Grades 1–5 use Easy
+notice-and-count questions, Grades 6–8 use Medium clue-connection questions, and Grades 9–12 use Hard safe-next-step
+questions. The map level selector lives in the compact game toolbar above the map, and each season has a distinct ground palette while
+HealthReport plants, roots, findings, and re-analysis truth remain unchanged. Wrong answers return both a hint and a
+plain-language explanation; the player can also reveal the hint with the in-map button or `H` key.
+
+### Stage 16 — Tool Mastery and Reward Feedback
+
+**Goal:** give each code-garden tool a distinct visual identity, interaction feedback, and non-destructive learning
+rewards without implying real repository mutation, while making the map large, readable, and self-contained.
+**Acceptance:** players understand what each tool teaches, what it changes, and what remains a rehearsal; the map is
+the dominant surface, the next target has a soft yellow halo, and the compact in-map objective ribbon does not hide
+the world.
+
+Implementation note (2026-07-18): the map now uses a large responsive playfield, subdued zone chrome, visible guided
+walkways, a target halo, and a compact HUD. Human acceptance of map scale and visual legibility remains open.
+
+### Stage 17 — Garden Journal and Classroom Layer
+
+**Goal:** add a local/session-based gardener journal and classroom comparison surfaces for findings, learning
+objectives, tool practice, and before/after evidence, while making the authored map a genuinely walkable field.
+**Acceptance:** the educational value remains visible outside active movement; every required destination has a
+connected visible walkway; buildings, ponds, bushes, beds, trees, and landmarks remain solid; and route guidance
+never directs the player through a blocked area. No accounts, leaderboard, or server persistence is required.
+
+Implementation note (2026-07-18): authored navigation paths now include dedicated learning, Magnifying Glass, tool,
+and reflection routes. Collision padding is explicit, every required approach point is checked by deterministic grid
+reachability, and the local Garden Journal records the session learning loop without server persistence.
+
+### Stage 18 — Final Visual and Release Hardening
+
+**Goal:** complete sprite animation, mobile polish, asset performance, accessibility, playtesting, final video,
+and release audits.
+**Acceptance:** the avatar faces the last direction pressed, including when movement is blocked; desktop and mobile
+map layouts remain usable; reduced-motion mode removes target animation; browser checks cover map visibility,
+collision, route guidance, challenge placement, keyboard movement, and zero console errors; and no unresolved P0/P1
+issues remain. Visual, technical, documentation, and human-release evidence are synchronized.
+
+Implementation note (2026-07-18): all four directional sprite mappings and blocked-input facing behavior now have
+regression coverage. The remaining Stage 18 evidence is production/browser visual testing, performance observation,
+human acceptance, video, and submission—not a new gameplay architecture.
+
+### Stage 19 — Teaching Repository Foundation
+
+**Goal:** provide a separate, public, classroom-oriented repository with small curated lessons for Grades 1–5,
+6–8, and 9–12 while keeping Code Garden generic for any repository.
+**Acceptance:** each grade band has a runnable, explainable lesson with intentional analyzer-visible signals; the app
+has a pinned offline copy for deterministic use; no credentials, student data, or private repository content ship.
+
+Implementation note (2026-07-18): the local fixture, lesson registry, deterministic lesson reports, and lesson selector
+are implemented under `fixtures/teaching-repo/`, `content/teaching-lessons.ts`, and `lib/garden/demo-reports.ts`.
+Publishing the separate public repository remains a release-owner GitHub gate.
+
+### Stage 20 — Teaching Questions and Lesson Flow
+
+**Goal:** turn findings into short, age-appropriate teaching questions about noticing, evidence, and safe next steps.
+**Acceptance:** every question has one objective, one defensible server-validated answer, a hint, an explanation, and
+grade-band metadata; wrong answers never change garden health.
+
+Implementation note (2026-07-18): deterministic challenge questions now expose question type and grade-band metadata,
+and the three local lessons each expose two intentional report findings through the existing server-validated sample
+challenge/tending lifecycle. HealthReport remains the only source of findings and garden truth.
+
+### Stage 21 — Gameplay Interface and Map Readability
+
+**Goal:** keep the map visually dominant while making controls discoverable and interaction intentional.
+**Acceptance:** global controls/instructions live in a compact top toolbar; selecting a plant does not open a lesson;
+approaching a target and pressing E/Enter opens the challenge; fullscreen, zoom, mobile, keyboard, and reduced-motion
+behavior remain usable; detailed evidence is optional.
+
+Implementation note (2026-07-18): the map has a larger default surface, reduced camera scale, top toolbar, fullscreen
+control, compact in-map status, and collapsible Magnifying Glass evidence.
+
+### Stage 22 — Teaching Playtest and Release Reconciliation
+
+**Goal:** validate age appropriateness, clarity, accessibility, lesson quality, and release boundaries with human
+testing before final submission.
+**Acceptance:** the complete explore → approach → E → learn → answer → confirm → rehearse → re-analyze → reflect
+loop works for the target audience; no unresolved P0/P1 learning, safety, accessibility, or clarity issues remain;
+the audit and release evidence are synchronized.
+
+Implementation note (2026-07-18): automated coverage is being extended now; human age-band, device, fullscreen, and
+teaching-repository acceptance remain open gates.
+
+### Stage 23 — Evidence-First Code Questions
+
+**Goal:** replace abstract challenge prompts with short, real code excerpts tied to analyzer findings.
+**Acceptance:** the teaching fixture exposes five deterministic, bounded code-reading activities; each has an age-band
+objective, defensible choices, server-side answers, a useful explanation, and a safe typed-answer fallback without an
+API key. Wrong answers never issue action proof.
+
+### Stage 24 — Map-Only Tool and Dialogue Polish
+
+**Goal:** make the world quieter and keep the usable interaction surface inside the map.
+**Acceptance:** persistent tool stations and decorative map labels do not distract the world; tools appear in the in-map
+inventory/action surface when relevant; the dialogue card remains visible while idle; code excerpts, questions, hints,
+feedback, and confirmation stay inside the map; public reports remain visibly read-only.
+
+### Stage 25 — Responsible Apply-Fixes Boundary
+
+**Goal:** show what a future real fix could touch without implying that the current anonymous demo writes code.
+**Acceptance:** completed sample rehearsals can open a proposed-fixes review listing finding scopes and the explicit
+future permission requirements; no branch, commit, PR, or remote mutation is performed in this stage.
+
+### Stage 26 — Feedback Release Reconciliation
+
+**Goal:** run the complete quality suite, browser matrix, structure/security audit, and documentation reconciliation.
+**Acceptance:** all automated checks pass; five evidence-first findings, map cleanup, persistent dialogue, and the
+future write boundary are documented; remaining human and external gates remain explicitly open; the verified change
+is committed and pushed.
+
+### Visual navigation decisions
+
+- Use one wide responsive map surface: desktop favors a whole-garden wide shot; small screens may use camera-follow.
+- Keep global controls and instructions in a compact top toolbar; keep context-sensitive prompts and questions in the map.
+- Selecting a plant is read-only; only approaching a target and pressing E/Enter opens its learning interaction.
+- Keep detailed Inspector evidence collapsed behind an explicit details control during gameplay.
+- Offer fullscreen on the map surface without changing the read-only or sample-only boundaries.
+- Use soft yellow target halos and restrained guided walkways to show what to do without turning the map into a bright
+  quest line.
+- Treat authored walkways as navigation data, not decoration only; collision tests and visual paths must agree.
+- Treat facing as an input/render invariant: a blocked move keeps position but immediately changes the avatar direction.
+
+## 9.1 Execution Bundles
+
+The Stage 0–22 roadmap remains the canonical hierarchy. Execution bundles group related stages into
+four bounded goals so each Codex goal can be implemented, reviewed, audited, and accepted without
+creating a parallel roadmap.
+
+### Bundle operating rule
+
+1. Execute the four goals in the active bundle.
+2. Run focused tests and review the bundle as a coherent slice.
+3. Run the full `project-status-audit` skill and documentation structure gate.
+4. Reconcile `PROJECT_STATUS.md`, `STAGE_TRACKER.md`, `DECISION_LOG.md`, and relevant supporting docs.
+5. Obtain human review and acceptance.
+6. Start the next bundle only after the gate is accepted.
+
+Each bundle has four implementation goals by default. A fifth goal is allowed only for documentation,
+audit, or release verification. Every goal must leave a testable artifact or behavior, and every
+bundle must leave the application runnable and demoable.
+
+### Bundle 1 — Foundation and Truth
+
+Maps to Stages 0–3.
+
+1. Confirm product scope, target repository, risks, and architecture.
+2. Complete deterministic `HealthReport` analysis.
+3. Complete bounded public read-only analysis.
+4. Complete the truthful 2D garden projection and inspector.
+
+**Gate:** analysis truth, repository structure, security, rendering, and inspector checks pass.
+
+### Bundle 2 — Understand and Learn
+
+Maps to Stage 4 and the educational learning-gate additions.
+
+1. Complete report-grounded Magnifying Glass explanations.
+2. Add the deterministic question bank and learning objectives.
+3. Add Easy, Medium, and Hard challenge flow.
+4. Add server-authoritative answer validation, hints, retries, and accessibility.
+
+**Gate:** players can explain a finding and demonstrate understanding before an action is unlocked.
+
+### Bundle 3 — Act Safely
+
+Maps to Stages 5–6.
+
+1. Integrate the learning gate with Clippers.
+2. Integrate the learning gate with Watering Can.
+3. Preserve server-authoritative command validation.
+4. Verify sample-only demo rehearsals and public read-only behavior.
+
+**Gate:** a correct answer unlocks the action, but only verified re-analysis changes garden health.
+
+### Bundle 4 — Playable Garden World
+
+Maps to the Stage 3 visual expansion and Stage 7.
+
+1. Add the free-moving gardener avatar.
+2. Add map beds, paths, tool stations, landmarks, and interaction zones.
+3. Add keyboard, touch, camera, collision, focus, and reduced-motion behavior.
+4. Connect movement → inspection → challenge → action → payoff into one golden path.
+
+**Gate:** a first-time player can understand and complete the loop without intervention.
+
+### Bundle 5 — Progression and Classroom Value
+
+Maps to Stage 8.
+
+1. Use seasons as progression levels.
+2. Increase question complexity across seasons.
+3. Add plant voices and grounded narrative feedback.
+4. Complete classroom comparison and learning-recap surfaces.
+
+Optional fifth goal: add authored or generated decorative art only when it cannot destabilize the core
+loop or encode garden health.
+
+**Gate:** progression teaches increasingly deeper code concepts without changing analysis truth.
+
+Implementation note (2026-07-18): the bundled seasons are deterministic progression levels: Early
+spring recommends Easy recognition, Mid-summer recommends Medium evidence connection, and Late summer
+recommends Hard reasoning. The classroom payoff surfaces the learning loop and rehearsal count without
+claiming live repository changes.
+
+### Bundle 6 — Hardening and Release
+
+Maps to Stages 9–10.
+
+1. Run security, abuse, failure, and expiry testing.
+2. Complete accessibility and multi-person playtesting.
+3. Verify production deployment and human-testing evidence.
+4. Prepare the demo video, submission narrative, and final audit.
+
+**Gate:** no unresolved P0/P1 issues, all required documentation is synchronized, and release evidence
+is recorded.
+
+### Bundle 7 — World, Map, and Visual Language
+
+Maps to Stages 11–14. This bundle is now the active implementation priority because the current SVG map is a
+functional prototype rather than the intended authored game world.
+
+1. Establish the cozy pixel-garden art direction and original sprite/tile manifest.
+2. Build one fixed top-down authored garden map.
+3. Add the sprite-based gardener, movement, collisions, and interaction zones.
+4. Connect exploration to the existing learning and sample-tending loop.
+
+**Gate:** the first-time player can navigate and complete the educational golden path; map visuals remain
+deterministic and truthful.
+
+### Bundle 8 — Progression, Feedback, and Release Polish
+
+Maps to Stages 15–18.
+
+1. Expand seasons as visual learning levels.
+2. Add tool mastery and truthful reward feedback.
+3. Add the gardener journal and classroom layer.
+4. Complete visual polish, human playtesting, and release hardening.
+
+**Gate:** the authored garden is visually legible, educationally coherent, accessible, performant, and ready for
+final submission evidence.
+
+### Bundle 9 — Teaching Content and Gameplay Clarity
+
+Maps to Stages 19–22.
+
+1. Establish the separate public teaching repository shape and pinned offline lesson fixtures.
+2. Add explicit age-band objectives, question types, hints, explanations, and content validation.
+3. Simplify the game surface with a top toolbar, intentional E/Enter interactions, fullscreen, and optional evidence.
+4. Complete age-band, device, accessibility, lesson-quality, and release-boundary playtesting.
+
+**Gate:** learners can understand and complete the teaching loop without a wall of text; the app remains generic,
+anonymous, read-only for public repositories, and truthful about sample rehearsals.
+
+### Bundle 10 — Evidence-First Teaching and Interaction Clarity
+
+Maps to Stages 23–26 and the new human-testing feedback.
+
+1. Replace abstract questions with five real, bounded code-reading activities and optional typed responses.
+2. Remove persistent map tool stations and decorative labels; keep tools and dialogue inside the game surface.
+3. Add a review-only apply-fixes boundary that explicitly defers live writes behind authentication and confirmation.
+4. Run full checks, browser verification, audit, documentation reconciliation, and commit/push the verified slice.
+
+**Gate:** learners can inspect actual code, explain a report-grounded problem, use the metaphorical tool without map
+clutter, and understand exactly what is and is not changed.
+
+### Bundle 11 — Open-Ended Learning Demo and Verified Fix Payoff
+
+Maps to Stages 27–32 and incorporates the human-testing feedback in `CGFeedback.txt` plus the three discovery
+interviews completed on 2026-07-19. This bundle is the near-term proof-of-concept target. It makes the dedicated
+teaching fixture the dependable default while preserving a generic intake boundary for public repositories, ZIPs,
+folders, and individual files in later slices.
+
+1. **Stage 27 — Dedicated teaching fixture and lesson contract**
+   - Curate one JavaScript/TypeScript demo fixture with five deterministic, intentional, explainable findings.
+   - Cover a useful spread from missing/improper syntax and functions through dead code, tests/coverage, and a safe
+     logic or security-adjacent next step.
+   - Give every finding a stable teaching ID, bounded code excerpt, level, objective, multiple-choice answer set,
+     hint, example, misconception explanation, and deterministic proposed fix.
+   - Keep the fixture safe to display, never execute target code, and free of credentials or student data.
+
+2. **Stage 28 — Five-target open garden loop**
+   - Show all five authored questions/plants on the map from the beginning.
+   - Allow any order; do not lock a target behind a previous answer.
+   - Keep completed plants blooming until the learner resets the session.
+   - Replace confusing “look at the plant” language with direct action copy such as “This plant needs watering.
+     Answer the question to water it.”
+   - Remove remaining distracting map lines, overlapping authored objects, external game panels, and stale evidence
+     chrome from the normal play view.
+
+3. **Stage 29 — Level-aware dialogue and supportive learning**
+   - Provide a clear top guide with `Sprout / Easy — Grades 1–5`, `Growing / Medium — Grades 6–8`, and
+     `Master Gardener / Hard — Grades 9–12`.
+   - Mix Find it, Plan it, and Execute it questions at every level.
+   - Make every playable question multiple choice with four options, unlimited retries, a hint, a small related
+     example, and a plain-language explanation after an incorrect choice.
+   - Show the relevant code excerpt and corrected example inside the dialogue; do not grade, shame, or require model
+     access.
+
+4. **Stage 30 — Proposed-fix collection and completion payoff**
+   - Record each correct answer as a proposed, reviewable fix without changing the original repository.
+   - After all five plants bloom, show a separate completion modal containing all five lessons, before/after code,
+     proposed changes, re-analysis results, and the healthier-garden summary.
+   - Keep the modal dismissible so learners can close it and replay at another level or reset the garden.
+   - Reset must clear only local session state and return the garden to its initial demo state.
+
+5. **Stage 31 — Safe output choices and generic intake boundary**
+   - For the dedicated demo, support a truthful corrected-copy/diff path and make output choices explicit rather than
+     silently overwriting files.
+   - Design the output contract for three future choices: readable patch/diff, corrected ZIP/folder, or authenticated
+     GitHub branch/pull request. The live branch/PR path remains separately gated and deferred until credentials,
+     permissions, checks, rollback, and human approval exist.
+   - Preserve the input contract for the eventual choices of demo, public GitHub URL, ZIP/folder, and individual files.
+     The dedicated demo remains the default now; unfinished inputs must be clearly labeled rather than pretending to
+     be ready.
+   - Show unsupported but real findings as **More to explore**; only authored validated lessons become playable.
+
+6. **Stage 32 — Verification, configuration management, and release evidence**
+   - Add focused unit, route, component, and browser coverage for all five targets, open ordering, reset, level copy,
+     hints/examples, wrong answers, completion modal, proposed fixes, output choices, and read-only boundaries.
+   - Run the full suite in the documented order, including format, lint, typecheck, tests, analysis validation, build,
+     browser smoke, and `git diff --check`.
+   - Run the full project-status audit over the entire coding-garden folder, including duplicate-document checks,
+     stale status/path checks, secret scanning, demo-fixture integrity, and documentation synchronization.
+   - Reconcile the roadmap, tracker, status, decisions, journey, feature backlog, fixture README, and human-testing
+     guide; then perform human desktop/mobile/keyboard/age-band testing before commit and push.
+
+**Bundle gate:** the five-question demo is playable in any order, understandable across all three level bands,
+supportive when learners need help, and produces a truthful verified payoff. The completion modal clearly separates
+reviewable demo output from future live repository writes. Automated checks, configuration/release evidence, the full
+project audit, and human acceptance must all be recorded before the bundle is promoted.
+
+### Bundle 12 — Easy-first interaction repair and demo clarity
+
+Bundle 12 is the active refinement cycle after the Bundle 11 implementation slice. It incorporates the 2026-07-19
+`CGFeedback.txt` findings and the two ten-question product interviews. The first polished path is for an independent
+Grades 1–5 learner. Medium and Hard remain available as authored capability, but they are not the primary optimization
+target for this demo.
+
+1. **Stage 33 — Map readability, walkability, and interaction reliability**
+   - Make the garden map the dominant surface at full-screen and normal sizes; remove excessive zoom and unexplained
+     lines, borders, overlaps, stale panels, and duplicate grade controls.
+   - Keep a connected visible walkway to every plant and interaction area, with collision behavior matching the art.
+   - Show a soft golden halo only behind unfinished plants; completed plants lose the halo and visibly bloom.
+   - Make approaching a plant plus pressing `E` or `Enter` reliably open the compact dialogue. The first press shows
+     direct in-world copy such as “This plant needs watering. Solve the problem to water it.” A second `E`/`Enter`
+     opens the full challenge.
+   - Verify facing, blocked movement, and keyboard-only movement while preserving the map’s read-only/public truth.
+
+2. **Stage 34 — Easy-first question and dialogue redesign**
+   - Make the primary demo path Sprout / Easy — Grades 1–5, with short sentences, one idea per question, and no
+     grading language.
+   - Keep all five questions visible and open-ended. Preserve mixed Find it, Plan it, and Execute it objectives;
+     where a question asks for a choice, use four large, clearly separated answer boxes.
+   - Keep the intentional fixture errors synchronized with the authored questions: simple syntax/punctuation,
+     variable/dead code, visible test/coverage, and straightforward logic/function problems.
+   - Show only a small code excerpt first, with an expand option. Include direct action wording, a plain-language
+     explanation, a tiny related example, and an optional hint. Wrong answers require/recommend a hint before retry and
+     never reduce health or shame the learner.
+   - After a correct answer, heal the plant immediately and offer `Y` to review the explanation; the learner may
+     continue without opening it.
+
+3. **Stage 35 — Completion, replay, and safe output payoff**
+   - Ensure every correct answer produces an obvious plant/healing sprite transition and a concise success cue.
+   - Keep completion session-local until Reset Garden. Unlock Growing after Easy and Master Gardener after Growing;
+     preserve the capability for harder questions without making them the first-run focus.
+   - After all five plants are complete, show a dismissible completion surface with before/after code, proposed fixes,
+     re-analysis evidence, and healthier-garden summary. Offer replay/reset and explicit review, corrected-copy, and
+     patch/diff choices; never silently overwrite source code.
+   - Keep the dedicated demo as the only first-release source. Preserve future intake boundaries for GitHub URLs,
+     ZIP/folder uploads, and individual files, and label unsupported findings as `More to explore`.
+
+4. **Stage 36 — Product language, verification, and human evidence**
+   - Use the product framing “A garden adventure for finding and fixing bugs in code”; avoid presenting the app as a
+     generic health dashboard or promising automatic bug fixing.
+   - Run focused tests for E/Enter activation, dialogue expansion, answer boxes, hint-before-retry, immediate bloom,
+     completion/reset, halos, walkability, collision, facing, and duplicate controls.
+   - Run the full project checks, configuration/repository-structure checks, and the entire coding-garden audit only
+     after implementation is complete.
+   - Prepare human evidence for Easy first, then availability of Growing/Master Gardener, all-five open ordering,
+     mobile/full-screen map scale, keyboard-only operation, wrong-answer recovery, `Y` explanation review, completion,
+     reset, and safe output wording. Update all authoritative records before commit/push.
+
+**Bundle 12 gate:** an independent student can see the whole garden, understand the next action, walk to every target,
+open each challenge with the keyboard, solve five simple intentional bugs in any order, see each plant visibly heal,
+and understand the safe completion outputs. No public repository is mutated, no code is silently overwritten, and the
+demo remains runnable without accounts or an OpenAI key.
+
+### Wave 1 — Trust, Onboarding, and Accessible Recovery
+
+This is the first rolling feature wave from `docs/FEATURE_BACKLOG.md`. It refines the existing playable map without
+creating a second roadmap. The bounded goals are:
+
+1. Add a dismissible first-visit guide inside the map for movement, target halo, interaction, and questions.
+2. Keep Sample Rehearsal and Public Read-only truth boundaries visible on the map at all times.
+3. Add an in-map Help/Pause surface with controls, truth boundaries, hint guidance, and a re-openable first-visit guide.
+4. Add a local sample-lesson reset so stale, interrupted, or confusing demo state can be recovered without a browser refresh.
+
+**Wave gate:** focused unit/browser checks pass; the map remains the dominant surface; keyboard, touch, reduced-motion,
+public read-only, and sample-only invariants remain intact; documentation and status records are reconciled; human
+desktop/mobile acceptance is recorded before the wave is archived.
+
+**Implementation note (2026-07-19):** the Bundle 12 implementation slice is complete locally. The larger map,
+unfinished-target guidance, two-step E/Enter dialogue, Easy-first copy, and duplicate-level-control cleanup are covered
+by focused/browser evidence. The remaining gate is the full project-status audit plus human playtest and acceptance;
+these remain open until recorded.
+
+### Wave 2 — Learning Progression and Scaffolding
+
+The next rolling feature wave promotes four bounded learning improvements from `docs/FEATURE_BACKLOG.md`:
+
+1. Add a no-account learner age-band selector for Grades 1–5, 6–8, and 9–12.
+2. Explain the recommended Easy, Medium, or Hard depth and let the learner override it locally.
+3. Add a progressive three-step clue ladder that never reveals the answer or grants action proof.
+4. Return misconception-aware wrong-answer feedback before a challenge can unlock confirmation.
+
+**Wave gate:** questions remain deterministic, report-grounded, age-appropriate, and server-validated; focused unit
+and browser evidence passes; the golden path and public read-only/sample-only invariants remain intact; documentation,
+audit, and human acceptance are complete before the implemented items move to the backlog archive.
+
+**Implementation note (2026-07-18):** all four goals are implemented locally. The remaining gate is browser rerun,
+human playtest, and acceptance; this wave adds no accounts, learner persistence, model grading, or new HealthReport
+truth.
+
+### Wave 3 — Loop Clarity and Learning Reflection
+
+This bounded slice keeps the interaction inside the map while making the existing golden path easier to read:
+
+1. Show an in-map action-status card for the learning question, confirmation, rehearsal, re-analysis, and verified
+   health-change phases.
+2. Add an optional local reflection prompt after a completed sample rehearsal; save only the learner's short note in
+   the current Garden Journal session.
+3. Keep objective, command, journal, and report messaging synchronized without adding accounts, server persistence,
+   or new HealthReport truth.
+4. Add browser coverage for the status surface and run the complete project checks before the wave audit.
+
+**Wave gate:** the player can tell what phase the action is in, can record what they learned without an account, and
+the UI never implies that a public repository was changed. Human confirmation of age-appropriate wording and map
+legibility remains a separate gate.
+
+### Visual expansion assumptions
+
+- The current production build remains a fallback while Bundles 7–8 move through human visual/release acceptance;
+  their implementation slices may be complete on the development branch before promotion.
+- The visual expansion uses original generated pixel-art assets plus a dependency-light React/SVG/image renderer;
+  Phaser and other game engines remain deferred.
+- Combat, enemies, bosses, accounts, leaderboards, procedural worlds, and multiplayer remain post-event scope.
+
+### Bundle assumptions
+
+- Bundles are a delivery cadence, not a second execution plan or tracker.
+- Bundle 1 has implementation evidence from Stages 0–3; bundle-level acceptance remains an explicit
+  human gate rather than an implied completion claim.
+- Bundle 2 may proceed before the free-movement world because the learning gate improves the current UI
+  and later transfers into the map.
+- Questions are deterministic, authored, report-grounded, and server-validated; the LLM does not grade
+  answers or mutate garden state.
+- Public reports remain read-only and demo rehearsals remain sample-only until a separate live
+  branch/PR integration gate is accepted.
+- Every bundle ends with focused checks, the full project-status audit, documentation reconciliation,
+  and explicit human acceptance.
+- Bundle 11 is intentionally demo-first: the dedicated JavaScript/TypeScript teaching fixture is the default and
+  must be deterministic, safe, and available without network or credentials.
+- All five lessons are visible and independently playable; completion is session-local until reset, and no question
+  order is required.
+- A correct answer records a proposed fix, but only a verified apply-and-reanalyze flow may claim that code improved.
+  The demo may produce a corrected copy or diff; direct remote repository writes remain a future authenticated gate.
+- The next execution cycle follows this order: plan and configuration checkpoint → implementation → focused tests →
+  full validation → repository/configuration management and documentation reconciliation → project-status audit →
+  human testing and acceptance → commit/push.
 
 ---
 
@@ -528,15 +1109,15 @@ Stage 2 (analysis) → 3 (rendering) → 5 (first real change loop) → 7 (payof
 
 ## 10.2 Day-by-day (against July 21, 5 PM PT)
 
-| Day | Target |
-|---|---|
-| Fri Jul 17 | Stage 0 + Stage 1 complete; Stage 2 started |
-| Sat Jul 18 | Stage 2 + Stage 3 complete (garden visible from real analysis) |
-| Sun Jul 19 | Stage 4 + Stage 5 complete (first real Codex PR heals the garden) |
-| Mon Jul 20 | Stage 6 + Stage 7 complete; golden playthrough recorded; Stage 8 only if ahead |
+| Day             | Target                                                                                      |
+| --------------- | ------------------------------------------------------------------------------------------- |
+| Fri Jul 17      | Stage 0 + Stage 1 complete; Stage 2 started                                                 |
+| Sat Jul 18      | Stage 2 + Stage 3 complete (garden visible from real analysis)                              |
+| Sun Jul 19      | Stage 4 + Stage 5 complete (first real Codex PR heals the garden)                           |
+| Mon Jul 20      | Stage 6 + Stage 7 complete; golden playthrough recorded; Stage 8 only if ahead              |
 | Tue Jul 21 (AM) | Stage 9 + Stage 10: hardening, production deploy, video, submit by ~2 PM PT (3-hour buffer) |
 
-Slip rule: if any day ends a stage behind, cut the lowest-tier remaining scope immediately (8 first, then 6 — Clippers alone still proves the loop) and record it in `DECISIONS.md`.
+Slip rule: if any day ends a stage behind, cut the lowest-tier remaining scope immediately (8 first, then 6 — Clippers alone still proves the loop) and record it in `DECISION_LOG.md`.
 
 ## 10.3 Decision rights
 
@@ -544,7 +1125,7 @@ Human owner: scope changes, demo repo, track selection, stage acceptance, submis
 
 ## 10.4 Status reporting
 
-`STATUS.md` updated at every stage boundary and end of day: active goal, passing/failing checks, blockers, risks changed, next three actions, submission readiness.
+`PROJECT_STATUS.md` updated at every stage boundary and end of day: active goal, passing/failing checks, blockers, risks changed, next three actions, submission readiness.
 
 ---
 
@@ -559,18 +1140,18 @@ Human owner: scope changes, demo repo, track selection, stage acceptance, submis
 
 # 12. Risk Register
 
-Maintained in `docs/RISK_REGISTER.md` (R01–R10). Review at every stage boundary; record deltas in STATUS.md.
+Maintained in `RISK_REGISTER.md` (R01–R10). Review at every stage boundary; record deltas in PROJECT_STATUS.md.
 
 # 13. Playtesting & Product Evaluation
 
 - **Non-coder comprehension test (required, Stage 4 and 7):** one non-coder uses the Magnifying Glass on five plants and explains back what the codebase does and where it's sick. Success: broadly correct without prompting. Failures become P1 copy/design fixes.
 - **Legibility test (Stage 7):** two people, 5-second wide shot, "healthy or sick?" — must be correct.
 - **Developer credibility check:** one developer reviews two Codex PRs from tool actions — changes must be ones they'd plausibly merge.
-- Log all sessions and resulting fixes in PLAN.md evidence.
+- Log all sessions and resulting fixes in STAGE_TRACKER.md evidence.
 
 # 14. Deployment, Operations, Incident Response
 
-Deployment per `docs/DEPLOYMENT.md` (Vercel, env vars, per-deploy verification). Operations during judging (Jul 22–Aug 5): keep production frozen; monitor `/api/health` daily; if the live path degrades, sample mode is the incident fallback — it must remain indistinguishable in quality for the read-only experience. Incident playbook: reproduce → check mode flag → roll back to last verified deploy → note in STATUS.md.
+Deployment per `DEPLOYMENT.md` (Vercel, env vars, per-deploy verification). Operations during judging (Jul 22–Aug 5): keep production frozen; monitor `/api/health` daily; if the live path degrades, sample mode is the incident fallback — it must remain indistinguishable in quality for the read-only experience. Incident playbook: reproduce → check mode flag → roll back to last verified deploy → note in PROJECT_STATUS.md.
 
 # 15. Demo Video & Submission Plan
 
@@ -578,11 +1159,15 @@ Deployment per `docs/DEPLOYMENT.md` (Vercel, env vars, per-deploy verification).
 
 1. **0:00–0:20 Hook.** A famously messy repo opens as a garden: overgrown, brown, crawling with pests. "This is a real codebase. You're looking at its actual health."
 2. **0:20–0:50 Understand.** Magnifying Glass on two plants — the code introduces itself in plain English. Name GPT-5.6 on the audio here.
-3. **0:50–2:20 Tend.** Clip a withered branch (show the explanation → confirm → PR opening), water a drought zone (tests being written). Name Codex on the audio: what it's doing, where it accelerated the build, where key decisions were made.
-4. **2:20–2:45 Payoff.** Wide shot: the same garden, lush. Cut to the reveal: the real PRs, diffs, passing tests underneath.
+3. **0:50–2:20 Tend.** In the current anonymous release, show the explanation → learning answer → proposed scope → confirmed sample rehearsal for Clippers and Watering Can. Name Codex on the audio: what it built, where it accelerated the workflow, and where key decisions were made. Do not imply a branch or PR was created.
+4. **2:20–2:45 Payoff.** Wide shot: the same garden, lush. Cut to the before/after HealthReport comparison and server lifecycle evidence. Reserve real PRs, diffs, and passing target-repo tests for a separately credentialed live-integration recording.
 5. **2:45–3:00 Close.** "Code transparency for everyone." Track framing (Education) + URL.
 
 Audio requirement (hard): explicitly cover how Codex AND GPT-5.6 were used.
+
+Current-release boundary: the public login-free build is a truthful demo rehearsal. It does not mutate
+the analyzed repository or create a branch/PR; the video must say this plainly. A live PR recording is
+optional future evidence, not a prerequisite for describing the current release.
 
 ## 15.2 Submission description draft (skeleton)
 
@@ -590,7 +1175,7 @@ What it is (one paragraph from §1.2) · how it works (analysis→garden→tools
 
 ## 15.3 Final checklist
 
-Run `docs/BUILD_WEEK_REQUIREMENTS.md` top to bottom, including the fresh-clone README test and the video rewatch, one day before the deadline. Submit with hours of buffer, not minutes.
+Run `BUILD_WEEK_REQUIREMENTS.md` top to bottom, including the fresh-clone README test and the video rewatch, one day before the deadline. Submit with hours of buffer, not minutes.
 
 # 16. Post-Event Roadmap
 
@@ -607,14 +1192,119 @@ Run `docs/BUILD_WEEK_REQUIREMENTS.md` top to bottom, including the fresh-clone R
 
 # Appendices — Canonical Templates
 
-The files in the sibling `repo/` folder of this package are the authoritative, ready-to-copy instances of these templates:
+The files in this repository are the authoritative, active instances of these templates:
 
-- **Appendix A — Root `AGENTS.md`:** `repo/AGENTS.md`
-- **Appendix B — `lib/analysis/AGENTS.md`:** `repo/lib/analysis/AGENTS.md`
-- **Appendix C — `lib/garden/AGENTS.md`:** `repo/lib/garden/AGENTS.md`
-- **Appendix D — `lib/ai/AGENTS.md`:** `repo/lib/ai/AGENTS.md`
-- **Appendix E — `PLAN.md` (bounded-slice template):** `repo/PLAN.md` (pre-filled for Stage 0; reuse its section skeleton for every stage)
-- **Appendix F — `STATUS.md` (living snapshot template):** `repo/STATUS.md`
-- **Appendix G — Pull request template:** `repo/.github/pull_request_template.md`
+- **Appendix A — Root `AGENTS.md`:** `AGENTS.md`
+- **Appendix B — `lib/analysis/AGENTS.md`:** `lib/analysis/AGENTS.md`
+- **Appendix C — `lib/garden/AGENTS.md`:** `lib/garden/AGENTS.md`
+- **Appendix D — `lib/ai/AGENTS.md`:** `lib/ai/AGENTS.md`
+- **Appendix E — `STAGE_TRACKER.md` (bounded-slice template):** `STAGE_TRACKER.md` (pre-filled for Stage 0; reuse its section skeleton for every stage)
+- **Appendix F — `PROJECT_STATUS.md` (living snapshot template):** `PROJECT_STATUS.md`
+- **Appendix G — Pull request template:** `.github/pull_request_template.md`
 
-When bootstrapping the repository (Stage 1), copy them verbatim, then keep PLAN/STATUS/DECISIONS live per the work process in Appendix A.
+When bootstrapping the repository (Stage 1), copy them verbatim, then keep the stage tracker, project status, and decision log live per the work process in Appendix A.
+
+---
+
+# Bundle 13 — Complete Python Teaching Demo Realignment
+
+This is the next approved execution cycle based on `CODE_GARDEN_DESIGN_BRIEF_FINAL.md`,
+`CGFeedback.txt`, and the 2026-07-19 product interviews. It supersedes older Bundle 11/12
+assumptions about a JavaScript-only five-question demo. The canonical roadmap remains this
+file; `CHANGELOG.md` records the gap analysis but is not a second plan.
+
+## Stage 37 — Documentation and gap-analysis preflight
+
+- Reconcile the design brief, feedback, implementation, tests, tracker, status, decisions,
+  journey, backlog, risks, deployment guide, fixture README, and navigation indexes.
+- Record every requirement as implemented, partial, or missing in `CHANGELOG.md`.
+- Record the Python demo migration, fixed-map contract, minimal dialogue contract, safe-output
+  contract, no-persistence boundary, visual asset rules, and future-only features.
+- Keep one roadmap, one root tracker/status/decision set, and no duplicate planning documents.
+
+## Stage 38 — Python fixture, authored questions, and intro screen
+
+- Replace the dedicated demo with one read-only Python fixture containing 20 intentional issues:
+  10 Easy, 5 Medium, and 5 Hard.
+- Require every question to have a Python excerpt, direct prompt, four fixed-order choices,
+  accepted answer, hint, example, explanation, recap, proposed fix, and evidence.
+- Select five Easy questions randomly from ten; use all five Medium and Hard questions; never
+  generate or execute lesson content at runtime.
+- Add the title/story screen, Start Game button, Easy default, and Easy/Medium/Hard selector.
+- Preserve public JavaScript/TypeScript analysis as separate anonymous, read-only functionality.
+
+## Stage 39 — Fixed map, collision, targets, and interaction
+
+- Use one fixed, single-screen, non-scrolling garden with paths at least 2–3 tiles wide.
+- Make visible paths and explicit collision grids agree exactly; keep every target reachable.
+- Use three target categories with unhealthy and healthy states.
+- Show five selected targets immediately, with contained two-sentence bubbles and unfinished-only
+  gold markers; completed targets lose guidance and visibly bloom.
+- Support WASD/arrows, four-way facing, blocked-input facing, and forgiving 3×3 target zones.
+- Make E/Enter first confirm the nearby target and then open the question; nearest target wins if
+  zones overlap. Return keyboard focus to the map after closing a dialogue.
+- Keep decorations off paths and preserve clear public read-only/sample-only truth.
+
+## Stage 40 — Minimal learning dialogue and recovery
+
+- Render only the Python excerpt, one direct question, four answer cards, Submit, collapsed Hint,
+  collapsed Example, and post-correct Explanation.
+- Remove legacy level controls, duplicate labels, progress/status chrome, filler, and generic
+  report copy from the active question surface.
+- Re-evaluate every Submit; a wrong answer clears automatically and keeps the question open.
+- Keep retries unlimited and non-punitive; never show scores, grades, counters, or shame language.
+- Show a short correct confirmation, let the student optionally read Explanation, and heal the
+  target only when the solved dialogue is closed.
+
+## Stage 41 — Completion and safe output
+
+- After five targets heal, show the healthy-garden completion overlay.
+- Provide Review, before/after code, proposed fixes, re-analysis evidence, copy corrected code,
+  download corrected code, patch/diff, PDF/print, Replay, and Reset Garden as separate actions.
+- Keep progress in memory only; refresh/browser close clears it.
+- Never execute or modify the fixture, silently overwrite code, mutate a public repository, create
+  a branch/PR, or imply that a rehearsal changed remote code.
+
+## Stage 42 — Visual, accessibility, and deployment refinement
+
+- Apply the `pixel-garden-design` palette, sizing, outline, animation, manifest, transparency,
+  native-resolution, reduced-motion, and manual visual-validation rules.
+- Keep the map dominant, dialogue readable, controls keyboard/touch accessible, and mobile layouts
+  free of horizontal overflow.
+- Keep the default demo self-contained and network-independent while preserving Vercel/API support
+  for the existing public read-only analysis path.
+- Document future-only GitHub URL, ZIP/folder, individual-file, AI, audio, teacher, persistence,
+  communication-style difficulty, and multiplayer capabilities.
+
+## Stage 43 — Full verification, audit, and release evidence
+
+Run, in order: `npm run format:check`, `npm run lint`, `npm run typecheck`, `npm run test`,
+`npm run analysis:validate`, `npm run build`, `npm run test:browser`, and `git diff --check`.
+
+Add tests for intro, selection, fixture integrity, random/session behavior, reachability, collision,
+facing, 3×3 activation, two-step E/Enter, dialogue minimality, four choices, wrong-answer recovery,
+Hint, Example, Explanation, healing, completion, safe outputs, replay/reset, focus restoration,
+mobile, reduced motion, public read-only behavior, and zero browser errors.
+
+Run the full coding-garden audit for duplicate plans/statuses/trackers, stale references, generated
+files, secrets, documentation synchronization, fixture safety, path consistency, and public safety.
+Commit/push only after automated checks, audit, configuration reconciliation, and human acceptance
+evidence are complete.
+
+## Stage 44 — Human playtest refinement pass
+
+This is the next bounded pass after Bundle 13 is pushed. It is driven by Liam's hands-on testing
+of the deployed or local demo, not a new roadmap.
+
+- Record concrete findings for Easy-first comprehension, target reachability, map scale, collision,
+  four-way facing, E/Enter activation, wrong-answer recovery, Hint/Example/Y explanation, healing,
+  completion outputs, reset, mobile layout, fullscreen, and safe-output wording.
+- Fix only confirmed P0/P1 usability or reliability issues first; keep the Python fixture, public
+  read-only boundary, HealthReport truth, and no-automatic-write boundary unchanged.
+- Add a focused regression test for every confirmed fix, then rerun the complete project checks and
+  browser smoke suite.
+- Reconcile `PROJECT_STATUS.md`, `STAGE_TRACKER.md`, `DECISION_LOG.md`, `CHANGELOG.md`, and the
+  human-test evidence table before the next commit/push.
+
+**Gate:** Liam's human-test evidence is recorded, confirmed defects have regression coverage, all
+automated checks pass, and the project-status audit is clean.

@@ -4,7 +4,7 @@ Status: Accepted
 
 ## Context
 
-The product's credibility rests on the garden being *true*: "the state of the garden is determined by the actual state of the code — not a dashboard, not a chart" (brief). An LLM hallucinating health signals, or a visual layer inventing state, would destroy both the developer-tool value and the education value. The V1 project proved the pattern: deterministic domain owns truth; AI interprets and narrates.
+The product's credibility rests on the garden being _true_: "the state of the garden is determined by the actual state of the code — not a dashboard, not a chart" (brief). An LLM hallucinating health signals, or a visual layer inventing state, would destroy both the developer-tool value and the education value. The V1 project proved the pattern: deterministic domain owns truth; AI interprets and narrates.
 
 ## Decision
 
