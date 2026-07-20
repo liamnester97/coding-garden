@@ -51,6 +51,24 @@ npm run analysis:validate
 npm run build
 ```
 
+### Commit/push server check
+
+Before a commit/push handoff, verify the app itself is serving successfully:
+
+```bash
+npm run dev
+curl -f http://127.0.0.1:3000/
+curl -f http://127.0.0.1:3000/api/health
+```
+
+Both requests should succeed before reporting the local server as ready. If port 3000 is already
+occupied by a stale or failing Next.js process, stop that process and restart `npm run dev`; do
+not silently switch the handoff URL to another port. Keep the server running for hands-on testing,
+or stop it with `Ctrl-C` when finished.
+
+After pushing, verify the deployed preview or production URL and its `/api/health` route before
+starting the human-test matrix. Record the tested URL and commit in the evidence table.
+
 ## Deploy a Vercel preview
 
 1. Sign in to Vercel and choose **Add New → Project**.
