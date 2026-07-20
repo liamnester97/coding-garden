@@ -97,27 +97,27 @@ export const authoredGardenMap = {
     {
       id: "main-walk",
       label: "Main garden walk",
-      points: "50,86 52,78 52,60 50,43",
+      points: "50,86 50,78 58,78 50,60 50,30",
     },
     {
       id: "learning-walk",
       label: "Learning greenhouse walk",
-      points: "50,43 50,28 75,20",
+      points: "50,30 50,20 75,20",
     },
     {
       id: "magnify-walk",
       label: "Magnifying Glass walk",
-      points: "50,43 34,43 20,30 20,20",
+      points: "50,30 42,30 22,30 20,20",
     },
     {
       id: "tool-walk",
       label: "Tool shed walk",
-      points: "50,43 52,78 84,78 86,82",
+      points: "50,60 70,60 86,82",
     },
     {
       id: "clippers-walk",
       label: "Clippers walk",
-      points: "50,43 50,24 70,20 88,18",
+      points: "50,30 62,30 88,18",
     },
     {
       id: "reflection-walk",
@@ -138,17 +138,17 @@ export const authoredGardenMap = {
     {
       id: "greenhouse",
       label: "Learning greenhouse",
-      x: 51,
+      x: 57,
       y: 2,
       width: 21,
       height: 14,
     },
-    { id: "shed", label: "Tool shed", x: 57, y: 50, width: 22, height: 22 },
+    { id: "shed", label: "Tool shed", x: 82, y: 48, width: 12, height: 18 },
     { id: "tree", label: "Boundary tree", x: 75, y: 28, width: 21, height: 22 },
     {
       id: "bench",
       label: "Reflection bench",
-      x: 39,
+      x: 34,
       y: 68,
       width: 10,
       height: 8,

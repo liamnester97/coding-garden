@@ -1,5 +1,26 @@
 # The Gardener's Journey (Demo Path)
 
+## Current approved teaching demo
+
+The dedicated offline demo is a Python teaching garden, not a live repository-writing
+tool. It contains 20 pre-authored issues and presents five targets per session. Easy
+selects five from ten beginner issues; Medium and Hard use their five authored issues.
+The learner may solve the five visible targets in any order.
+
+The current visual contract is a fixed, single-screen garden with clear 2–3 tile paths,
+three target categories, unhealthy/healthy sprite states, contained two-sentence target
+bubbles, and an unfinished-only gold marker. E/Enter works anywhere in a target's 3×3
+interaction area. The first press confirms the target; the second opens the question.
+
+The question surface contains only the Python excerpt, direct question, four answer
+choices, Submit, collapsed Hint, collapsed Example, and post-correct Explanation. A
+wrong answer automatically resets for another attempt. Closing a correct dialogue heals
+the target. Completion provides optional recap, before/after code, proposed fixes,
+evidence, copy, download, patch/diff, PDF/print, replay, and reset actions.
+
+The fixture is never executed or modified. Public JavaScript/TypeScript repository
+analysis remains anonymous and read-only. Refresh/browser close clears local progress.
+
 ## The one-minute promise
 
 You open a codebase you've never seen. Instead of ten thousand lines of text, you're standing at the edge of a garden — and you can tell at a glance that it's sick. Brown drought patches. Withered branches. Something crawling on the auth module. You pick up a magnifying glass, and the garden explains itself in plain English. Then you pick up the clippers, and the garden actually gets better — because the code actually got better.
@@ -113,8 +134,8 @@ rollback, and final confirmation. Public repository analysis remains read-only.
 
 ## Bundle 11 proof-of-concept journey
 
-The dedicated teaching demo is the default starting point. It contains five known,
-intentional JavaScript/TypeScript findings with authored lessons and deterministic proposed fixes. All five plants are
+The earlier Bundle 11 JavaScript/TypeScript teaching demo is historical. The current Bundle 13 default is one
+Python-first fixture with 20 known intentional issues, of which five active targets are selected per session, with
 visible immediately and may be completed in any order; there is no required route through the garden. The learner
 chooses one of:
 
@@ -148,7 +169,8 @@ example, and an explanation. Wrong answers require or recommend a hint before re
 answer makes that plant bloom immediately; `Y` opens the explanation if the learner wants to review it. Completed
 plants lose their golden halos. The map should stay large, uncluttered, and fully walkable with keyboard controls.
 
-The demo remains five questions for now. Growing and Master Gardener unlock after Easy, but their polish is secondary
+The demo remains five active questions per session. Easy draws one target question from each pair in its ten-question
+pool; Growing and Master Gardener use five authored questions each. Growing and Master Gardener unlock after Easy, but their polish is secondary
 to making the Easy path understandable. At completion, the learner can review the before/after code and proposed fixes,
 reset or replay, and choose an explicit safe output. The app never silently overwrites code or mutates a public
 repository.

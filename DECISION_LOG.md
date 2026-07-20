@@ -2,6 +2,46 @@
 
 Chronological record of binding decisions. Newest last. A decision here is frozen; changing it requires a new dated entry and human approval.
 
+## 2026-07-19 — Design brief alignment: Python teaching demo
+
+The dedicated offline teaching experience is planned as a deterministic Python
+debugging lesson. One bundled fixture contains 20 intentional issues: 10 Easy, 5
+Medium, and 5 Hard. Easy selects five issues per session; Medium and Hard use their
+five authored issues. Questions, answers, hints, examples, explanations, fixes, and
+evidence are authored content and are never generated or executed during play.
+
+The public JavaScript/TypeScript repository analyzer remains available as a separate
+anonymous, read-only mode. The Python fixture is never modified, public repositories
+are never mutated, and completion outputs are explicit proposed copies/diffs only.
+
+## 2026-07-19 — Bundle 13 implementation checkpoint
+
+Stages 38–42 now have local implementation evidence: the fixture and authored bank are
+checked in, Easy sessions select one question per target from the ten-question pool, and
+the map, question, and completion surfaces use the Python contract. Stage 43 remains open
+for the full-folder audit and human acceptance; this entry does not authorize commit/push
+or remote repository writes.
+
+## 2026-07-19 — Design brief alignment: fixed garden and minimal dialogue
+
+The teaching demo uses one fixed, single-screen, non-scrolling garden. Paths are
+2–3 tiles wide and collision is authored as an explicit grid matching visible terrain.
+Each active target has a forgiving 3×3 interaction area; E/Enter first confirms the
+target bubble and the second press opens the question. Five targets are visible and
+solvable in any order.
+
+The active question surface is intentionally minimal: Python excerpt, one direct
+question, four fixed-order answer cards, Submit, collapsed Hint, collapsed Example,
+and Explanation only after a correct answer. Wrong answers reset automatically;
+closing a correct dialogue changes the unhealthy target into its healthy state.
+
+## 2026-07-19 — Design brief alignment: no persistence or automatic writes
+
+Progress is browser-memory-only and is lost on refresh or browser close. No accounts,
+cloud persistence, teacher dashboard, AI lesson generation, audio, live PRs, or
+automatic repository writes are part of this demo. Completion offers explicit review,
+copy, download, patch/diff, and replay/reset actions.
+
 ## 2026-07-17 — Concept adopted: Code Garden
 
 The Build Week V2 submission is Code Garden per `code_garden_brief.pdf`: a living-garden interface over real codebase health, where gardening tools trigger real Codex code changes. Primary track: Education, with crossover into Developer Tools, Work & Productivity, and Apps for Your Life.

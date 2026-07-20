@@ -18,6 +18,7 @@ export type GardenPlant = {
   ariaLabel: string;
   color: string;
   sprite: PixelSpriteId;
+  targetCategory: "flower" | "hedge" | "tree";
 };
 
 export type GardenScene = {
@@ -44,6 +45,18 @@ function stableHash(value: string) {
 }
 
 function positionFor(nodeId: string, occupied: Set<string>) {
+  const teachingPositions: Record<string, { x: number; y: number }> = {
+    "lesson_garden.py::flowers": { x: 58, y: 78 },
+    "lesson_garden.py::hedges": { x: 42, y: 30 },
+    "lesson_garden.py::trees": { x: 62, y: 30 },
+    "lesson_garden.py::beds": { x: 30, y: 60 },
+    "lesson_garden.py::paths": { x: 70, y: 60 },
+  };
+  const authored = teachingPositions[nodeId];
+  if (authored) {
+    occupied.add(`${authored.x},${authored.y}`);
+    return authored;
+  }
   const hash = stableHash(nodeId);
   const start = hash % (80 * 66);
   for (let offset = 0; offset < 80 * 66; offset += 1) {
@@ -94,7 +107,7 @@ export function projectHealthReport(report: HealthReport): GardenScene {
             ]
           : [];
       }),
-    plants: report.nodes.map((node) => {
+    plants: report.nodes.map((node, index) => {
       const findings = report.findings.filter(
         (finding) => finding.nodeId === node.id,
       );
@@ -121,6 +134,8 @@ export function projectHealthReport(report: HealthReport): GardenScene {
         ariaLabel: `${node.path}: ${metaphor.label}${issueText}`,
         color: metaphor.color,
         sprite: spriteForHealth(node.health),
+        targetCategory:
+          index % 3 === 0 ? "flower" : index % 3 === 1 ? "hedge" : "tree",
       };
     }),
   };

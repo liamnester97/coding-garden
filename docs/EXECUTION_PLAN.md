@@ -1203,3 +1203,108 @@ The files in this repository are the authoritative, active instances of these te
 - **Appendix G — Pull request template:** `.github/pull_request_template.md`
 
 When bootstrapping the repository (Stage 1), copy them verbatim, then keep the stage tracker, project status, and decision log live per the work process in Appendix A.
+
+---
+
+# Bundle 13 — Complete Python Teaching Demo Realignment
+
+This is the next approved execution cycle based on `CODE_GARDEN_DESIGN_BRIEF_FINAL.md`,
+`CGFeedback.txt`, and the 2026-07-19 product interviews. It supersedes older Bundle 11/12
+assumptions about a JavaScript-only five-question demo. The canonical roadmap remains this
+file; `CHANGELOG.md` records the gap analysis but is not a second plan.
+
+## Stage 37 — Documentation and gap-analysis preflight
+
+- Reconcile the design brief, feedback, implementation, tests, tracker, status, decisions,
+  journey, backlog, risks, deployment guide, fixture README, and navigation indexes.
+- Record every requirement as implemented, partial, or missing in `CHANGELOG.md`.
+- Record the Python demo migration, fixed-map contract, minimal dialogue contract, safe-output
+  contract, no-persistence boundary, visual asset rules, and future-only features.
+- Keep one roadmap, one root tracker/status/decision set, and no duplicate planning documents.
+
+## Stage 38 — Python fixture, authored questions, and intro screen
+
+- Replace the dedicated demo with one read-only Python fixture containing 20 intentional issues:
+  10 Easy, 5 Medium, and 5 Hard.
+- Require every question to have a Python excerpt, direct prompt, four fixed-order choices,
+  accepted answer, hint, example, explanation, recap, proposed fix, and evidence.
+- Select five Easy questions randomly from ten; use all five Medium and Hard questions; never
+  generate or execute lesson content at runtime.
+- Add the title/story screen, Start Game button, Easy default, and Easy/Medium/Hard selector.
+- Preserve public JavaScript/TypeScript analysis as separate anonymous, read-only functionality.
+
+## Stage 39 — Fixed map, collision, targets, and interaction
+
+- Use one fixed, single-screen, non-scrolling garden with paths at least 2–3 tiles wide.
+- Make visible paths and explicit collision grids agree exactly; keep every target reachable.
+- Use three target categories with unhealthy and healthy states.
+- Show five selected targets immediately, with contained two-sentence bubbles and unfinished-only
+  gold markers; completed targets lose guidance and visibly bloom.
+- Support WASD/arrows, four-way facing, blocked-input facing, and forgiving 3×3 target zones.
+- Make E/Enter first confirm the nearby target and then open the question; nearest target wins if
+  zones overlap. Return keyboard focus to the map after closing a dialogue.
+- Keep decorations off paths and preserve clear public read-only/sample-only truth.
+
+## Stage 40 — Minimal learning dialogue and recovery
+
+- Render only the Python excerpt, one direct question, four answer cards, Submit, collapsed Hint,
+  collapsed Example, and post-correct Explanation.
+- Remove legacy level controls, duplicate labels, progress/status chrome, filler, and generic
+  report copy from the active question surface.
+- Re-evaluate every Submit; a wrong answer clears automatically and keeps the question open.
+- Keep retries unlimited and non-punitive; never show scores, grades, counters, or shame language.
+- Show a short correct confirmation, let the student optionally read Explanation, and heal the
+  target only when the solved dialogue is closed.
+
+## Stage 41 — Completion and safe output
+
+- After five targets heal, show the healthy-garden completion overlay.
+- Provide Review, before/after code, proposed fixes, re-analysis evidence, copy corrected code,
+  download corrected code, patch/diff, PDF/print, Replay, and Reset Garden as separate actions.
+- Keep progress in memory only; refresh/browser close clears it.
+- Never execute or modify the fixture, silently overwrite code, mutate a public repository, create
+  a branch/PR, or imply that a rehearsal changed remote code.
+
+## Stage 42 — Visual, accessibility, and deployment refinement
+
+- Apply the `pixel-garden-design` palette, sizing, outline, animation, manifest, transparency,
+  native-resolution, reduced-motion, and manual visual-validation rules.
+- Keep the map dominant, dialogue readable, controls keyboard/touch accessible, and mobile layouts
+  free of horizontal overflow.
+- Keep the default demo self-contained and network-independent while preserving Vercel/API support
+  for the existing public read-only analysis path.
+- Document future-only GitHub URL, ZIP/folder, individual-file, AI, audio, teacher, persistence,
+  communication-style difficulty, and multiplayer capabilities.
+
+## Stage 43 — Full verification, audit, and release evidence
+
+Run, in order: `npm run format:check`, `npm run lint`, `npm run typecheck`, `npm run test`,
+`npm run analysis:validate`, `npm run build`, `npm run test:browser`, and `git diff --check`.
+
+Add tests for intro, selection, fixture integrity, random/session behavior, reachability, collision,
+facing, 3×3 activation, two-step E/Enter, dialogue minimality, four choices, wrong-answer recovery,
+Hint, Example, Explanation, healing, completion, safe outputs, replay/reset, focus restoration,
+mobile, reduced motion, public read-only behavior, and zero browser errors.
+
+Run the full coding-garden audit for duplicate plans/statuses/trackers, stale references, generated
+files, secrets, documentation synchronization, fixture safety, path consistency, and public safety.
+Commit/push only after automated checks, audit, configuration reconciliation, and human acceptance
+evidence are complete.
+
+## Stage 44 — Human playtest refinement pass
+
+This is the next bounded pass after Bundle 13 is pushed. It is driven by Liam's hands-on testing
+of the deployed or local demo, not a new roadmap.
+
+- Record concrete findings for Easy-first comprehension, target reachability, map scale, collision,
+  four-way facing, E/Enter activation, wrong-answer recovery, Hint/Example/Y explanation, healing,
+  completion outputs, reset, mobile layout, fullscreen, and safe-output wording.
+- Fix only confirmed P0/P1 usability or reliability issues first; keep the Python fixture, public
+  read-only boundary, HealthReport truth, and no-automatic-write boundary unchanged.
+- Add a focused regression test for every confirmed fix, then rerun the complete project checks and
+  browser smoke suite.
+- Reconcile `PROJECT_STATUS.md`, `STAGE_TRACKER.md`, `DECISION_LOG.md`, `CHANGELOG.md`, and the
+  human-test evidence table before the next commit/push.
+
+**Gate:** Liam's human-test evidence is recorded, confirmed defects have regression coverage, all
+automated checks pass, and the project-status audit is clean.

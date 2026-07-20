@@ -10,6 +10,7 @@ import {
 import { projectHealthReport } from "@/lib/garden/project";
 import { analyzeJavaScriptRepository } from "@/lib/analysis/analyze-javascript";
 import { teachingQuestionContent } from "@/content/teaching-questions";
+import { activeQuestionIdsForDifficulty } from "@/content/teaching-questions";
 
 describe("teaching lesson registry", () => {
   it("covers the three learner grade bands with validated objectives", () => {
@@ -68,39 +69,40 @@ describe("teaching lesson registry", () => {
     ).toBeGreaterThanOrEqual(3);
   });
 
-  it("provides five bounded code-reading activities tied to real findings", () => {
-    expect(
-      Object.keys(teachingQuestionContent).filter((id) =>
-        id.startsWith("demo-"),
-      ),
-    ).toHaveLength(5);
-    expect(demoTeachingReport.findings).toHaveLength(5);
-    expect(demoTeachingReport.findings.map((finding) => finding.id)).toEqual(
-      expect.arrayContaining(
-        Object.keys(teachingQuestionContent).filter((id) =>
-          id.startsWith("demo-"),
-        ),
-      ),
-    );
+  it("provides the twenty authored Python questions and matching findings", () => {
+    expect(Object.keys(teachingQuestionContent)).toHaveLength(20);
+    expect(demoTeachingReport.findings).toHaveLength(20);
+    expect(demoTeachingReport.nodes).toHaveLength(5);
     for (const content of Object.values(teachingQuestionContent)) {
       expect(content.codeExcerpt.length).toBeLessThanOrEqual(1200);
-      expect(content.choices.length).toBeGreaterThanOrEqual(2);
-      expect(content.answers.length).toBeGreaterThanOrEqual(1);
       expect(content.choices).toHaveLength(4);
+      expect(content.language).toBe("python");
+      expect(content.answers).toEqual([content.answer]);
       expect(content.explanation).toBeTruthy();
+      expect(content.proposedFix).toBeTruthy();
+      expect(content.reanalysisEvidence).toBeTruthy();
     }
   });
 
-  it("keeps the default demo open-order contract explicit", () => {
-    const ids = demoTeachingReport.findings.map((finding) => finding.id);
+  it("keeps five active easy questions open in any order", () => {
+    const ids = Object.values(teachingQuestionContent)
+      .filter((question) => question.difficulty === "easy")
+      .slice(0, 5)
+      .map((question) => question.findingId);
     expect(ids).toHaveLength(5);
-    expect(new Set(ids).size).toBe(5);
-    expect(ids.every((id) => id.startsWith("demo-"))).toBe(true);
     for (const id of ids) {
       const question = teachingQuestionContent[id];
       expect(question.choices).toHaveLength(4);
       expect(question.example).toBeTruthy();
       expect(question.beforeCode).not.toBe(question.afterCode);
     }
+  });
+
+  it("selects one question per target for each authored level", () => {
+    const easy = activeQuestionIdsForDifficulty("easy", () => 0.9);
+    expect(easy).toHaveLength(5);
+    expect(new Set(easy).size).toBe(5);
+    expect(activeQuestionIdsForDifficulty("medium")).toHaveLength(5);
+    expect(activeQuestionIdsForDifficulty("hard")).toHaveLength(5);
   });
 });

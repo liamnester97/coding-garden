@@ -1,5 +1,17 @@
 # Code Garden Feature Backlog
 
+## Current cycle — Bundle 13 Python teaching demo
+
+The current approved implementation cycle is documented in `docs/EXECUTION_PLAN.md`.
+It promotes the dedicated demo from five authored JavaScript findings to one Python
+fixture with 20 authored issues, a fixed single-screen map, minimal question dialogue,
+and explicit safe completion outputs. These are implementation goals, not backlog
+ideas; they leave this list only after tests, audit, and human evidence pass.
+
+Deferred boundaries remain unchanged: public GitHub analysis, ZIP/folder intake,
+individual-file intake, AI-generated lessons, accounts, cloud persistence, teacher
+dashboards, audio, live PRs, and multiplayer are not part of this cycle.
+
 > A running list of candidate features, experiments, and refinements. This is **not** an execution plan,
 > stage tracker, status report, or commitment to build. `docs/EXECUTION_PLAN.md` remains the only roadmap.
 
@@ -183,7 +195,7 @@ Promoted into Bundle 12 / Stages 33–36 in `docs/EXECUTION_PLAN.md`:
 - Product language and human evidence: “A garden adventure for finding and fixing bugs in code,” with keyboard-first
   operation and Growing/Master Gardener retained as secondary capabilities.
 
-The implementation cycle is active locally; its full audit and human acceptance remain open. The five-question count is
+The implementation cycle is implemented locally; its full audit and human acceptance remain open. The five-question count is
 fixed for this demo and remains a future scalability decision.
 
 Implementation evidence (2026-07-19): the map scale/path guidance, unfinished-only halo, two-step E/Enter dialogue,

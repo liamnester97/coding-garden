@@ -37,13 +37,16 @@ export const challengeQuestionSchema = z.object({
   answer: z.string().min(1),
   explanation: z.string().min(1),
   codeExcerpt: z.string().min(1).max(1200),
-  language: z.literal("javascript"),
-  choices: z.array(z.string().min(1).max(180)).min(2).max(4),
+  language: z.enum(["javascript", "python"]),
+  choices: z.array(z.string().min(1).max(180)).length(4),
   answers: z.array(z.string().min(1)).min(1),
   actionLabel: z.string().min(1),
   example: z.string().min(1),
   beforeCode: z.string().min(1),
   afterCode: z.string().min(1),
+  recap: z.string().min(1).optional(),
+  proposedFix: z.string().min(1).optional(),
+  reanalysisEvidence: z.string().min(1).optional(),
 });
 
 export const challengePublicSchema = challengeQuestionSchema.omit({
@@ -188,10 +191,53 @@ export function questionForFinding(
     (candidate) => candidate.id === findingId,
   );
   if (!finding || !(finding.type in toolForFinding)) return null;
+  const authored = teachingQuestionContent[finding.id];
+  if (authored) {
+    if (authored.difficulty !== difficulty) return null;
+    return challengeQuestionSchema.parse({
+      id: `question-${authored.findingId}`,
+      findingId: authored.findingId,
+      nodeId: finding.nodeId,
+      tool: toolForFinding[finding.type as keyof typeof toolForFinding],
+      difficulty: authored.difficulty,
+      questionType:
+        authored.questionType === "find-it"
+          ? "notice"
+          : authored.questionType === "plan-it"
+            ? "evidence"
+            : "safe-next-step",
+      gradeBand: authored.gradeBand,
+      objective: authored.prompt,
+      prompt: authored.prompt,
+      hint: authored.hint,
+      scaffolds: [
+        authored.hint,
+        authored.example,
+        "Read the choices and try again.",
+      ],
+      answer: authored.answer,
+      explanation: authored.explanation,
+      codeExcerpt: authored.codeExcerpt,
+      language: authored.language,
+      choices: authored.choices,
+      answers: [authored.answer],
+      actionLabel: authored.actionLabel,
+      example: authored.example,
+      beforeCode: authored.beforeCode,
+      afterCode: authored.afterCode,
+      recap: authored.recap,
+      proposedFix: authored.proposedFix,
+      reanalysisEvidence: authored.reanalysisEvidence,
+    });
+  }
   const content = fallbackContent(finding);
   const difficultyAnswer = answerFor(finding, difficulty);
   const isCurated = Boolean(teachingQuestionContent[finding.id]);
-  const answer = isCurated ? content.answers[0] : difficultyAnswer;
+  const answer = isCurated
+    ? "answer" in content
+      ? content.answer
+      : content.answers[0]
+    : difficultyAnswer;
   const prompt = isCurated
     ? difficulty === "easy"
       ? "Look at the code. Which answer best describes the problem?"
@@ -230,8 +276,11 @@ export function questionForFinding(
       : explanationFor(finding, difficulty),
     codeExcerpt: content.codeExcerpt,
     language: content.language,
-    choices: content.choices,
-    answers: content.answers,
+    choices: [...content.choices, "Read the report evidence first."].slice(
+      0,
+      4,
+    ),
+    answers: ["answer" in content ? content.answer : content.answers[0]],
     actionLabel: content.actionLabel,
     example: content.example,
     beforeCode: content.beforeCode,

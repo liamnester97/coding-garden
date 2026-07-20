@@ -3,6 +3,10 @@
 This guide is for trying the current standalone Code Garden release locally or through Vercel.
 The normal public workflow does not require a fork, GitHub login, or `OPENAI_API_KEY`.
 
+The approved teaching demo is a self-contained Python fixture. It should work without
+network access or an API key. Public JavaScript/TypeScript repository analysis remains
+an optional, bounded, anonymous, read-only path.
+
 ## What you need
 
 - Node.js and npm.
@@ -81,6 +85,26 @@ viewport when possible.
 - [ ] Three sample plants and their health summary are visible.
 - [ ] The report source says the sample is offline and requires no credentials.
 - [ ] No browser console errors or uncaught page errors appear.
+
+### Python teaching demo
+
+- [ ] The title screen appears before the garden and defaults to Easy.
+- [ ] Easy, Medium, and Hard are selectable without an account.
+- [ ] The selected session contains five visible targets; Easy draws from ten authored
+      questions, while Medium and Hard use five authored questions.
+- [ ] The five targets can be solved in any order.
+- [ ] Every target has an unhealthy and healthy state; only unfinished targets have a
+      gold marker and contained two-sentence bubble.
+- [ ] The map is fixed and fully visible; paths are wide, connected, and match collision.
+- [ ] E/Enter works anywhere in the target's 3x3 area and the second press opens the question.
+- [ ] The question shows only Python code, one direct question, four choices, Submit,
+      collapsed Hint, collapsed Example, and optional post-correct Explanation.
+- [ ] A wrong answer clears automatically and allows another submission.
+- [ ] Closing a correct dialogue visibly heals the target and removes its marker/bubble.
+- [ ] Completion offers recap, before/after code, proposed fixes, evidence, copy,
+      corrected download, patch/diff, PDF/print, replay, and reset.
+- [ ] No output action silently overwrites the fixture or a repository.
+- [ ] Refresh/browser close clears progress; no account or cloud state is created.
 
 ### Stage 11 pixel-garden visuals
 

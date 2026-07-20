@@ -7,10 +7,11 @@ The active runnable application and implementation source are in this folder.
 
 ## What Code Garden is
 
-Code Garden turns a public JavaScript or TypeScript repository into a playable 2D garden. Modules
-become plants, imports become roots, coverage gaps become drought, and dead-code findings become
-withered branches. A deterministic `HealthReport` owns the garden truth; the interface explains each
-finding in plain language and uses authored learning challenges before any demo action is unlocked.
+Code Garden turns code debugging into a playable 2D garden. The dedicated offline teaching demo uses
+one authored Python fixture: intentional code problems become unhealthy plants, questions teach the
+student what is wrong, and correct answers make the garden healthy. Public JavaScript or TypeScript
+repository analysis remains supported as a separate anonymous, read-only mode. A deterministic
+`HealthReport` owns public-report truth; authored demo lessons own only their prewritten teaching content.
 
 The public release is anonymous and read-only for analyzed GitHub repositories. The bundled sample
 garden supports honest, server-authoritative demo rehearsals for Clippers and Watering Can; it does
@@ -39,10 +40,11 @@ Its implementation slices are complete on the current development branch; human 
 acceptance remains open, and the currently deployed production build remains the fallback until that
 acceptance is recorded.
 
-Bundle 9 adds a curated teaching-repository shape for Grades 1–5, 6–8, and 9–12. The local lesson
-registry, deterministic reports, selector, and offline fixtures live under `content/`, `lib/garden/`,
-and `fixtures/teaching-repo/`; Bundle 11 now provides a five-finding, open-order proof of concept with direct action
-wording, four-choice learning, hints, examples, and a dismissible completion payoff.
+The next approved refinement migrates the dedicated teaching demo to a single pre-authored Python
+fixture with 20 intentional issues: 10 Easy, 5 Medium, and 5 Hard. Each session presents five
+questions, keeps them solvable in any order, and produces explicit review/copy/download/diff outputs
+without changing the fixture. The active implementation plan for this migration is Bundle 13 in
+`docs/EXECUTION_PLAN.md`.
 The dedicated demo remains the default while future intake supports public GitHub URLs, ZIP/folder uploads, and
 individual files. A separate public repository is planned for the published classroom lessons. The app remains
 generic for any public repository, and public analysis remains read-only.
@@ -61,6 +63,7 @@ for the active stage’s evidence and gates.
 | Live stage tracker                           | [`STAGE_TRACKER.md`](STAGE_TRACKER.md)                                         |
 | What is done now, blockers, and next actions | [`PROJECT_STATUS.md`](PROJECT_STATUS.md)                                       |
 | Binding decisions                            | [`DECISION_LOG.md`](DECISION_LOG.md)                                           |
+| Design-brief gap analysis and change history | [`CHANGELOG.md`](CHANGELOG.md)                                                 |
 | Canonical execution plan                     | [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md)                             |
 | Deploy and human-test guide                  | [`docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md`](docs/HOW_TO_DEPLOY_AND_HUMAN_TEST.md) |
 | Candidate feature ideas                      | [`docs/FEATURE_BACKLOG.md`](docs/FEATURE_BACKLOG.md)                           |

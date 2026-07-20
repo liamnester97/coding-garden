@@ -3,6 +3,7 @@ import { sampleHealthReport } from "@/lib/analysis/sample-report";
 import { projectHealthReport } from "@/lib/garden/project";
 import { explainNode } from "@/lib/garden/explanation";
 import { authoredGardenMap } from "@/lib/garden/map";
+import { demoTeachingReport } from "@/content/teaching-lessons";
 import {
   pixelSpriteManifest,
   spriteForHealth,
@@ -229,5 +230,16 @@ describe("HealthReport garden projection", () => {
         sprites.map((sprite) => spritePosition(sprite).backgroundPosition),
       ).size,
     ).toBe(4);
+  });
+
+  it("projects the Python demo into five distinct target categories", () => {
+    const scene = projectHealthReport(demoTeachingReport);
+    expect(scene.plants).toHaveLength(5);
+    expect(
+      new Set(scene.plants.map((plant) => plant.targetCategory)).size,
+    ).toBe(3);
+    expect(
+      scene.plants.every((plant) => plant.path === "lesson_garden.py"),
+    ).toBe(true);
   });
 });

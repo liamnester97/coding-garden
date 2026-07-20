@@ -4,13 +4,14 @@ Updated: 2026-07-19, America/Denver
 
 ## Active Bundle and Goal
 
-- Bundle: 12 — Easy-first Interaction Repair and Demo Clarity
-- Current goal: Stage 36 — final verification, full coding-garden audit, human-test preparation, and release gate.
+- Bundle: 13 — Complete Python Teaching Demo Realignment
+- Current goal: Stage 43 — commit/push the verified Bundle 13 implementation; Stage 44 is queued for the next human-playtest refinement pass.
 - Canonical roadmap: [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md)
 - Detailed evidence: [STAGE_TRACKER.md](STAGE_TRACKER.md)
 - Branch/PR: `agent/health-report-foundation`; draft PR #1
-- Development branch head: `436a09e` (`Build Bundle 11 open-order learning demo`), pushed to
-  `origin/agent/health-report-foundation`; Bundle 12 changes are currently uncommitted locally.
+- Development branch head remains `e32ee3b` (`Complete Bundle 12 map and learning refinements`), pushed to
+  `origin/agent/health-report-foundation`; Bundle 13 implementation and documentation changes are ready to commit
+  after the final verification pass. Stage 44 is queued for confirmed human-playtest findings.
 - Production-verified release commit: `bd77258` (deployment `dpl_FE5RHs7shenW2g9BAonNu7L7jrpa`). The
   deployed release is intentionally behind the development branch until the remaining human visual/release
   gates are accepted; earlier release/documentation commits are preserved in history.
@@ -41,6 +42,9 @@ Updated: 2026-07-19, America/Denver
 - Bundle 12 — Easy-first Interaction Repair and Demo Clarity: Stages 33–36 are implemented locally. The map is larger,
   the objective guidance is unfinished-target-only, E/Enter uses a two-step dialogue, and the primary framing is
   Easy-first for Grades 1–5. The full coding-garden audit passed on 2026-07-19; human evidence and push remain open.
+- Bundle 13 — Complete Python Teaching Demo Realignment: Stages 38–42 are implemented locally. The dedicated demo is
+  Python-first with 20 authored issues, five active open-order targets, fixed map/collision/facing, minimal retryable
+  dialogue, and explicit safe completion outputs. Stage 43 audit and human acceptance remain open.
 - Wave 1 — Trust, Onboarding, and Accessible Recovery: implementation complete locally; human acceptance and the
   end-of-wave project-status audit are complete; human acceptance remains open.
 - Wave 2 — Learning Progression and Scaffolding: implementation complete locally; browser rerun, human acceptance,
@@ -52,6 +56,36 @@ Updated: 2026-07-19, America/Denver
 - Latest implementation slice: Bundle 12 — Easy-first interaction repair and demo clarity. Its scope is map
   readability/walkability, reliable E/Enter dialogue, simple Grades 1–5 questions, visible plant healing, replay/reset,
   and safe completion output.
+
+## Bundle 13 blockers and next actions
+
+- Blocker: human acceptance is still required for Easy-first comprehension, open-order play, healing visibility, and
+  safe output wording.
+- Blocker: the final full-folder audit must reconcile historical lesson files and confirm no generated drift or
+  sensitive information is present.
+- Next three actions: commit/push the verified Bundle 13 implementation; complete the desktop/mobile human-test matrix;
+  capture confirmed findings and execute Stage 44 with focused regression tests.
+
+## Bundle 13 implementation evidence
+
+- [x] `fixtures/teaching-repo/lesson_garden.py` is the read-only intentional-error source; the app never executes or edits it.
+- [x] The authored bank has 20 Python questions: 10 Easy, 5 Medium, 5 Hard, each with four choices and complete learning/output metadata.
+- [x] Easy selects one authored question per target from the ten-question pool; Medium and Hard expose five each.
+- [x] Map interaction is fixed-screen, keyboard-first, two-step E/Enter, collision-aware, and public-report read-only.
+- [x] Completion outputs are explicit and session-local: review, copy, download, patch/diff, PDF/print, replay/reset.
+- [x] Stage 43 full-folder audit and automated verification.
+- [ ] Human acceptance remains open; Stage 44 is the next bounded refinement pass after playtest findings are recorded.
+
+## Bundle 13 documentation preflight evidence
+
+- [x] Design brief, feedback, current implementation, and tests compared.
+- [x] `CHANGELOG.md` records the requirement-level gap analysis.
+- [x] Authoritative roadmap, tracker, status, decision log, journey, backlog, risk register, deployment guide,
+      fixture README, root README, and docs index synchronized.
+- [x] Exactly one execution plan and no active generic duplicate plan/status/tracker files found.
+- [x] No sensitive-looking files or detected secret literals found.
+- [x] Generated `next-env.d.ts` drift restored; no application code changed in this documentation pass.
+- [x] Formatting, analysis fixture validation, and `git diff --check` pass.
 
 ## Current State
 

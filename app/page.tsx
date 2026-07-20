@@ -30,6 +30,7 @@ import {
   teachingLessons,
   type TeachingLesson,
 } from "@/content/teaching-lessons";
+import { activeQuestionIdsForDifficulty } from "@/content/teaching-questions";
 import { teachingReportForLesson } from "@/lib/garden/demo-reports";
 import {
   advanceGoldenPath,
@@ -117,6 +118,9 @@ export default function HomePage() {
     PublicChallengeQuestion[]
   >([]);
   const [showCompletion, setShowCompletion] = useState(false);
+  const [activeQuestionIds, setActiveQuestionIds] = useState(() =>
+    activeQuestionIdsForDifficulty("easy"),
+  );
   const [journalEntries, setJournalEntries] = useState<string[]>([
     "You entered the garden. Walk to the golden glow to begin.",
   ]);
@@ -146,17 +150,33 @@ export default function HomePage() {
     completionFixes.map((fix) => fix.findingId),
   );
   const completedNodeIds = new Set(completionFixes.map((fix) => fix.nodeId));
-  const unfinishedPlants = scene.plants.filter((plant) =>
-    report.findings.some(
-      (finding) =>
-        finding.nodeId === plant.id && !completedFindingIds.has(finding.id),
-    ),
+  const unfinishedPlants = scene.plants.filter(
+    (plant) =>
+      !completedNodeIds.has(plant.id) &&
+      activeQuestionIds.some(
+        (findingId) =>
+          report.findings.find((finding) => finding.id === findingId)
+            ?.nodeId === plant.id,
+      ),
   );
   const [selectedId, setSelectedId] = useState(scene.plants[0]?.id);
   const selectedPlant = scene.plants.find((plant) => plant.id === selectedId);
-  const nearbyPlant = scene.plants.find((plant) =>
-    isNearWorldPoint(gardener, plant, 10),
-  );
+  const nearbyPlant = scene.plants
+    .filter(
+      (plant) =>
+        !completedNodeIds.has(plant.id) &&
+        activeQuestionIds.some(
+          (findingId) =>
+            report.findings.find((finding) => finding.id === findingId)
+              ?.nodeId === plant.id,
+        ),
+    )
+    .filter((plant) => isNearWorldPoint(gardener, plant, 10))
+    .sort(
+      (left, right) =>
+        Math.hypot(gardener.x - left.x, gardener.y - left.y) -
+        Math.hypot(gardener.x - right.x, gardener.y - right.y),
+    )[0];
   const nearbyZone = authoredGardenMap.zones.find((zone) => {
     if (zone.id !== "learning" && zone.id !== "payoff") return false;
     return isNearWorldPoint(
@@ -235,6 +255,7 @@ export default function HomePage() {
     setSeasonId("early-spring");
     setChallengeDifficulty("easy");
     setCompletionFixes([]);
+    setActiveQuestionIds(activeQuestionIdsForDifficulty("easy"));
     setShowCompletion(false);
     setSelectedId(demoTeachingReport.nodes[0]?.id);
     setShowHelp(false);
@@ -259,6 +280,7 @@ export default function HomePage() {
     setTendError(null);
     setCompletedCommands([]);
     setCompletionFixes([]);
+    setActiveQuestionIds(activeQuestionIdsForDifficulty("easy"));
     setShowCompletion(false);
     setShowApplyReview(false);
     setReflectionNote("");
@@ -393,6 +415,8 @@ export default function HomePage() {
       const nearbyFinding = report.findings.find(
         (finding) =>
           finding.nodeId === nearbyPlant.id &&
+          (activeQuestionIds.includes(finding.id) ||
+            finding.id.startsWith(`py-${challengeDifficulty}`)) &&
           !completedFindingIds.has(finding.id),
       );
       if (!nearbyFinding) {
@@ -412,6 +436,8 @@ export default function HomePage() {
       const finding = report.findings.find(
         (candidate) =>
           candidate.nodeId === nearbyPlant.id &&
+          (activeQuestionIds.includes(candidate.id) ||
+            candidate.id.startsWith(`py-${challengeDifficulty}`)) &&
           (candidate.type === "dead-code" ||
             candidate.type === "coverage-gap" ||
             candidate.type === "vulnerability"),
@@ -511,13 +537,9 @@ export default function HomePage() {
         );
       } else {
         setChallengeFeedback(
-          [payload.feedback, payload.explanation].filter(Boolean).join(" ") ||
-            payload.error ||
-            payload.hint ||
-            "Try again.",
+          payload.feedback || payload.error || "Not quite. Try another choice.",
         );
-        setShowHint(true);
-        setScaffoldLevel((current) => Math.max(current, 1));
+        setChallengeAnswer("");
       }
     } catch (caught) {
       setChallengeFeedback(
@@ -668,6 +690,31 @@ export default function HomePage() {
     recordJournalEntry(`Reflection: ${note}`);
   }
 
+  function correctedCopy() {
+    return completionFixes
+      .map((fix) => `# ${fix.findingId}\n${fix.afterCode}`)
+      .join("\n\n");
+  }
+
+  async function copyCorrectedCode() {
+    const copy = correctedCopy();
+    if (copy) await navigator.clipboard?.writeText(copy);
+  }
+
+  function downloadCorrectedCode() {
+    const blob = new Blob([correctedCopy()], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "lesson_garden_fixed.py";
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function printCompletion() {
+    window.print();
+  }
+
   async function toggleFullscreen() {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
@@ -680,12 +727,11 @@ export default function HomePage() {
     <main>
       <section className="garden" aria-labelledby="title">
         <span className="eyebrow">Code Garden · {modeLabel}</span>
-        <h1 id="title">
-          A garden adventure for finding and fixing bugs in code.
-        </h1>
+        <h1 id="title">Code Garden: fix the plants, learn the code.</h1>
         <p>
-          Every plant is a module. Its condition comes from the validated health
-          report, and its position is stable across renders.
+          Start with the Python teaching garden. Five plants are waiting in any
+          order. Walk close, press E or Enter, answer a short question, and
+          watch the unhealthy plant bloom.
         </p>
         <span className="status">
           {scene.repoName} · {scene.plants.length} plants ·{" "}
@@ -766,7 +812,7 @@ export default function HomePage() {
             </small>
           </div>
           <div className="game-toolbar-actions">
-            <label htmlFor="toolbar-lesson-select">Lesson</label>
+            <label htmlFor="toolbar-lesson-select">Teaching demo</label>
             <select
               id="toolbar-lesson-select"
               value={lessonId}
@@ -777,7 +823,9 @@ export default function HomePage() {
               }
               disabled={source !== "sample"}
             >
-              <option value="sample">Sample garden</option>
+              <option value="sample">
+                Python garden · five active questions
+              </option>
               {teachingLessons.map((lesson) => (
                 <option key={lesson.id} value={lesson.id}>
                   {lesson.gradeBand} · {lesson.title}
@@ -798,6 +846,9 @@ export default function HomePage() {
                   setSeasonId(next.id);
                   setReport(next.report);
                   setChallengeDifficulty(next.recommendedDifficulty);
+                  setActiveQuestionIds(
+                    activeQuestionIdsForDifficulty(next.recommendedDifficulty),
+                  );
                   setPendingFinding(null);
                   setChallenge(null);
                   setSelectedId(next.report.nodes[0]?.id);
@@ -861,12 +912,23 @@ export default function HomePage() {
           {showWelcome ? (
             <aside className="map-welcome" aria-label="First visit guide">
               <span className="eyebrow">First visit</span>
-              <strong>Learn the garden in three steps</strong>
+              <strong>Code Garden · Python demo</strong>
+              <p>
+                Start with Easy for Grades 1–5. Five plants are ready in any
+                order.
+              </p>
               <ol>
                 <li>Use the arrow keys or WASD to walk.</li>
                 <li>Follow the golden glow to a plant.</li>
                 <li>Press Enter or E, then answer the question.</li>
               </ol>
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={() => setShowWelcome(false)}
+              >
+                Start Game
+              </button>
               <button
                 type="button"
                 className="secondary-button"
@@ -982,7 +1044,7 @@ export default function HomePage() {
             <div className="garden-sprites" aria-hidden="true">
               {scene.plants.map((plant) => (
                 <span
-                  className={`pixel-sprite plant-sprite ${plant.health}`}
+                  className={`pixel-sprite plant-sprite ${plant.health} target-${plant.targetCategory}`}
                   key={plant.id}
                   style={spriteStyle(
                     plant.sprite,
@@ -1007,7 +1069,7 @@ export default function HomePage() {
                 <button
                   key={plant.id}
                   type="button"
-                  className={`map-plant-button ${plant.health} ${completedNodeIds.has(plant.id) ? "completed" : ""} ${plant.id === selectedId ? "selected" : ""}`}
+                  className={`map-plant-button ${plant.health} target-${plant.targetCategory} ${completedNodeIds.has(plant.id) ? "completed" : ""} ${plant.id === selectedId ? "selected" : ""}`}
                   style={{ left: `${plant.x}%`, top: `${plant.y}%` }}
                   aria-label={`Inspect plant ${index + 1}`}
                   title={plant.path}
@@ -1020,6 +1082,13 @@ export default function HomePage() {
                     className="pixel-sprite map-plant-sprite"
                     style={spriteStyle(plant.sprite, 50, 50, "plant")}
                   />
+                  {!completedNodeIds.has(plant.id) ? (
+                    <span className="target-bubble" aria-hidden="true">
+                      I need a fix!
+                      <br />
+                      Press E to solve the problem.
+                    </span>
+                  ) : null}
                 </button>
               ))}
             </div>
@@ -1184,10 +1253,7 @@ export default function HomePage() {
                   : "Inspect nearby"}
             </button>
           </div>
-          {pendingFinding &&
-          source === "sample" &&
-          visibleExplanation &&
-          challenge ? (
+          {pendingFinding && source === "sample" && challenge ? (
             <div
               className="map-challenge-overlay"
               role="dialog"
@@ -1216,60 +1282,17 @@ export default function HomePage() {
                 Learning greenhouse · {challenge.question.difficulty}
               </span>
               <h2 id="map-confirm-title">{challenge.question.actionLabel}</h2>
-              <p id="map-confirm-description">{visibleExplanation.summary}</p>
+              <p id="map-confirm-description">
+                Choose the best answer. You can try again as many times as you
+                need.
+              </p>
               <div className="challenge-card" aria-live="polite">
-                <strong>{challenge.question.objective}</strong>
                 <pre className="challenge-code" aria-label="Code excerpt">
                   <code>{challenge.question.codeExcerpt}</code>
                 </pre>
-                <details className="challenge-example">
-                  <summary>Show a small example</summary>
-                  <code>{challenge.question.example}</code>
-                </details>
-                <p className="challenge-question-kind">
-                  {challenge.question.questionType === "notice"
-                    ? "Notice the clue"
-                    : challenge.question.questionType === "evidence"
-                      ? "Use the evidence"
-                      : "Choose a safe next step"}
-                </p>
-                <label htmlFor="map-challenge-difficulty">
-                  Challenge level
-                </label>
-                <select
-                  id="map-challenge-difficulty"
-                  value={challengeDifficulty}
-                  disabled={Boolean(challenge.proof)}
-                  onChange={(event) => {
-                    const nextDifficulty = event.target
-                      .value as ChallengeDifficulty;
-                    setChallengeDifficulty(nextDifficulty);
-                    void startChallenge(pendingFinding, nextDifficulty);
-                  }}
-                >
-                  <option value="easy">Sprout / Easy · Grades 1–5</option>
-                  <option value="medium" disabled={completionFixes.length < 5}>
-                    Growing / Medium · Grades 6–8{" "}
-                    {completionFixes.length < 5 ? "(unlock Easy first)" : ""}
-                  </option>
-                  <option value="hard" disabled={completionFixes.length < 10}>
-                    Master Gardener / Hard · Grades 9–12{" "}
-                    {completionFixes.length < 10
-                      ? "(unlock Growing first)"
-                      : ""}
-                  </option>
-                </select>
-                <label htmlFor="map-challenge-answer">
+                <h3 className="challenge-prompt">
                   {challenge.question.prompt}
-                </label>
-                <input
-                  id="map-challenge-answer"
-                  ref={challengeAnswerRef}
-                  value={challengeAnswer}
-                  onChange={(event) => setChallengeAnswer(event.target.value)}
-                  disabled={Boolean(challenge.proof)}
-                  aria-describedby="map-challenge-hint map-challenge-feedback"
-                />
+                </h3>
                 <fieldset className="challenge-choices">
                   <legend>Choose one answer</legend>
                   {challenge.question.choices.map((choice) => (
@@ -1288,17 +1311,13 @@ export default function HomePage() {
                     </label>
                   ))}
                 </fieldset>
+                <details className="challenge-example">
+                  <summary>Show example</summary>
+                  <code>{challenge.question.example}</code>
+                </details>
                 {showHint ? (
                   <small id="map-challenge-hint">
-                    Clue{" "}
-                    {Math.min(
-                      scaffoldLevel,
-                      challenge.question.scaffolds.length,
-                    )}
-                    :{" "}
-                    {challenge.question.scaffolds[
-                      Math.max(0, scaffoldLevel - 1)
-                    ] ?? challenge.question.hint}
+                    Hint: {challenge.question.hint}
                   </small>
                 ) : null}
                 {challengeFeedback ? (
@@ -1309,8 +1328,11 @@ export default function HomePage() {
                 {showExplanationReview && challenge.proof ? (
                   <div className="challenge-explanation-review" role="status">
                     <strong>Why this answer works</strong>
-                    <p>{visibleExplanation.summary}</p>
-                    <p>{visibleExplanation.needs}</p>
+                    <p>{challenge.question.objective}</p>
+                    <p>
+                      Review the proposed fix and the evidence before
+                      continuing.
+                    </p>
                   </div>
                 ) : null}
                 <button
@@ -1340,21 +1362,10 @@ export default function HomePage() {
                 <button
                   type="button"
                   className="secondary-button"
-                  onClick={() => {
-                    setShowHint(true);
-                    setScaffoldLevel((current) =>
-                      Math.min(
-                        current + 1,
-                        challenge.question.scaffolds.length,
-                      ),
-                    );
-                  }}
-                  disabled={
-                    Boolean(challenge.proof) ||
-                    scaffoldLevel >= challenge.question.scaffolds.length
-                  }
+                  onClick={() => setShowHint(true)}
+                  disabled={Boolean(challenge.proof)}
                 >
-                  Show next clue
+                  Show hint
                 </button>
               </div>
               <div className="confirmation-actions">
@@ -1484,8 +1495,8 @@ export default function HomePage() {
               <span className="eyebrow">Garden celebration</span>
               <h2 id="completion-title">All five plants are blooming!</h2>
               <p>
-                You explored every lesson in this session. Here is the
-                reviewable before-and-after work.
+                You solved all five active questions in your own order. Here is
+                the reviewable work.
               </p>
               <ul>
                 {completionFixes.map((fix) => (
@@ -1498,6 +1509,13 @@ export default function HomePage() {
                     <pre>
                       <code>{fix.afterCode}</code>
                     </pre>
+                    <small>
+                      {fix.proposedFix ?? "Proposed fix shown for review."}
+                    </small>
+                    <small>
+                      {fix.reanalysisEvidence ??
+                        "Verified by the sample re-analysis."}
+                    </small>
                   </li>
                 ))}
               </ul>
@@ -1507,6 +1525,41 @@ export default function HomePage() {
                 repository.
               </p>
               <div className="confirmation-actions">
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => setShowApplyReview((current) => !current)}
+                >
+                  Review what you learned
+                </button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => void copyCorrectedCode()}
+                >
+                  Copy corrected code
+                </button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={downloadCorrectedCode}
+                >
+                  Download corrected copy
+                </button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={printCompletion}
+                >
+                  PDF / print
+                </button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => setShowApplyReview(true)}
+                >
+                  View patch / diff
+                </button>
                 <button
                   type="button"
                   className="secondary-button"
@@ -1522,6 +1575,30 @@ export default function HomePage() {
                   Reset Garden
                 </button>
               </div>
+              {showApplyReview ? (
+                <div
+                  className="apply-review"
+                  role="region"
+                  aria-label="Completion review"
+                >
+                  <strong>Before → after and patch review</strong>
+                  <p>
+                    These are explicit proposed changes only. Review, copy,
+                    download, or print them; nothing is written back
+                    automatically.
+                  </p>
+                  <pre>
+                    <code>{correctedCopy()}</code>
+                  </pre>
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={() => setShowCompletion(false)}
+                  >
+                    Close review
+                  </button>
+                </div>
+              ) : null}
             </div>
           </section>
         ) : null}

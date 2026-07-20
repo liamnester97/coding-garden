@@ -10,6 +10,7 @@ import {
   demoTeachingReport,
   teachingLessonReports,
 } from "@/content/teaching-lessons";
+import { teachingQuestionContent } from "@/content/teaching-questions";
 
 function request(body: unknown) {
   return new Request("http://localhost/api/challenge", {
@@ -159,12 +160,12 @@ describe("learning challenge gate", () => {
   });
 
   it("serves every default demo plant with four choices", async () => {
-    for (const finding of demoTeachingReport.findings) {
+    for (const finding of demoTeachingReport.findings.slice(0, 5)) {
       const response = await POST(
         request({
           report: demoTeachingReport,
           findingId: finding.id,
-          difficulty: "easy",
+          difficulty: teachingQuestionContent[finding.id].difficulty,
         }),
       );
       const payload = (await response.json()) as {
@@ -176,12 +177,12 @@ describe("learning challenge gate", () => {
     }
   });
 
-  it("returns an evidence-first excerpt and choices for curated findings", async () => {
-    const report = teachingLessonReports["first-sprouts"];
+  it("returns the authored Python excerpt and four choices", async () => {
+    const report = demoTeachingReport;
     const response = await POST(
       request({
         report,
-        findingId: "first-sprouts-coverage",
+        findingId: "py-easy-01",
         difficulty: "easy",
       }),
     );
@@ -194,7 +195,7 @@ describe("learning challenge gate", () => {
       };
     };
     expect(response.status).toBe(200);
-    expect(payload.question.codeExcerpt).toContain("greetGarden");
+    expect(payload.question.codeExcerpt).toContain("def greet");
     expect(payload.question.choices).toHaveLength(4);
     expect(payload.question.answer).toBeUndefined();
     expect(payload.question.explanation).toBeUndefined();

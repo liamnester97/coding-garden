@@ -10,6 +10,7 @@ supporting project records.
 | `GARDENER_JOURNEY.md`             | Demo narrative and user journey                    | Active          |
 | `HOW_TO_DEPLOY_AND_HUMAN_TEST.md` | Local/Vercel deployment and human test checklist   | Active          |
 | `FEATURE_BACKLOG.md`              | Candidate features and playtest ideas              | Supporting list |
+| `../CHANGELOG.md`                 | Design-brief gap analysis and material changes    | Supporting history |
 | `../content/teaching-lessons.ts`  | Curated lesson objectives and grade bands          | Active content  |
 | `RISK_REGISTER.md`                | Risk register                                      | Active          |
 | `adr/`                            | Architecture decision records                      | Active          |

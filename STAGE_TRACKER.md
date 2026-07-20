@@ -2,23 +2,66 @@
 
 ## Stage
 
-Stage 33 — Map Readability, Walkability, and Interaction Reliability / Bundle 12 — Easy-first Interaction Repair and Demo Clarity
+Stage 43 — Full Verification and Audit / Bundle 13 — Complete Python Teaching Demo Realignment
 
 ## Execution Bundle
 
-- **Bundle:** 12 — Easy-first Interaction Repair and Demo Clarity
-- **Current goal:** Stage 36 — finish verification, full coding-garden audit, documentation reconciliation, and human
-  evidence preparation for the implemented map and Easy-first interaction slice.
+- **Bundle:** 13 — Complete Python Teaching Demo Realignment
+- **Current goal:** Stage 43 — commit/push the verified Bundle 13 implementation; Stage 44 is queued for the next human-playtest refinement pass.
+- **Completed implementation slices:** Stages 38–42 are implemented locally and covered by the automated suite.
 - **Bundle 1:** Implementation complete based on the Stages 0–3 evidence below; bundle-level human
   acceptance remains to be recorded.
 - **Bundles 2–4 status:** Implementation slices complete; formal human/review gates remain open where
   the roadmap requires external evidence.
-- **Bundle gate:** The Bundle 12 implementation slice and automated checks are complete; the full project audit and
-  human acceptance remain open until the evidence is recorded.
-- **Audit status:** Full coding-garden structure/security/navigation audit passed locally on 2026-07-19 after generated
-  `.next` declaration drift was removed; human acceptance remains separate.
-- **Human acceptance:** Bundle 12 human acceptance is not started; desktop/mobile, keyboard, Easy-first, and output
-  evidence remain explicitly open.
+- **Bundle gate:** Bundle 13 implementation and automated verification are complete locally; human acceptance remains open, with Stage 44 queued for confirmed findings.
+- **Audit status:** Stage 37 documentation preflight passed. Stage 43 full-folder audit is pending after the final
+  implementation reconciliation.
+- **Human acceptance:** Not applicable to the documentation preflight; later stages require desktop/mobile,
+  keyboard, beginner-comprehension, map, healing, and safe-output acceptance.
+
+## Bundle 13 bounded goals
+
+- [x] Stage 37 — Reconcile every authoritative document and complete the source-brief gap analysis.
+- [x] Stage 38 — Implement the 20-issue Python fixture, authored question contract, and intro screen.
+- [x] Stage 39 — Implement the fixed map, three target categories, paths, collision, facing, and 3×3 interaction.
+- [x] Stage 40 — Implement the minimal four-choice dialogue, hints/examples, retries, explanation, and healing.
+- [x] Stage 41 — Implement completion recap, before/after, fixes, evidence, copy/download, patch/PDF, replay, reset.
+- [x] Stage 42 — Complete pixel-garden visual, accessibility, reduced-motion, and deployment refinement.
+- [ ] Stage 43 — Commit/push after full checks, browser evidence, entire-folder audit, and documentation reconciliation; human gates remain open.
+
+### Bundle 13 implementation evidence — 2026-07-19
+
+- [x] `lesson_garden.py` and `lesson_garden_fixed.py` are present locally as a read-only Python teaching fixture and explicit corrected copy.
+- [x] The authored bank contains exactly 20 questions: 10 Easy, 5 Medium, and 5 Hard; every question has four choices,
+      code, hint, example, explanation, recap, proposed fix, and re-analysis evidence.
+- [x] Easy sessions choose one question per target from the ten-question pool; Medium and Hard expose their five-question
+      pools. Active questions are independently playable and target guidance is unfinished-only.
+- [x] The fixed SVG map uses authored reachable walkways, deterministic collision/facing, three target categories, and
+      a two-step E/Enter interaction. Public report analysis remains read-only.
+- [x] The question surface is Python-first and retryable; completion offers explicit review/copy/download/patch/print
+      actions without modifying the fixture.
+- [x] Automated evidence: 89 Vitest tests, 28 desktop/mobile Playwright tests, formatting, lint, typecheck, analysis
+      validation, build, and diff checks pass locally.
+- [x] Stage 43 automated checks, browser evidence, full coding-garden structure/security audit, and documentation reconciliation pass.
+- [ ] Stage 43 human acceptance remains open; Stage 44 is queued to capture and fix confirmed playtest findings with regression coverage.
+
+### Stage 43 verification snapshot — 2026-07-19
+
+- [x] Sequential project checks pass: format, lint, typecheck, 89 Vitest tests, analysis validation, build,
+      28 desktop/mobile Playwright tests, and `git diff --check`.
+- [x] Full repository structure/security pass: exactly one `docs/EXECUTION_PLAN.md`, zero generic duplicate plan/status/
+      tracker filenames, required navigation files present, no sensitive-looking files or detected secret literals, and
+      no tracked generated build/report directories.
+- [ ] Human acceptance: Easy-first comprehension, Medium/Hard availability, arbitrary open order, mobile/fullscreen
+      map scale, keyboard-only movement/facing/collision, wrong-answer recovery, Hint/Example/Y explanation, five blooms,
+      completion outputs, reset, and no-overwrite wording.
+
+### Stage 37 documentation gate
+
+- [x] Approved source documents and existing implementation reviewed.
+- [x] Gap analysis created in `CHANGELOG.md`.
+- [x] Structure/stale-reference/sensitive-information audit passes after documentation synchronization.
+- [x] Human owner accepts the synchronized documentation before application implementation begins.
 
 ## Bundle 11 Goals — Open-ended learning demo and verified fix payoff
 

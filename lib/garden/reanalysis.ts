@@ -5,8 +5,14 @@ export function reanalyzeDemoReport(
   report: HealthReport,
   findingId: string,
 ): HealthReport {
+  const resolvedFinding = report.findings.find(
+    (finding) => finding.id === findingId,
+  );
+  const resolvedNodeId = resolvedFinding?.nodeId;
   const findings = report.findings.filter(
-    (finding) => finding.id !== findingId,
+    (finding) =>
+      finding.id !== findingId &&
+      !(finding.id.startsWith("py-") && finding.nodeId === resolvedNodeId),
   );
   const healthByNode = new Map<string, number>();
   for (const finding of findings)

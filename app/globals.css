@@ -696,6 +696,35 @@ main {
 .map-plant-button.completed .map-plant-sprite {
   filter: drop-shadow(0 0 0.65rem rgb(170 235 114 / 0.9));
 }
+.target-bubble {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 2.15rem;
+  width: max-content;
+  max-width: 9rem;
+  padding: 0.28rem 0.42rem;
+  border: 1px solid #263d2b;
+  border-radius: 0.35rem;
+  background: #fffdf1;
+  color: #263d2b;
+  font-size: 0.58rem;
+  line-height: 1.2;
+  text-align: left;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.target-bubble::after {
+  position: absolute;
+  left: 0.55rem;
+  bottom: -0.35rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1px solid #263d2b;
+  border-bottom: 1px solid #263d2b;
+  background: #fffdf1;
+  content: "";
+  transform: rotate(45deg);
+}
 @keyframes target-pulse {
   0%,
   100% {

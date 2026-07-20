@@ -4,21 +4,19 @@ This fixture mirrors the shape of the planned public teaching repository. It is
 kept inside the app so the lesson remains available offline and does not depend
 on GitHub credentials or network access.
 
-The proof-of-concept fixture contains five tiny JavaScript examples
-with deliberate, explainable code-health signals. The five lessons should cover a
-mix of Find it, Plan it, and Execute it activities across the three age bands:
+The approved next fixture is one Python teaching file with 20 intentional,
+explainable issues:
 
-- a missing or improperly formed function/syntax pattern;
-- an unused or unreachable helper;
-- a missing test or visible coverage gap;
-- a simple logic/condition problem;
-- a safe next-step lesson grounded in a real report finding.
+- 10 Easy questions for Grades 1–5;
+- 5 Medium questions for Grades 6–8;
+- 5 Hard questions for Grades 9–12.
 
-Each lesson includes a stable teaching ID, bounded excerpt, four answer choices,
-the accepted answer, hint, related example, misconception explanation, and a
-deterministic proposed fix. The app's deterministic analyzer remains the source of
-truth; these authored fields define how a validated finding is taught, not what the
-analyzer found.
+Easy content focuses on beginner syntax and structure: colons, indentation,
+variables, functions, arguments, returns, imports, conditionals, and loops.
+Every question is authored in advance with one code excerpt, one direct question,
+four fixed-order answer choices, a hint, a small related example, an explanation,
+a recap entry, and a deterministic proposed fix. The fixture is never executed or
+modified during gameplay.
 
 The future public repository should preserve this layout:
 
@@ -26,10 +24,14 @@ The future public repository should preserve this layout:
 - `lessons/grades-6-8/` — connect imports, tests, and evidence.
 - `lessons/grades-9-12/` — choose and explain a safe next step.
 
-All five lessons are visible in the garden from the beginning and are independent;
-learners may solve them in any order. A solved lesson blooms for the local session
-until Reset Garden is selected. Findings without an authored lesson remain visible
-as “More to explore” and are not playable.
+Five questions are selected for each session. Easy selects five from its ten-question
+pool; Medium and Hard use all five authored questions. The five active targets are
+visible immediately and independent; learners may solve them in any order. A solved
+target blooms for the local session until Reset Garden is selected. Findings without
+an authored lesson remain visible as “More to explore” and are not playable.
+
+The public-repository analyzer remains a separate read-only JavaScript/TypeScript
+path. It must never be confused with this self-contained teaching fixture.
 
 No lesson should contain credentials, student data, private repository content,
 or code that the app needs to execute.

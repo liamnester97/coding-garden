@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { healthReportSchema, type HealthReport } from "@/lib/analysis/schema";
+import { teachingQuestionContent } from "@/content/teaching-questions";
 
 export const teachingLessonSchema = z.object({
   id: z.string().min(1),
@@ -82,61 +83,54 @@ export const teachingLessons = [
   },
 ] satisfies TeachingLesson[];
 
+const pythonNodeIds = [
+  "lesson_garden.py::flowers",
+  "lesson_garden.py::hedges",
+  "lesson_garden.py::trees",
+  "lesson_garden.py::beds",
+  "lesson_garden.py::paths",
+] as const;
+const pythonTypes = [
+  "syntax-error",
+  "logic-bug",
+  "missing-function",
+  "coverage-gap",
+  "dead-code",
+  "coverage-gap",
+  "dead-code",
+  "syntax-error",
+  "logic-bug",
+  "missing-function",
+  "dead-code",
+  "coverage-gap",
+  "logic-bug",
+  "missing-function",
+  "syntax-error",
+  "logic-bug",
+  "missing-function",
+  "coverage-gap",
+  "dead-code",
+  "syntax-error",
+] as const;
+
 export const demoTeachingReport = lessonReport(
-  "demo-garden",
-  [
-    { id: "src/greeting.js", path: "src/greeting.js", health: "stressed" },
-    {
-      id: "src/unused-helper.js",
-      path: "src/unused-helper.js",
-      health: "withered",
-    },
-    { id: "src/score.js", path: "src/score.js", health: "stressed" },
-    { id: "src/format.js", path: "src/format.js", health: "stressed" },
-    { id: "src/lesson.js", path: "src/lesson.js", health: "stressed" },
-  ],
-  [
-    {
-      id: "demo-syntax",
-      type: "syntax-error",
-      nodeId: "src/greeting.js",
-      summary: "A closing brace is missing from this function.",
-      evidence: { tool: "teaching-fixture", file: "src/greeting.js" },
-    },
-    {
-      id: "demo-dead-code",
-      type: "dead-code",
-      nodeId: "src/unused-helper.js",
-      summary: "No incoming import was found for this helper.",
-      evidence: { tool: "teaching-fixture", file: "src/unused-helper.js" },
-    },
-    {
-      id: "demo-coverage",
-      type: "coverage-gap",
-      nodeId: "src/score.js",
-      summary: "This score path has no matching test yet.",
-      evidence: { tool: "teaching-fixture", file: "src/score.js" },
-    },
-    {
-      id: "demo-logic",
-      type: "logic-bug",
-      nodeId: "src/format.js",
-      summary: "The formatter uses the wrong separator for a friendly message.",
-      evidence: { tool: "teaching-fixture", file: "src/format.js" },
-    },
-    {
-      id: "demo-function",
-      type: "missing-function",
-      nodeId: "src/lesson.js",
-      summary: "The lesson calls a function that has not been defined.",
-      evidence: { tool: "teaching-fixture", file: "src/lesson.js" },
-    },
-  ],
-  [
-    { from: "src/lesson.js", to: "src/greeting.js" },
-    { from: "src/lesson.js", to: "src/score.js" },
-    { from: "src/lesson.js", to: "src/format.js" },
-  ],
+  "python-teaching-demo",
+  pythonNodeIds.map((id, index) => ({
+    id,
+    path: "lesson_garden.py",
+    health: index < 2 ? "withered" : "stressed",
+  })),
+  Object.values(teachingQuestionContent).map((question, index) => ({
+    id: question.findingId,
+    type: pythonTypes[index],
+    nodeId: pythonNodeIds[index % pythonNodeIds.length],
+    summary: question.prompt,
+    evidence: { tool: "authored-python-fixture", file: "lesson_garden.py" },
+  })),
+  pythonNodeIds.slice(1).map((nodeId, index) => ({
+    from: pythonNodeIds[index],
+    to: nodeId,
+  })),
 );
 
 export const teachingLessonReports: Record<string, HealthReport> = {
